@@ -1,11 +1,18 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.security.authentication;
+
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import cn.topiam.employee.support.geo.GeoLocation;
 import cn.topiam.employee.support.web.useragent.UserAgent;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 
 /**
  * Web认证详情类

@@ -1,13 +1,9 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.context;
 
-import cn.topiam.employee.support.security.userdetails.Group;
-import cn.topiam.employee.support.util.DesensitizationUtils;
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -18,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import lombok.Generated;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.PropertyAccessorFactory;
@@ -27,6 +23,16 @@ import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
+
+import lombok.Generated;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * Servlet context service class

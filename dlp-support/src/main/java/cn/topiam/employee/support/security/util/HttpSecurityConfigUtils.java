@@ -1,6 +1,11 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.security.util;
 
 import java.util.Map;
+
 import org.springframework.beans.factory.BeanFactoryUtils;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.NoUniqueBeanDefinitionException;

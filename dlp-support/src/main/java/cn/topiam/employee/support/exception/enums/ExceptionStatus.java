@@ -1,3 +1,7 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.exception.enums;
 
 /**
@@ -150,35 +154,6 @@ public enum ExceptionStatus {
      * 验证码错误。
      * 用户输入的验证码与系统生成的验证码不一致。
      */
-    EX000108("EX000108", "验证码错误");
-```
-
-D:\project\dlp\dlp-test\src\main\java\cn\topiam\employee\support\exception\enums\ExceptionStatus.java
-```java
-<<<<<<< SEARCH
-import cn.topiam.employee.support.security.jackjson.GrantedAuthorityMixin;
-    EX000202("EX000202", "参数验证失败"),
-    EX000100("EX000100", "请求参数错误"),
-    EX900000("EX900000", "系统异常"),
-    EX000104("EX000104", "数据不存在"),
-    EX000107("EX000107", "权限不足"),
-    EX000109("EX000109", "操作被禁止"),
-    EX000203("EX000203", "请求超时"),
-    EX000201("EX000201", "服务不可用"),
-    EX000106("EX000106", "认证失败"),
-    EX000101("EX000101", "账户不存在"),
-    EX000105("EX000105", "密码错误"),
-    EX000205("EX000205", "请求过于频繁"),
-    EX900008("EX900008", "数据库异常"),
-    EX900002("EX900002", "网络异常"),
-    EX900001("EX900001", "配置错误"),
-    EX000102("EX000102", "会话过期"),
-    EX900007("EX900007", "文件上传失败"),
-    EX900009("EX900009", "数据格式错误"),
-    EX900004("EX900004", "服务正在维护"),
-    EX900005("EX900005", "功能未实现"),
-    EX900006("EX900006", "版本不兼容"),
-    EX000103("EX000103", "账户已被锁定"),
     EX000108("EX000108", "验证码错误");
 
     /**

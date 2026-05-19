@@ -1,5 +1,5 @@
 /*
- * eiam-synchronizer - Employee Identity and Access Management
+ * eiam-synchronizer - United Login Platform
  * Copyright © 2022-Present Charles Network Technology Co., Ltd.
  */
 package cn.topiam.employee.synchronizer;

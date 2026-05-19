@@ -1,3 +1,7 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.cache;
 
 import java.io.Serializable;
@@ -5,7 +9,7 @@ import java.lang.reflect.Method;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
-import lombok.Generated;
+
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.boot.info.BuildProperties;

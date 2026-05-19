@@ -1,6 +1,6 @@
 /*
- * eiam-console - Employee Identity and Access Management
- * Copyright © 2005-Present Charles Co., Ltd.
+ * eiam-console - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
  */
 export default {
   'pages.setting.message.desc':

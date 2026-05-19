@@ -1,19 +1,23 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.web.controller;
 
-import cn.topiam.employee.support.security.constant.SecurityConstants;
-import cn.topiam.employee.support.security.savedredirect.HttpSessionRedirectCache;
-import cn.topiam.employee.support.security.savedredirect.RedirectCache;
-import cn.topiam.employee.support.security.util.SecurityUtils;
-import cn.topiam.employee.support.util.PhoneUtils;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
+
+import cn.topiam.employee.support.security.savedredirect.HttpSessionRedirectCache;
+import cn.topiam.employee.support.security.savedredirect.RedirectCache;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * 跳转控制器

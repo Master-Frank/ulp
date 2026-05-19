@@ -1,8 +1,13 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.security.password.enums;
+
+import java.util.Objects;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import java.util.Objects;
 
 /**
  * 密码复杂度规则转换器

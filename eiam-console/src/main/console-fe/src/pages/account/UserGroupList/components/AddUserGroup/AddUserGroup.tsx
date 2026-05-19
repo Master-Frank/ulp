@@ -1,6 +1,6 @@
 /*
- * eiam-console - Employee Identity and Access Management
- * Copyright © 2005-Present Charles Co., Ltd.
+ * eiam-console - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
  */
 import { random } from '@/utils/utils';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-components';

@@ -1,9 +1,11 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.redis;
 
-import cn.topiam.employee.support.cache.CachePrefixGenerator;
-import cn.topiam.employee.support.util.PhoneUtils;
 import java.time.Duration;
-import java.util.Objects;
+
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
@@ -21,6 +23,9 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+
+import cn.topiam.employee.support.cache.CachePrefixGenerator;
+import cn.topiam.employee.support.util.PhoneUtils;
 
 /**
  * Redis配置类

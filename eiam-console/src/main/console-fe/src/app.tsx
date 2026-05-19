@@ -1,6 +1,6 @@
 /*
- * eiam-console - Employee Identity and Access Management
- * Copyright © 2005-Present Charles Co., Ltd.
+ * eiam-console - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
  */
 import { isLoginPath, isResetPasswordPath, isSessionExpiredPath, LOGIN_PATH } from '@/utils/utils';
 import type { MenuDataItem, Settings as LayoutSettings } from '@ant-design/pro-components';

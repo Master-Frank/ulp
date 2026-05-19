@@ -1,8 +1,13 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.repository;
+
+import java.util.Objects;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import java.util.Objects;
 
 /**
  * 软删除转换器

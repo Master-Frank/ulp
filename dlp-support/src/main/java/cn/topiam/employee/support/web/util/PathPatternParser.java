@@ -1,10 +1,15 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.web.util;
 
-import cn.topiam.employee.support.context.ApplicationContextService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import cn.topiam.employee.support.context.ApplicationContextService;
 
 /**
  * 路径模式解析器类

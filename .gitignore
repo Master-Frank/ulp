@@ -34,3 +34,6 @@ build/
 .DS_Store
 */.DS_Store
 /eiam-support/
+
+### Local backups (rebrand work) ###
+.backup/

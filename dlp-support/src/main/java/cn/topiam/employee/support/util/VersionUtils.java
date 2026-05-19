@@ -1,7 +1,12 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.util;
 
-import cn.topiam.employee.support.Version;
 import java.util.Objects;
+
+import cn.topiam.employee.support.Version;
 
 /**
  * 版本工具类

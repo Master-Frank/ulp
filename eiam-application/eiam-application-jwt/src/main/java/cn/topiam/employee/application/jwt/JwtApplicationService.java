@@ -1,5 +1,5 @@
 /*
- * eiam-application-jwt - Employee Identity and Access Management
+ * eiam-application-jwt - United Login Platform
  * Copyright © 2022-Present Charles Network Technology Co., Ltd.
  */
 package cn.topiam.employee.application.jwt;

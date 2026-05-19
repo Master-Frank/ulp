@@ -1,7 +1,12 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.security.password.exception;
 
-import cn.topiam.employee.support.exception.TopIamException;
 import org.springframework.http.HttpStatus;
+
+import cn.topiam.employee.support.exception.TopIamException;
 
 /**
  * 密码无效异常

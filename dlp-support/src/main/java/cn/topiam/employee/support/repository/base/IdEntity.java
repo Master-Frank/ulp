@@ -1,13 +1,19 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.repository.base;
+
+import java.io.Serializable;
+
+import org.hibernate.annotations.UuidGenerator;
+import org.hibernate.annotations.UuidGenerator.Style;
 
 import jakarta.persistence.Access;
 import jakarta.persistence.AccessType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
-import java.io.Serializable;
-import org.hibernate.annotations.UuidGenerator;
-import org.hibernate.annotations.UuidGenerator.Style;
 
 /**
  * ID实体类

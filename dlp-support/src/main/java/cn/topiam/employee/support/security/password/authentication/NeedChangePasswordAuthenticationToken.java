@@ -1,9 +1,15 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.security.password.authentication;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Collections;
+
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.Authentication;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * 需要更改密码认证令牌类

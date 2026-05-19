@@ -1,7 +1,9 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.security.configurer;
 
-import cn.topiam.employee.support.security.password.PasswordPolicyManager;
-import cn.topiam.employee.support.security.userdetails.UserDetailsService;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
@@ -9,6 +11,9 @@ import org.springframework.security.config.annotation.web.HttpSecurityBuilder;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import cn.topiam.employee.support.security.password.PasswordPolicyManager;
+import cn.topiam.employee.support.security.userdetails.UserDetailsService;
 
 /**
  * 自定义安全配置类

@@ -1,16 +1,16 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.web.decrypt;
 
-import cn.topiam.employee.support.context.ServletContextService;
-import cn.topiam.employee.support.enums.SecretType;
-import cn.topiam.employee.support.util.AesUtils;
-import com.alibaba.fastjson2.JSONObject;
-import jakarta.servlet.http.HttpSession;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.function.Function;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
@@ -23,6 +23,14 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdviceAdapter;
+
+import com.alibaba.fastjson2.JSONObject;
+
+import cn.topiam.employee.support.context.ServletContextService;
+import cn.topiam.employee.support.enums.SecretType;
+import cn.topiam.employee.support.util.AesUtils;
+
+import jakarta.servlet.http.HttpSession;
 
 /**
  * 解密请求体通知类

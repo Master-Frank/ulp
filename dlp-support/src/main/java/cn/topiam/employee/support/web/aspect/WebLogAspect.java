@@ -1,18 +1,16 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.web.aspect;
 
-import cn.topiam.employee.support.context.ServletContextService;
-import cn.topiam.employee.support.security.util.SecurityUtils;
-import cn.topiam.employee.support.trace.TraceUtils;
-import cn.topiam.employee.support.util.PhoneUtils;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -23,6 +21,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
+
+import cn.topiam.employee.support.context.ServletContextService;
+import cn.topiam.employee.support.security.util.SecurityUtils;
+import cn.topiam.employee.support.trace.TraceUtils;
+import cn.topiam.employee.support.util.PhoneUtils;
+
+import lombok.extern.slf4j.Slf4j;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Web日志切面

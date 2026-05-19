@@ -1,8 +1,13 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.trace;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * 跟踪工具类

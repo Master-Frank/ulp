@@ -1,6 +1,6 @@
 /*
- * eiam-portal - Employee Identity and Access Management
- * Copyright © 2005-Present Charles Co., Ltd.
+ * eiam-portal - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
  */
 import { App, Avatar, Button, List, Skeleton } from 'antd';
 import React, { Fragment, useState } from 'react';

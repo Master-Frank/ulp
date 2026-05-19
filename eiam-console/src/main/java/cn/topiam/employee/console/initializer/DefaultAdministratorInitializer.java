@@ -1,5 +1,5 @@
 /*
- * eiam-console - Employee Identity and Access Management
+ * eiam-console - United Login Platform
  * Copyright © 2022-Present Charles Network Technology Co., Ltd.
  */
 package cn.topiam.employee.console.initializer;
@@ -44,7 +44,7 @@ public class DefaultAdministratorInitializer extends AbstractSystemInitializer {
     private static final String INITIAL_PASSWORD_VALUE_NAME = "initial.password.value";
     // generate: 自动生成，setting: 读取[INITIAL_PASSWORD_VALUE]设置的固定值，没有设置使用[INITIAL_PASSWORD_DEFAULT]的默认值
     private static final String INITIAL_PASSWORD_TYPE_NAME  = "initial.password.type";
-    private static final String INITIAL_PASSWORD_DEFAULT    = "topiam.cn";
+    private static final String INITIAL_PASSWORD_DEFAULT    = "admin@ulp";
 
     @Override
     public void init() throws InitializationException {

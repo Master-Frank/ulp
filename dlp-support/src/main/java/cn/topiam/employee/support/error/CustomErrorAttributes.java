@@ -1,25 +1,30 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.error;
 
-import cn.topiam.employee.support.error.ErrorAttributesHandler;
-import cn.topiam.employee.support.exception.TopIamException;
-import cn.topiam.employee.support.exception.enums.ExceptionStatus;
-import cn.topiam.employee.support.util.PhoneUtils;
-import com.alibaba.fastjson2.JSON;
-import com.google.common.collect.Maps;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.dao.DataAccessException;
-import org.springframework.util.Assert;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
+
+import com.google.common.collect.Maps;
+
+import cn.topiam.employee.support.exception.TopIamException;
+import cn.topiam.employee.support.exception.enums.ExceptionStatus;
+import cn.topiam.employee.support.util.PhoneUtils;
+
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 
 /**
  * 自定义错误属性处理器

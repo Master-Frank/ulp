@@ -1,6 +1,6 @@
 /*
- * eiam-portal - Employee Identity and Access Management
- * Copyright © 2005-Present Charles Co., Ltd.
+ * eiam-portal - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
  */
 import { FieldNames } from '@/constants';
 import { ServerExceptionStatus } from '@/pages/Account/constant';

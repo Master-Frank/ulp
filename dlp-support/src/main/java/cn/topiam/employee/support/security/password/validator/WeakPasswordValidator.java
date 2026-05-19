@@ -1,14 +1,21 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.security.password.validator;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cn.topiam.employee.support.security.password.PasswordValidator;
 import cn.topiam.employee.support.security.password.exception.PasswordInvalidException;
 import cn.topiam.employee.support.security.password.exception.PasswordWeakInvalidException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
 import lombok.Generated;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 弱密码验证器

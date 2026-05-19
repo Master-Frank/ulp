@@ -1,4 +1,13 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.web.config;
+
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import cn.topiam.employee.support.util.PhoneUtils;
 import cn.topiam.employee.support.util.VersionUtils;
@@ -6,11 +15,6 @@ import cn.topiam.employee.support.web.converter.CustomEnumConverterFactory;
 import cn.topiam.employee.support.web.filter.VersionHeaderFilter;
 import cn.topiam.employee.support.web.useragent.DefaultUserAgentParser;
 import cn.topiam.employee.support.web.useragent.UserAgentParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.format.FormatterRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * 自定义Web MVC配置器

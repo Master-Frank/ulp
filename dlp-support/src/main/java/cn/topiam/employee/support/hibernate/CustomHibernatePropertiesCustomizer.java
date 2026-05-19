@@ -1,9 +1,15 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.hibernate;
+
+import java.util.Map;
+
+import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
 
 import cn.topiam.employee.support.repository.page.domain.Page;
 import cn.topiam.employee.support.security.userdetails.Group;
-import java.util.Map;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
 
 /**
  * 自定义Hibernate属性定制器

@@ -1,8 +1,12 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.async;
 
-import cn.topiam.employee.support.util.DesensitizationUtils;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;

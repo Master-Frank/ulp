@@ -1,10 +1,11 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.async;
 
-import cn.topiam.employee.support.async.ExceptionHandlingAsyncTaskExecutor;
-import cn.topiam.employee.support.repository.page.domain.Page;
-import cn.topiam.employee.support.util.DesensitizationUtils;
-import com.alibaba.ttl.threadpool.TtlExecutors;
 import java.util.concurrent.Executor;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
@@ -14,6 +15,10 @@ import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
+
+import com.alibaba.ttl.threadpool.TtlExecutors;
+
+import cn.topiam.employee.support.util.DesensitizationUtils;
 
 /**
  * Custom asynchronous configuration class

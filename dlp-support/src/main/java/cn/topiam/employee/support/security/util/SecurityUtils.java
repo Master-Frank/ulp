@@ -1,9 +1,12 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.security.util;
 
-import cn.topiam.employee.support.security.userdetails.UserDetails;
-import cn.topiam.employee.support.security.userdetails.UserType;
 import java.util.Objects;
 import java.util.Optional;
+
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
@@ -12,6 +15,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import cn.topiam.employee.support.security.userdetails.UserDetails;
+import cn.topiam.employee.support.security.userdetails.UserType;
 
 public final class SecurityUtils {
    public static final String ANONYMOUS_USER = "anonymousUser";

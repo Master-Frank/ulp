@@ -1,10 +1,14 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.security.web;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import cn.topiam.employee.support.result.ApiRestResult;
 import cn.topiam.employee.support.security.password.PasswordGenerator;
-import cn.topiam.employee.support.util.PhoneUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 密码生成器控制器

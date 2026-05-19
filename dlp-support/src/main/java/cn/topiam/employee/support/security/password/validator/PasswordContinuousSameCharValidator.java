@@ -1,18 +1,24 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.security.password.validator;
 
-import cn.topiam.employee.support.security.password.PasswordValidator;
-import cn.topiam.employee.support.security.password.exception.PasswordContinuousSameCharInvalidException;
-import cn.topiam.employee.support.security.password.exception.PasswordInvalidException;
-import com.alibaba.fastjson2.JSONObject;
-import com.alibaba.fastjson2.JSONWriter;
-import java.util.List;
-import lombok.Generated;
 import org.passay.PasswordData;
 import org.passay.RepeatCharactersRule;
 import org.passay.Rule;
 import org.passay.RuleResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.JSONWriter;
+
+import cn.topiam.employee.support.security.password.PasswordValidator;
+import cn.topiam.employee.support.security.password.exception.PasswordContinuousSameCharInvalidException;
+import cn.topiam.employee.support.security.password.exception.PasswordInvalidException;
+
+import lombok.Generated;
 
 /**
  * 密码连续相同字符验证器

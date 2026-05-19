@@ -1,9 +1,15 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.web.useragent;
 
-import cn.topiam.employee.support.context.ApplicationContextService;
 import com.blueconic.browscap.BrowsCapField;
 import com.blueconic.browscap.Capabilities;
 import com.blueconic.browscap.UserAgentService;
+
+import cn.topiam.employee.support.context.ApplicationContextService;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 /**

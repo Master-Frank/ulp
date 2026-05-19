@@ -1,5 +1,5 @@
 /*
- * eiam-authentication-dingtalk - Employee Identity and Access Management
+ * eiam-authentication-dingtalk - United Login Platform
  * Copyright © 2022-Present Charles Network Technology Co., Ltd.
  */
 package cn.topiam.employee.authentication.dingtalk.configurer;

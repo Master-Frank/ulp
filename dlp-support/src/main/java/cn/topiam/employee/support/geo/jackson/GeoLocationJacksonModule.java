@@ -1,11 +1,16 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.geo.jackson;
+
+import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.databind.Module;
 
 import cn.topiam.employee.support.Fa;
 import cn.topiam.employee.support.da;
 import cn.topiam.employee.support.geo.GeoLocation;
 import cn.topiam.employee.support.geo.GeoLocationProvider;
-import com.fasterxml.jackson.core.Version;
-import com.fasterxml.jackson.databind.Module;
 
 /**
  * 地理位置相关的Jackson模块

@@ -1,11 +1,14 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.error;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
+
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.logging.Log;
@@ -15,6 +18,9 @@ import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.View;
 import org.springframework.web.util.HtmlUtils;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * 自定义错误视图类

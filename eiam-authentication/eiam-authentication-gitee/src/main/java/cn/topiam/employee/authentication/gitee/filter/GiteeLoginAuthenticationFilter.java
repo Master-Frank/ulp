@@ -1,5 +1,5 @@
 /*
- * eiam-authentication-gitee - Employee Identity and Access Management
+ * eiam-authentication-gitee - United Login Platform
  * Copyright © 2022-Present Charles Network Technology Co., Ltd.
  */
 package cn.topiam.employee.authentication.gitee.filter;

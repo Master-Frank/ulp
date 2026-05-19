@@ -1,6 +1,8 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.lock;
-
-import cn.topiam.employee.support.util.AesUtils;
 
 /**
  * 分布式锁异常类

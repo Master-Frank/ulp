@@ -1,8 +1,13 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.validation;
 
-import cn.topiam.employee.support.security.jackjson.GrantedAuthorityMixin;
 import org.springframework.boot.autoconfigure.validation.ValidationConfigurationCustomizer;
 import org.springframework.context.annotation.Bean;
+
+import cn.topiam.employee.support.security.jackjson.GrantedAuthorityMixin;
 
 /**
  * 自定义验证配置类

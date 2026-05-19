@@ -1,10 +1,17 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.validation;
 
+import java.util.regex.Pattern;
+
+import org.apache.commons.lang3.StringUtils;
+
 import cn.topiam.employee.support.validation.annotation.Phone;
+
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import java.util.regex.Pattern;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * 手机号验证器

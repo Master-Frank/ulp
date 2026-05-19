@@ -1,6 +1,6 @@
 /*
- * eiam-portal - Employee Identity and Access Management
- * Copyright © 2005-Present Charles Co., Ltd.
+ * eiam-portal - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
  */
 // import { GithubOutlined } from '@ant-design/icons';
 import type { FooterProps } from '@ant-design/pro-components';

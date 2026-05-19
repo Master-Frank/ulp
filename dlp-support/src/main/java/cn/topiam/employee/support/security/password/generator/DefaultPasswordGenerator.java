@@ -1,10 +1,16 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.security.password.generator;
 
-import cn.topiam.employee.support.security.password.PasswordGenerator;
 import java.util.Arrays;
 import java.util.List;
+
 import org.passay.CharacterRule;
 import org.passay.EnglishCharacterData;
+
+import cn.topiam.employee.support.security.password.PasswordGenerator;
 
 /**
  * 默认密码生成器

@@ -1,9 +1,15 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.config;
 
-import cn.topiam.employee.support.security.util.SecurityUtils;
 import java.util.Optional;
+
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.lang.NonNull;
+
+import cn.topiam.employee.support.security.util.SecurityUtils;
 
 /**
  * 自定义审计员感知器

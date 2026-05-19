@@ -1,10 +1,9 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.security.password.validator;
 
-import cn.topiam.employee.support.security.password.PasswordValidator;
-import cn.topiam.employee.support.security.password.enums.PasswordComplexityRule;
-import cn.topiam.employee.support.security.password.exception.PasswordComplexityRuleInvalidException;
-import cn.topiam.employee.support.security.password.exception.PasswordInvalidException;
-import lombok.Generated;
 import org.passay.CharacterCharacteristicsRule;
 import org.passay.CharacterRule;
 import org.passay.EnglishCharacterData;
@@ -12,6 +11,13 @@ import org.passay.PasswordData;
 import org.passay.Rule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import cn.topiam.employee.support.security.password.PasswordValidator;
+import cn.topiam.employee.support.security.password.enums.PasswordComplexityRule;
+import cn.topiam.employee.support.security.password.exception.PasswordComplexityRuleInvalidException;
+import cn.topiam.employee.support.security.password.exception.PasswordInvalidException;
+
+import lombok.Generated;
 
 /**
  * 密码复杂度规则验证器

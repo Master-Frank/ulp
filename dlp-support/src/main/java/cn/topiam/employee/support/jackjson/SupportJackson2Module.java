@@ -1,12 +1,19 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.jackjson;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.security.jackson2.SecurityJackson2Modules;
+
+import com.fasterxml.jackson.databind.Module;
 
 import cn.topiam.employee.support.geo.jackson.GeoLocationJacksonModule;
 import cn.topiam.employee.support.security.jackjson.SecurityJacksonModule;
 import cn.topiam.employee.support.web.jackjson.WebJacksonModule;
-import com.fasterxml.jackson.databind.Module;
-import java.util.ArrayList;
-import java.util.List;
-import org.springframework.security.jackson2.SecurityJackson2Modules;
 
 /**
  * 支持Jackson2的模块配置类

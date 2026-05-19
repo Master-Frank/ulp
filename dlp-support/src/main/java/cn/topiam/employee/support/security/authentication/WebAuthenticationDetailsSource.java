@@ -1,11 +1,17 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.security.authentication;
+
+import org.springframework.security.authentication.AuthenticationDetailsSource;
+import org.springframework.util.Assert;
 
 import cn.topiam.employee.support.geo.GeoLocationParser;
 import cn.topiam.employee.support.util.IpUtils;
 import cn.topiam.employee.support.web.useragent.UserAgentParser;
+
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.security.authentication.AuthenticationDetailsSource;
-import org.springframework.util.Assert;
 
 /**
  * Web认证详情源类

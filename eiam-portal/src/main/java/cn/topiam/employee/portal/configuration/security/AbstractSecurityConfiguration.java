@@ -1,5 +1,5 @@
 /*
- * eiam-portal - Employee Identity and Access Management
+ * eiam-portal - United Login Platform
  * Copyright © 2022-Present Charles Network Technology Co., Ltd.
  */
 package cn.topiam.employee.portal.configuration.security;
@@ -13,6 +13,7 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.http.HttpMethod;
 import org.springframework.lang.Nullable;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
@@ -26,7 +27,7 @@ import org.springframework.session.security.web.authentication.SpringSessionReme
 import org.springframework.util.Assert;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.http.HttpMethod;
+
 import com.google.common.collect.Lists;
 
 import cn.topiam.employee.common.entity.setting.SettingEntity;

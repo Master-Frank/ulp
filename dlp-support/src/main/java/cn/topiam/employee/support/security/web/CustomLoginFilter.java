@@ -1,13 +1,9 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.security.web;
 
-import cn.topiam.employee.support.enums.SecretType;
-import cn.topiam.employee.support.repository.page.domain.ExampleRequest;
-import cn.topiam.employee.support.repository.page.domain.Page;
-import cn.topiam.employee.support.security.exception.SecretInvalidException;
-import cn.topiam.employee.support.util.AesUtils;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +11,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import cn.topiam.employee.support.enums.SecretType;
+import cn.topiam.employee.support.security.exception.SecretInvalidException;
+import cn.topiam.employee.support.util.AesUtils;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * 自定义登录过滤器

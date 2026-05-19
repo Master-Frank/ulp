@@ -1,9 +1,20 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.security.web;
+
+import java.io.IOException;
+import java.util.Objects;
+
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.web.filter.GenericFilterBean;
 
 import cn.topiam.employee.support.security.session.RefreshCurrentSessionPrincipalService;
 import cn.topiam.employee.support.security.userdetails.UserDetails;
 import cn.topiam.employee.support.security.util.SecurityUtils;
-import cn.topiam.employee.support.util.BeanUtils;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -11,13 +22,6 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.Objects;
-import lombok.Generated;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.context.SecurityContextRepository;
-import org.springframework.web.filter.GenericFilterBean;
 
 /**
  * 会话刷新过滤器

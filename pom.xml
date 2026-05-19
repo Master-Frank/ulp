@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    TOPIAM Employee - Employee Identity and Access Management
+    ULP - United Login Platform
     Copyright © 2022-Present Charles Network Technology Co., Ltd.
 
 -->
@@ -18,9 +18,9 @@
     <artifactId>dlp</artifactId>
     <version>1.1.0</version>
     <packaging>pom</packaging>
-    <name>TOPIAM Employee</name>
-    <description>Employee Identity and Access Management</description>
-    <inceptionYear>2020</inceptionYear>
+    <name>ULP</name>
+    <description>United Login Platform</description>  
+    <inceptionYear>2025</inceptionYear>
     <properties>
         <!--Maven-->
         <module.install.skip>true</module.install.skip>
@@ -53,7 +53,6 @@
         <module>eiam-authentication</module>
         <module>eiam-audit</module>
         <module>eiam-synchronizer</module>
-        <module>dlp-support</module>
     </modules>
     <repositories>
         <repository>

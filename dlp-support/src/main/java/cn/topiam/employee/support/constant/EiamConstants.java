@@ -1,12 +1,17 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.constant;
 
-import cn.topiam.employee.support.security.userdetails.Group;
-import cn.topiam.employee.support.util.PhoneUtils;
 import java.io.File;
 import java.time.format.DateTimeFormatter;
+
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
+
+import cn.topiam.employee.support.util.PhoneUtils;
 
 /**
  * 系统常量定义接口

@@ -1,8 +1,13 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.configrefresh;
 
-import cn.topiam.employee.support.util.PhoneUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import cn.topiam.employee.support.util.PhoneUtils;
 
 /**
  * 配置刷新命令行运行器

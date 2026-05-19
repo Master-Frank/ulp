@@ -1,13 +1,20 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.security.savedredirect;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.http.HttpMethod;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
 import lombok.Generated;
-import org.springframework.http.HttpMethod;
 
 /**
  * 保存的重定向信息类

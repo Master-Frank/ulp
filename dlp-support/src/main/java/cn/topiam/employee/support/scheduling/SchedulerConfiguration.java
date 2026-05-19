@@ -1,8 +1,12 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.scheduling;
 
-import cn.topiam.employee.support.async.CustomThreadPoolTaskExecutor;
 import java.util.Map;
 import java.util.concurrent.Executor;
+
 import org.slf4j.MDC;
 import org.springframework.boot.task.ThreadPoolTaskSchedulerBuilder;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +14,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
+
+import cn.topiam.employee.support.async.CustomThreadPoolTaskExecutor;
 
 /**
  * 调度配置类

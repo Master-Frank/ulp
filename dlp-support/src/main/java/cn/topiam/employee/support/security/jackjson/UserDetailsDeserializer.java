@@ -1,14 +1,20 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.security.jackjson;
 
-import cn.topiam.employee.support.security.userdetails.UserDetails;
-import cn.topiam.employee.support.security.userdetails.UserType;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
+import cn.topiam.employee.support.security.userdetails.UserDetails;
+import cn.topiam.employee.support.security.userdetails.UserType;
 
 /**
  * 用户详情反序列化器

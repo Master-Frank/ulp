@@ -1,6 +1,6 @@
 /*
- * eiam-portal - Employee Identity and Access Management
- * Copyright © 2005-Present Charles Co., Ltd.
+ * eiam-portal - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
  */
 export default {
   'pages.audit.desc': '审计日志记录了用户进行的关键操作，以对某次改变提供充分的溯源数据。',

@@ -1,8 +1,13 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.repository.page.domain;
 
-import io.swagger.v3.oas.annotations.Parameter;
 import java.io.Serializable;
 import java.util.List;
+
+import io.swagger.v3.oas.annotations.Parameter;
 
 /**
  * 分页结果类

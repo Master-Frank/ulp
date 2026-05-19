@@ -1,30 +1,14 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.security.web;
 
-import cn.topiam.employee.support.exception.UnknownAuthenticationTypeException;
-import cn.topiam.employee.support.result.ApiRestResult;
-import cn.topiam.employee.support.security.password.PasswordPolicyManager;
-import cn.topiam.employee.support.security.password.authentication.NeedChangePasswordAuthenticationToken;
-import cn.topiam.employee.support.security.password.exception.PasswordInvalidException;
-import cn.topiam.employee.support.security.password.exception.PasswordValidatedFailException;
-import cn.topiam.employee.support.security.userdetails.UserDetails;
-import cn.topiam.employee.support.security.userdetails.UserDetailsService;
-import cn.topiam.employee.support.util.DesensitizationUtils;
-import cn.topiam.employee.support.util.EmailUtils;
-import cn.topiam.employee.support.util.HttpResponseUtils;
-import cn.topiam.employee.support.web.decrypt.DecryptRequestBodyAdvice;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Executor;
-import lombok.Generated;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
@@ -39,6 +23,28 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import cn.topiam.employee.support.exception.UnknownAuthenticationTypeException;
+import cn.topiam.employee.support.result.ApiRestResult;
+import cn.topiam.employee.support.security.password.PasswordPolicyManager;
+import cn.topiam.employee.support.security.password.authentication.NeedChangePasswordAuthenticationToken;
+import cn.topiam.employee.support.security.password.exception.PasswordInvalidException;
+import cn.topiam.employee.support.security.password.exception.PasswordValidatedFailException;
+import cn.topiam.employee.support.security.userdetails.UserDetails;
+import cn.topiam.employee.support.security.userdetails.UserDetailsService;
+import cn.topiam.employee.support.util.DesensitizationUtils;
+import cn.topiam.employee.support.util.HttpResponseUtils;
+import cn.topiam.employee.support.web.decrypt.DecryptRequestBodyAdvice;
+
+import lombok.Generated;
+
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * 自定义认证过滤器

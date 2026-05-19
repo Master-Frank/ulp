@@ -1,5 +1,5 @@
 /*
- * eiam-authentication-wechat - Employee Identity and Access Management
+ * eiam-authentication-wechat - United Login Platform
  * Copyright © 2022-Present Charles Network Technology Co., Ltd.
  */
 package cn.topiam.employee.authentication.wechat.filter;

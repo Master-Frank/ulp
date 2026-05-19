@@ -1,13 +1,19 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.web.controller;
 
-import cn.topiam.employee.support.util.PhoneUtils;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.security.web.csrf.CsrfTokenRequestHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import cn.topiam.employee.support.util.PhoneUtils;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * CSRF令牌控制器

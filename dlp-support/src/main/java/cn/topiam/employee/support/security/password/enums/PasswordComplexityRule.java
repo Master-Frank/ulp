@@ -1,7 +1,12 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.security.password.enums;
 
-import cn.topiam.employee.support.enums.BaseEnum;
 import com.fasterxml.jackson.annotation.JsonValue;
+
+import cn.topiam.employee.support.enums.BaseEnum;
 
 /**
  * 密码复杂度规则枚举

@@ -1,13 +1,17 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.security.configurer;
 
-import cn.topiam.employee.support.security.crypto.password.PasswordEncoderFactories;
-import cn.topiam.employee.support.util.AesUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextHolderStrategy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import cn.topiam.employee.support.security.crypto.password.PasswordEncoderFactories;
 
 /**
  * 自定义安全Bean配置类

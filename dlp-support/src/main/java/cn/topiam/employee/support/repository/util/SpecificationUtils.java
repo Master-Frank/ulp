@@ -1,9 +1,13 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.repository.util;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.CollectionUtils;

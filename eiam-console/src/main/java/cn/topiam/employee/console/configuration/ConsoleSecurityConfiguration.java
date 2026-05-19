@@ -1,5 +1,5 @@
 /*
- * eiam-console - Employee Identity and Access Management
+ * eiam-console - United Login Platform
  * Copyright © 2022-Present Charles Network Technology Co., Ltd.
  */
 package cn.topiam.employee.console.configuration;
@@ -34,7 +34,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.http.HttpMethod;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;

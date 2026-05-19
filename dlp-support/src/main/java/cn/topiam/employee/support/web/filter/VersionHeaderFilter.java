@@ -1,12 +1,19 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.web.filter;
 
+import java.io.IOException;
+
+import org.springframework.web.filter.OncePerRequestFilter;
+
 import cn.topiam.employee.support.util.VersionUtils;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
  * 版本头部过滤器

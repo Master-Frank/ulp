@@ -1,16 +1,23 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.repository;
 
-import cn.topiam.employee.support.repository.aspect.query.QuerySingleResult;
-import cn.topiam.employee.support.util.PhoneUtils;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.NonUniqueResultException;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
+
+import cn.topiam.employee.support.util.PhoneUtils;
+
+import lombok.extern.slf4j.Slf4j;
+
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.NonUniqueResultException;
 
 /**
  * 查询单个结果切面

@@ -1,11 +1,17 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
 package cn.topiam.employee.support.cache;
+
+import java.io.Serializable;
+import java.util.Arrays;
+
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 import cn.topiam.employee.support.repository.page.domain.Page;
 import cn.topiam.employee.support.security.jackjson.GrantedAuthorityMixin;
-import java.io.Serializable;
-import java.util.Arrays;
-import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 
 /**
  * 缓存键

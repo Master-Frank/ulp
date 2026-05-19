@@ -1,6 +1,6 @@
 /*
- * eiam-console - Employee Identity and Access Management
- * Copyright © 2005-Present Charles Co., Ltd.
+ * eiam-console - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
  */
 /**
  * 在生产环境 代理是无法生效的，所以这里没有生产环境的配置
