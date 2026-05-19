@@ -1,112 +1,76 @@
-/*
- * ULP - United Login Platform
- * Copyright © 2022-Present Charles Network Technology Co., Ltd.
- */
 package cn.topiam.employee.support.util;
 
-import cn.topiam.employee.support.security.jackjson.GrantedAuthorityMixin;
-import cn.topiam.employee.support.security.userdetails.Group;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
+/**
+ * 字符串工具.
+ */
 public class StringUtils {
-   public static Pattern 1_1_1_ce = Pattern.compile(GrantedAuthorityMixin.1_1_1_ce("[h-g\u000eg\ng\r"));
-   public static final String SPLIT_DEFAULT = ",";
 
-   public static String escapeLike(String a) {
-      return org.apache.commons.lang3.StringUtils.isEmpty(a) ? a : org.springframework.util.StringUtils.replace(org.springframework.util.StringUtils.replace(a, GrantedAuthorityMixin.1_1_1_ce("\""), Group.1_1_1_ce("tB")), GrantedAuthorityMixin.1_1_1_ce("X"), Group.1_1_1_ce("t8"));
-   }
+    public static final String       SPLIT_DEFAULT  = ",";
 
-   // $FF: synthetic method
-   private static byte __1_1_ce/* $FF was: 1_1_1_ce*/(char a) {
-      return (byte)Group.1_1_1_ce("\u0018V\u001aT\u001cR\u001eP\u0010^i%k#m!").indexOf(a);
-   }
+    private static final Pattern     BLANK_PATTERN  = Pattern.compile("\\s*|\t|\r|\n");
 
-   public static String byteToHexString(byte[] a) {
-      StringBuilder var5 = new StringBuilder();
-      byte[] var4;
-      int var3 = (var4 = a).length;
-      int var10000 = 3 >> 2;
-      boolean var10002 = true;
+    private static final char[]      HEX_DIGITS     = "0123456789ABCDEF".toCharArray();
 
-      for(int var2 = var10000; var10000 < var3; var10000 = var2) {
-         var10000 = var4[var2];
-         int var10003 = 1;
-         String var6;
-         var10000 = (var6 = Integer.toHexString(var10000 & 255)).length();
-         int var10001 = 3 >> 1;
-         var10003 = 3 >> 1;
-         if (var10000 == var10001) {
-            var6 = "0" + var6;
-         }
+    public StringUtils() {
+    }
 
-         ++var2;
-         var5.append(var6.toUpperCase());
-      }
+    public static String escapeLike(String input) {
+        if (org.apache.commons.lang3.StringUtils.isEmpty(input)) {
+            return input;
+        }
+        return input.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_");
+    }
 
-      return var5.toString();
-   }
+    public static String byteToHexString(byte[] bytes) {
+        if (bytes == null) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder(bytes.length * 2);
+        for (byte b : bytes) {
+            sb.append(HEX_DIGITS[(b >> 4) & 0x0F]);
+            sb.append(HEX_DIGITS[b & 0x0F]);
+        }
+        return sb.toString();
+    }
 
-   public static String replaceBlank(String a) {
-      String var1 = a;
-      a = "";
-      if (var1 != null) {
-         a = 1_1_1_ce.matcher(var1).replaceAll("");
-      }
+    public static byte[] hexStringToBytes(String hex) {
+        if (hex == null || hex.isEmpty()) {
+            return null;
+        }
+        String upper = hex.toUpperCase();
+        int len = upper.length() / 2;
+        char[] chars = upper.toCharArray();
+        byte[] result = new byte[len];
+        for (int i = 0; i < len; i++) {
+            int pos = i * 2;
+            result[i] = (byte) ((charToByte(chars[pos]) << 4) | charToByte(chars[pos + 1]));
+        }
+        return result;
+    }
 
-      return a;
-   }
+    public static String replaceBlank(String input) {
+        if (input == null) {
+            return "";
+        }
+        return BLANK_PATTERN.matcher(input).replaceAll("");
+    }
 
-   public static byte[] hexStringToBytes(String a) {
-      if (a != null && !a.isEmpty()) {
-         String var10000 = a.toUpperCase();
-         int var10001 = var10000.length();
-         boolean var10004 = true;
-         int var4 = var10001 / 2;
-         char[] var2 = var10000.toCharArray();
-         byte[] var7 = new byte[var4];
-         int var10002 = 1;
-         byte[] var3 = var7;
-         int var8 = 3 & 4;
-         var10002 = (boolean)1;
+    public static Map<Character, Long> statisticsCharCount(String input) {
+        Map<Character, Long> result = new HashMap<>();
+        if (input == null) {
+            return result;
+        }
+        for (char c : input.toCharArray()) {
+            result.merge(c, 1L, Long::sum);
+        }
+        return result;
+    }
 
-         for(String var6 = var8; var8 < var4; var8 = var6) {
-            boolean var10003 = true;
-            int var5 = var6 * 2;
-            var10001 = var6;
-            var10002 = 1_1_1_ce(var2[var5]);
-            int var10005 = 1;
-            var10002 <<= 4;
-            var10005 = 2 ^ 3;
-            int var10007 = 2 ^ 3;
-            var10002 = (byte)(var10002 | 1_1_1_ce(var2[var5 + var10005]));
-            ++var6;
-            var3[var10001] = (byte)var10002;
-         }
-
-         return var3;
-      } else {
-         return null;
-      }
-   }
-
-   public static Map<Character, Long> statisticsCharCount(String a) {
-      return (Map)Stream.of(a).flatMap((ax) -> {
-         String var5 = ax.toCharArray();
-         ArrayList var2 = new ArrayList();
-         char[] var6;
-         int var4 = (var6 = var5).length;
-         int var10000 = 3 & 4;
-         boolean var10002 = true;
-
-         for(int var3 = var10000; var10000 < var4; var10000 = var3) {
-            var2.add(var6[var3++]);
-         }
-
-         return var2.stream();
-      }).collect(Collectors.groupingBy(Character::charValue, Collectors.counting()));
-   }
+    private static byte charToByte(char c) {
+        return (byte) "0123456789ABCDEF".indexOf(c);
+    }
 }

@@ -1,60 +1,52 @@
-/*
- * ULP - United Login Platform
- * Copyright © 2022-Present Charles Network Technology Co., Ltd.
- */
 package cn.topiam.employee.support.util;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.context.expression.MethodBasedEvaluationContext;
+import org.springframework.core.ParameterNameDiscoverer;
 import org.springframework.core.StandardReflectionParameterNameDiscoverer;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 
+/**
+ * Spring SpEL 表达式工具.
+ */
 public class SpelUtils {
-   // $FF: synthetic field
-   private static final SpelExpressionParser 1_1_1_ce = new SpelExpressionParser();
 
-   public static boolean isSpelExpression(String a) {
-      int var2;
-      try {
-         (new SpelExpressionParser()).parseExpression(a);
-         var2 = 1;
-      } catch (Exception var1) {
-         var2 = 3 >> 2;
-         boolean var10002 = true;
-         return (boolean)var2;
-      }
+    private static final SpelExpressionParser DEFAULT_PARSER = new SpelExpressionParser();
 
-      return (boolean)var2;
-   }
+    public SpelUtils() {
+    }
 
-   public static String parser(Object a, String a, Method a, Object[] a, SpelExpressionParser a) {
-      if (!org.springframework.util.StringUtils.hasText(a)) {
-         return "";
-      } else {
-         String[] var6;
-         StandardReflectionParameterNameDiscoverer var7;
-         if (ArrayUtils.isEmpty(var6 = (var7 = new StandardReflectionParameterNameDiscoverer()).getParameterNames(a))) {
-            return a;
-         } else {
-            Method var9 = new MethodBasedEvaluationContext(a, a, a, var7);
-            int var10000 = 3 & 4;
-            boolean var10002 = true;
+    public static boolean isSpelExpression(String expression) {
+        try {
+            new SpelExpressionParser().parseExpression(expression);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
-            for(Object var8 = var10000; var10000 < ((String[])Objects.requireNonNull(var6)).length; var10000 = var8) {
-               var9.setVariable(var6[var8], a[var8++]);
-            }
+    public static String parser(Object root, String spel, Method method, Object[] args) {
+        return parser(root, spel, method, args, DEFAULT_PARSER);
+    }
 
-            return (String)a.parseExpression(a).getValue(var9, String.class);
-         }
-      }
-   }
-
-   public static String parser(Object a, String a, Method a, Object[] a) {
-      Object var10000 = a;
-      a = a;
-      a = (Object[])var10000;
-      return parser(a, a, a, (Object[])a, 1_1_1_ce);
-   }
+    public static String parser(Object root, String spel, Method method, Object[] args,
+                                SpelExpressionParser parser) {
+        if (!org.springframework.util.StringUtils.hasText(spel)) {
+            return "";
+        }
+        ParameterNameDiscoverer discoverer = new StandardReflectionParameterNameDiscoverer();
+        String[] parameterNames = discoverer.getParameterNames(method);
+        if (ArrayUtils.isEmpty(parameterNames)) {
+            return spel;
+        }
+        MethodBasedEvaluationContext context = new MethodBasedEvaluationContext(root, method, args,
+            discoverer);
+        for (int i = 0; i < Objects.requireNonNull(parameterNames).length; i++) {
+            context.setVariable(parameterNames[i], args[i]);
+        }
+        return parser.parseExpression(spel).getValue(context, String.class);
+    }
 }

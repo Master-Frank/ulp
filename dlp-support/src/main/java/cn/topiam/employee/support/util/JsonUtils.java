@@ -1,250 +1,210 @@
-/*
- * ULP - United Login Platform
- * Copyright © 2022-Present Charles Network Technology Co., Ltd.
- */
 package cn.topiam.employee.support.util;
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Map;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+/**
+ * Jackson 工具.
+ */
 public class JsonUtils {
-   // $FF: synthetic field
-   private static final ObjectMapper 1_1_1_ce = new ObjectMapper();
 
-   public static <T> T readValue(String a, TypeReference<T> a) {
-      String var10000 = a;
-      TypeReference var3 = a;
-      TypeReference a = var10000;
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
-      try {
-         return (T)(hasText(a) ? 1_1_1_ce.readValue(a, var3) : null);
-      } catch (IOException var2) {
-         throw new JsonUtilException(var2);
-      }
-   }
+    static {
+        MAPPER.registerModule(new JavaTimeModule());
+        MAPPER.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        MAPPER.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+    }
 
-   public static <T> T readValue(byte[] a, Class<T> a) throws JsonUtilException {
-      byte[] var10000 = a;
-      Class var3 = a;
-      Class a = var10000;
+    public JsonUtils() {
+    }
 
-      try {
-         return (T)(a != null && ((Object[])a).length > 0 ? 1_1_1_ce.readValue((byte[])a, var3) : null);
-      } catch (IOException var2) {
-         throw new JsonUtilException(var2);
-      }
-   }
+    public static <T> T readValue(String content, Class<T> valueType) throws JsonUtilException {
+        try {
+            return hasText(content) ? MAPPER.readValue(content, valueType) : null;
+        } catch (IOException e) {
+            throw new JsonUtilException(e);
+        }
+    }
 
-   public static Map<String, Object> getNodeAsMap(JsonNode a) {
-      return (Map)1_1_1_ce.convertValue(a, Map.class);
-   }
+    public static <T> T readValue(String content, TypeReference<T> typeReference) {
+        try {
+            return hasText(content) ? MAPPER.readValue(content, typeReference) : null;
+        } catch (IOException e) {
+            throw new JsonUtilException(e);
+        }
+    }
 
-   public static <T> T readValue(String a, Class<T> a) throws JsonUtilException {
-      String var10000 = a;
-      Class var3 = a;
-      Class a = var10000;
+    public static <T> T readValue(byte[] data, Class<T> valueType) throws JsonUtilException {
+        try {
+            return data != null && data.length > 0 ? MAPPER.readValue(data, valueType) : null;
+        } catch (IOException e) {
+            throw new JsonUtilException(e);
+        }
+    }
 
-      try {
-         return (T)(hasText(a) ? 1_1_1_ce.readValue(a, var3) : null);
-      } catch (IOException var2) {
-         throw new JsonUtilException(var2);
-      }
-   }
+    public static <T> T readValue(byte[] data, TypeReference<T> typeReference) {
+        try {
+            return data != null && data.length > 0 ? MAPPER.readValue(data, typeReference) : null;
+        } catch (IOException e) {
+            throw new JsonUtilException(e);
+        }
+    }
 
-   public static Date getNodeAsDate(JsonNode a, String a) {
-      JsonNode var10000 = a;
-      String var4 = a;
-      String a = var10000;
-      JsonNode var5;
-      long var2 = (var5 = ((JsonNode)a).get(var4)) == null ? -1L : var5.asLong(-1L);
-      return var2 == -1L ? null : new Date(var2);
-   }
+    public static JsonNode readTree(String content) {
+        try {
+            return hasText(content) ? MAPPER.readTree(content) : null;
+        } catch (IOException e) {
+            throw new JsonUtilException(e);
+        }
+    }
 
-   public static boolean getNodeAsBoolean(JsonNode a, String a, boolean a) {
-      JsonNode var10000 = a;
-      String var3 = a;
-      String a = var10000;
-      JsonNode var4;
-      return (boolean)((var4 = ((JsonNode)a).get(var3)) == null ? a : var4.asBoolean((boolean)a));
-   }
+    public static JsonNode readTree(JsonParser parser) {
+        try {
+            return MAPPER.readTree(parser);
+        } catch (IOException e) {
+            throw new JsonUtilException(e);
+        }
+    }
 
-   public static String writeValueAsString(Object a) throws JsonUtilException {
-      Object var1 = a;
+    public static String writeValueAsString(Object value) throws JsonUtilException {
+        try {
+            return MAPPER.writeValueAsString(value);
+        } catch (IOException e) {
+            throw new JsonUtilException(e);
+        }
+    }
 
-      try {
-         return 1_1_1_ce.writeValueAsString(var1);
-      } catch (IOException var2) {
-         throw new JsonUtilException(var2);
-      }
-   }
+    public static byte[] writeValueAsBytes(Object value) throws JsonUtilException {
+        try {
+            return MAPPER.writeValueAsBytes(value);
+        } catch (IOException e) {
+            throw new JsonUtilException(e);
+        }
+    }
 
-   public static JsonNode readTree(JsonParser a) {
-      JsonParser var1 = a;
+    public static <T> T convertValue(Object fromValue, Class<T> toValueType) throws JsonUtilException {
+        try {
+            return fromValue == null ? null : MAPPER.convertValue(fromValue, toValueType);
+        } catch (IllegalArgumentException e) {
+            throw new JsonUtilException(e);
+        }
+    }
 
-      try {
-         return (JsonNode)1_1_1_ce.readTree(var1);
-      } catch (IOException var2) {
-         throw new JsonUtilException(var2);
-      }
-   }
+    @SuppressWarnings("unchecked")
+    public static Map<String, Object> getNodeAsMap(JsonNode node) {
+        if (node == null || node.isNull() || node.isMissingNode()) {
+            return new HashMap<>();
+        }
+        return MAPPER.convertValue(node, Map.class);
+    }
 
-   public static byte[] writeValueAsBytes(Object a) throws JsonUtilException {
-      Object var1 = a;
+    public static String getNodeAsString(JsonNode node, String fieldName, String defaultValue) {
+        JsonNode child;
+        return node == null || (child = node.get(fieldName)) == null ? defaultValue
+            : child.asText(defaultValue);
+    }
 
-      try {
-         return 1_1_1_ce.writeValueAsBytes(var1);
-      } catch (IOException var2) {
-         throw new JsonUtilException(var2);
-      }
-   }
+    public static int getNodeAsInt(JsonNode node, String fieldName, int defaultValue) {
+        JsonNode child;
+        return node == null || (child = node.get(fieldName)) == null ? defaultValue
+            : child.asInt(defaultValue);
+    }
 
-   public static int getNodeAsInt(JsonNode a, String a, int a) {
-      JsonNode var10000 = a;
-      String var3 = a;
-      String a = var10000;
-      JsonNode var4;
-      return (var4 = ((JsonNode)a).get(var3)) == null ? a : var4.asInt(a);
-   }
+    public static boolean getNodeAsBoolean(JsonNode node, String fieldName, boolean defaultValue) {
+        JsonNode child;
+        return node == null || (child = node.get(fieldName)) == null ? defaultValue
+            : child.asBoolean(defaultValue);
+    }
 
-   public static String getNodeAsString(JsonNode a, String a, String a) {
-      JsonNode var10000 = a;
-      String var3 = a;
-      String a = var10000;
-      JsonNode var4;
-      return (var4 = ((JsonNode)a).get(var3)) == null ? a : var4.asText(a);
-   }
+    public static Date getNodeAsDate(JsonNode node, String fieldName) {
+        JsonNode child;
+        if (node == null || (child = node.get(fieldName)) == null) {
+            return null;
+        }
+        long ts = child.asLong(-1L);
+        return ts == -1L ? null : new Date(ts);
+    }
 
-   public static <T> T readValue(byte[] a, TypeReference<T> a) {
-      byte[] var10000 = a;
-      TypeReference var3 = a;
-      TypeReference a = var10000;
-
-      try {
-         return (T)(a != null && ((Object[])a).length > 0 ? 1_1_1_ce.readValue((byte[])a, var3) : null);
-      } catch (IOException var2) {
-         throw new JsonUtilException(var2);
-      }
-   }
-
-   public static JsonNode readTree(String a) {
-      String var1 = a;
-
-      try {
-         return hasText(var1) ? 1_1_1_ce.readTree(var1) : null;
-      } catch (IOException var2) {
-         throw new JsonUtilException(var2);
-      }
-   }
-
-   public static boolean hasText(CharSequence a) {
-      CharSequence var2 = a;
-      if (!hasLength(a)) {
-         int var5 = 3 & 4;
-         boolean var8 = true;
-         return (boolean)var5;
-      } else {
-         int var1 = a.length();
-         int var10000 = 3 & 4;
-         int var10002 = 1;
-
-         for(CharSequence var3 = var10000; var10000 < var1; var10000 = var3) {
-            if (!Character.isWhitespace(var2.charAt(var3))) {
-               var10000 = 5 >> 2;
-               var10002 = 5 >> 2;
-               return (boolean)var10000;
+    public static String serializeExcludingProperties(Object value, String... properties) {
+        try {
+            // ObjectMapper 上使用临时 mixin / filter 排除一级属性
+            String json = writeValueAsString(value);
+            @SuppressWarnings("unchecked")
+            Map<String, Object> map = readValue(json, new TypeReference<Map<String, Object>>() {});
+            for (String prop : properties) {
+                if (prop.contains(".")) {
+                    String[] parts = prop.split("\\.", 2);
+                    if (map.containsKey(parts[0])) {
+                        Object child = map.get(parts[0]);
+                        map.put(parts[0], readValue(serializeExcludingProperties(child,
+                            new String[] { parts[1] }), new TypeReference<Map<String, Object>>() {}));
+                    }
+                } else {
+                    map.remove(prop);
+                }
             }
-
-            ++var3;
-         }
-
-         var10002 = 1;
-         return false;
-      }
-   }
-
-   public static <T> T convertValue(Object a, Class<T> a) throws JsonUtilException {
-      Object var10000 = a;
-      Class var3 = a;
-      Class a = (Class)var10000;
-
-      try {
-         return (T)(a == null ? null : 1_1_1_ce.convertValue(a, var3));
-      } catch (IllegalArgumentException var2) {
-         throw new JsonUtilException(var2);
-      }
-   }
-
-   public static String serializeExcludingProperties(Object a, String... a) {
-      Object var8 = writeValueAsString(a);
-      Object var9 = (Map)readValue(var8, new TypeReference<Map<String, Object>>() {
-      });
-      String[] var10;
-      int var6 = (var10 = a).length;
-      int var10000 = 3 & 4;
-      int var10002 = 1;
-
-      for(int var4 = var10000; var10000 < var6; var10000 = var4) {
-         String var5;
-         if ((var5 = var10[var4]).contains(".")) {
-            String var10001 = PhoneUtils.1_1_1_ce("\u001e<");
-            boolean var10004 = true;
-            String[] var3 = var5.split(var10001, 2);
-            var10002 = 2 & 5;
-            var10004 = true;
-            if (var9.containsKey(var3[var10002])) {
-               int var10003 = 3 >> 2;
-               int var10005 = 1;
-               Object var7 = var9.get(var3[var10003]);
-               var10002 = 3 & 4;
-               var10004 = true;
-               var10001 = var3[var10002];
-               var10003 = 2 ^ 3;
-               var10005 = 2 ^ 3;
-               String[] var15 = new String[var10003];
-               var10005 = 1;
-               var10005 = 3 & 4;
-               int var10007 = 1;
-               var10007 = 3 >> 1;
-               int var10009 = 3 >> 1;
-               var15[var10005] = var3[var10007];
-               var9.put(var10001, readValue(serializeExcludingProperties(var7, var15), new TypeReference<Map<String, Object>>() {
-               }));
+            return writeValueAsString(map);
+        } catch (Exception e) {
+            // fallback：使用 jackson FilterProvider
+            try {
+                ObjectMapper mapper = MAPPER.copy();
+                mapper.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
+                    @Override
+                    public Object findFilterId(com.fasterxml.jackson.databind.introspect.Annotated a) {
+                        return "__excludeFilter__";
+                    }
+                });
+                SimpleFilterProvider provider = new SimpleFilterProvider().addFilter(
+                    "__excludeFilter__", SimpleBeanPropertyFilter.serializeAllExcept(properties));
+                return mapper.writer(provider).writeValueAsString(value);
+            } catch (Exception ex) {
+                throw new JsonUtilException(ex);
             }
-         } else {
-            var9.remove(var5);
-         }
+        }
+    }
 
-         ++var4;
-      }
+    public static boolean hasText(CharSequence str) {
+        if (!hasLength(str)) {
+            return false;
+        }
+        int strLen = str.length();
+        for (int i = 0; i < strLen; i++) {
+            if (!Character.isWhitespace(str.charAt(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-      return writeValueAsString(var9);
-   }
+    public static boolean hasLength(CharSequence str) {
+        return str != null && !str.isEmpty();
+    }
 
-   public static boolean hasLength(CharSequence a) {
-      if (a != null && !a.isEmpty()) {
-         int var10000 = 3 >> 1;
-         int var1 = 3 >> 1;
-         return (boolean)var10000;
-      } else {
-         boolean var10002 = true;
-         return false;
-      }
-   }
+    /** 内部用于 {@link #serializeExcludingProperties} 的占位 mixin（保留以兼容潜在动态 mixin 场景）。 */
+    @JsonFilter("__excludeFilter__")
+    private static class ExcludeFilterMixin {
+    }
 
-   public static class JsonUtilException extends RuntimeException {
-      // $FF: synthetic field
-      private static final long 1_1_1_ce = -4804245225960963421L;
-
-      public JsonUtilException(Throwable a) {
-         JsonUtilException var10000 = a;
-         Throwable var2 = a;
-         Throwable a = var10000;
-         a.<init>(var2);
-      }
-   }
+    public static class JsonUtilException extends RuntimeException {
+        public JsonUtilException(Throwable cause) {
+            super(cause);
+        }
+    }
 }

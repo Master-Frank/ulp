@@ -1,67 +1,50 @@
-/*
- * ULP - United Login Platform
- * Copyright © 2022-Present Charles Network Technology Co., Ltd.
- */
 package cn.topiam.employee.support.util;
 
-import cn.topiam.employee.support.repository.page.domain.Page;
 import java.lang.reflect.Field;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+/**
+ * 实体反射工具.
+ */
 public class EntityUtils {
-   // $FF: synthetic field
-   private static final Logger 1_1_1_ce = LoggerFactory.getLogger(EntityUtils.class);
 
-   public static boolean isHasField(Object a, String a) {
-      Object var6 = a.getClass().getDeclaredFields();
-      int var10000 = 3 ^ 3;
-      int var10002 = 1;
-      int var3 = var10000;
-      Field[] var7;
-      int var4 = (var7 = var6).length;
-      var10000 = 5 >> 3;
-      var10002 = (boolean)1;
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EntityUtils.class);
 
-      for(int var5 = var10000; var10000 < var4; var10000 = var5) {
-         if (var7[var5].getName().equals(a)) {
-            var10000 = 4 ^ 5;
-            var10002 = 4 ^ 5;
-            return (boolean)var10000;
-         }
+    public EntityUtils() {
+    }
 
-         ++var5;
-      }
+    public static boolean isHasField(Object obj, String fieldName) {
+        if (obj == null || fieldName == null) {
+            return false;
+        }
+        Class<?> clazz = obj.getClass();
+        while (clazz != null && clazz != Object.class) {
+            for (Field f : clazz.getDeclaredFields()) {
+                if (f.getName().equals(fieldName)) {
+                    return true;
+                }
+            }
+            clazz = clazz.getSuperclass();
+        }
+        return false;
+    }
 
-      return (boolean)var3;
-   }
-
-   public static Object getPropertyValue(Object a, String a) {
-      Object var3 = a;
-      Class var2 = a.getClass();
-
-      try {
-         Object var5 = var2.getDeclaredField(a);
-         int var10003 = 2 ^ 3;
-         int var10005 = 2 ^ 3;
-         var5.setAccessible((boolean)var10003);
-         return var5.get(var3);
-      } catch (IllegalAccessException | NoSuchFieldException var4) {
-         Logger var10000 = 1_1_1_ce;
-         String var10001 = Page.1_1_1_ce("莝厈q%W\u0003寓谿屴恹\u0010\u0005Q#w偢弨幦\u0010\u0005Q#w");
-         int var10004 = 1;
-         Object[] var10002 = new Object[3];
-         var10004 = (boolean)1;
-         var10004 = 3 ^ 3;
-         int var10006 = 1;
-         var10002[var10004] = var2.getName();
-         var10004 = 5 >> 2;
-         var10006 = 5 >> 2;
-         var10002[var10004] = a;
-         var10006 = 1;
-         var10002[2] = ((ReflectiveOperationException)var4).getMessage();
-         var10000.error(var10001, var10002);
-         throw new RuntimeException(var4);
-      }
-   }
+    public static Object getPropertyValue(Object obj, String fieldName) {
+        Class<?> clazz = obj.getClass();
+        Class<?> cur = clazz;
+        while (cur != null && cur != Object.class) {
+            try {
+                Field f = cur.getDeclaredField(fieldName);
+                f.setAccessible(true);
+                return f.get(obj);
+            } catch (NoSuchFieldException nsfe) {
+                cur = cur.getSuperclass();
+            } catch (IllegalAccessException iae) {
+                log.error("反射获取字段 {} 在类 {} 上失败: {}", fieldName, clazz.getName(),
+                    iae.getMessage());
+                throw new RuntimeException(iae);
+            }
+        }
+        log.error("类 {} 上不存在字段 {}", clazz.getName(), fieldName);
+        throw new RuntimeException(new NoSuchFieldException(fieldName));
+    }
 }
