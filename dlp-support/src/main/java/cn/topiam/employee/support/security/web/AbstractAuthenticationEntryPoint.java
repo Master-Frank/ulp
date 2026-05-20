@@ -58,7 +58,7 @@ public abstract class AbstractAuthenticationEntryPoint implements Authentication
       response.setStatus(401);
       String requestBody = IOUtils.toString(request.getInputStream(), StandardCharsets.UTF_8).replaceAll("\\s+", "");
       
-      cn.topiam.employee.support.web.logger.LoggingAspect$Log log = new cn.topiam.employee.support.web.logger.LoggingAspect$Log();
+      cn.topiam.employee.support.web.logger.Log log = new cn.topiam.employee.support.web.logger.Log();
       log.setRequestUrl(request.getRequestURL().toString());
       log.setHttpType(request.getMethod());
       log.setBody(requestBody);

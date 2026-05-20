@@ -36,7 +36,7 @@
         <!--java 版本-->
         <java.version>17</java.version>
         <project.encoding>UTF-8</project.encoding>
-        <main.user.dir>${user.dir}</main.user.dir>
+        <main.user.dir>${maven.multiModuleProjectDirectory}</main.user.dir>
         <java.source.version>17</java.source.version>
         <java.target.version>17</java.target.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -106,6 +106,7 @@
 
     <!--模块-->
     <modules>
+        <module>dlp-support</module>
         <module>eiam-core</module>
         <module>eiam-common</module>
         <module>eiam-application</module>
@@ -433,22 +434,17 @@
                 <artifactId>woodstox-core</artifactId>
                 <version>${woodstox-core.version}</version>
             </dependency>
-            <!-- eiam-support (private jar; will be replaced by dlp-support in Phase 4) -->
+            <!-- dlp-support (in-tree replacement for the former eiam-support private jar) -->
             <dependency>
-                <groupId>cn.topiam</groupId>
-                <artifactId>eiam-support</artifactId>
-                <version>1.1.1-CE</version>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>dlp-support</artifactId>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
     <!--dependencies-->
     <dependencies>
-        <!-- eiam-support (auto-injected by all child modules; was provided by old parent) -->
-        <dependency>
-            <groupId>cn.topiam</groupId>
-            <artifactId>eiam-support</artifactId>
-        </dependency>
         <!-- caffeine -->
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>

@@ -18,6 +18,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>eiam-common</artifactId>
+    <dependencies>
+        <!-- dlp-support (replaces former eiam-support private jar; propagated transitively to all modules via eiam-common) -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>dlp-support</artifactId>
+        </dependency>
+    </dependencies>
     <build>
         <resources>
             <resource>
