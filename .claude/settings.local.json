@@ -92,7 +92,9 @@
       "Bash(find . -type d -empty -path \"*/cn/topiam\" -not -path \"*/target/*\" -not -path \"*/.git/*\" -exec rmdir {} \\\\;)",
       "Bash(find . -type d -empty -path \"*/cn\" -not -path \"*/target/*\" -not -path \"*/.git/*\" -exec rmdir {} \\\\;)",
       "Bash(find . -name \"*.java\" -not -path \"*/target/*\" -exec sed -i 's/cn\\\\.topiam\\\\.employee/cn.frank.ulp/g' {} +)",
-      "Bash(find eiam-console/src/main/java/cn/frank/ulp/console/converter eiam-openapi/src/main/java/cn/frank/ulp/openapi/converter -name '*.java' -exec sed -i -e 's/userdetails\\\\.security\\\\.support\\\\.cn\\\\.frank\\\\.ulp\\\\.DataOrigin/cn.frank.ulp.support.security.userdetails.DataOrigin/g' -e 's/constant\\\\.support\\\\.cn\\\\.frank\\\\.ulp\\\\.EiamConstants/cn.frank.ulp.support.constant.EiamConstants/g' -e 's/common\\\\.authentication\\\\.cn\\\\.frank\\\\.ulp\\\\.IdentityProviderType/cn.frank.ulp.authentication.common.IdentityProviderType/g' '{}' +)"
+      "Bash(find eiam-console/src/main/java/cn/frank/ulp/console/converter eiam-openapi/src/main/java/cn/frank/ulp/openapi/converter -name '*.java' -exec sed -i -e 's/userdetails\\\\.security\\\\.support\\\\.cn\\\\.frank\\\\.ulp\\\\.DataOrigin/cn.frank.ulp.support.security.userdetails.DataOrigin/g' -e 's/constant\\\\.support\\\\.cn\\\\.frank\\\\.ulp\\\\.EiamConstants/cn.frank.ulp.support.constant.EiamConstants/g' -e 's/common\\\\.authentication\\\\.cn\\\\.frank\\\\.ulp\\\\.IdentityProviderType/cn.frank.ulp.authentication.common.IdentityProviderType/g' '{}' +)",
+      "Bash(find . \\\\\\( -name \"*.java\" -o -name \"*.xml\" -o -name \"*.yml\" -o -name \"*.properties\" -o -name \"*.factories\" -o -name \"*.imports\" \\\\\\) -not -path \"*/target/*\" -not -path \"*/node_modules/*\" -not -path \"*/.git/*\" -exec grep -l \"cn\\\\.topiam\\\\.eiam\" {} \\\\;)",
+      "Bash(xargs sed *)"
     ]
   }
 }
