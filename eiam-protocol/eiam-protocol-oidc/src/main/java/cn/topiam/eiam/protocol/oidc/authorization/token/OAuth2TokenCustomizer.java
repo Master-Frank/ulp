@@ -13,15 +13,15 @@ import org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
 
-import cn.topiam.employee.common.entity.account.UserEntity;
-import cn.topiam.employee.common.repository.account.UserRepository;
-import cn.topiam.employee.support.security.userdetails.UserDetails;
-import cn.topiam.employee.support.util.BeanUtils;
+import cn.frank.ulp.common.entity.account.UserEntity;
+import cn.frank.ulp.common.repository.account.UserRepository;
+import cn.frank.ulp.support.security.userdetails.UserDetails;
+import cn.frank.ulp.support.util.BeanUtils;
 
 import lombok.Setter;
 import static org.springframework.security.oauth2.core.oidc.OidcScopes.*;
 
-import static cn.topiam.employee.support.constant.EiamConstants.DEFAULT_DATE_TIME_FORMATTER;
+import static cn.frank.ulp.support.constant.EiamConstants.DEFAULT_DATE_TIME_FORMATTER;
 
 /**
  * 令牌定制器

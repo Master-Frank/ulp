@@ -14,9 +14,9 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
-import cn.topiam.employee.application.context.ApplicationContext;
-import cn.topiam.employee.application.context.ApplicationContextHolder;
-import cn.topiam.employee.application.oidc.model.OidcProtocolConfig;
+import cn.frank.ulp.application.context.ApplicationContext;
+import cn.frank.ulp.application.context.ApplicationContextHolder;
+import cn.frank.ulp.application.oidc.model.OidcProtocolConfig;
 
 /**
  * 客户端JWK

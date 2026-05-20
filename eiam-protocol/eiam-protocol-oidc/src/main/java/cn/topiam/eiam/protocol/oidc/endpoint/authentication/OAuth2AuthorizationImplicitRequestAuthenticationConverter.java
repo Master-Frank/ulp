@@ -29,8 +29,8 @@ import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.INVALID_REQUEST;
 import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.UNSUPPORTED_RESPONSE_TYPE;
 
+import static cn.frank.ulp.support.util.HttpRequestUtils.*;
 import static cn.topiam.eiam.protocol.oidc.endpoint.OAuth2ParameterNames.RESPONSE_MODE;
-import static cn.topiam.employee.support.util.HttpRequestUtils.*;
 
 /**
  * OAuth2 授权简化模式请求身份验证转换器

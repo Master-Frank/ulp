@@ -1,0 +1,11 @@
+/*
+ * eiam-core - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
+/**
+ * boot
+ *
+ * @author TopIAM
+ * Created by support@topiam.cn on 2020/9/5 21:50
+ */
+package cn.frank.ulp.core.configuration;

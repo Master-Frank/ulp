@@ -33,9 +33,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import cn.topiam.employee.common.constant.ProtocolConstants;
-import cn.topiam.employee.protocol.code.EndpointMatcher;
-import cn.topiam.employee.protocol.code.configurer.AbstractConfigurer;
+import cn.frank.ulp.common.constant.ProtocolConstants;
+import cn.frank.ulp.protocol.code.EndpointMatcher;
+import cn.frank.ulp.protocol.code.configurer.AbstractConfigurer;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -27,8 +27,8 @@ import org.springframework.util.CollectionUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import cn.frank.ulp.support.jackjson.SupportJackson2Module;
 import cn.topiam.eiam.protocol.oidc.jackson.OidcProtocolJackson2Module;
-import cn.topiam.employee.support.jackjson.SupportJackson2Module;
 
 import lombok.Setter;
 import static cn.topiam.eiam.protocol.oidc.constant.OidcProtocolConstants.ID_TOKEN;

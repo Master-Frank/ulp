@@ -1,0 +1,20 @@
+/*
+ * eiam-common - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
+package cn.frank.ulp.common.exception.app;
+
+import cn.frank.ulp.support.exception.TopIamException;
+
+/**
+ * 默认应用账户已存在
+ *
+ * @author TopIAM
+ * Created by support@topiam.cn on 2022/7/8 22:49
+ */
+public class AppDefaultAccountExistException extends TopIamException {
+
+    public AppDefaultAccountExistException() {
+        super("app_default_account_exist", "默认应用账户已存在", DEFAULT_STATUS);
+    }
+}

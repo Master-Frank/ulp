@@ -5,9 +5,8 @@
 package cn.topiam.eiam.protocol.oidc.constant;
 
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
-import org.springframework.security.oauth2.server.authorization.settings.ConfigurationSettingNames;
-import static cn.topiam.employee.protocol.code.constant.ProtocolConstants.PROTOCOL_CACHE_PREFIX;
-import static cn.topiam.employee.support.constant.EiamConstants.COLON;
+import static cn.frank.ulp.protocol.code.constant.ProtocolConstants.PROTOCOL_CACHE_PREFIX;
+import static cn.frank.ulp.support.constant.EiamConstants.COLON;
 
 /**
  * @author TopIAM

@@ -11,10 +11,10 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
+import cn.frank.ulp.protocol.code.EndpointMatcher;
+import cn.frank.ulp.protocol.code.configurer.AbstractConfigurer;
 import cn.topiam.eiam.protocol.oidc.endpoint.OidcProviderConfigurationEndpointFilter;
-import cn.topiam.employee.protocol.code.EndpointMatcher;
-import cn.topiam.employee.protocol.code.configurer.AbstractConfigurer;
-import static cn.topiam.employee.common.constant.ProtocolConstants.OidcEndpointConstants.WELL_KNOWN_OPENID_CONFIGURATION;
+import static cn.frank.ulp.common.constant.ProtocolConstants.OidcEndpointConstants.WELL_KNOWN_OPENID_CONFIGURATION;
 
 /**
  * OIDC 服务配置端点配置

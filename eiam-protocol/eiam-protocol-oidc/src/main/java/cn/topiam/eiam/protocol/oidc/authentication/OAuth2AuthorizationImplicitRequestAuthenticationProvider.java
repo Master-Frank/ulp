@@ -37,9 +37,9 @@ import org.springframework.util.StringUtils;
 import com.google.common.collect.Maps;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.*;
 
+import static cn.frank.ulp.support.security.util.SecurityUtils.isPrincipalAuthenticated;
 import static cn.topiam.eiam.protocol.oidc.endpoint.OAuth2ParameterNames.RESPONSE_MODE;
 import static cn.topiam.eiam.protocol.oidc.endpoint.authentication.OAuth2AuthorizationImplicitRequestAuthenticationConverter.ID_TOKEN;
-import static cn.topiam.employee.support.security.util.SecurityUtils.isPrincipalAuthenticated;
 
 /**
  * 隐式授权请求认证提供商

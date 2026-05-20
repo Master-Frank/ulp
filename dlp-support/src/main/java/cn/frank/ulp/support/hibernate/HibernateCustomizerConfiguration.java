@@ -1,0 +1,17 @@
+/*
+ * ULP - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
+package cn.frank.ulp.support.hibernate;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+
+/**
+ * Hibernate自定义配置类
+ * 用于导入Hibernate属性自定义器
+ */
+@Configuration
+@Import({CustomHibernatePropertiesCustomizer.class})
+public class HibernateCustomizerConfiguration {
+}

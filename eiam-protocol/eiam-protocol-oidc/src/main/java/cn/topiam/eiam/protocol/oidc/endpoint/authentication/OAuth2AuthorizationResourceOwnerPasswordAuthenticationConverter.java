@@ -20,8 +20,8 @@ import cn.topiam.eiam.protocol.oidc.authentication.OAuth2AuthorizationResourceOw
 import jakarta.servlet.http.HttpServletRequest;
 import static org.springframework.http.HttpMethod.GET;
 
+import static cn.frank.ulp.support.util.HttpRequestUtils.*;
 import static cn.topiam.eiam.protocol.oidc.endpoint.OAuth2EndpointUtils.throwError;
-import static cn.topiam.employee.support.util.HttpRequestUtils.*;
 
 /**
  * 密码模式认证转换器

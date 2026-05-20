@@ -52,22 +52,18 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.util.UriUtils;
 
-import com.google.common.collect.Sets;
-
+import cn.frank.ulp.application.context.ApplicationContext;
+import cn.frank.ulp.application.context.ApplicationContextHolder;
+import cn.frank.ulp.application.oidc.model.OidcProtocolConfig;
 import cn.topiam.eiam.protocol.oidc.authentication.OAuth2AuthorizationImplicitAccessTokenAuthenticationToken;
 import cn.topiam.eiam.protocol.oidc.authentication.OAuth2AuthorizationImplicitRequestAuthenticationException;
 import cn.topiam.eiam.protocol.oidc.authentication.OAuth2AuthorizationImplicitRequestAuthenticationToken;
 import cn.topiam.eiam.protocol.oidc.endpoint.authentication.OAuth2AuthorizationImplicitRequestAuthenticationConverter;
-import cn.topiam.employee.application.context.ApplicationContext;
-import cn.topiam.employee.application.context.ApplicationContextHolder;
-import cn.topiam.employee.application.oidc.model.OidcProtocolConfig;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.oauth2.core.OAuth2ErrorCodes.UNSUPPORTED_RESPONSE_TYPE;
 import static org.springframework.security.oauth2.core.OAuth2TokenIntrospectionClaimNames.TOKEN_TYPE;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.*;

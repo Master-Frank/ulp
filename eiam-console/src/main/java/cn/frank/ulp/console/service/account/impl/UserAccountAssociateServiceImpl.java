@@ -1,0 +1,20 @@
+/*
+ * eiam-console - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
+package cn.frank.ulp.console.service.account.impl;
+
+import org.springframework.stereotype.Service;
+
+import cn.frank.ulp.console.service.account.UserAccountAssociateService;
+
+import lombok.AllArgsConstructor;
+
+/**
+ * @author TopIAM
+ * Created by support@topiam.cn on 2020/12/29 22:48
+ */
+@Service
+@AllArgsConstructor
+public class UserAccountAssociateServiceImpl implements UserAccountAssociateService {
+}

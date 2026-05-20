@@ -1,0 +1,17 @@
+/*
+ * eiam-protocol-jwt - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
+package cn.frank.ulp.protocol.jwt.token;
+
+/**
+ *
+ * @author TopIAM
+ * Created by support@topiam.cn on 2023/7/10 22:43
+ */
+@FunctionalInterface
+public interface IdTokenGenerator {
+
+    IdToken generate(IdTokenContext context);
+
+}

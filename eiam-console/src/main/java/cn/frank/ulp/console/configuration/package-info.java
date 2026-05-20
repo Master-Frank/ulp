@@ -1,0 +1,11 @@
+/*
+ * eiam-console - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
+/**
+ * Configuration
+ *
+ * @author TopIAM
+ * Created by support@topiam.cn on 2020/7/10 22:26
+ */
+package cn.frank.ulp.console.configuration;

@@ -32,16 +32,16 @@ import com.nimbusds.jose.proc.SecurityContext;
 import com.nimbusds.jwt.proc.ConfigurableJWTProcessor;
 import com.nimbusds.jwt.proc.DefaultJWTProcessor;
 
+import cn.frank.ulp.application.ApplicationServiceLoader;
+import cn.frank.ulp.common.constant.ProtocolConstants;
+import cn.frank.ulp.protocol.code.EndpointMatcher;
+import cn.frank.ulp.protocol.code.UnauthorizedAuthenticationEntryPoint;
+import cn.frank.ulp.protocol.code.configurer.AbstractConfigurer;
+import cn.frank.ulp.support.web.useragent.UserAgentParser;
 import cn.topiam.eiam.protocol.oidc.authentication.ClientAuthenticationRequiredEntryPoint;
 import cn.topiam.eiam.protocol.oidc.context.OidcAuthorizationServerContextFilter;
-import cn.topiam.employee.application.ApplicationServiceLoader;
-import cn.topiam.employee.common.constant.ProtocolConstants;
-import cn.topiam.employee.protocol.code.EndpointMatcher;
-import cn.topiam.employee.protocol.code.UnauthorizedAuthenticationEntryPoint;
-import cn.topiam.employee.protocol.code.configurer.AbstractConfigurer;
-import cn.topiam.employee.support.web.useragent.UserAgentParser;
-import static cn.topiam.employee.protocol.code.configurer.AuthenticationUtils.getApplicationServiceLoader;
-import static cn.topiam.employee.support.security.util.HttpSecurityConfigUtils.getOptionalBean;
+import static cn.frank.ulp.protocol.code.configurer.AuthenticationUtils.getApplicationServiceLoader;
+import static cn.frank.ulp.support.security.util.HttpSecurityConfigUtils.getOptionalBean;
 
 /**
  * OAuth2 授权服务器配置

@@ -20,11 +20,11 @@ import org.springframework.util.Assert;
 
 import com.google.common.collect.Lists;
 
-import cn.topiam.employee.audit.entity.Target;
-import cn.topiam.employee.audit.enums.EventStatus;
-import cn.topiam.employee.audit.enums.TargetType;
-import cn.topiam.employee.audit.event.AuditEventPublish;
-import cn.topiam.employee.audit.event.type.EventType;
+import cn.frank.ulp.audit.entity.Target;
+import cn.frank.ulp.audit.enums.EventStatus;
+import cn.frank.ulp.audit.enums.TargetType;
+import cn.frank.ulp.audit.event.AuditEventPublish;
+import cn.frank.ulp.audit.event.type.EventType;
 import static cn.topiam.eiam.protocol.oidc.constant.OidcProtocolConstants.ID_TOKEN;
 
 /**

@@ -25,9 +25,9 @@ import org.springframework.security.oauth2.server.authorization.token.*;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
-import cn.topiam.employee.common.repository.app.AppCertRepository;
-import cn.topiam.employee.common.repository.app.AppOidcConfigRepository;
-import static cn.topiam.employee.support.security.util.HttpSecurityConfigUtils.getOptionalBean;
+import cn.frank.ulp.common.repository.app.AppCertRepository;
+import cn.frank.ulp.common.repository.app.AppOidcConfigRepository;
+import static cn.frank.ulp.support.security.util.HttpSecurityConfigUtils.getOptionalBean;
 
 /**
  * Utility methods for the OAuth 2.0 Configurers.

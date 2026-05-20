@@ -1,0 +1,20 @@
+/*
+ * eiam-protocol-core - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
+package cn.frank.ulp.protocol.code.constant;
+
+import static cn.frank.ulp.support.constant.EiamConstants.COLON;
+
+/**
+ *
+ * @author TopIAM
+ * Created by support@topiam.cn on 2023/7/4 21:19
+ */
+public class ProtocolConstants {
+
+    /**
+     * 协议缓存前缀
+     */
+    public static final String PROTOCOL_CACHE_PREFIX = "protocol" + COLON;
+}

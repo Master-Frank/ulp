@@ -1,0 +1,61 @@
+/*
+ * eiam-protocol-core - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
+package cn.frank.ulp.protocol.code;
+
+import java.io.IOException;
+import java.util.Objects;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.AuthenticationException;
+
+import cn.frank.ulp.core.context.ContextService;
+import cn.frank.ulp.support.result.ApiRestResult;
+import cn.frank.ulp.support.security.savedredirect.HttpSessionRedirectCache;
+import cn.frank.ulp.support.security.savedredirect.RedirectCache;
+import cn.frank.ulp.support.security.web.AbstractAuthenticationEntryPoint;
+import cn.frank.ulp.support.util.HttpResponseUtils;
+import cn.frank.ulp.support.web.useragent.UserAgentParser;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+
+import static cn.frank.ulp.support.context.ServletContextService.isHtmlRequest;
+
+/**
+ *
+ * @author TopIAM
+ * Created by support@topiam.cn on 2023/7/5 21:24
+ */
+public class UnauthorizedAuthenticationEntryPoint extends AbstractAuthenticationEntryPoint {
+    private final Logger        logger        = LoggerFactory.getLogger(this.getClass());
+    private final RedirectCache redirectCache = new HttpSessionRedirectCache();
+
+    public UnauthorizedAuthenticationEntryPoint(UserAgentParser userAgentParser) {
+        super(userAgentParser);
+    }
+
+    @Override
+    public void commence(HttpServletRequest request, HttpServletResponse response,
+                         AuthenticationException authException) throws IOException {
+        //记录
+        redirectCache.saveRedirect(request, response, RedirectCache.RedirectType.REQUEST);
+        //判断请求
+        boolean isHtmlRequest = isHtmlRequest(request);
+        // HTML
+        if (isHtmlRequest) {
+            //跳转前端SESSION过期路由
+            response.sendRedirect(ContextService.getPortalLoginUrl());
+            return;
+        }
+        // JSON
+        ApiRestResult<Object> result = ApiRestResult.builder()
+            .status(String.valueOf(UNAUTHORIZED.value()))
+            .message(Objects.toString(authException.getMessage(), UNAUTHORIZED.getReasonPhrase()))
+            .build();
+        HttpResponseUtils.flushResponseJson(response, UNAUTHORIZED.value(), result);
+    }
+}

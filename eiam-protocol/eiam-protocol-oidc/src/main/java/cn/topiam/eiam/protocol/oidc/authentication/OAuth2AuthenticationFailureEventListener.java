@@ -9,7 +9,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.event.AbstractAuthenticationFailureEvent;
 import org.springframework.util.Assert;
 
-import cn.topiam.employee.audit.event.AuditEventPublish;
+import cn.frank.ulp.audit.event.AuditEventPublish;
 
 /**
  * 认证失败监听

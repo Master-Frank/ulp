@@ -13,8 +13,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.http.converter.OAuth2ErrorHttpMessageConverter;
 
-import cn.topiam.employee.support.security.web.AbstractAuthenticationEntryPoint;
-import cn.topiam.employee.support.web.useragent.UserAgentParser;
+import cn.frank.ulp.support.security.web.AbstractAuthenticationEntryPoint;
+import cn.frank.ulp.support.web.useragent.UserAgentParser;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

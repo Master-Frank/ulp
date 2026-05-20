@@ -16,9 +16,9 @@ import org.springframework.security.oauth2.server.authorization.settings.OAuth2T
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
 import org.springframework.util.CollectionUtils;
 
-import cn.topiam.employee.common.entity.app.AppOidcConfigEntity;
-import cn.topiam.employee.common.entity.app.po.AppOidcConfigPO;
-import cn.topiam.employee.common.repository.app.AppOidcConfigRepository;
+import cn.frank.ulp.common.entity.app.AppOidcConfigEntity;
+import cn.frank.ulp.common.entity.app.po.AppOidcConfigPO;
+import cn.frank.ulp.common.repository.app.AppOidcConfigRepository;
 
 /**
  * @author TopIAM

@@ -1,0 +1,53 @@
+/*
+ * eiam-console - United Login Platform
+ * Copyright © 2022-Present Charles Network Technology Co., Ltd.
+ */
+package cn.frank.ulp.console.pojo.query.app;
+
+import java.io.Serializable;
+
+import org.springdoc.core.annotations.ParameterObject;
+
+import cn.frank.ulp.common.enums.app.AppGroupType;
+
+import lombok.Data;
+
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * 查询分组列表入参
+ *
+ * @author TopIAM
+ * Created by support@topiam.cn on 2023/8/31 9:08
+ */
+@Data
+@Schema(description = "查询分组列表入参")
+@ParameterObject
+public class AppGroupListQuery implements Serializable {
+
+    /**
+     * 分组名称
+     */
+    @Parameter(description = "分组名称")
+    private String       name;
+
+    /**
+     * 应用名称
+     */
+    @Parameter(description = "应用名称")
+    private String       appName;
+
+    /**
+     * 分组编码
+     */
+    @Parameter(description = "分组编码")
+    private String       code;
+
+    /**
+     * 分组类型
+     */
+    @Parameter(description = "分组类型")
+    private AppGroupType type;
+
+}

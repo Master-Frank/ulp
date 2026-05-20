@@ -26,14 +26,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
+import cn.frank.ulp.protocol.code.EndpointMatcher;
+import cn.frank.ulp.protocol.code.configurer.AbstractConfigurer;
 import cn.topiam.eiam.protocol.oidc.authentication.OAuth2AuthorizationImplicitRequestAuthenticationProvider;
 import cn.topiam.eiam.protocol.oidc.authentication.OAuth2AuthorizationImplicitRequestAuthenticationToken;
 import cn.topiam.eiam.protocol.oidc.authorization.client.OidcConfigRegisteredClientRepositoryWrapper;
 import cn.topiam.eiam.protocol.oidc.endpoint.OAuth2AuthorizationEndpointFilter;
-import cn.topiam.employee.protocol.code.EndpointMatcher;
-import cn.topiam.employee.protocol.code.configurer.AbstractConfigurer;
-import static cn.topiam.employee.common.constant.ProtocolConstants.OidcEndpointConstants.AUTHORIZATION_ENDPOINT;
-import static cn.topiam.employee.protocol.code.configurer.AuthenticationUtils.getAuthenticationDetailsSource;
+import static cn.frank.ulp.common.constant.ProtocolConstants.OidcEndpointConstants.AUTHORIZATION_ENDPOINT;
+import static cn.frank.ulp.protocol.code.configurer.AuthenticationUtils.getAuthenticationDetailsSource;
 
 /**
  * Configurer for the OAuth 2.0 Authorization Endpoint.

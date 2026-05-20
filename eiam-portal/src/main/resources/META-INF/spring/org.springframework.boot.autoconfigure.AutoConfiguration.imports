@@ -1,4 +1,4 @@
-cn.topiam.employee.portal.configuration.security.OidcProtocolSecurityConfiguration
-cn.topiam.employee.portal.configuration.security.JwtProtocolSecurityConfiguration
-cn.topiam.employee.portal.configuration.security.FormProtocolSecurityConfiguration
-cn.topiam.employee.portal.configuration.security.PortalSecurityConfiguration
+cn.frank.ulp.portal.configuration.security.OidcProtocolSecurityConfiguration
+cn.frank.ulp.portal.configuration.security.JwtProtocolSecurityConfiguration
+cn.frank.ulp.portal.configuration.security.FormProtocolSecurityConfiguration
+cn.frank.ulp.portal.configuration.security.PortalSecurityConfiguration

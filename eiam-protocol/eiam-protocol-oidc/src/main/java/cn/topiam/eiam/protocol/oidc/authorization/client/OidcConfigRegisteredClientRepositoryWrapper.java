@@ -17,9 +17,9 @@ import org.springframework.security.oauth2.server.authorization.settings.TokenSe
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
-import cn.topiam.employee.application.context.ApplicationContext;
-import cn.topiam.employee.application.context.ApplicationContextHolder;
-import cn.topiam.employee.application.oidc.model.OidcProtocolConfig;
+import cn.frank.ulp.application.context.ApplicationContext;
+import cn.frank.ulp.application.context.ApplicationContextHolder;
+import cn.frank.ulp.application.oidc.model.OidcProtocolConfig;
 
 /**
  * OidcConfigRegisteredClientRepositoryWrapper

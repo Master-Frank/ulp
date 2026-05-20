@@ -34,10 +34,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
+import cn.frank.ulp.protocol.code.util.SpringSecurityEndpointUtils;
 import cn.topiam.eiam.protocol.oidc.endpoint.OAuth2AuthorizationEndpointFilter;
 import cn.topiam.eiam.protocol.oidc.endpoint.OAuth2ParameterNames;
 import cn.topiam.eiam.protocol.oidc.endpoint.OidcProviderConfigurationEndpointFilter;
-import cn.topiam.employee.protocol.code.util.SpringSecurityEndpointUtils;
 
 import io.swagger.v3.core.util.AnnotationsUtils;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;

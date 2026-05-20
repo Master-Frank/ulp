@@ -43,13 +43,13 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
-import cn.topiam.employee.support.security.authentication.WebAuthenticationDetails;
+import cn.frank.ulp.support.security.authentication.WebAuthenticationDetails;
 
 import jakarta.servlet.http.HttpServletRequest;
+import static cn.frank.ulp.support.security.authentication.AuthenticationProvider.USERNAME_PASSWORD;
+import static cn.frank.ulp.support.security.util.SecurityUtils.isPrincipalAuthenticated;
 import static cn.topiam.eiam.protocol.oidc.authentication.OAuth2AuthenticationProviderUtils.getAuthenticatedClientElseThrowInvalidClient;
 import static cn.topiam.eiam.protocol.oidc.authentication.OAuth2AuthorizationResourceOwnerPasswordAuthenticationToken.PASSWORD;
-import static cn.topiam.employee.support.security.authentication.AuthenticationProvider.USERNAME_PASSWORD;
-import static cn.topiam.employee.support.security.util.SecurityUtils.isPrincipalAuthenticated;
 
 /**
  * An {@link AuthenticationProvider} implementation for the OAuth 2.0 Authorization Code Grant.
