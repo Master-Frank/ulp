@@ -8,61 +8,30 @@ import org.springframework.http.HttpStatus;
 
 import cn.topiam.employee.support.exception.TopIamException;
 
-/**
- * 密码无效异常
- * 密码相关异常的基类
- */
 public class PasswordInvalidException extends TopIamException {
-   
-   /**
-    * 构造函数
-    *
-    * @param message 消息
-    * @param cause 原因
-    */
-   public PasswordInvalidException(String message, Throwable cause) {
-      super(message, cause);
-   }
 
-   /**
-    * 构造函数
-    *
-    * @param message 消息
-    */
-   public PasswordInvalidException(String message) {
-      super(message, HttpStatus.BAD_REQUEST);
-   }
+    public PasswordInvalidException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-   /**
-    * 构造函数
-    *
-    * @param message 消息
-    * @param status HTTP状态码
-    */
-   public PasswordInvalidException(String message, HttpStatus status) {
-      super("密码验证失败", message, status);
-   }
+    public PasswordInvalidException(String message) {
+        super(message, HttpStatus.BAD_REQUEST);
+    }
 
-   /**
-    * 构造函数
-    *
-    * @param message 消息
-    * @param cause 原因
-    * @param code 代码
-    * @param status HTTP状态码
-    */
-   public PasswordInvalidException(String message, Throwable cause, String code, HttpStatus status) {
-      super(message, cause, code, status);
-   }
+    public PasswordInvalidException(String message, HttpStatus status) {
+        super(message, status);
+    }
 
-   /**
-    * 构造函数
-    *
-    * @param message 消息
-    * @param code 代码
-    * @param status HTTP状态码
-    */
-   public PasswordInvalidException(String message, String code, HttpStatus status) {
-      super(message, code, status);
-   }
+    public PasswordInvalidException(Throwable cause, String errorCode, String message, HttpStatus status) {
+        super(cause, errorCode, message, status);
+    }
+
+    public PasswordInvalidException(String errorCode, String message, HttpStatus status) {
+        super(errorCode, message, status);
+    }
+
+    public PasswordInvalidException(String message, Throwable cause, String errorCode, HttpStatus status) {
+        super(cause, errorCode, message, status);
+    }
 }
+

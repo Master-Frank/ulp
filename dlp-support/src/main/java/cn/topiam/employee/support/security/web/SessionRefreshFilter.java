@@ -7,13 +7,17 @@ package cn.topiam.employee.support.security.web;
 import java.io.IOException;
 import java.util.Objects;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpRequestResponseHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.web.filter.GenericFilterBean;
 
 import cn.topiam.employee.support.security.session.RefreshCurrentSessionPrincipalService;
 import cn.topiam.employee.support.security.userdetails.UserDetails;
-import cn.topiam.employee.support.security.util.SecurityUtils;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,70 +25,47 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
-/**
- * 会话刷新过滤器
- * 用于刷新当前会话中的用户主体信息
- */
 public class SessionRefreshFilter extends GenericFilterBean {
-   
-   /**
-    * 安全上下文仓库
-    */
-   private SecurityContextRepository securityContextRepository;
-   
-   /**
-    * 刷新当前会话主体服务
-    */
-   private final RefreshCurrentSessionPrincipalService refreshCurrentSessionPrincipalService;
-   
-   /**
-    * 构造函数
-    * 
-    * @param refreshCurrentSessionPrincipalService 刷新当前会话主体服务
-    */
-   public SessionRefreshFilter(RefreshCurrentSessionPrincipalService refreshCurrentSessionPrincipalService) {
-      this.refreshCurrentSessionPrincipalService = refreshCurrentSessionPrincipalService;
-   }
-   
-   /**
-    * 过滤方法
-    * 
-    * @param servletRequest Servlet请求
-    * @param servletResponse Servlet响应
-    * @param filterChain 过滤器链
-    * @throws IOException IO异常
-    * @throws ServletException Servlet异常
-    */
-   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-      HttpServletRequest request = (HttpServletRequest) servletRequest;
-      HttpServletResponse response = (HttpServletResponse) servletResponse;
-      SecurityContext context = this.securityContextRepository.loadContext(request);
-      if (Objects.nonNull(context.getAuthentication()) && context.getAuthentication().isAuthenticated()) {
-         Object principal = context.getAuthentication().getPrincipal();
-         if (principal instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) principal;
-            String userId = userDetails.getId();
-            UserDetails latestUserDetails = this.refreshCurrentSessionPrincipalService.refresh(userId);
-            if (Objects.nonNull(latestUserDetails)) {
-               HttpSession session = request.getSession(false);
-               if (Objects.nonNull(session)) {
-                  SecurityUtils.updateSecurityContext(latestUserDetails, session.getId());
-               }
+
+    private SecurityContextRepository securityContextRepository = new HttpSessionSecurityContextRepository();
+
+    private final RefreshCurrentSessionPrincipalService refreshCurrentSessionPrincipalService;
+
+    public SessionRefreshFilter(RefreshCurrentSessionPrincipalService refreshCurrentSessionPrincipalService) {
+        this.refreshCurrentSessionPrincipalService = refreshCurrentSessionPrincipalService;
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+        throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+        HttpRequestResponseHolder holder = new HttpRequestResponseHolder(request, response);
+        SecurityContext context = this.securityContextRepository.loadContext(holder);
+
+        Authentication authentication = context.getAuthentication();
+        if (Objects.nonNull(authentication) && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof UserDetails) {
+                String userId = ((UserDetails) principal).getId();
+                UserDetails latest = this.refreshCurrentSessionPrincipalService.getPrincipal(userId);
+                if (Objects.nonNull(latest)) {
+                    UsernamePasswordAuthenticationToken refreshed = UsernamePasswordAuthenticationToken
+                        .authenticated(latest, authentication.getCredentials(), latest.getAuthorities());
+                    refreshed.setDetails(authentication.getDetails());
+                    context.setAuthentication(refreshed);
+                    SecurityContextHolder.setContext(context);
+                    this.securityContextRepository.saveContext(context, request, response);
+                }
             }
-         }
-      }
-      
-      filterChain.doFilter(request, response);
-   }
-   
-   /**
-    * 设置安全上下文仓库
-    * 
-    * @param securityContextRepository 安全上下文仓库
-    */
-   public void setSecurityContextRepository(SecurityContextRepository securityContextRepository) {
-      this.securityContextRepository = securityContextRepository;
-   }
+        }
+
+        filterChain.doFilter(request, response);
+    }
+
+    public void setSecurityContextRepository(SecurityContextRepository securityContextRepository) {
+        this.securityContextRepository = securityContextRepository;
+    }
 }

@@ -13,6 +13,7 @@ import org.springframework.security.web.context.SecurityContextHolderFilter;
 import org.springframework.security.web.context.SecurityContextRepository;
 
 import cn.topiam.employee.support.security.session.RefreshCurrentSessionPrincipalService;
+import cn.topiam.employee.support.security.web.SessionRefreshFilter;
 
 /**
  * 会话管理配置器

@@ -10,88 +10,48 @@ import java.util.Arrays;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import cn.topiam.employee.support.repository.page.domain.Page;
-import cn.topiam.employee.support.security.jackjson.GrantedAuthorityMixin;
-
-/**
- * 缓存键
- * 用于生成和管理缓存键值
- */
 public class CacheKey implements Serializable {
-   
-   /**
-    * 组
-    */
-   private final String group;
-   
-   /**
-    * 参数
-    */
-   private final Object[] params;
-   
-   /**
-    * 哈希码
-    */
-   private int hashCodeValue;
-   
-   /**
-    * 键名
-    */
-   private final String keyName;
 
-   /**
-    * 判断对象是否相等
-    * 
-    * @param obj 比较对象
-    * @return 是否相等
-    */
-   public boolean equals(Object obj) {
-      if (this != obj && (!(obj instanceof CacheKey) || 
-              !this.group.equals(((CacheKey) obj).group) || 
-              !this.keyName.equals(((CacheKey) obj).keyName) || 
-              !Arrays.deepEquals(this.params, ((CacheKey) obj).params))) {
-         return false;
-      } else {
-         return true;
-      }
-   }
+    private final String   group;
 
-   /**
-    * 构造函数
-    * 
-    * @param group 组
-    * @param keyName 键名
-    * @param params 参数
-    */
-   public CacheKey(String group, String keyName, Object... params) {
-      Assert.notNull(group, GrantedAuthorityMixin.decodeString("Wib}nc'vrhs;its;e~'urwk"));
-      Assert.notNull(params, Page.decode("o2O3O0^-\n3_-^~D1^~H;\n0_2F"));
-      this.group = group;
-      this.keyName = keyName;
-      this.params = new Object[params.length];
-      System.arraycopy(params, 0, this.params, 0, params.length);
-      
-      this.hashCodeValue = this.group.hashCode();
-      this.hashCodeValue = 31 * this.hashCodeValue + this.keyName.hashCode();
-      this.hashCodeValue = 31 * this.hashCodeValue + Arrays.deepHashCode(this.params);
-   }
+    private final Object[] params;
 
-   /**
-    * 转换为字符串
-    * 
-    * @return 字符串表示
-    */
-   public String toString() {
-      return this.group + " " + this.getClass().getSimpleName() + this.keyName + " [" + 
-              StringUtils.arrayToCommaDelimitedString(this.params) + "]";
-   }
+    private final int      hashCodeValue;
 
-   /**
-    * 获取哈希码
-    * 
-    * @return 哈希码
-    */
-   public final int hashCode() {
-      return this.hashCodeValue;
-   }
+    private final String   keyName;
+
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof CacheKey)) {
+            return false;
+        }
+        CacheKey other = (CacheKey) obj;
+        return this.group.equals(other.group) && this.keyName.equals(other.keyName)
+               && Arrays.deepEquals(this.params, other.params);
+    }
+
+    public CacheKey(String group, String keyName, Object... params) {
+        Assert.notNull(group, "group must not be null");
+        Assert.notNull(params, "params must not be null");
+        this.group = group;
+        this.keyName = keyName;
+        this.params = new Object[params.length];
+        System.arraycopy(params, 0, this.params, 0, params.length);
+
+        int hash = this.group.hashCode();
+        hash = 31 * hash + this.keyName.hashCode();
+        hash = 31 * hash + Arrays.deepHashCode(this.params);
+        this.hashCodeValue = hash;
+    }
+
+    public String toString() {
+        return this.group + " " + this.getClass().getSimpleName() + this.keyName + " ["
+               + StringUtils.arrayToCommaDelimitedString(this.params) + "]";
+    }
+
+    public final int hashCode() {
+        return this.hashCodeValue;
+    }
 }

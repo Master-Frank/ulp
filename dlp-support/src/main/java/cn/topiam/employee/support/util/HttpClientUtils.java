@@ -33,8 +33,9 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Apache HttpClient 4.x 包装工具.

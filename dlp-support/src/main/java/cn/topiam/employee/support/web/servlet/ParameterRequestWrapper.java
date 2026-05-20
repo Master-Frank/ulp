@@ -95,6 +95,7 @@ public class ParameterRequestWrapper extends HttpServletRequestWrapper {
     */
    public ParameterRequestWrapper(HttpServletRequest request, Map<String, Object> parameters) {
       super(request);
+      this.parameterMap = new HashMap<>(16);
       this.addAllParameters(parameters);
    }
 

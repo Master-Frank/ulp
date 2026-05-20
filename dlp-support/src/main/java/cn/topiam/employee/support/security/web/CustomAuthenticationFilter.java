@@ -18,6 +18,7 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.session.SessionRegistry;
@@ -27,213 +28,148 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import cn.topiam.employee.support.enums.SecretType;
 import cn.topiam.employee.support.exception.UnknownAuthenticationTypeException;
 import cn.topiam.employee.support.result.ApiRestResult;
 import cn.topiam.employee.support.security.password.PasswordPolicyManager;
-import cn.topiam.employee.support.security.password.authentication.NeedChangePasswordAuthenticationToken;
 import cn.topiam.employee.support.security.password.exception.PasswordInvalidException;
-import cn.topiam.employee.support.security.password.exception.PasswordValidatedFailException;
 import cn.topiam.employee.support.security.userdetails.UserDetails;
 import cn.topiam.employee.support.security.userdetails.UserDetailsService;
-import cn.topiam.employee.support.util.DesensitizationUtils;
+import cn.topiam.employee.support.util.AesUtils;
 import cn.topiam.employee.support.util.HttpResponseUtils;
-import cn.topiam.employee.support.web.decrypt.DecryptRequestBodyAdvice;
-
-import lombok.Generated;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-/**
- * 自定义认证过滤器
- * 用于处理用户认证请求
- */
 public class CustomAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
-    @Generated
+
     private static final Logger logger = LoggerFactory.getLogger(CustomAuthenticationFilter.class);
     private static final AntPathRequestMatcher DEFAULT_ANT_PATH_REQUEST_MATCHER = new AntPathRequestMatcher("/login", "POST");
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
     private final UserDetailsService userDetailsService;
     private final PasswordPolicyManager passwordPolicyManager;
     private final SessionRegistry sessionRegistry;
     private final Executor taskExecutor;
 
-    /**
-     * 构造函数
-     *
-     * @param userDetailsService 用户详情服务
-     * @param passwordPolicyManager 密码策略管理器
-     * @param sessionRegistry 会话注册表
-     * @param asyncConfigurer 异步配置器
-     */
-    public CustomAuthenticationFilter(UserDetailsService userDetailsService, PasswordPolicyManager passwordPolicyManager, SessionRegistry sessionRegistry, AsyncConfigurer asyncConfigurer) {
+    public CustomAuthenticationFilter(UserDetailsService userDetailsService,
+                                      PasswordPolicyManager passwordPolicyManager,
+                                      SessionRegistry sessionRegistry,
+                                      AsyncConfigurer asyncConfigurer) {
         super(DEFAULT_ANT_PATH_REQUEST_MATCHER);
         this.userDetailsService = userDetailsService;
         this.passwordPolicyManager = passwordPolicyManager;
         this.sessionRegistry = sessionRegistry;
-        this.taskExecutor = asyncConfigurer.getAsyncExecutor();
-    }
-
-    /**
-     * 尝试认证
-     *
-     * @param request HTTP请求
-     * @return 认证对象
-     * @throws AuthenticationException 认证异常
-     * @throws IOException IO异常
-     * @throws ServletException Servlet异常
-     */
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
-        if (!HttpMethod.POST.name().equals(request.getMethod())) {
-            throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
-        } else {
-            String username = this.obtainUsername(request);
-            String password = this.obtainPassword(request);
-            String decryptUsername = DecryptRequestBodyAdvice.decryptString(username);
-            String decryptPassword = DecryptRequestBodyAdvice.decryptString(password);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Processing authentication for username: {}", DesensitizationUtils.desensitizeUsername(decryptUsername));
-            }
-
-            if (Objects.isNull(decryptUsername)) {
-                throw new BadCredentialsException("Username cannot be null");
-            } else if (Objects.isNull(decryptPassword)) {
-                throw new BadCredentialsException("Password cannot be null");
-            } else {
-                UserDetails userDetails = this.userDetailsService.loadUserByUsername(decryptUsername);
-                if (Objects.isNull(userDetails)) {
-                    throw new BadCredentialsException("Invalid username or password");
-                } else {
-                    try {
-                        this.passwordPolicyManager.validate(decryptPassword, userDetails);
-                    } catch (PasswordInvalidException var11) {
-                        throw new BadCredentialsException(var11.getMessage());
-                    }
-
-                    if (!userDetails.isEnabled()) {
-                        throw new DisabledException("User account is disabled");
-                    } else if (!userDetails.isAccountNonLocked()) {
-                        throw new LockedException("User account is locked");
-                    } else {
-                        try {
-                            userDetails = this.userDetailsService.authenticate(decryptUsername, decryptPassword);
-                        } catch (PasswordValidatedFailException var10) {
-                            this.taskExecutor.execute(() -> {
-                                this.passwordPolicyManager.recordFailedAttempt(decryptUsername);
-                            });
-                            throw new BadCredentialsException("Invalid username or password");
-                        }
-
-                        this.taskExecutor.execute(() -> {
-                            this.passwordPolicyManager.recordSuccessfulAttempt(decryptUsername);
-                        });
-                        if (this.passwordPolicyManager.needChangePassword(userDetails)) {
-                            return new NeedChangePasswordAuthenticationToken(userDetails);
-                        } else {
-                            return this.getAuthenticationManager().authenticate(this.createAuthenticationToken(userDetails, decryptPassword));
-                        }
-                    }
-                }
-            }
+        this.taskExecutor = asyncConfigurer != null ? asyncConfigurer.getAsyncExecutor() : Runnable::run;
+        if (this.taskExecutor == null) {
+            logger.debug("No async executor configured");
         }
     }
 
-    /**
-     * 获取用户名
-     *
-     * @param request HTTP请求
-     * @return 用户名
-     */
-    protected String obtainUsername(HttpServletRequest request) {
-        Map<String, String> paramMap = this.getParams(request);
-        return (String)paramMap.get("username");
-    }
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+        throws AuthenticationException, IOException, ServletException {
+        if (!HttpMethod.POST.name().equals(request.getMethod())) {
+            throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
+        }
 
-    /**
-     * 获取密码
-     *
-     * @param request HTTP请求
-     * @return 密码
-     */
-    protected String obtainPassword(HttpServletRequest request) {
-        Map<String, String> paramMap = this.getParams(request);
-        return (String)paramMap.get("password");
-    }
+        Map<String, String> params = readBody(request);
+        String username = params.get("username");
+        String password = params.get("password");
 
-    /**
-     * 获取请求参数
-     *
-     * @param request HTTP请求
-     * @return 参数映射
-     */
-    private Map<String, String> getParams(HttpServletRequest request) {
+        String decryptUsername = decryptString(request, username);
+        String decryptPassword = decryptString(request, password);
+
+        if (Objects.isNull(decryptUsername)) {
+            throw new BadCredentialsException("Username cannot be null");
+        }
+        if (Objects.isNull(decryptPassword)) {
+            throw new BadCredentialsException("Password cannot be null");
+        }
+
+        org.springframework.security.core.userdetails.UserDetails loaded = this.userDetailsService
+            .loadUserByUsername(decryptUsername);
+        if (Objects.isNull(loaded)) {
+            throw new BadCredentialsException("Invalid username or password");
+        }
+        if (!(loaded instanceof UserDetails)) {
+            throw new UnknownAuthenticationTypeException();
+        }
+        UserDetails userDetails = (UserDetails) loaded;
+
         try {
-            String body = request.getReader().lines().reduce("", (accumulator, actual) -> {
-                return accumulator + actual;
+            this.passwordPolicyManager.validate(userDetails, decryptPassword);
+        } catch (PasswordInvalidException e) {
+            throw new BadCredentialsException(e.getMessage());
+        }
+
+        if (!userDetails.isEnabled()) {
+            throw new DisabledException("User account is disabled");
+        }
+        if (!userDetails.isAccountNonLocked()) {
+            throw new LockedException("User account is locked");
+        }
+
+        UsernamePasswordAuthenticationToken token = UsernamePasswordAuthenticationToken
+            .unauthenticated(userDetails, decryptPassword);
+        return getAuthenticationManager().authenticate(token);
+    }
+
+    private Map<String, String> readBody(HttpServletRequest request) {
+        try {
+            String body = request.getReader().lines().reduce("", (a, b) -> a + b);
+            if (body.isEmpty()) {
+                return Map.of();
+            }
+            return OBJECT_MAPPER.readValue(body, new TypeReference<Map<String, String>>() {
             });
-            ObjectMapper mapper = new ObjectMapper();
-            TypeReference<Map<String, String>> typeRef = new TypeReference<Map<String, String>>() {
-            };
-            return (Map)mapper.readValue(body, typeRef);
-        } catch (Exception var6) {
-            logger.error("Failed to parse request parameters", var6);
+        } catch (Exception e) {
+            logger.error("Failed to parse request parameters", e);
             return Map.of();
         }
     }
 
-    /**
-     * 创建认证令牌
-     *
-     * @param userDetails 用户详情
-     * @param password 密码
-     * @return 认证令牌
-     */
-    private Authentication createAuthenticationToken(UserDetails userDetails, String password) {
-        return new CustomLoginFilter(userDetails, password, userDetails.getAuthorities());
+    private String decryptString(HttpServletRequest request, String value) {
+        if (value == null || value.isEmpty()) {
+            return value;
+        }
+        try {
+            Object secret = request.getSession().getAttribute(SecretType.LOGIN.getKey());
+            if (secret instanceof String && !((String) secret).isEmpty()) {
+                return AesUtils.decrypt(value, (String) secret);
+            }
+        } catch (Exception ignored) {
+        }
+        return value;
     }
 
-    /**
-     * 认证成功
-     *
-     * @param request HTTP请求
-     * @param response HTTP响应
-     * @param chain 过滤器链
-     * @param authResult 认证结果
-     * @throws IOException IO异常
-     * @throws ServletException Servlet异常
-     */
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        if (authResult instanceof NeedChangePasswordAuthenticationToken) {
-            NeedChangePasswordAuthenticationToken needChangePasswordAuthenticationToken = (NeedChangePasswordAuthenticationToken)authResult;
-            ApiRestResult<Map<String, Object>> result = ApiRestResult.builder().status(String.valueOf(HttpStatus.UNAUTHORIZED.value())).message("Password needs to be changed").result(Map.of("needChangePassword", true, "principal", needChangePasswordAuthenticationToken.getPrincipal())).build();
-            HttpResponseUtils.writeResponse(response, result, HttpStatus.UNAUTHORIZED);
-        } else {
-            super.successfulAuthentication(request, response, chain, authResult);
+    @Override
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+                                            FilterChain chain, Authentication authResult)
+        throws IOException, ServletException {
+        super.successfulAuthentication(request, response, chain, authResult);
+        if (this.sessionRegistry != null) {
             this.sessionRegistry.registerNewSession(request.getSession(true).getId(), authResult.getPrincipal());
         }
     }
 
-    /**
-     * 认证失败
-     *
-     * @param request HTTP请求
-     * @param response HTTP响应
-     * @param failed 失败的认证异常
-     * @throws IOException IO异常
-     * @throws ServletException Servlet异常
-     */
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+                                              AuthenticationException failed)
+        throws IOException, ServletException {
         String errorMsg = "Invalid username or password";
         if (failed instanceof DisabledException) {
             errorMsg = "User account is disabled";
         } else if (failed instanceof LockedException) {
             errorMsg = "User account is locked";
-        } else if (failed instanceof UnknownAuthenticationTypeException) {
-            errorMsg = failed.getMessage();
         }
 
-        ApiRestResult<Object> result = ApiRestResult.builder().status(String.valueOf(HttpStatus.UNAUTHORIZED.value())).message(errorMsg).build();
-        HttpResponseUtils.writeResponse(response, result, HttpStatus.UNAUTHORIZED);
+        ApiRestResult<Object> result = ApiRestResult.builder()
+            .status(String.valueOf(HttpStatus.UNAUTHORIZED.value()))
+            .message(errorMsg)
+            .build();
+        HttpResponseUtils.flushResponseJson(response, HttpStatus.UNAUTHORIZED.value(), result);
     }
 }

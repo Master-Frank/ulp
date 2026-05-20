@@ -13,205 +13,93 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import cn.topiam.employee.support.enums.SecretType;
-import cn.topiam.employee.support.security.exception.SecretInvalidException;
 import cn.topiam.employee.support.util.AesUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-/**
- * 自定义登录过滤器
- * 处理用户登录请求，支持加密密码验证
- */
 public class CustomLoginFilter extends AbstractAuthenticationProcessingFilter {
-   
-   /**
-    * 表单用户名字段名
-    */
-   public static final String SECURITY_FORM_USERNAME_KEY = "username";
-   
-   /**
-    * 登录请求匹配器
-    */
-   private static final AntPathRequestMatcher DEFAULT_ANT_PATH_REQUEST_MATCHER = new AntPathRequestMatcher("/login", "POST");
-   
-   /**
-    * 用户名
-    */
-   private String usernameParameter = SECURITY_FORM_USERNAME_KEY;
-   
-   /**
-    * 密码
-    */
-   private String passwordParameter = "password";
-   
-   /**
-    * 是否只处理POST请求
-    */
-   private boolean postOnly = true;
-   
-   /**
-    * 构造函数
-    */
-   public CustomLoginFilter() {
-      super(DEFAULT_ANT_PATH_REQUEST_MATCHER);
-   }
-   
-   /**
-    * 构造函数
-    * 
-    * @param authenticationManager 认证管理器
-    */
-   public CustomLoginFilter(AuthenticationManager authenticationManager) {
-      super(DEFAULT_ANT_PATH_REQUEST_MATCHER, authenticationManager);
-   }
-   
-   /**
-    * 尝试认证
-    * 
-    * @param request HTTP请求
-    * @param response HTTP响应
-    * @return 认证对象
-    * @throws AuthenticationException 认证异常
-    */
-   public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-      if (this.postOnly && !request.getMethod().equals("POST")) {
-         throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
-      } else {
-         String username = this.obtainUsername(request);
-         String password = this.obtainPassword(request);
-         String decryptUsername = this.decryptString(username);
-         String decryptPassword = this.decryptString(password);
-         
-         if (username == null) {
-            username = "";
-         }
-         
-         if (password == null) {
-            password = "";
-         }
-         
-         username = username.trim();
-         CustomLoginFilter token = new CustomLoginFilter(decryptUsername, decryptPassword);
-         this.setDetails(request, token);
-         return this.getAuthenticationManager().authenticate(token);
-      }
-   }
-   
-   /**
-    * 获取用户名
-    * 
-    * @param request HTTP请求
-    * @return 用户名
-    */
-   protected String obtainUsername(HttpServletRequest request) {
-      return request.getParameter(this.usernameParameter);
-   }
-   
-   /**
-    * 获取密码
-    * 
-    * @param request HTTP请求
-    * @return 密码
-    */
-   protected String obtainPassword(HttpServletRequest request) {
-      return request.getParameter(this.passwordParameter);
-   }
-   
-   /**
-    * 解密字符串
-    * 
-    * @param str 待解密字符串
-    * @return 解密后的字符串
-    */
-   private String decryptString(String str) {
-      try {
-         return AesUtils.decrypt(str, SecretType.LOGIN_ENCRYPT_SECRET.getSecret());
-      } catch (Exception e) {
-         throw new SecretInvalidException("Decrypt failed", e);
-      }
-   }
-   
-   /**
-    * 设置详细信息
-    * 
-    * @param request HTTP请求
-    * @param authRequest 认证请求
-    */
-   protected void setDetails(HttpServletRequest request, CustomLoginFilter authRequest) {
-      authRequest.setDetails(this.authenticationDetailsSource.buildDetails(request));
-   }
-   
-   /**
-    * 设置用户名参数
-    * 
-    * @param usernameParameter 用户名参数
-    */
-   public void setUsernameParameter(String usernameParameter) {
-      this.usernameParameter = usernameParameter;
-   }
-   
-   /**
-    * 设置密码参数
-    * 
-    * @param passwordParameter 密码参数
-    */
-   public void setPasswordParameter(String passwordParameter) {
-      this.passwordParameter = passwordParameter;
-   }
-   
-   /**
-    * 设置是否只处理POST请求
-    * 
-    * @param postOnly 是否只处理POST请求
-    */
-   public void setPostOnly(boolean postOnly) {
-      this.postOnly = postOnly;
-   }
-   
-   /**
-    * 获取用户名参数
-    * 
-    * @return 用户名参数
-    */
-   public final String getUsernameParameter() {
-      return this.usernameParameter;
-   }
-   
-   /**
-    * 获取密码参数
-    * 
-    * @return 密码参数
-    */
-   public final String getPasswordParameter() {
-      return this.passwordParameter;
-   }
-   
-   /**
-    * 构造函数
-    * 
-    * @param username 用户名
-    * @param password 密码
-    */
-   public CustomLoginFilter(String username, String password) {
-      super(new UsernamePasswordAuthenticationToken(username, password));
-   }
-   
-   /**
-    * 获取凭证
-    * 
-    * @return 凭证
-    */
-   public Object getCredentials() {
-      return null;
-   }
-   
-   /**
-    * 获取主体
-    * 
-    * @return 主体
-    */
-   public Object getPrincipal() {
-      return null;
-   }
+
+    public static final String SECURITY_FORM_USERNAME_KEY = "username";
+    public static final String SECURITY_FORM_PASSWORD_KEY = "password";
+
+    private static final AntPathRequestMatcher DEFAULT_ANT_PATH_REQUEST_MATCHER = new AntPathRequestMatcher("/login", "POST");
+
+    private String usernameParameter = SECURITY_FORM_USERNAME_KEY;
+    private String passwordParameter = SECURITY_FORM_PASSWORD_KEY;
+    private boolean postOnly = true;
+
+    public CustomLoginFilter() {
+        super(DEFAULT_ANT_PATH_REQUEST_MATCHER);
+    }
+
+    public CustomLoginFilter(AuthenticationManager authenticationManager) {
+        super(DEFAULT_ANT_PATH_REQUEST_MATCHER, authenticationManager);
+    }
+
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+        throws AuthenticationException {
+        if (this.postOnly && !"POST".equals(request.getMethod())) {
+            throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
+        }
+        String username = obtainUsername(request);
+        String password = obtainPassword(request);
+        username = username == null ? "" : username.trim();
+        password = password == null ? "" : password;
+
+        String decryptUsername = decryptString(request, username);
+        String decryptPassword = decryptString(request, password);
+
+        UsernamePasswordAuthenticationToken token = UsernamePasswordAuthenticationToken
+            .unauthenticated(decryptUsername, decryptPassword);
+        setDetails(request, token);
+        return getAuthenticationManager().authenticate(token);
+    }
+
+    protected String obtainUsername(HttpServletRequest request) {
+        return request.getParameter(this.usernameParameter);
+    }
+
+    protected String obtainPassword(HttpServletRequest request) {
+        return request.getParameter(this.passwordParameter);
+    }
+
+    private String decryptString(HttpServletRequest request, String value) {
+        if (value == null || value.isEmpty()) {
+            return value;
+        }
+        try {
+            Object secret = request.getSession().getAttribute(SecretType.LOGIN.getKey());
+            if (secret instanceof String && !((String) secret).isEmpty()) {
+                return AesUtils.decrypt(value, (String) secret);
+            }
+        } catch (Exception ignored) {
+        }
+        return value;
+    }
+
+    protected void setDetails(HttpServletRequest request, UsernamePasswordAuthenticationToken authRequest) {
+        authRequest.setDetails(this.authenticationDetailsSource.buildDetails(request));
+    }
+
+    public void setUsernameParameter(String usernameParameter) {
+        this.usernameParameter = usernameParameter;
+    }
+
+    public void setPasswordParameter(String passwordParameter) {
+        this.passwordParameter = passwordParameter;
+    }
+
+    public void setPostOnly(boolean postOnly) {
+        this.postOnly = postOnly;
+    }
+
+    public final String getUsernameParameter() {
+        return this.usernameParameter;
+    }
+
+    public final String getPasswordParameter() {
+        return this.passwordParameter;
+    }
 }

@@ -6,22 +6,43 @@ package cn.topiam.employee.support.web.converter;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
-/**
- * 自定义枚举转换器工厂
- * 用于将字符串转换为枚举类型
- */
-public class CustomEnumConverterFactory implements ConverterFactory<String, Enum> {
-   
-   /**
-    * 获取转换器
-    * 
-    * @param targetType 目标类型
-    * @param <T> 枚举类型
-    * @return 转换器
-    */
-   @Override
-   public <T extends Enum> Converter<String, T> getConverter(Class<T> targetType) {
-      return new CustomEnumConverter(targetType);
-   }
+import cn.topiam.employee.support.enums.BaseEnum;
+
+public class CustomEnumConverterFactory implements ConverterFactory<String, Enum<?>> {
+
+    @Override
+    @NonNull
+    public <T extends Enum<?>> Converter<String, T> getConverter(@NonNull Class<T> targetType) {
+        return new StringToEnumConverter<>(targetType);
+    }
+
+    private static final class StringToEnumConverter<T extends Enum<?>> implements Converter<String, T> {
+
+        private final Class<T> targetType;
+
+        StringToEnumConverter(Class<T> targetType) {
+            this.targetType = targetType;
+        }
+
+        @Override
+        @Nullable
+        public T convert(@NonNull String source) {
+            if (source.isEmpty()) {
+                return null;
+            }
+            for (T constant : this.targetType.getEnumConstants()) {
+                if (constant instanceof BaseEnum) {
+                    if (((BaseEnum) constant).getCode().equals(source)) {
+                        return constant;
+                    }
+                } else if (constant.name().equals(source)) {
+                    return constant;
+                }
+            }
+            return null;
+        }
+    }
 }

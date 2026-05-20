@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.HttpSecurityBuilder;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.context.SecurityContextHolderFilter;
 
+import cn.topiam.employee.support.web.filter.CustomRedirectFilter;
+
 /**
  * 自定义安全配置器
  * 用于向Spring Security配置中添加自定义过滤器

@@ -49,7 +49,7 @@ public class UserDetails extends User {
    /**
     * 邮箱
     */
-   private final String email;
+   private String email;
    
    /**
     * 邮箱是否已验证
@@ -409,7 +409,7 @@ public class UserDetails extends User {
     */
    @JsonProperty("applications")
    public Collection<Application> getApplications() {
-      return CollectionUtils.isEmpty(this.applications) ? CollectionUtils.emptyCollection() : this.applications;
+      return CollectionUtils.isEmpty(this.applications) ? Collections.emptySet() : this.applications;
    }
 
    /**
@@ -523,7 +523,7 @@ public class UserDetails extends User {
     */
    @JsonProperty("groups")
    public Collection<Group> getGroups() {
-      return CollectionUtils.isEmpty(this.groups) ? CollectionUtils.emptyCollection() : this.groups;
+      return CollectionUtils.isEmpty(this.groups) ? Collections.emptySet() : this.groups;
    }
 
    /**
@@ -593,7 +593,7 @@ public class UserDetails extends User {
     */
    @JsonProperty("organizations")
    public Collection<Organization> getOrganizations() {
-      return CollectionUtils.isEmpty(this.organizations) ? CollectionUtils.emptyCollection() : this.organizations;
+      return CollectionUtils.isEmpty(this.organizations) ? Collections.emptySet() : this.organizations;
    }
 
    /**
