@@ -97,7 +97,10 @@
       "Bash(xargs sed *)",
       "Bash(grep -v \"//.*eiam-\\\\|//.*dlp-\\\\|/\\\\*.*eiam-\\\\|/\\\\*.*dlp-\\\\| \\\\* \")",
       "Bash(find . -name pom.xml -not -path '*/target/*' -not -path '*/node_modules/*' -exec sed -E -i -e 's|<artifactId>eiam-\\([a-zA-Z0-9-]+\\)</artifactId>|<artifactId>ulp-\\\\1</artifactId>|g' -e 's|<module>eiam-\\([a-zA-Z0-9-]+\\)</module>|<module>ulp-\\\\1</module>|g' -e 's|<groupId>cn\\\\.topiam</groupId>|<groupId>cn.frank.ulp</groupId>|g' -e 's|<artifactId>dlp-support</artifactId>|<artifactId>ulp-support</artifactId>|g' -e 's|<module>dlp-support</module>|<module>ulp-support</module>|g' -e 's|<artifactId>dlp</artifactId>|<artifactId>ulp-parent</artifactId>|g' '{}' +)",
-      "Bash(grep -v \"//.*eiam-\\\\|/\\\\*.*eiam-\")"
+      "Bash(grep -v \"//.*eiam-\\\\|/\\\\*.*eiam-\")",
+      "WebFetch(domain:www.apache.org)",
+      "Bash(curl -sf https://www.apache.org/licenses/LICENSE-2.0.txt -o D:/project/dlp/LICENSE)",
+      "Bash(./mvnw.cmd com.mycila:license-maven-plugin:remove com.mycila:license-maven-plugin:format -Dformatter.skip=true)"
     ]
   }
 }
