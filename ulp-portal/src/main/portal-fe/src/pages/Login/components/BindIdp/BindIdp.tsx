@@ -72,7 +72,7 @@ export default () => {
 
   useMount(() => {
     //查看cookie是否存在state
-    const state = getCookie('topiam-bind-state-cookie');
+    const state = getCookie('ulp-bind-state-cookie');
     if (!state) {
       history.push(`${LOGIN_PATH}`);
       return;

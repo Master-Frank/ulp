@@ -16,7 +16,7 @@
  */
 export default {
   'pages.account.user_list.desc':
-    '组织与用户用于解决企业组织、用户等实体的管理问题。这些实体您可以直接在TOPIAM中进行维护，也可以通过配置身份源后，同步身份源的数据。',
+    '组织与用户用于解决企业组织、用户等实体的管理问题。这些实体您可以直接在ULP中进行维护，也可以通过配置身份源后，同步身份源的数据。',
   'pages.account.user_list.common.base': '基础字段',
   'pages.account.user_list.common.custom': '扩展字段',
   'pages.account.user_list.common.step_next': '下一步',

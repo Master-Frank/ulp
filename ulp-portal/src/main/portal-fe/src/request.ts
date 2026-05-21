@@ -29,8 +29,8 @@ import { isLoginPath, isSessionExpiredPath, SESSION_EXPIRED_PATH } from './utils
  */
 export const requestConfig: RequestConfig = {
   withCredentials: true,
-  xsrfHeaderName: 'topiam-csrf',
-  xsrfCookieName: 'topiam-csrf-cookie',
+  xsrfHeaderName: 'ulp-csrf',
+  xsrfCookieName: 'ulp-csrf-cookie',
   // 错误处理： umi@3 的错误处理方案。
   errorConfig: {
     // 错误接收及处理

@@ -24,7 +24,7 @@ export default {
   'layout.user.link.privacy': '隐私',
   'layout.user.link.terms': '条款',
   'app.notification.rule.0.message': '提示',
-  /* TopIAM 自定义 */
+  /* ULP 自定义 */
   'app.option': '操作',
   'app.create': '新增',
   'app.create_child': '新增下级',

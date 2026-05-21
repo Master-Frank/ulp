@@ -1,8 +1,8 @@
 {
-  "name": "topiam-portal",
+  "name": "ulp-portal",
   "version": "1.0.0",
   "private": true,
-  "description": "企业级身份管理和访问管理程序，为企业实现统一认证和单点登录、为数字身份安全赋能！",
+  "description": "ULP - United Login Platform 用户门户",
   "scripts": {
     "analyze": "cross-env ANALYZE=1 max build",
     "build": "max build",
@@ -22,7 +22,7 @@
     "lint:prettier": "prettier -c --write \"src/**/*\" --end-of-line auto",
     "openapi": "max openapi",
     "playwright": "playwright install && playwright test",
-    "prepare": "cd ../../../../ && husky install eiam-portal/src/main/portal-fe/.husky",
+    "prepare": "cd ../../../../ && husky install ulp-portal/src/main/portal-fe/.husky",
     "prettier": "prettier -c --write \"src/**/*\"",
     "serve": "umi-serve",
     "start": "cross-env DID_YOU_KNOW=none UMI_ENV=dev max dev ",

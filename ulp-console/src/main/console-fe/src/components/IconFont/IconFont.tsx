@@ -21,7 +21,7 @@ type IconFontProps = {
   name: string;
   className?: string;
 };
-const prefixCls = 'topiam-icon';
+const prefixCls = 'ulp-icon';
 
 /**
  * Icon Font

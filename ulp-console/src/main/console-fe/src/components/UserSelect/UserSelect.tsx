@@ -23,7 +23,7 @@ import classNames from 'classnames';
 import UserAvatar from '@/components/UserAvatar';
 import { useAsyncEffect } from 'ahooks';
 
-const prefixCls = 'topiam-user-select';
+const prefixCls = 'ulp-user-select';
 interface UserData {
   id: string;
   username: string;

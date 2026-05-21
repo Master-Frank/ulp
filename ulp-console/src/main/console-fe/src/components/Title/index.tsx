@@ -20,7 +20,7 @@ import classnames from 'classnames';
 import useStyle from './style';
 import React from 'react';
 
-const prefixCls = 'topiam-title-wrapper';
+const prefixCls = 'ulp-title-wrapper';
 export type IProps = {
   title: string | React.ReactNode;
   aside?: any;

@@ -20,7 +20,7 @@ import useStyle from './style';
 type IconFontProps = {
   name: string;
 };
-const prefixCls = 'topiam-icon';
+const prefixCls = 'ulp-icon';
 
 /**
  * Icon Font

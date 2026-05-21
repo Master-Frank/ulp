@@ -21,7 +21,7 @@ import useStyle from './style';
 import Title from '@/components/Title';
 import { Typography } from 'antd';
 
-const prefixCls = 'topiam-forget-password';
+const prefixCls = 'ulp-forget-password';
 const { Paragraph } = Typography;
 
 type PasswordProps = {

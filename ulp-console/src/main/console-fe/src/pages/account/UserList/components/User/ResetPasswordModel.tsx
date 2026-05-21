@@ -217,7 +217,7 @@ export default (props: {
           onClick={async () => {
             const password = form.getFieldValue('password');
             const success = await copy(
-              `TOPIAM 账户进行了密码修改\n账户名：admin\n新密码：${password || ''}`,
+              `ULP 账户进行了密码修改\n账户名：admin\n新密码：${password || ''}`,
             );
             if (success) {
               message.success('复制成功');

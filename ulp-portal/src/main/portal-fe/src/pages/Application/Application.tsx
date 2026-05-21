@@ -33,7 +33,7 @@ import { SpinProps } from 'antd/es/spin';
 import { useIntl } from '@umijs/max';
 
 const { Paragraph } = Typography;
-const prefixCls = 'topiam-app-list';
+const prefixCls = 'ulp-app-list';
 const all = 'all';
 const renderBadge = (count: number, active = false) => {
   return (

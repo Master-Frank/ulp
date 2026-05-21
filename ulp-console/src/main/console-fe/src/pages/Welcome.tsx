@@ -146,20 +146,20 @@ const Welcome: React.FC = () => {
           >
             <InfoCard
               index={1}
-              href="https://topiam.cn/docs/overview/introduction/"
+              href="#"
               title="入门文档"
               desc="入门文档"
             />
             <InfoCard
               index={2}
               title="绑定现有账户系统"
-              href="https://topiam.cn/docs/use-cases/identity-source/"
+              href="#"
               desc="快速导入账户，并复用现有的登录方式。"
             />
             <InfoCard
               index={3}
               title="集成身份提供商"
-              href="https://topiam.cn/docs/use-cases/authentication"
+              href="#"
               desc="集成身份提供商，快速纳入三方平台登录。"
             />
           </div>
@@ -173,19 +173,19 @@ const Welcome: React.FC = () => {
             <InfoCard
               index={4}
               title="实现应用单点登录"
-              href="https://topiam.cn/docs/guide/console/application/create-app/"
+              href="#"
               desc="创建配置应用，实现应用单点登录。"
             />
             <InfoCard
               index={5}
               title="系统配置"
-              href="https://topiam.cn/docs/guide/console/setting/message/"
+              href="#"
               desc="进行系统基础配置，如文件存储、地理位置、邮件短信服务。"
             />
             <InfoCard
               index={6}
               title="安全配置"
-              href="https://topiam.cn/docs/guide/console/security/security/"
+              href="#"
               desc="进行系统安全配置，如密码策略、会话策略，完善系统安全。"
             />
           </div>

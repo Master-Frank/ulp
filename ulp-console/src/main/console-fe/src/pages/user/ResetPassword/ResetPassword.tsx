@@ -29,7 +29,7 @@ import { useIntl } from '@@/exports';
 import { resetPassword } from './service';
 import useStyle from './style';
 import { aesEcbEncrypt } from '@/utils/aes';
-const prefixCls = 'topiam-login';
+const prefixCls = 'ulp-login';
 
 enum Status {
   password_invalid_error = 'password_invalid_error',

@@ -27,7 +27,7 @@ import { LeftOutlined } from '@ant-design/icons';
 import { onGetEncryptSecret } from '@/utils/utils';
 import { aesEcbEncrypt } from '@/utils/aes';
 
-const prefixCls = 'topiam-forget-password';
+const prefixCls = 'ulp-forget-password';
 export default ({ close }: { close: () => void }) => {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({ phone: '', code: '', newPassword: '', passwordAgain: '' });

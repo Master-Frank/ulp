@@ -155,8 +155,8 @@ declare namespace DashboardAPI {
 /**
  * 账户API类型定义
  *
- * @author TopIAM
- * Created by support@topiam.cn on  2020/9/13 11:25
+ * @author Frank Zhang
+ * 
  */
 declare namespace AccountAPI {
   //= =========================用户API相关=============================//
@@ -400,8 +400,8 @@ declare namespace AccountAPI {
 /**
  * 应用管理API类型定义
  *
- * @author TopIAM
- * Created by support@topiam.cn on  2020/9/13 11:26
+ * @author Frank Zhang
+ * 
  */
 declare namespace AppAPI {
   /**

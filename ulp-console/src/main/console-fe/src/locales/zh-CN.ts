@@ -21,7 +21,7 @@ import pages from './zh-CN/pages';
 export default {
   'nav_bar.lang': '语言',
   'app.notification.rule.0.message': '提示',
-  /* TopIAM 自定义 */
+  /* ULP 自定义 */
   'app.option': '操作',
   'app.manage': '管理',
   'app.detail': '详情',
@@ -83,7 +83,7 @@ export default {
   'app.minute': '分钟',
   'app.minute.not_update': '分钟（暂不支持修改）',
   'app.displayed': '是否显示',
-  'app.issue': '不知道怎么配置？请参考 TOPIAM ',
+  'app.issue': '不知道怎么配置？请参考 ULP ',
   'app.disposition': '配置',
   'app.required_field': '此项为必填项',
   'app.doc': '对接文档',

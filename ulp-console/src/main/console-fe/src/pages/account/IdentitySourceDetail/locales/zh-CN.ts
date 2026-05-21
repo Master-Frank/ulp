@@ -67,11 +67,11 @@ export default {
   'pages.account.identity_source_detail.sync_history.tool_bar_render.title': '一键拉取',
   'pages.account.identity_source_detail.sync_history.tool_bar_render.success.title': '任务触发成功',
   'pages.account.identity_source_detail.sync_history.tool_bar_render.content.title':
-    'TOPIAM 将全量拉取身份源授权范围内部门和账户，置于同步目标组织下。',
+    'ULP 将全量拉取身份源授权范围内部门和账户，置于同步目标组织下。',
   'pages.account.identity_source_detail.sync_history.tool_bar_render.content.description':
-    'TOPIAM 将全量拉取身份源授权范围内部门和账户，置于同步目标组织下。',
+    'ULP 将全量拉取身份源授权范围内部门和账户，置于同步目标组织下。',
   'pages.account.identity_source_detail.strategy_config.target_extra.0':
-    '身份源组织同步至 TOPIAM 后的父级组织。',
+    '身份源组织同步至 ULP 后的父级组织。',
   'pages.account.identity_source_detail.strategy_config.target_extra.1':
     '如果不填，将自动创建顶层组织。配置后不可更改。',
   'pages.account.identity_source_detail.strategy_config.organization_policies': '组织相关策略',
@@ -87,7 +87,7 @@ export default {
     '请输入默认密码',
   'pages.account.identity_source_detail.strategy_config.user_policies.enabled': '是否启用',
   'pages.account.identity_source_detail.strategy_config.user_policies.enabled.extra.0':
-    '默认启用，首次同步用户时，用户是否在 TOPIAM 中启用。',
+    '默认启用，首次同步用户时，用户是否在 ULP 中启用。',
   'pages.account.identity_source_detail.strategy_config.user_policies.enabled.extra.1':
     '注意：身份源用户未启用时，将已身份源为准。',
   'pages.account.identity_source_detail.strategy_config.user_policies.email_notify': '邮件通知',

@@ -21,7 +21,7 @@ type IProps = {
   children: any;
   maxWidth?: number | string;
 };
-const prefixCls = 'topiam-container';
+const prefixCls = 'ulp-container';
 
 export const Container = (props: IProps) => {
   const { children = null, maxWidth = 1000 } = props;

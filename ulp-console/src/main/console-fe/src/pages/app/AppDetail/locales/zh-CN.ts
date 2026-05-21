@@ -193,7 +193,7 @@ export default {
     '登录发起地址不能为空',
   'pages.app.config.detail.protocol_config.oidc.init_login_url.field_props': '请输入登录链接',
   'pages.app.config.detail.protocol_config.oidc.init_login_url.extra':
-    '在门户端点击应用图标时，会跳转到此 URL，默认为 TOPIAM 登录页。 ',
+    '在门户端点击应用图标时，会跳转到此 URL，默认为 ULP 登录页。 ',
   'pages.app.config.detail.protocol_config.oidc.advanced': '高级配置',
   'pages.app.config.detail.protocol_config.oidc.grant_scopes': '用户信息范围',
   'pages.app.config.detail.protocol_config.oidc.grant_scopes.rule.0.message': '请勾选用户信息范围',

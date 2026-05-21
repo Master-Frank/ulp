@@ -40,7 +40,7 @@ import { createApp, getAppTemplateList } from './service';
 import { getAllAppGroupList } from '@/services/app';
 
 const { Paragraph } = Typography;
-const prefixCls = 'topiam-create-app';
+const prefixCls = 'ulp-create-app';
 
 /**
  * 创建应用

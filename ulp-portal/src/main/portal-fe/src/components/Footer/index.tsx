@@ -37,12 +37,6 @@ export default (props: FooterProps) => (
       //   href: 'https://github.com/',
       //   blankTarget: true,
       // },
-      // {
-      //   key: 'docs',
-      //   title: '使用文档',
-      //   href: 'https://eiam.topiam.cn/docs/introduction/overview',
-      //   blankTarget: true,
-      // },
     ]}
     {...props}
   />

@@ -40,7 +40,7 @@ import { emailValidator } from '@/utils/utils';
 import { openPopup } from '@/utils/popup';
 import PageLoading from '@/components/PageLoading';
 
-const prefixCls = 'topiam-login';
+const prefixCls = 'ulp-login';
 
 /**
  * 错误消息

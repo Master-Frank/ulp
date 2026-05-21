@@ -129,7 +129,7 @@ export default (props: { app: GetApp | Record<string, any> }) => {
                 {intl.formatMessage({ id: 'app.disposition' })}{' '}
                 <a
                   target={'_blank'}
-                  href={'https://eiam.topiam.cn/docs/portal/form/overview'}
+                  href={'#'}
                   rel="noreferrer"
                 >
                   {intl.formatMessage({
