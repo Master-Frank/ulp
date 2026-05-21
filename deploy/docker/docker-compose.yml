@@ -27,7 +27,7 @@ services:
       # root 密码
       MYSQL_ROOT_PASSWORD: root
       # 初始化数据库(后续的初始化sql会在这个库执行)
-      MYSQL_DATABASE: topiam
+      MYSQL_DATABASE: ulp
     ports:
       - "3306:3306"
     volumes:
@@ -128,9 +128,11 @@ services:
     volumes:
       - /docker/rabbitmq/data:/var/lib/rabbitmq
 
-  topiam-console-ce:
-    image: ccr.ccs.tencentyun.com/topiam/eiam-console-ce:1.0.1
-    container_name: topiam-console-ce
+  # Note: build images locally via `mvn -pl ulp-console spring-boot:build-image` (etc.)
+  # or push to your own registry, then update image: refs below.
+  ulp-console:
+    image: ulp-console:latest
+    container_name: ulp-console
     environment:
       # 时区上海
       TZ: Asia/Shanghai
@@ -139,13 +141,13 @@ services:
       - "1898:1898"
     volumes:
       # 配置文件
-      - /docker/topiam/conf:/opt/topiam/conf
+      - /docker/ulp/conf:/opt/ulp/conf
     privileged: true
     network_mode: "host"
 
-  topiam-portal-ce:
-    image: ccr.ccs.tencentyun.com/topiam/eiam-portal-ce:1.0.1
-    container_name: topiam-portal-ce
+  ulp-portal:
+    image: ulp-portal:latest
+    container_name: ulp-portal
     environment:
       # 时区上海
       TZ: Asia/Shanghai
@@ -154,13 +156,13 @@ services:
       - "1989:1989"
     volumes:
       # 配置文件
-      - /docker/topiam/conf:/opt/topiam/conf
+      - /docker/ulp/conf:/opt/ulp/conf
     privileged: true
     network_mode: "host"
 
-  topiam-portal-openapi:
-    image: ccr.ccs.tencentyun.com/topiam/eiam-openapi-ce:1.0.1
-    container_name: topiam-openapi-ce
+  ulp-openapi:
+    image: ulp-openapi:latest
+    container_name: ulp-openapi
     environment:
       # 时区上海
       TZ: Asia/Shanghai
@@ -169,6 +171,6 @@ services:
       - "1988:1988"
     volumes:
       # 配置文件
-      - /docker/topiam/conf:/opt/topiam/conf
+      - /docker/ulp/conf:/opt/ulp/conf
     privileged: true
     network_mode: "host"

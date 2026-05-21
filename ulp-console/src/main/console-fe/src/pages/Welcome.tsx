@@ -122,7 +122,7 @@ const Welcome: React.FC = () => {
               color: '#1A1A1A',
             }}
           >
-            欢迎使用 DLP 统一登录平台
+            欢迎使用 ULP 统一登录平台
           </div>
           <p
             style={{
@@ -134,7 +134,7 @@ const Welcome: React.FC = () => {
               width: '65%',
             }}
           >
-            DLP 统一登录平台平台（Dragonpass United Login Platform）
+            ULP 统一登录平台（United Login Platform）
             用于管理集团员工的账号、权限、身份认证、应用访问，帮助整合部署在本地或云端的内部办公系统、业务系统及三方
             SaaS 系统的所有身份，实现一个账号打通所有应用的服务。
           </p>

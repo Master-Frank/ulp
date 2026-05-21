@@ -23,7 +23,7 @@ const Workplace: FC = () => {
   return (
     <PageContainer>
       <Card>
-        <Alert banner description={'欢迎使用 DLP 统一登录平台'} type={'success'} />
+        <Alert banner description={'欢迎使用 ULP 统一登录平台'} type={'success'} />
       </Card>
     </PageContainer>
   );
