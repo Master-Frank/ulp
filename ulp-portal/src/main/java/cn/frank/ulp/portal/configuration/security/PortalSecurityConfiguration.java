@@ -101,8 +101,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.API_PATH;
 /**
  * PortalSecurityConfiguration
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2019/9/27 21:54
+ * @author Frank Zhang
  */
 @EnableMethodSecurity
 @Configuration(proxyBeanMethods = false)

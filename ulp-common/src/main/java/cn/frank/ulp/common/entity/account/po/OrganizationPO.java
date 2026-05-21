@@ -29,8 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 组织 PO
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/5/30 21:27
+ * @author Frank Zhang
  */
 @Data
 @Slf4j

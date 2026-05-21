@@ -23,8 +23,7 @@ import cn.frank.ulp.console.pojo.result.app.UserIdpBindListResult;
 /**
  * 用户身份提供商绑定
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/11 21:10
+ * @author Frank Zhang
  */
 public interface UserIdpBindService {
     /**

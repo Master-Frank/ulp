@@ -21,8 +21,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.V1_API_PATH;
 /**
  * Open API 常量
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/9/5 21:58
+ * @author Frank Zhang
  */
 public class OpenApiV1Constants {
     /**

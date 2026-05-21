@@ -45,8 +45,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 /**
  * 身份提供商
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/7/11 21:18
+ * @author Frank Zhang
  */
 @Tag(name = "身份提供商")
 @Validated

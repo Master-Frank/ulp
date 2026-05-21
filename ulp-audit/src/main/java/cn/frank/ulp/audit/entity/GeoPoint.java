@@ -23,8 +23,7 @@ import lombok.Getter;
 /**
  * GeoPoint
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2024/04/17 23:30
+ * @author Frank Zhang
  */
 @Getter
 public class GeoPoint {

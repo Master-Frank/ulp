@@ -53,8 +53,7 @@ import static cn.frank.ulp.protocol.jwt.constant.JwtProtocolConstants.JWT_ERROR_
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/9/4 20:14
+ * @author Frank Zhang
  */
 public final class JwtLogoutAuthenticationEndpointFilter extends OncePerRequestFilter {
 

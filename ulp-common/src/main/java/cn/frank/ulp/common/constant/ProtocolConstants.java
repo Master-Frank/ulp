@@ -24,8 +24,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.V1_API_PATH;
 /**
  * 协议常量
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/5/18 21:49
+ * @author Frank Zhang
  */
 public final class ProtocolConstants {
     /**

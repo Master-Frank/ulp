@@ -28,8 +28,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 审计字典结果
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/27 22:35
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "字典响应")

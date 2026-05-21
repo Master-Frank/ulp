@@ -27,8 +27,7 @@ import cn.frank.ulp.support.web.converter.EnumConvert;
 /**
  * 存储提供商
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/19
+ * @author Frank Zhang
  */
 public enum StorageProvider implements Serializable {
 

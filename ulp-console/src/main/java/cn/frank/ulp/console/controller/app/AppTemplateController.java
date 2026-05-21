@@ -42,8 +42,7 @@ import static cn.frank.ulp.common.constant.AppConstants.APP_PATH;
 /**
  * 应用模板
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/9/27 21:28
+ * @author Frank Zhang
  */
 @Validated
 @Tag(name = "应用模板")

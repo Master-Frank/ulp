@@ -26,8 +26,7 @@ import static cn.frank.ulp.audit.event.ConsoleResource.IDP_RESOURCE;
 /**
  * 认证资源
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/24 22:59
+ * @author Frank Zhang
  */
 public class AuthenticationEventType {
 

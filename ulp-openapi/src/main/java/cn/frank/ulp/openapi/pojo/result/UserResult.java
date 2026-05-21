@@ -31,8 +31,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.DEFAULT_DATE_TIME_FORM
 /**
  * 根据ID查询用户结果
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/11 23:22
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "根据ID查询用户响应")

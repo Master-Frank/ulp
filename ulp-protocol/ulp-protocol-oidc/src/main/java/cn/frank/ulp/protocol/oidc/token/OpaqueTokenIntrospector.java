@@ -39,8 +39,7 @@ import static org.springframework.security.oauth2.server.authorization.OAuth2Tok
 /**
  * 不透明令牌 Introspector
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/10/29 21:27
+ * @author Frank Zhang
  */
 public class OpaqueTokenIntrospector implements
                                      org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector {

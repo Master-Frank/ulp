@@ -22,7 +22,7 @@ import org.springframework.http.HttpStatus;
  * 信息有效性验证失败异常
  * 当信息有效性验证失败时抛出此异常
  */
-public class InfoValidityFailException extends TopIamException {
+public class InfoValidityFailException extends UlpException {
     /**
      * 构造函数
      *
@@ -71,7 +71,8 @@ public class InfoValidityFailException extends TopIamException {
      * @param message 异常消息
      * @param httpStatus HTTP状态码
      */
-    public InfoValidityFailException(Throwable cause, String errorCode, String message, HttpStatus httpStatus) {
+    public InfoValidityFailException(Throwable cause, String errorCode, String message,
+                                     HttpStatus httpStatus) {
         super(cause, errorCode, message, httpStatus);
     }
 }

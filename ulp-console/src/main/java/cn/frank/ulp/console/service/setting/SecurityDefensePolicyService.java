@@ -22,8 +22,7 @@ import cn.frank.ulp.console.pojo.save.setting.SecurityDefensePolicyParam;
 /**
  * 安全策略
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023-03-09
+ * @author Frank Zhang
  */
 public interface SecurityDefensePolicyService {
 

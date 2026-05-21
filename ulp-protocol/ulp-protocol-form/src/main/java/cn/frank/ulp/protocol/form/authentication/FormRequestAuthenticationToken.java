@@ -26,8 +26,7 @@ import cn.frank.ulp.application.form.model.FormProtocolConfig;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/8 00:08
+ * @author Frank Zhang
  */
 public class FormRequestAuthenticationToken extends AbstractAuthenticationToken {
     private final Authentication     principal;

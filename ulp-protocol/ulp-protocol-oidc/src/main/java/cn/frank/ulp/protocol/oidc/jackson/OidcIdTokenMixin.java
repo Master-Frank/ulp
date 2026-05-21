@@ -25,8 +25,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/30 21:10
+ * @author Frank Zhang
  */
 @SuppressWarnings("AlibabaAbstractClassShouldStartWithAbstractNaming")
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)

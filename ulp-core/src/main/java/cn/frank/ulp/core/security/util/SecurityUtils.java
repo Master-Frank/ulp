@@ -21,8 +21,7 @@ import org.springframework.security.authentication.event.*;
 /**
  * Spring Security的实用程序类。
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2019/5/7
+ * @author Frank Zhang
  */
 public final class SecurityUtils {
     /**

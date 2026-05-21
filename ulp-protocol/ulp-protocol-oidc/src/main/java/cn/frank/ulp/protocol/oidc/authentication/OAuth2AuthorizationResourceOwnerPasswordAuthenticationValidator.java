@@ -31,8 +31,7 @@ import static cn.frank.ulp.protocol.oidc.authentication.OAuth2AuthorizationResou
 /**
  * 验证器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/11/9 23:54
+ * @author Frank Zhang
  */
 @SuppressWarnings({ "AlibabaClassNamingShouldBeCamel", "AlibabaUndefineMagicConstant" })
 public final class OAuth2AuthorizationResourceOwnerPasswordAuthenticationValidator implements

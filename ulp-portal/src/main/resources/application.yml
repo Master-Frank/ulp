@@ -18,7 +18,7 @@
 # spring
 spring:
   application:
-    name: TOPIAM 企业数字身份管控平台门户端
+    name: ULP 统一登录平台门户端
   jackson:
     #日期格式化
     date-format: "yyyy-MM-dd HH:mm:ss"
@@ -44,7 +44,7 @@ spring:
   cache:
     type: redis
     redis:
-      key-prefix: 'topiam'
+      key-prefix: 'ulp'
   servlet:
     multipart:
       max-file-size: 50MB
@@ -55,7 +55,7 @@ spring:
       flush-mode: immediate
       repository-type: indexed
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/topiam?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
+    url: jdbc:mysql://127.0.0.1:3306/ulp?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
     username: root
     password: root
     type: com.zaxxer.hikari.HikariDataSource
@@ -68,7 +68,7 @@ spring:
       max-lifetime: 1800000
       maximum-pool-size: 15
       minimum-idle: 5
-      pool-name: eiam
+      pool-name: ulp
   #elasticsearch
   elasticsearch:
     socket-timeout: 30000s
@@ -112,7 +112,7 @@ server:
       cookie:
         secure: true
         same-site: none
-        name: topiam-employee-portal-cookie
+        name: ulp-portal-cookie
         http-only: true
     encoding:
       charset: UTF-8
@@ -133,8 +133,8 @@ springdoc:
   swagger-ui:
     csrf:
       enabled: true
-      cookie-name: 'topiam-csrf-cookie'
-      header-name: 'topiam-csrf'
+      cookie-name: 'ulp-csrf-cookie'
+      header-name: 'ulp-csrf'
     enabled: false
   cache:
     disabled: true

@@ -47,8 +47,7 @@ import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignReques
 import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/10 21:36
+ * @author Frank Zhang
  */
 @Slf4j
 public class S3Storage extends AbstractStorage {

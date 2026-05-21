@@ -24,8 +24,7 @@ import cn.frank.ulp.support.security.userdetails.UserDetails;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/8 00:23
+ * @author Frank Zhang
  */
 public interface JwtAuthorizationService {
 

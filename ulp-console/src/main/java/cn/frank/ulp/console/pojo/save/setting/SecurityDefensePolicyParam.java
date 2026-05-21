@@ -27,8 +27,7 @@ import jakarta.validation.constraints.NotBlank;
 /**
  * 创建安全策略参数
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023-03-09
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "创建安全策略入参数")

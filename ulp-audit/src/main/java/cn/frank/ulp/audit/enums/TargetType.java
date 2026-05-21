@@ -27,8 +27,7 @@ import lombok.Getter;
 /**
  * 目标类型
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/10/27 23:46
+ * @author Frank Zhang
  */
 @Getter
 public enum TargetType {

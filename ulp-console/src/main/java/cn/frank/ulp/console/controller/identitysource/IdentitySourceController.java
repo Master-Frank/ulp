@@ -51,8 +51,7 @@ import static cn.frank.ulp.common.constant.AccountConstants.IDENTITY_SOURCE_PATH
 /**
  * 身份源管理
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/7/11 21:18
+ * @author Frank Zhang
  */
 @Validated
 @Tag(name = "身份源管理")

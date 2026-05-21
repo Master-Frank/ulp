@@ -22,7 +22,7 @@ import org.springframework.stereotype.Repository;
 import cn.frank.ulp.common.entity.message.SmsSendRecordEntity;
 
 /**
- * @author TopIAM
+ * @author Frank Zhang
  */
 @Repository
 public interface SmsSendRecordRepository extends JpaRepository<SmsSendRecordEntity, String> {

@@ -23,39 +23,39 @@ import java.util.TreeMap;
 import org.springframework.http.HttpStatus;
 
 /**
- * TopIAM异常基类
- * 所有TopIAM相关异常的基类
+ * ULP 异常基类
+ * 所有 ULP 相关异常的基类
  */
-public class TopIamException extends RuntimeException {
-    public static final String BIND_EXCEPTION = "bind_exception";
-    public static final String DESCRIPTION = "error_description";
-    public static final String STATUS = "status";
-    public static final String DEFAULT_EXCEPTION = "unknown_exception";
-    public static final String CONSTRAINT_VIOLATION_EXCEPTION = "constraint_violation_exception";
-    public static final String ERROR = "error";
+public class UlpException extends RuntimeException {
+    public static final String     BIND_EXCEPTION                 = "bind_exception";
+    public static final String     DESCRIPTION                    = "error_description";
+    public static final String     STATUS                         = "status";
+    public static final String     DEFAULT_EXCEPTION              = "unknown_exception";
+    public static final String     CONSTRAINT_VIOLATION_EXCEPTION = "constraint_violation_exception";
+    public static final String     ERROR                          = "error";
     public static final HttpStatus DEFAULT_STATUS;
-    
+
     /**
      * 错误码
      */
-    private final String errorCode;
-    
+    private final String           errorCode;
+
     /**
      * 附加信息
      */
-    private Map<String, String> additionalInformation;
-    
+    private Map<String, String>    additionalInformation;
+
     /**
      * HTTP状态码
      */
-    private final HttpStatus httpStatus;
+    private final HttpStatus       httpStatus;
 
     /**
      * 构造函数
      *
      * @param message 异常消息
      */
-    public TopIamException(String message) {
+    public UlpException(String message) {
         this("unknown_exception", message, DEFAULT_STATUS);
     }
 
@@ -74,7 +74,7 @@ public class TopIamException extends RuntimeException {
      * @param message 异常消息
      * @param httpStatus HTTP状态码
      */
-    public TopIamException(String message, HttpStatus httpStatus) {
+    public UlpException(String message, HttpStatus httpStatus) {
         this("unknown_exception", message, httpStatus);
     }
 
@@ -99,7 +99,7 @@ public class TopIamException extends RuntimeException {
      * @param message 异常消息
      * @param httpStatus HTTP状态码
      */
-    public TopIamException(Throwable cause, String errorCode, String message, HttpStatus httpStatus) {
+    public UlpException(Throwable cause, String errorCode, String message, HttpStatus httpStatus) {
         super(message, cause);
         this.additionalInformation = null;
         this.errorCode = errorCode;
@@ -112,7 +112,7 @@ public class TopIamException extends RuntimeException {
      * @param message 异常消息
      * @param cause 异常原因
      */
-    public TopIamException(String message, Throwable cause) {
+    public UlpException(String message, Throwable cause) {
         super(message, cause);
         this.additionalInformation = null;
         this.errorCode = "unknown_exception";
@@ -125,7 +125,7 @@ public class TopIamException extends RuntimeException {
      * @param errorCode 错误码
      * @param message 异常消息
      */
-    public TopIamException(String errorCode, String message) {
+    public UlpException(String errorCode, String message) {
         super(message);
         this.additionalInformation = null;
         this.errorCode = errorCode;
@@ -148,7 +148,7 @@ public class TopIamException extends RuntimeException {
      * @param message 异常消息
      * @param httpStatus HTTP状态码
      */
-    public TopIamException(String errorCode, String message, HttpStatus httpStatus) {
+    public UlpException(String errorCode, String message, HttpStatus httpStatus) {
         super(message);
         this.additionalInformation = null;
         this.errorCode = errorCode;
@@ -159,9 +159,9 @@ public class TopIamException extends RuntimeException {
      * 根据映射创建异常实例
      *
      * @param exceptionMap 异常信息映射
-     * @return TopIamException实例
+     * @return UlpException实例
      */
-    public static TopIamException valueOf(Map<String, String> exceptionMap) {
+    public static UlpException valueOf(Map<String, String> exceptionMap) {
         String errorCode = exceptionMap.get("error");
         String errorMessage = (String) exceptionMap.getOrDefault("error_description", null);
         HttpStatus status = DEFAULT_STATUS;
@@ -172,7 +172,7 @@ public class TopIamException extends RuntimeException {
             }
         }
 
-        TopIamException exception = new TopIamException(errorCode, errorMessage, status);
+        UlpException exception = new UlpException(errorCode, errorMessage, status);
         Iterator<Map.Entry<String, String>> iterator = exceptionMap.entrySet().iterator();
 
         while (iterator.hasNext()) {
@@ -195,7 +195,7 @@ public class TopIamException extends RuntimeException {
         StringBuilder sb = new StringBuilder();
         String delimiter = "";
         String value;
-        
+
         if ((value = this.getErrorCode()) != null) {
             sb.append(delimiter).append("error: ").append(value).append("\n");
             delimiter = "error: ";
@@ -209,7 +209,8 @@ public class TopIamException extends RuntimeException {
         Map<String, String> additionalInfo;
         if ((additionalInfo = this.getAdditionalInformation()) != null) {
             for (Map.Entry<String, String> entry : additionalInfo.entrySet()) {
-                sb.append(delimiter).append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+                sb.append(delimiter).append(entry.getKey()).append(": ").append(entry.getValue())
+                    .append("\n");
                 delimiter = "error: ";
             }
         }

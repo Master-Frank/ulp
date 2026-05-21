@@ -28,8 +28,7 @@ import lombok.Getter;
 /**
  * 审计事件
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/8/1 21:56
+ * @author Frank Zhang
  */
 @Getter
 public class AuditEvent extends ApplicationEvent {
@@ -38,11 +37,11 @@ public class AuditEvent extends ApplicationEvent {
 
     private final String       requestId;
     private final String       sessionId;
-    private final Actor actor;
-    private final Event event;
+    private final Actor        actor;
+    private final Event        event;
     private final List<Target> targets;
-    private final UserAgent userAgent;
-    private final GeoLocation geoLocation;
+    private final UserAgent    userAgent;
+    private final GeoLocation  geoLocation;
 
     public AuditEvent(String requestId, String sessionId, Actor actor, Event event,
                       UserAgent userAgent, GeoLocation geoLocation, List<Target> targets) {

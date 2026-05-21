@@ -23,8 +23,7 @@ import static org.springframework.http.MediaType.*;
 /**
  * View Content Type
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/03/13 21:32
+ * @author Frank Zhang
  */
 public enum ViewContentType {
                              /**

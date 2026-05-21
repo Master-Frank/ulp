@@ -39,7 +39,7 @@ import cn.frank.ulp.common.repository.account.UserIdpRepository;
 import cn.frank.ulp.common.repository.account.UserRepository;
 import cn.frank.ulp.common.repository.authentication.IdentityProviderRepository;
 import cn.frank.ulp.portal.converter.AccountConverter;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.security.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
@@ -48,8 +48,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 身份验证用户详细信息实现
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/11 21:10
+ * @author Frank Zhang
  */
 @Component
 @Slf4j
@@ -70,7 +69,7 @@ public class IdentityProviderAuthenticationServiceImpl implements
             throw new NullPointerException("认证源不存在");
         }
         if (!source.get().getEnabled()) {
-            throw new TopIamException("认证源已禁用");
+            throw new UlpException("认证源已禁用");
         }
         Optional<UserIdpBindPO> authnBind = userIdpRepository.findByIdpIdAndOpenId(providerId,
             openId);

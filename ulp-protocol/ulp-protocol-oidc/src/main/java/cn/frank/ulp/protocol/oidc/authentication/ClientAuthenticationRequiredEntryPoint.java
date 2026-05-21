@@ -38,8 +38,7 @@ import static cn.frank.ulp.protocol.oidc.constant.OidcProtocolConstants.OIDC_ERR
 /**
  * 需要客户端身份验证
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/12/9 18:18
+ * @author Frank Zhang
  */
 public class ClientAuthenticationRequiredEntryPoint extends AbstractAuthenticationEntryPoint {
 

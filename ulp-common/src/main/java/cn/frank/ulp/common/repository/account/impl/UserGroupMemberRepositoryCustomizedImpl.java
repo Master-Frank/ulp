@@ -35,8 +35,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2022/2/13 21:27
+ * @author Frank Zhang
  */
 @Repository
 @AllArgsConstructor

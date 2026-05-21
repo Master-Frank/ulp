@@ -48,8 +48,7 @@ import static cn.frank.ulp.core.message.sms.SmsMsgEventPublish.USERNAME;
 /**
  * 消息设置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/7/24 22:36
+ * @author Frank Zhang
  */
 @Validated
 @Tag(name = "短信提供商")

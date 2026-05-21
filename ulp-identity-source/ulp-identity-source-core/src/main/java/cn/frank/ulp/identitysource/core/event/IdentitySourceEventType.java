@@ -19,8 +19,7 @@ package cn.frank.ulp.identitysource.core.event;
 /**
      * 身份源配置事件类型
      *
-     * @author TopIAM
-     * Created by support@topiam.cn on 2022/3/20 21:59
+     * @author Frank Zhang
      */
 public enum IdentitySourceEventType {
                                      /**

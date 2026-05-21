@@ -23,8 +23,7 @@ import org.springframework.security.core.SpringSecurityCoreVersion;
 import org.springframework.util.Assert;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/8 00:28
+ * @author Frank Zhang
  */
 public class FormError implements Serializable {
 

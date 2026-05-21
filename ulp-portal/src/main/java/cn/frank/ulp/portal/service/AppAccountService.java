@@ -24,8 +24,7 @@ import cn.frank.ulp.portal.pojo.request.AppAccountRequest;
 /**
  * 应用账户
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/8/25 21:07
+ * @author Frank Zhang
  */
 public interface AppAccountService {
 

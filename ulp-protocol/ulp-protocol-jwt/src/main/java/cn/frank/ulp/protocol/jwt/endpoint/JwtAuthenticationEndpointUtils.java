@@ -21,8 +21,7 @@ import cn.frank.ulp.protocol.jwt.exception.JwtError;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/9/4 13:05
+ * @author Frank Zhang
  */
 public class JwtAuthenticationEndpointUtils {
 

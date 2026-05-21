@@ -26,8 +26,7 @@ import jakarta.validation.constraints.NotBlank;
 /**
  * 分组保存入参
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/8/31 23:26
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "应用分组保存入参")

@@ -33,8 +33,7 @@ import io.swagger.v3.oas.models.SpecVersion;
 /**
  * Form openapi 定制器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/11/25 13:53
+ * @author Frank Zhang
  */
 public class FormOpenApiCustomizer implements GlobalOpenApiCustomizer, ApplicationContextAware {
 

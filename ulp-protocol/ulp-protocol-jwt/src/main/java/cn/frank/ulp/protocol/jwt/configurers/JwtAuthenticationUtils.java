@@ -25,8 +25,7 @@ import cn.frank.ulp.protocol.jwt.JwtAuthorizationService;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/8 23:19
+ * @author Frank Zhang
  */
 public class JwtAuthenticationUtils {
 

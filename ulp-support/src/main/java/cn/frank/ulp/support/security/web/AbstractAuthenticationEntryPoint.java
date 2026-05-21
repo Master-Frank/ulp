@@ -39,27 +39,27 @@ import jakarta.servlet.http.HttpServletResponse;
  * 实现AuthenticationEntryPoint接口，处理未认证用户的访问请求
  */
 public abstract class AbstractAuthenticationEntryPoint implements AuthenticationEntryPoint {
-   /**
+    /**
     * 用户代理解析器
     */
-   private final UserAgentParser userAgentParser;
-   
-   /**
+    private final UserAgentParser userAgentParser;
+
+    /**
     * 日志记录器
     */
-   private final Logger logger;
+    private final Logger          logger;
 
-   /**
+    /**
     * 构造函数
     *
     * @param userAgentParser 用户代理解析器
     */
-   public AbstractAuthenticationEntryPoint(UserAgentParser userAgentParser) {
-      this.logger = LoggerFactory.getLogger(this.getClass());
-      this.userAgentParser = userAgentParser;
-   }
+    public AbstractAuthenticationEntryPoint(UserAgentParser userAgentParser) {
+        this.logger = LoggerFactory.getLogger(this.getClass());
+        this.userAgentParser = userAgentParser;
+    }
 
-   /**
+    /**
     * 处理未认证用户的访问请求
     *
     * @param request HTTP请求
@@ -68,20 +68,23 @@ public abstract class AbstractAuthenticationEntryPoint implements Authentication
     * @throws IOException IO异常
     * @throws ServletException Servlet异常
     */
-   @Override
-   public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-      response.setStatus(401);
-      String requestBody = IOUtils.toString(request.getInputStream(), StandardCharsets.UTF_8).replaceAll("\\s+", "");
-      
-      Log log = new Log();
-      log.setRequestUrl(request.getRequestURL().toString());
-      log.setHttpType(request.getMethod());
-      log.setBody(requestBody);
-      log.setHeaders(HttpRequestUtils.getRequestHeaders(request));
-      log.setIp(IpUtils.getIpAddr(request));
-      log.setSuccess(Boolean.FALSE);
-      log.setResult(authException.getMessage());
-      log.setUserAgent(this.userAgentParser.getUserAgent(request));
-      this.logger.error(log.toString());
-   }
+    @Override
+    public void commence(HttpServletRequest request, HttpServletResponse response,
+                         AuthenticationException authException) throws IOException,
+                                                                ServletException {
+        response.setStatus(401);
+        String requestBody = IOUtils.toString(request.getInputStream(), StandardCharsets.UTF_8)
+            .replaceAll("\\s+", "");
+
+        Log log = new Log();
+        log.setRequestUrl(request.getRequestURL().toString());
+        log.setHttpType(request.getMethod());
+        log.setBody(requestBody);
+        log.setHeaders(HttpRequestUtils.getRequestHeaders(request));
+        log.setIp(IpUtils.getIpAddr(request));
+        log.setSuccess(Boolean.FALSE);
+        log.setResult(authException.getMessage());
+        log.setUserAgent(this.userAgentParser.getUserAgent(request));
+        this.logger.error(log.toString());
+    }
 }

@@ -36,8 +36,7 @@ import static cn.frank.ulp.support.context.ServletContextService.isHtmlRequest;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/9/4 13:03
+ * @author Frank Zhang
  */
 public class JwtAuthenticationFailureHandler implements AuthenticationFailureHandler {
     /**

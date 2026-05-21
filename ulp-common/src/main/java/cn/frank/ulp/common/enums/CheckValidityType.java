@@ -19,8 +19,7 @@ package cn.frank.ulp.common.enums;
 /**
  * 检查有效性类型
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/17 21:22
+ * @author Frank Zhang
  */
 public enum CheckValidityType {
                                /**

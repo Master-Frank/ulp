@@ -24,8 +24,7 @@ import cn.frank.ulp.support.web.converter.EnumConvert;
 /**
  * Form用户名，密码加密类型
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/02/15
+ * @author Frank Zhang
  */
 public enum FormEncryptType implements BaseEnum {
                                                  /**

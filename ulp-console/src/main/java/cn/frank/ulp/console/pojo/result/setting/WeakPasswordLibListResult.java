@@ -27,8 +27,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 弱密码列表查询结果
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/10/11 21:19
+ * @author Frank Zhang
  */
 @Data
 @RequiredArgsConstructor

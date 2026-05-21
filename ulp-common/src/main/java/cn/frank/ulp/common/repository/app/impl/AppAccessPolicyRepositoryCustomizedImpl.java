@@ -29,7 +29,7 @@ import org.springframework.stereotype.Repository;
 import cn.frank.ulp.common.entity.app.po.AppAccessPolicyPO;
 import cn.frank.ulp.common.entity.app.query.AppAccessPolicyQueryParam;
 import cn.frank.ulp.common.repository.app.AppAccessPolicyRepositoryCustomized;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -37,8 +37,7 @@ import jakarta.persistence.TypedQuery;
 /**
  * AppPolicy Repository Customized
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/29 21:27
+ * @author Frank Zhang
  */
 @Repository
 public class AppAccessPolicyRepositoryCustomizedImpl implements
@@ -111,7 +110,7 @@ public class AppAccessPolicyRepositoryCustomizedImpl implements
             args.put("subjectId", query.getSubjectId());
         } else {
             if (StringUtils.isEmpty(query.getAppId())) {
-                throw new TopIamException("主体ID不能为空");
+                throw new UlpException("主体ID不能为空");
             }
         }
 

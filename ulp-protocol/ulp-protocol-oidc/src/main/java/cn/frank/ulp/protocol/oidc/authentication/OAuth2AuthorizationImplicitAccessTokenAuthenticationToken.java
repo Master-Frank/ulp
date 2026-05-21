@@ -27,8 +27,7 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.util.Assert;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/28 22:43
+ * @author Frank Zhang
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class OAuth2AuthorizationImplicitAccessTokenAuthenticationToken extends

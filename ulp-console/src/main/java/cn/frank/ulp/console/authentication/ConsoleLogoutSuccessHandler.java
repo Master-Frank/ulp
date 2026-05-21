@@ -32,8 +32,7 @@ import static cn.frank.ulp.support.result.ApiRestResult.SUCCESS;
 /**
  * 注销成功
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/9/2 22:11
+ * @author Frank Zhang
  */
 public class ConsoleLogoutSuccessHandler implements LogoutSuccessHandler {
     /**

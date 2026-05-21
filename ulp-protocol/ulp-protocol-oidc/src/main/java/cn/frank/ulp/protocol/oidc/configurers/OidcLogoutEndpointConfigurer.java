@@ -65,8 +65,7 @@ import static cn.frank.ulp.protocol.oidc.constant.OidcProtocolConstants.OIDC_ERR
 /**
  * Configurer for OpenID Connect 1.0 RP-Initiated Logout Endpoint.
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/27 21:02
+ * @author Frank Zhang
  */
 public final class OidcLogoutEndpointConfigurer extends AbstractConfigurer {
 

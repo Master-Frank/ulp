@@ -26,8 +26,7 @@ import cn.frank.ulp.console.pojo.result.setting.SmsTemplateListResult;
  * 短信模版 服务类
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-08-13
+ * @author Frank Zhang
  */
 public interface SmsTemplateService extends SettingService {
 

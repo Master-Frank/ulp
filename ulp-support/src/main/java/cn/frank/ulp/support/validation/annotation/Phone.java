@@ -32,13 +32,14 @@ import jakarta.validation.Payload;
  * 用于验证手机号格式是否正确
  */
 @Documented
-@Constraint(validatedBy = {PhoneValidator.class})
-@Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.PARAMETER, ElementType.TYPE_USE})
+@Constraint(validatedBy = { PhoneValidator.class })
+@Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE,
+          ElementType.CONSTRUCTOR, ElementType.PARAMETER, ElementType.TYPE_USE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Phone {
-   String message() default "手机号格式错误";
+    String message() default "手机号格式错误";
 
-   Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 
-   Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 }

@@ -41,8 +41,7 @@ import static cn.frank.ulp.protocol.oidc.endpoint.OAuth2ParameterNames.*;
 /**
  * 验证器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/11/9 23:54
+ * @author Frank Zhang
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public final class OAuth2AuthorizationImplicitRequestAuthenticationValidator implements

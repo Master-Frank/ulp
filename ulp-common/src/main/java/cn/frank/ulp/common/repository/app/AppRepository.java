@@ -35,7 +35,7 @@ import cn.frank.ulp.common.entity.app.AppEntity;
 import static cn.frank.ulp.common.constant.AppConstants.APP_CACHE_NAME;
 
 /**
- * @author TopIAM
+ * @author Frank Zhang
  */
 @Repository
 @CacheConfig(cacheNames = { APP_CACHE_NAME })

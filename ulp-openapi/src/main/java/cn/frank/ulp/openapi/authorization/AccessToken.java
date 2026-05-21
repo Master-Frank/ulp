@@ -23,8 +23,7 @@ import lombok.Data;
 /**
  * Authorization
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/25 21:53
+ * @author Frank Zhang
  */
 @Data
 public class AccessToken {

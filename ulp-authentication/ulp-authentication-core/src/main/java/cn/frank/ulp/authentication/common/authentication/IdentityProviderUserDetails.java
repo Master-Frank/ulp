@@ -27,8 +27,7 @@ import lombok.Getter;
 /**
  * IDP用户信息
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/9/18 21:23
+ * @author Frank Zhang
  */
 @Getter
 public class IdentityProviderUserDetails {

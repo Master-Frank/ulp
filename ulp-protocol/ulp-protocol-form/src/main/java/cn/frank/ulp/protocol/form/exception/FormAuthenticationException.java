@@ -23,8 +23,7 @@ import lombok.Getter;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/8 00:27
+ * @author Frank Zhang
  */
 @Getter
 public class FormAuthenticationException extends AuthenticationException {

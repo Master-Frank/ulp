@@ -18,8 +18,7 @@ package cn.frank.ulp.protocol.jwt.token;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/10 22:43
+ * @author Frank Zhang
  */
 @FunctionalInterface
 public interface IdTokenGenerator {

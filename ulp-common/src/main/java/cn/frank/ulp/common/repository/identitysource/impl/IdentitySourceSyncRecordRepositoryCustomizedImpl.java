@@ -33,8 +33,7 @@ import cn.frank.ulp.common.repository.identitysource.IdentitySourceSyncRecordRep
 /**
  * 身份源同步记录
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/3/15 21:35
+ * @author Frank Zhang
  */
 @Repository
 public class IdentitySourceSyncRecordRepositoryCustomizedImpl implements
@@ -43,7 +42,7 @@ public class IdentitySourceSyncRecordRepositoryCustomizedImpl implements
     @Override
     public void batchSave(List<IdentitySourceSyncRecordEntity> list) {
         jdbcTemplate.batchUpdate(
-            "INSERT INTO eiam_identity_source_sync_record (id_, sync_history_id, action_type, object_id, object_name, object_type, status_,desc_,create_by,create_time,update_by,update_time,remark_,is_deleted) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            "INSERT INTO ulp_identity_source_sync_record (id_, sync_history_id, action_type, object_id, object_name, object_type, status_,desc_,create_by,create_time,update_by,update_time,remark_,is_deleted) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
             new BatchPreparedStatementSetter() {
                 @Override
                 public void setValues(@NotNull PreparedStatement ps, int i) throws SQLException {

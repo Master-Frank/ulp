@@ -41,8 +41,7 @@ import static cn.frank.ulp.core.setting.SecuritySettingConstants.SECURITY_BASIC_
  * 安全设置表 服务实现类
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-10-01
+ * @author Frank Zhang
  */
 @Service
 public class SecuritySettingServiceImpl extends SettingServiceImpl

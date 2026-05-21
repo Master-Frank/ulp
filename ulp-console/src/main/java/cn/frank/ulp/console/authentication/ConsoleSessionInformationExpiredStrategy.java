@@ -31,8 +31,7 @@ import static cn.frank.ulp.support.exception.enums.ExceptionStatus.EX000203;
 /**
  * session 过期
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/7/25 21:08
+ * @author Frank Zhang
  */
 public class ConsoleSessionInformationExpiredStrategy implements SessionInformationExpiredStrategy {
 

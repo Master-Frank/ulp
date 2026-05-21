@@ -24,8 +24,7 @@ import cn.frank.ulp.openapi.authorization.AccessToken;
 /**
  * TokenStorage
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/5/8 21:42
+ * @author Frank Zhang
  */
 public interface AccessTokenStore extends Serializable {
 

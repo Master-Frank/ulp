@@ -34,8 +34,7 @@ import static cn.frank.ulp.common.entity.app.AppCertEntity.USING_TYPE_FIELD_NAME
 /**
  * 应用证书Converter
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/6/4 23:52
+ * @author Frank Zhang
  */
 @Mapper(componentModel = "spring")
 public interface AppCertConverter {

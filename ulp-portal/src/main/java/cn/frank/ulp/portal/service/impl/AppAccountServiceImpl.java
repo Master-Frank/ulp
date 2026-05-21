@@ -39,7 +39,7 @@ import cn.frank.ulp.common.repository.app.AppAccountRepository;
 import cn.frank.ulp.portal.converter.AppAccountConverter;
 import cn.frank.ulp.portal.pojo.request.AppAccountRequest;
 import cn.frank.ulp.portal.service.AppAccountService;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.security.util.SecurityUtils;
 
 import lombok.AllArgsConstructor;
@@ -48,8 +48,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 应用账户
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/8/25 21:07
+ * @author Frank Zhang
  */
 @Service
 @Slf4j
@@ -101,7 +100,7 @@ public class AppAccountServiceImpl implements AppAccountService {
         if (optional.isEmpty()) {
             AuditContext.setContent("删除失败，应用账户不存在");
             log.warn(AuditContext.getContent());
-            throw new TopIamException(AuditContext.getContent());
+            throw new UlpException(AuditContext.getContent());
         }
         appAccountRepository.deleteById(id);
         AuditContext.setTarget(

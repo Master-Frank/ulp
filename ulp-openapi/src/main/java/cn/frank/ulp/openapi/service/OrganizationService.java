@@ -28,8 +28,7 @@ import cn.frank.ulp.openapi.pojo.update.OrganizationUpdateParam;
  * 组织架构 服务类
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-08-09
+ * @author Frank Zhang
  */
 public interface OrganizationService {
 

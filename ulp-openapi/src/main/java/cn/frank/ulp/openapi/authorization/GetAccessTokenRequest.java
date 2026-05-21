@@ -27,8 +27,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 获取 access_token 授权
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/23 21:09
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "获取 access_token 授权")

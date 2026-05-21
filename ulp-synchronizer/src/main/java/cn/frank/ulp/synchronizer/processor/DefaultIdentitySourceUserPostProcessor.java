@@ -71,8 +71,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.SYSTEM_DEFAULT_USER_NA
 /**
  * 身份源数据 pull post 处理器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/3/1 22:04
+ * @author Frank Zhang
  */
 @Slf4j
 @Component
@@ -710,17 +709,17 @@ public class DefaultIdentitySourceUserPostProcessor extends AbstractIdentitySour
     /**
      * 用户 Repository
      */
-    private final UserRepository userRepository;
+    private final UserRepository               userRepository;
 
     /**
      * 用户详情 Repository
      */
-    private final UserDetailRepository userDetailRepository;
+    private final UserDetailRepository         userDetailRepository;
 
     /**
      * 组织机构 Repository
      */
-    private final OrganizationRepository organizationRepository;
+    private final OrganizationRepository       organizationRepository;
 
     /**
      * 组织成员 Repository
@@ -730,7 +729,7 @@ public class DefaultIdentitySourceUserPostProcessor extends AbstractIdentitySour
     /**
      * 删除用户组关联关系
      */
-    private final UserGroupMemberRepository userGroupMemberRepository;
+    private final UserGroupMemberRepository    userGroupMemberRepository;
 
     public DefaultIdentitySourceUserPostProcessor(MailMsgEventPublish mailMsgEventPublish,
                                                   TransactionDefinition transactionDefinition,

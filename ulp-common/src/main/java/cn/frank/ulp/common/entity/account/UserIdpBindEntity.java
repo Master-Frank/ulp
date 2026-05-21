@@ -35,15 +35,14 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.IS_DELETED_COLUMN;
 /**
  * 用户认证方式绑定表
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/29 21:23
+ * @author Frank Zhang
  */
 @Accessors(chain = true)
 @Getter
 @Setter
 @ToString
 @Entity
-@Table(name = "eiam_user_idp_bind")
+@Table(name = "ulp_user_idp_bind")
 @SoftDelete(columnName = IS_DELETED_COLUMN, converter = SoftDeleteConverter.class)
 public class UserIdpBindEntity extends BaseEntity {
 

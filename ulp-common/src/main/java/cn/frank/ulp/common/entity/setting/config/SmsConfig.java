@@ -32,7 +32,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 /**
  * 短信配置
  *
- * @author TopIAM
+ * @author Frank Zhang
  */
 @Data
 public class SmsConfig implements Serializable {

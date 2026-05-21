@@ -23,8 +23,7 @@ import cn.frank.ulp.console.service.account.UserAccountAssociateService;
 import lombok.AllArgsConstructor;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/29 22:48
+ * @author Frank Zhang
  */
 @Service
 @AllArgsConstructor

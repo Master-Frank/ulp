@@ -22,8 +22,7 @@ import cn.frank.ulp.support.security.userdetails.UserDetails;
 /**
  * UserIdpService
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/9 21:54
+ * @author Frank Zhang
  */
 public interface IdentityProviderAuthenticationService {
 

@@ -39,7 +39,7 @@ import cn.frank.ulp.console.pojo.result.setting.GeoIpProviderResult;
 import cn.frank.ulp.console.pojo.save.setting.GeoIpProviderSaveParam;
 import cn.frank.ulp.console.pojo.save.setting.MailProviderSaveParam;
 import cn.frank.ulp.support.context.ApplicationContextService;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.validation.ValidationUtils;
 
 import jakarta.validation.ValidationException;
@@ -50,8 +50,7 @@ import static cn.frank.ulp.core.setting.GeoIpProviderConstants.IPADDRESS_SETTING
 /**
  * 地理位置设置转换器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/10/1 23:18
+ * @author Frank Zhang
  */
 @Mapper(componentModel = "spring")
 public interface GeoLocationSettingConverter {
@@ -91,12 +90,12 @@ public interface GeoLocationSettingConverter {
                    HttpStatusCode statusCode = checkConnect.getStatusCode();
                    if (statusCode.isError()) {
                        log.error("MAXMIND调用失败:[{}]", checkConnect);
-                       throw new TopIamException("注册码错误或连接异常");
+                       throw new UlpException("注册码错误或连接异常");
                    }
                }
                catch (Exception e) {
                    log.error("MAXMIND调用异常: [{}]", e.getMessage());
-                   throw new TopIamException("注册码错误或连接异常");
+                   throw new UlpException("注册码错误或连接异常");
                }
            }
            entity.setDesc(desc);

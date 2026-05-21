@@ -22,8 +22,7 @@ import static cn.frank.ulp.support.security.constant.SecurityConstants.LOGIN_PAT
 /**
  * 认证常量
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/7/26 21:07
+ * @author Frank Zhang
  */
 public final class AuthnConstants {
     public final static String AUTHN_PATH   = EiamConstants.V1_API_PATH + "/authn";

@@ -37,8 +37,7 @@ import static cn.frank.ulp.support.security.util.HttpSecurityFilterOrderRegistra
 /**
  * 认证配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/10 22:58
+ * @author Frank Zhang
  */
 public class MailOtpAuthenticationConfigurer extends
                                              AbstractAuthenticationFilterConfigurer<HttpSecurity, MailOtpAuthenticationConfigurer, MailOtpAuthenticationFilter> {

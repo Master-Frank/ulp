@@ -27,8 +27,7 @@ import jakarta.validation.constraints.NotBlank;
 /**
  * 邮件模板配置更新参数
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/17 23:20
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "邮件模板配置保存入参")

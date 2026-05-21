@@ -26,8 +26,7 @@ import cn.frank.ulp.support.repository.page.domain.PageModel;
 /**
  * 身份源同步service接口
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/3/16 22:56
+ * @author Frank Zhang
  */
 public interface IdentitySourceSyncService {
     /**

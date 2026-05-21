@@ -36,7 +36,7 @@ import com.cronutils.model.field.value.IntegerFieldValue;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -52,8 +52,7 @@ import static com.cronutils.model.field.expression.FieldExpressionFactory.*;
 /**
  * 任务配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/9/24 23:09
+ * @author Frank Zhang
  */
 @Slf4j
 @Data
@@ -155,7 +154,7 @@ public class JobConfig implements Serializable {
     @JsonIgnore
     public String getCronExpression(CronType cronType) {
         if (!(cronType.equals(CronType.SPRING) || cronType.equals(CronType.QUARTZ))) {
-            throw new TopIamException("不支持该类型 [" + cronType + "]");
+            throw new UlpException("不支持该类型 [" + cronType + "]");
         }
         //小时
         FieldExpression hour = always();

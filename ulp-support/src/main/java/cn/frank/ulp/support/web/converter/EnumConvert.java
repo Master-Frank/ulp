@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  * 枚举转换注解
  * 用于标识需要进行枚举转换的方法
  */
-@Target({ElementType.METHOD})
+@Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface EnumConvert {

@@ -53,8 +53,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.COLON;
 /**
  * 审计切面
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/28 21:20
+ * @author Frank Zhang
  */
 @Component
 @Aspect

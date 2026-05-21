@@ -35,8 +35,7 @@ import static cn.frank.ulp.common.constant.AppConstants.APP_CERT_CACHE_NAME;
 /**
  * AppCertificateRepository
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/5/31 21:52
+ * @author Frank Zhang
  */
 @CacheConfig(cacheNames = { APP_CERT_CACHE_NAME })
 public interface AppCertRepository extends JpaRepository<AppCertEntity, String> {

@@ -45,8 +45,7 @@ import static cn.frank.ulp.support.security.userdetails.UserType.USER;
 /**
  * 审计 service impl
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/10 23:06
+ * @author Frank Zhang
  */
 @Service
 @RequiredArgsConstructor

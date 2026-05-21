@@ -29,8 +29,7 @@ import lombok.Getter;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/8 00:08
+ * @author Frank Zhang
  */
 public class FormAuthenticationToken extends AbstractAuthenticationToken {
 

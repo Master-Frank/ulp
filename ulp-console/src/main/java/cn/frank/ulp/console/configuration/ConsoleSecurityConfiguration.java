@@ -80,8 +80,7 @@ import static cn.frank.ulp.support.security.constant.SecurityConstants.LOGOUT_PA
 /**
  * ConsoleSecurityConfiguration
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2019/9/27 22:54
+ * @author Frank Zhang
  */
 @EnableMethodSecurity
 @RequiredArgsConstructor

@@ -53,8 +53,7 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME
  * 组织架构 服务实现类
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-08-09
+ * @author Frank Zhang
  */
 @Slf4j
 @Service

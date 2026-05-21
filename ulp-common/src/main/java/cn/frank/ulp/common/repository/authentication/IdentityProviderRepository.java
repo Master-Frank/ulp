@@ -38,8 +38,7 @@ import cn.frank.ulp.common.entity.authn.IdentityProviderEntity;
  * 身份认证源配置 Repository  接口
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-08-16
+ * @author Frank Zhang
  */
 @Repository
 @CacheConfig(cacheNames = "idp")

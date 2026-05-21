@@ -26,8 +26,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 /**
  * OAuth2AuthorizationMixin
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/30 21:07
+ * @author Frank Zhang
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonDeserialize(using = OAuth2AuthorizationDeserializer.class)

@@ -23,8 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/10 22:25
+ * @author Frank Zhang
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonDeserialize(using = OtpAuthenticationTokenDeserializer.class)

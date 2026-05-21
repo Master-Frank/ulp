@@ -90,8 +90,7 @@ import static cn.frank.ulp.protocol.oidc.endpoint.authentication.OAuth2Authoriza
 /**
  * 处理授权请求
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/26 21:52
+ * @author Frank Zhang
  * @see <a target="_blank" href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.1">Section 4.1 Authorization Code Grant</a>
  * @see <a target="_blank" href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1">Section 4.1.1 Authorization Request</a>
  * @see <a target="_blank" href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.2">Section 4.1.2 Authorization Response</a>

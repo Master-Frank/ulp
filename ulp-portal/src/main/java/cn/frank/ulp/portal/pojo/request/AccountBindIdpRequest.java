@@ -26,8 +26,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2022/4/3 22:22
+ * @author Frank Zhang
  */
 @Data
 @AllArgsConstructor

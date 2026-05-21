@@ -30,8 +30,7 @@ import com.fasterxml.jackson.databind.Module;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2024/1/8 23:58
+ * @author Frank Zhang
  */
 public class OidcProtocolJackson2Module {
     public OidcProtocolJackson2Module() {

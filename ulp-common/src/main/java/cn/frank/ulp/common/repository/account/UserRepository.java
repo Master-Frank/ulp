@@ -42,8 +42,7 @@ import static cn.frank.ulp.common.constant.AccountConstants.USER_CACHE_NAME;
  * 用户表 Repository 接口
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-07-31
+ * @author Frank Zhang
  */
 @Repository
 @CacheConfig(cacheNames = { USER_CACHE_NAME })

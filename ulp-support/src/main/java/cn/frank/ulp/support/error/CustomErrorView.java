@@ -55,10 +55,10 @@ public class CustomErrorView implements View {
         if (logger.isWarnEnabled()) {
             String message = "Warning: requestId=" + ObjectUtils.identityToString(this)
                              + ", error message=[" + map.get("message") + "]" + ", status code=["
-                             + response.getStatus() + "]" + ", exception=[" + ex.getClass().getName()
-                             + ": " + ex.getMessage() + "]" + ", request URI=["
-                             + request.getRequestURI() + "]" + ", request method=["
-                             + request.getMethod() + "]" + ", timestamp=["
+                             + response.getStatus() + "]" + ", exception=["
+                             + ex.getClass().getName() + ": " + ex.getMessage() + "]"
+                             + ", request URI=[" + request.getRequestURI() + "]"
+                             + ", request method=[" + request.getMethod() + "]" + ", timestamp=["
                              + DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss") + "]";
             logger.warn(message, ex);
         }
@@ -79,22 +79,24 @@ public class CustomErrorView implements View {
 
         Object messageObj = map == null ? null : map.get("message");
         Object statusObj = map == null ? null : map.get("status");
-        String escapedMessage = HtmlUtils.htmlEscape(messageObj == null ? "" : messageObj.toString());
+        String escapedMessage = HtmlUtils
+            .htmlEscape(messageObj == null ? "" : messageObj.toString());
 
         StringBuilder html = new StringBuilder();
         html.append("<!DOCTYPE html>\n").append("<html>\n").append("<head>\n")
             .append("    <title>Error</title>\n").append("    <meta charset=\"UTF-8\">\n")
             .append("    <style>\n")
             .append("        body { font-family: Arial, sans-serif; margin: 40px; }\n")
-            .append("        .error-container { border: 1px solid #ddd; padding: 20px; border-radius: 5px; }\n")
+            .append(
+                "        .error-container { border: 1px solid #ddd; padding: 20px; border-radius: 5px; }\n")
             .append("        .error-title { color: #d9534f; }\n")
             .append("        .error-message { color: #333; }\n").append("    </style>\n")
             .append("</head>\n").append("<body>\n").append("    <div class=\"error-container\">\n")
             .append("        <h1 class=\"error-title\">系统错误</h1>\n")
             .append("        <p class=\"error-message\">").append(escapedMessage).append("</p>\n")
             .append("        <p>状态码: ").append(statusObj == null ? "" : statusObj).append("</p>\n")
-            .append("        <p>时间戳: ").append(new Date()).append("</p>\n")
-            .append("    </div>\n").append("</body>\n").append("</html>");
+            .append("        <p>时间戳: ").append(new Date()).append("</p>\n").append("    </div>\n")
+            .append("</body>\n").append("</html>");
 
         try {
             response.getWriter().write(html.toString());

@@ -26,8 +26,7 @@ import lombok.Data;
 /**
  * JWT 已注册的客户端
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/12/17 20:10
+ * @author Frank Zhang
  */
 @Data
 @Builder

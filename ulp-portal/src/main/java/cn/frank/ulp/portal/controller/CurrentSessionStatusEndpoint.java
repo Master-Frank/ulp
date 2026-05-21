@@ -43,8 +43,7 @@ import static cn.frank.ulp.common.constant.SessionConstants.CURRENT_STATUS;
 /**
  * 会话状态
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/7/30 21:09
+ * @author Frank Zhang
  */
 @Slf4j
 @RestController
@@ -72,8 +71,7 @@ public class CurrentSessionStatusEndpoint {
     /**
      * 当前状态返回结果
      *
-     * @author TopIAM
-     * Created by support@topiam.cn on 2020/10/26 21:16
+     * @author Frank Zhang
      */
     @Data
     @Builder

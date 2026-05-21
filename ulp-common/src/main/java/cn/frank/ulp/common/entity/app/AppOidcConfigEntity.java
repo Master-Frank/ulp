@@ -39,15 +39,14 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.IS_DELETED_COLUMN;
 /**
  * APP OIDC 配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/5/22 22:31
+ * @author Frank Zhang
  */
 @Getter
 @Setter
 @ToString
 @Entity
 @Accessors(chain = true)
-@Table(name = "eiam_app_oidc_config")
+@Table(name = "ulp_app_oidc_config")
 @SoftDelete(columnName = IS_DELETED_COLUMN, converter = SoftDeleteConverter.class)
 public class AppOidcConfigEntity extends BaseEntity {
 

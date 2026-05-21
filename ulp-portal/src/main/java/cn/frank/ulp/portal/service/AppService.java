@@ -28,8 +28,7 @@ import cn.frank.ulp.support.repository.page.domain.PageModel;
 /**
  * AppService
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/7/6 22:35
+ * @author Frank Zhang
  */
 public interface AppService {
     /**
@@ -39,8 +38,7 @@ public interface AppService {
      * @param pageModel {@link PageModel}
      * @return {@link Page}
      */
-    Page<GetAppListResult> getAppList(GetAppListQuery query,
-                                      PageModel pageModel);
+    Page<GetAppListResult> getAppList(GetAppListQuery query, PageModel pageModel);
 
     /**
      * 查询应用分组

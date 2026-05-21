@@ -27,8 +27,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/8/8 21:15
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "准备更改电子邮件入参")

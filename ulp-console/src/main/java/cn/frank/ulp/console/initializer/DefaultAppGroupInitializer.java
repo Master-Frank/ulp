@@ -33,8 +33,7 @@ import cn.frank.ulp.support.config.InitializationException;
 /**
  * DefaultAppGroupInitialize
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/9/11 21:44
+ * @author Frank Zhang
  */
 @Order(2)
 @Component

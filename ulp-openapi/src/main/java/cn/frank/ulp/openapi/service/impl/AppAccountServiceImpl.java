@@ -38,7 +38,7 @@ import cn.frank.ulp.openapi.pojo.query.OapiV1AppAccountQuery;
 import cn.frank.ulp.openapi.pojo.result.AppAccountListResult;
 import cn.frank.ulp.openapi.pojo.save.AppAccountCreateParam;
 import cn.frank.ulp.openapi.service.AppAccountService;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.repository.page.domain.Page;
 import cn.frank.ulp.support.repository.page.domain.PageModel;
 import cn.frank.ulp.support.security.util.SecurityUtils;
@@ -49,8 +49,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 应用账户
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/6/4 19:07
+ * @author Frank Zhang
  */
 @Service
 @Slf4j
@@ -87,9 +86,8 @@ public class AppAccountServiceImpl implements AppAccountService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean createAppAccount(AppAccountCreateParam param) {
-        List<AppAccountEntity> appAccounts = appAccountRepository.findByAppIdAndUserId(
-            param.getAppId(),
-            SecurityUtils.getCurrentUserId());
+        List<AppAccountEntity> appAccounts = appAccountRepository
+            .findByAppIdAndUserId(param.getAppId(), SecurityUtils.getCurrentUserId());
         if (!CollectionUtils.isEmpty(appAccounts)) {
             if (appAccounts.stream()
                 .anyMatch(appAccount -> appAccount.getAccount().equals(param.getAccount()))) {
@@ -121,7 +119,7 @@ public class AppAccountServiceImpl implements AppAccountService {
         if (optional.isEmpty()) {
             AuditContext.setContent("删除失败，应用账户不存在");
             log.warn(AuditContext.getContent());
-            throw new TopIamException(AuditContext.getContent());
+            throw new UlpException(AuditContext.getContent());
         }
         appAccountRepository.deleteById(id);
         AuditContext.setTarget(Target.builder().id(id).name(optional.get().getAccount())

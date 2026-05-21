@@ -24,8 +24,7 @@ import cn.frank.ulp.support.web.converter.EnumConvert;
 /**
  * 邮件模板类型
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/13 23:02
+ * @author Frank Zhang
  */
 public enum MailType implements BaseEnum {
 
@@ -77,7 +76,7 @@ public enum MailType implements BaseEnum {
                                            * 登录验证
                                            */
                                           LOGIN("login", "登录验证", "每当用户选择邮箱验证码登录时，都会发送此电子邮件。",
-                                                "您正在登录TopIAM系统，验证码为：${verify_code}，该验证码${expire_time}分钟内有效，请勿泄露于他人。",
+                                                "您正在登录 ULP 系统，验证码为：${verify_code}，该验证码${expire_time}分钟内有效，请勿泄露于他人。",
                                                 "系统账户",
                                                 getMailContentPath() + "login-content.html"),
 

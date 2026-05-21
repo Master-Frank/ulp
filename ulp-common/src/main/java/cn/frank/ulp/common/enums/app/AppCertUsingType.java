@@ -24,8 +24,7 @@ import cn.frank.ulp.support.web.converter.EnumConvert;
 /**
  * 证书使用类型
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/5/31 22:28
+ * @author Frank Zhang
  */
 public enum AppCertUsingType implements BaseEnum {
                                                   /**

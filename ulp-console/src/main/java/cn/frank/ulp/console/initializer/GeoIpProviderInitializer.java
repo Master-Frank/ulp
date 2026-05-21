@@ -39,8 +39,7 @@ import static cn.frank.ulp.core.setting.GeoIpProviderConstants.IPADDRESS_SETTING
 /**
  * GeoIpProviderInitializer
  *
- * @author TOPIAM
- * Created by support@topiam.cn on 2024/11/3 18:11
+ * @author Frank Zhang
  */
 @Component
 public class GeoIpProviderInitializer extends AbstractSystemInitializer {

@@ -38,8 +38,7 @@ import static cn.frank.ulp.support.security.util.HttpSecurityFilterOrderRegistra
 /**
  * 认证配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/8/19 15:52
+ * @author Frank Zhang
  */
 public class AlipayAuthenticationConfigurer extends
                                             AbstractAuthenticationFilterConfigurer<HttpSecurity, AlipayAuthenticationConfigurer, AlipayLoginAuthenticationFilter> {

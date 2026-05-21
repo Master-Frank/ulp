@@ -40,8 +40,7 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.IS_DELETED_COLUMN;
 /**
  * 身份源同步记录表
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/2/22 23:51
+ * @author Frank Zhang
  */
 @Getter
 @Setter
@@ -49,7 +48,7 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.IS_DELETED_COLUMN;
 @Entity
 @Accessors(chain = true)
 @NoArgsConstructor
-@Table(name = "eiam_identity_source_sync_history")
+@Table(name = "ulp_identity_source_sync_history")
 @SoftDelete(columnName = IS_DELETED_COLUMN, converter = SoftDeleteConverter.class)
 public class IdentitySourceSyncHistoryEntity extends BaseEntity {
 

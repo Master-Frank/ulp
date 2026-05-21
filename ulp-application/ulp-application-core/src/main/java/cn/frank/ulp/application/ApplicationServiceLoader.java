@@ -34,8 +34,7 @@ import cn.frank.ulp.common.repository.app.AppRepository;
 /**
  * 应用服务加载器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/8/20 21:08
+ * @author Frank Zhang
  */
 @Configuration
 public class ApplicationServiceLoader implements ApplicationContextAware {

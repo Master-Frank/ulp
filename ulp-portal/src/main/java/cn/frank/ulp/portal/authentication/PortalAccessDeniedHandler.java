@@ -35,8 +35,7 @@ import jakarta.servlet.http.HttpServletResponse;
 /**
  * 访问拒绝处理程序
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/9/2 22:11
+ * @author Frank Zhang
  */
 @AllArgsConstructor
 public class PortalAccessDeniedHandler implements

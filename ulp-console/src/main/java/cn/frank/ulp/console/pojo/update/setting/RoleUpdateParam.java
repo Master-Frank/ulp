@@ -29,8 +29,7 @@ import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 /**
  * 管理员修改参数
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/26 21:46
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "修改管理员入参")

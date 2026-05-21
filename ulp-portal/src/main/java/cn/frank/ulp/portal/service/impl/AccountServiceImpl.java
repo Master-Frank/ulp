@@ -58,7 +58,7 @@ import cn.frank.ulp.portal.service.AccountService;
 import cn.frank.ulp.support.context.ServletContextService;
 import cn.frank.ulp.support.exception.BadParamsException;
 import cn.frank.ulp.support.exception.InfoValidityFailException;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.security.password.PasswordPolicyManager;
 import cn.frank.ulp.support.security.password.exception.PasswordValidatedFailException;
 import cn.frank.ulp.support.security.userdetails.UserDetails;
@@ -79,8 +79,7 @@ import static cn.frank.ulp.support.util.EmailUtils.isEmailValidate;
 import static cn.frank.ulp.support.util.PhoneUtils.isPhoneValidate;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2022/4/3 22:20
+ * @author Frank Zhang
  */
 @Slf4j
 @Service
@@ -173,7 +172,7 @@ public class AccountServiceImpl implements AccountService {
         // 校验是否已经存在
         Optional<UserEntity> optional = userRepository.findByPhone(param.getPhone());
         if (optional.isPresent() && !user.getId().equals(optional.get().getId())) {
-            throw new TopIamException("系统中已存在[" + param.getPhone() + "]手机号, 请先解绑");
+            throw new UlpException("系统中已存在[" + param.getPhone() + "]手机号, 请先解绑");
         }
         String id = SecurityUtils.getCurrentUser().getId();
         userRepository.updateByIdAndPhone(id, param.getPhone());
@@ -228,7 +227,7 @@ public class AccountServiceImpl implements AccountService {
         // 校验是否已经存在
         Optional<UserEntity> optional = userRepository.findByEmail(param.getEmail());
         if (optional.isPresent() && !user.getId().equals(optional.get().getId())) {
-            throw new TopIamException("系统中已存在[" + param.getEmail() + "]邮箱, 请先解绑");
+            throw new UlpException("系统中已存在[" + param.getEmail() + "]邮箱, 请先解绑");
         }
         userRepository.updateByIdAndEmail(SecurityUtils.getCurrentUser().getId(), param.getEmail());
         return true;

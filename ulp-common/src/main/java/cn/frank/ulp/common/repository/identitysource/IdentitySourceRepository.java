@@ -42,8 +42,7 @@ import cn.frank.ulp.common.entity.identitysource.IdentitySourceEntity;
  * 部分操作使用了缓存，后期更改使用，请务必注意！
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-08-16
+ * @author Frank Zhang
  */
 @Repository
 @CacheConfig(cacheNames = { AccountConstants.IDS_CACHE_NAME })

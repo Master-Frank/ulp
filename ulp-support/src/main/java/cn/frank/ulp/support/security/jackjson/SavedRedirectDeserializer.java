@@ -32,7 +32,8 @@ import cn.frank.ulp.support.security.savedredirect.SavedRedirect.Parameter;
 public class SavedRedirectDeserializer extends JsonDeserializer<SavedRedirect> {
 
     @Override
-    public SavedRedirect deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+    public SavedRedirect deserialize(JsonParser jp,
+                                     DeserializationContext ctxt) throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         SavedRedirect savedRedirect = new SavedRedirect();
         JsonNode actionNode = node.get("action");

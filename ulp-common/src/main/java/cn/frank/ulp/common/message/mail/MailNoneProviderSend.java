@@ -21,8 +21,7 @@ import cn.frank.ulp.common.message.enums.MailProvider;
 /**
  * None
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/27 21:06
+ * @author Frank Zhang
  */
 public class MailNoneProviderSend implements MailProviderSend {
 

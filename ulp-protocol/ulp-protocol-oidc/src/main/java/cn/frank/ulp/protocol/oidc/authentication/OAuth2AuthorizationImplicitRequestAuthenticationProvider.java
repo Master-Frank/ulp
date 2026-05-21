@@ -56,8 +56,7 @@ import static cn.frank.ulp.support.security.util.SecurityUtils.isPrincipalAuthen
 /**
  * 隐式授权请求认证提供商
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/27 23:53
+ * @author Frank Zhang
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public final class OAuth2AuthorizationImplicitRequestAuthenticationProvider implements

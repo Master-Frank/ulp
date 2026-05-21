@@ -42,8 +42,7 @@ import static cn.frank.ulp.common.constant.SettingConstants.SECURITY_PATH;
 /**
  * 密码策略配置 Controller
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/05/05 21:18
+ * @author Frank Zhang
  */
 @Validated
 @Tag(name = "密码策略配置")

@@ -17,7 +17,6 @@
 /**
  * geoip
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/26 21:27
+ * @author Frank Zhang
  */
 package cn.frank.ulp.common.geo;

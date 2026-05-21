@@ -19,8 +19,7 @@ package cn.frank.ulp.authentication.feishu.constant;
 /**
  * 飞书认证常量
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/19 23:19
+ * @author Frank Zhang
  */
 public final class FeiShuAuthenticationConstants {
 

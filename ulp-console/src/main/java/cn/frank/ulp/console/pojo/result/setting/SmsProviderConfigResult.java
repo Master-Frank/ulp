@@ -33,7 +33,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 短信服务商配置查询结果
  *
- * @author TopIAM
+ * @author Frank Zhang
  */
 @Data
 @Builder

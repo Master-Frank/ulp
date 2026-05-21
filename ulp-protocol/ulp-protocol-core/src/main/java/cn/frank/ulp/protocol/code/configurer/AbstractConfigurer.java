@@ -24,8 +24,7 @@ import cn.frank.ulp.protocol.code.EndpointMatcher;
 /**
  * Base configurer
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/27 21:06
+ * @author Frank Zhang
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public abstract class AbstractConfigurer {

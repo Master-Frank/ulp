@@ -16,15 +16,14 @@
  */
 package cn.frank.ulp.identitysource.core.exception;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
  * 无效配置异常
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/4/10 00:22
+ * @author Frank Zhang
  */
-public class InvalidClientConfigException extends TopIamException {
+public class InvalidClientConfigException extends UlpException {
     public InvalidClientConfigException(String msg, Throwable t) {
         super(msg, t);
     }

@@ -23,8 +23,7 @@ import cn.frank.ulp.core.security.access.SecurityAccessExpression;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/3/22 21:05
+ * @author Frank Zhang
  */
 @Configuration
 public class EiamSecurityConfiguration {

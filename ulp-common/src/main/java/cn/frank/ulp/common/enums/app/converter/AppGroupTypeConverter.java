@@ -24,8 +24,7 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2023/9/9 16:23
+ * @author Frank Zhang
  */
 @Converter(autoApply = true)
 public class AppGroupTypeConverter implements AttributeConverter<AppGroupType, String> {

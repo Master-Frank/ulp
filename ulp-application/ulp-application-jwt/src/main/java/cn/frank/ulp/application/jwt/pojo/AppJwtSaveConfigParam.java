@@ -31,8 +31,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2023/02/12 22:45
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "保存 JWT 应用配置参数")

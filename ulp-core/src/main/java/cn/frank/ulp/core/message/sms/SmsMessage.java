@@ -27,8 +27,7 @@ import lombok.NoArgsConstructor;
 /**
  * 短信消息事件
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/25 21:07
+ * @author Frank Zhang
  */
 @Data
 @NoArgsConstructor

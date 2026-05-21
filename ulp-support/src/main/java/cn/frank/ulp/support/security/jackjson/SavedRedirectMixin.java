@@ -21,5 +21,5 @@ package cn.frank.ulp.support.security.jackjson;
  * 用于扩展保存的重定向功能
  */
 public class SavedRedirectMixin {
-   // Mixin类通常用于提供额外的功能或属性
+    // Mixin类通常用于提供额外的功能或属性
 }

@@ -27,8 +27,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 设置密码策略配置结果
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/10/4 19:48
+ * @author Frank Zhang
  */
 @Data
 public class PasswordPolicyConfigResult implements Serializable {

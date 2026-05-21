@@ -23,7 +23,8 @@ import java.lang.reflect.Field;
  */
 public class EntityUtils {
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EntityUtils.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory
+        .getLogger(EntityUtils.class);
 
     public EntityUtils() {
     }
@@ -55,8 +56,7 @@ public class EntityUtils {
             } catch (NoSuchFieldException nsfe) {
                 cur = cur.getSuperclass();
             } catch (IllegalAccessException iae) {
-                log.error("反射获取字段 {} 在类 {} 上失败: {}", fieldName, clazz.getName(),
-                    iae.getMessage());
+                log.error("反射获取字段 {} 在类 {} 上失败: {}", fieldName, clazz.getName(), iae.getMessage());
                 throw new RuntimeException(iae);
             }
         }

@@ -28,7 +28,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class FaviconController {
 
-    private static final String FAVICON_PATH = "static/favicon.ico";
+    private static final String FAVICON_PATH       = "static/favicon.ico";
 
     private static final String IMAGE_X_ICON_VALUE = "image/x-icon";
 

@@ -61,8 +61,7 @@ import static cn.frank.ulp.protocol.oidc.constant.OidcProtocolConstants.OIDC_ERR
 /**
  * 客户端认证配置器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/27 21:11
+ * @author Frank Zhang
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public final class OAuth2ClientAuthenticationConfigurer extends AbstractConfigurer {

@@ -54,7 +54,7 @@ import static cn.frank.ulp.protocol.oidc.endpoint.authentication.OAuth2Authoriza
 /**
  * A {@code Filter} that processes OpenID Provider Configuration Requests.
  *
- * @author TopIAM
+ * @author Frank Zhang
  * @see <a target="_blank" href="https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfigurationRequest">4.1. OpenID Provider Configuration Request</a>
  */
 public final class OidcProviderConfigurationEndpointFilter extends OncePerRequestFilter {

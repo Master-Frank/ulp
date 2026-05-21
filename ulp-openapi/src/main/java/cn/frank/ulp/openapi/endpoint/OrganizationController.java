@@ -42,8 +42,7 @@ import static cn.frank.ulp.openapi.constant.OpenApiV1Constants.ORGANIZATION_PATH
 /**
  * 系统账户-组织架构
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/7/11 21:18
+ * @author Frank Zhang
  */
 @Validated
 @Tag(name = "组织架构")

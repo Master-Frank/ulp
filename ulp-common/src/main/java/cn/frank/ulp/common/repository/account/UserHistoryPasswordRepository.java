@@ -26,8 +26,7 @@ import cn.frank.ulp.common.entity.account.UserHistoryPasswordEntity;
  * 用户历史密码表
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-07-31
+ * @author Frank Zhang
  */
 @Repository
 public interface UserHistoryPasswordRepository extends

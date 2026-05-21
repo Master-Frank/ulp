@@ -18,7 +18,7 @@ package cn.frank.ulp.core.security.access.converter;
 
 import java.util.Objects;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.security.userdetails.UserType;
 
 import jakarta.persistence.AttributeConverter;
@@ -26,8 +26,7 @@ import jakarta.persistence.Converter;
 import static cn.frank.ulp.support.security.userdetails.UserType.*;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/10 23:02
+ * @author Frank Zhang
  */
 @Converter(autoApply = true)
 public class UserTypeConverter implements AttributeConverter<UserType, String> {
@@ -69,6 +68,6 @@ public class UserTypeConverter implements AttributeConverter<UserType, String> {
         if (dbData.equals(USER.getType())) {
             return USER;
         }
-        throw new TopIamException("未知用户类型");
+        throw new UlpException("未知用户类型");
     }
 }

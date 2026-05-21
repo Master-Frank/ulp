@@ -32,7 +32,7 @@ import cn.frank.ulp.support.web.jackjson.WebJacksonModule;
  * 提供对GeoLocation、Security和Web相关Jackson模块的支持
  */
 public class SupportJackson2Module {
-    
+
     /**
      * 解密方法
      *
@@ -51,17 +51,17 @@ public class SupportJackson2Module {
         int var4 = var3;
         int var5 = index;
 
-        for(int var6 = var2; var5 >= 0; var5 = index) {
+        for (int var6 = var2; var5 >= 0; var5 = index) {
             int tempIndex = index;
             int charValue = str.charAt(index);
             --index;
-            result[tempIndex] = (char)(charValue ^ var6);
+            result[tempIndex] = (char) (charValue ^ var6);
             if (index < 0) {
                 break;
             }
 
             int tempIndex2 = index--;
-            result[tempIndex2] = (char)(str.charAt(tempIndex2) ^ var4);
+            result[tempIndex2] = (char) (str.charAt(tempIndex2) ^ var4);
         }
 
         return new String(result);

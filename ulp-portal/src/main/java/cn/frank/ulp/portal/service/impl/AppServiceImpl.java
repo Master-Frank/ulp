@@ -50,8 +50,7 @@ import cn.frank.ulp.support.security.util.SecurityUtils;
 /**
  * AppService
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/7/6 22:36
+ * @author Frank Zhang
  */
 @Service
 public class AppServiceImpl implements AppService {

@@ -29,8 +29,7 @@ import static cn.frank.ulp.common.constant.AccountConstants.USER_PATH;
 /**
  * 用户身份提供商绑定
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/6/4 21:06
+ * @author Frank Zhang
  */
 @Validated
 @Tag(name = "用户身份提供商绑定关系")

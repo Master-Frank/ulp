@@ -47,8 +47,7 @@ import static cn.frank.ulp.common.constant.AppConstants.APP_PATH;
 /**
  * 应用管理
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/7/24 22:35
+ * @author Frank Zhang
  */
 @Validated
 @Tag(name = "应用管理")
@@ -66,8 +65,7 @@ public class AppController {
     @Operation(summary = "获取应用列表")
     @GetMapping(value = "/list")
     @PreAuthorize(value = "authenticated and @sae.hasAuthority(T(cn.frank.ulp.support.security.userdetails.UserType).ADMIN)")
-    public ApiRestResult<Page<AppListResult>> getAppList(PageModel page,
-                                                         AppQuery query) {
+    public ApiRestResult<Page<AppListResult>> getAppList(PageModel page, AppQuery query) {
         Page<AppListResult> list = appService.getAppList(page, query);
         return ApiRestResult.<Page<AppListResult>> builder().result(list).build();
     }

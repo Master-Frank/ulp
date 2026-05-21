@@ -60,8 +60,7 @@ import static cn.frank.ulp.common.geo.District.PROVINCE_DISTRICT;
 /**
  * GeoIp
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/26 21:26
+ * @author Frank Zhang
  */
 @Slf4j
 @Getter

@@ -35,8 +35,7 @@ import static cn.frank.ulp.audit.event.type.EventType.LOGOUT_PORTAL_PORTAL;
 /**
  * 退出成功
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/9/3 22:42
+ * @author Frank Zhang
  */
 public class PortalLogoutSuccessEventListener implements ApplicationListener<LogoutSuccessEvent> {
 

@@ -26,8 +26,7 @@ import cn.frank.ulp.audit.event.AuditEventPublish;
 /**
  * 认证失败监听
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/8 21:25
+ * @author Frank Zhang
  */
 public class OAuth2AuthenticationFailureEventListener implements
                                                       ApplicationListener<AbstractAuthenticationFailureEvent> {

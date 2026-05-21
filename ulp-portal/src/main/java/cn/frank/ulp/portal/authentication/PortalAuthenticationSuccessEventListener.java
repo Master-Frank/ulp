@@ -25,8 +25,7 @@ import lombok.AllArgsConstructor;
 /**
  * 监听登录成功事件
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/9/3
+ * @author Frank Zhang
  */
 @AllArgsConstructor
 public class PortalAuthenticationSuccessEventListener implements

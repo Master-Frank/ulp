@@ -24,8 +24,7 @@ import cn.frank.ulp.support.web.converter.EnumConvert;
 /**
  * 组织机构类型
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/9 21:04
+ * @author Frank Zhang
  */
 public enum OrganizationType implements BaseEnum {
                                                   /**

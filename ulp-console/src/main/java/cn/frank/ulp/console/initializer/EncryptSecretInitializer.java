@@ -31,8 +31,7 @@ import static cn.frank.ulp.common.constant.SettingConstants.AES_SECRET;
 /**
  * EncryptSecretInitializer
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2024/04/04 21:24
+ * @author Frank Zhang
  */
 @Component
 public class EncryptSecretInitializer extends AbstractSystemInitializer {

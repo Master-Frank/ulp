@@ -28,8 +28,7 @@ import static cn.frank.ulp.identitysource.feishu.FeiShuConstant.PAGE_SIZE;
 /**
  * 部门列表入参
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022-02-17 22:47
+ * @author Frank Zhang
  */
 @Data
 @Accessors(chain = true)

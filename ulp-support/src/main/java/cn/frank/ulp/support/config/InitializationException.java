@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
  * 用于系统初始化过程中发生的异常
  */
 public class InitializationException extends Exception {
-    
+
     /**
      * 序列化版本UID
      */
@@ -37,7 +37,7 @@ public class InitializationException extends Exception {
 
     /**
      * 构造函数
-     * 
+     *
      * @param message 异常信息
      */
     public InitializationException(@Nullable final String message) {
@@ -46,17 +46,18 @@ public class InitializationException extends Exception {
 
     /**
      * 构造函数
-     * 
+     *
      * @param message 异常信息
      * @param cause 异常原因
      */
-    public InitializationException(@Nullable final String message, @Nullable final Throwable cause) {
+    public InitializationException(@Nullable final String message,
+                                   @Nullable final Throwable cause) {
         super(message, cause);
     }
 
     /**
      * 构造函数
-     * 
+     *
      * @param cause 异常原因
      */
     public InitializationException(@Nullable final Throwable cause) {

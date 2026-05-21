@@ -23,7 +23,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.COLON;
 /**
  * 常量
  *
- * @author TopIAM
+ * @author Frank Zhang
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DingTalkConstants {

@@ -28,30 +28,30 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
  * 用于配置国际化相关的组件
  */
 public class CustomLocaleConfiguration implements WebMvcConfigurer {
-   
-   /**
+
+    /**
     * 语言参数名称
     */
-   public static final String LANGUAGE_NAME = "topiam_language";
+    public static final String LANGUAGE_NAME = "ulp_language";
 
-   /**
+    /**
     * 添加拦截器
-    * 
+    *
     * @param registry 拦截器注册表
     */
-   public void addInterceptors(InterceptorRegistry registry) {
-      LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-      localeChangeInterceptor.setParamName("topiam_language");
-      registry.addInterceptor(localeChangeInterceptor);
-   }
+    public void addInterceptors(InterceptorRegistry registry) {
+        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+        localeChangeInterceptor.setParamName("ulp_language");
+        registry.addInterceptor(localeChangeInterceptor);
+    }
 
-   /**
+    /**
     * 本地化解析器Bean
-    * 
+    *
     * @return 本地化解析器
     */
-   @Bean
-   public LocaleResolver localeResolver() {
-      return new CookieLocaleResolver("topiam_language");
-   }
+    @Bean
+    public LocaleResolver localeResolver() {
+        return new CookieLocaleResolver("ulp_language");
+    }
 }

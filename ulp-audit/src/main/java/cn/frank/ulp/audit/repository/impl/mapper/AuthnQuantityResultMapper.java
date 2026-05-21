@@ -25,8 +25,7 @@ import org.springframework.lang.NonNull;
 import cn.frank.ulp.audit.repository.result.AuthnQuantityResult;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2023/10/04 22:25
+ * @author Frank Zhang
  */
 @SuppressWarnings("DuplicatedCode")
 public class AuthnQuantityResultMapper implements RowMapper<AuthnQuantityResult> {

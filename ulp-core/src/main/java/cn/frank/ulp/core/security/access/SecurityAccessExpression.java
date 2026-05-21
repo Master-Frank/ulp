@@ -24,8 +24,7 @@ import cn.frank.ulp.support.security.util.SecurityUtils;
 /**
  * 安全访问表达式
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/5/25 22:11
+ * @author Frank Zhang
  */
 public class SecurityAccessExpression {
 

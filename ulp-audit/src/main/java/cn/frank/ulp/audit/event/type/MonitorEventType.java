@@ -25,8 +25,7 @@ import static cn.frank.ulp.audit.event.ConsoleResource.SESSION_RESOURCE;
 /**
  * 系统监控
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/24 22:58
+ * @author Frank Zhang
  */
 public class MonitorEventType {
 

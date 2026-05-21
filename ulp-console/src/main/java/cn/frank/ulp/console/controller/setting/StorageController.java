@@ -39,8 +39,7 @@ import static cn.frank.ulp.common.constant.SettingConstants.SETTING_PATH;
 /**
  * 存储配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/10/30 21:16
+ * @author Frank Zhang
  */
 @Validated
 @Tag(name = "存储配置")

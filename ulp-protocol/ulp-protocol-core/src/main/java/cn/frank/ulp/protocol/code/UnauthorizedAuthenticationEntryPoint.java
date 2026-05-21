@@ -39,8 +39,7 @@ import static cn.frank.ulp.support.context.ServletContextService.isHtmlRequest;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/5 21:24
+ * @author Frank Zhang
  */
 public class UnauthorizedAuthenticationEntryPoint extends AbstractAuthenticationEntryPoint {
     private final Logger        logger        = LoggerFactory.getLogger(this.getClass());

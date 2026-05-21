@@ -25,8 +25,7 @@ import static cn.frank.ulp.support.security.userdetails.UserType.ADMIN;
 /**
  * 账户资源
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/24 22:58
+ * @author Frank Zhang
  */
 public class AccountEventType {
 

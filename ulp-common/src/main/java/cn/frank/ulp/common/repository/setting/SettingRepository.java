@@ -39,8 +39,7 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME
 /**
  * 设置表 Repository 接口
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/5 22:09
+ * @author Frank Zhang
  */
 @Repository
 @CacheConfig(cacheNames = { SETTING_CACHE_NAME })

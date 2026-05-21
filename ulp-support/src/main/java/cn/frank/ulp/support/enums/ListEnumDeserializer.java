@@ -36,11 +36,12 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 /**
  * 列表枚举反序列化器
  *
- * @author TopIAM
+ * @author Frank Zhang
  * Created by support on 2020/8/18 21:35
  */
-public class ListEnumDeserializer extends StdDeserializer<List<? extends BaseEnum>> implements ContextualDeserializer {
-    private static final Logger log = LoggerFactory.getLogger(ListEnumDeserializer.class);
+public class ListEnumDeserializer extends StdDeserializer<List<? extends BaseEnum>>
+                                  implements ContextualDeserializer {
+    private static final Logger       log = LoggerFactory.getLogger(ListEnumDeserializer.class);
 
     private Class<? extends BaseEnum> clazz;
 
@@ -54,7 +55,8 @@ public class ListEnumDeserializer extends StdDeserializer<List<? extends BaseEnu
     }
 
     @Override
-    public JsonDeserializer<?> createContextual(DeserializationContext context, BeanProperty property) throws JsonMappingException {
+    public JsonDeserializer<?> createContextual(DeserializationContext context,
+                                                BeanProperty property) throws JsonMappingException {
         JavaType type = context.getContextualType();
         if (type != null) {
             JavaType contentType = type.getContentType();
@@ -72,7 +74,8 @@ public class ListEnumDeserializer extends StdDeserializer<List<? extends BaseEnu
 
     @Override
     @SuppressWarnings("unused")
-    public List<? extends BaseEnum> deserialize(JsonParser parser, DeserializationContext context) throws IOException {
+    public List<? extends BaseEnum> deserialize(JsonParser parser,
+                                                DeserializationContext context) throws IOException {
         List<BaseEnum> list = new ArrayList<>();
         String text = parser.getText();
         if (StringUtils.hasText(text)) {

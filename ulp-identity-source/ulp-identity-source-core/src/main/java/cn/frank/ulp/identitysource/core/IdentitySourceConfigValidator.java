@@ -19,8 +19,7 @@ package cn.frank.ulp.identitysource.core;
 /**
  * 身份源客户端配置验证器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/4/10 00:23
+ * @author Frank Zhang
  */
 public interface IdentitySourceConfigValidator<T extends IdentitySourceConfig> {
     /**

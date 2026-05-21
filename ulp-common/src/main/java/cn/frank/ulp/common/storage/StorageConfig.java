@@ -29,8 +29,7 @@ import static cn.frank.ulp.common.storage.impl.AliYunOssStorage.URL_REGEXP;
 /**
  * 存储配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/10/1 21:10
+ * @author Frank Zhang
  */
 @Data
 @Builder
@@ -74,6 +73,6 @@ public class StorageConfig {
         /**
          * 存储位置
          */
-        private String location = "TopIAM";
+        private String location = "ULP";
     }
 }

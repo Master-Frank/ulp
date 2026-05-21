@@ -20,15 +20,14 @@ import java.io.Serial;
 
 import org.springframework.http.HttpStatus;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
  * 邮件模板异常
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/18 21:36
+ * @author Frank Zhang
  */
-public class MailTemplateException extends TopIamException {
+public class MailTemplateException extends UlpException {
     @Serial
     private static final long serialVersionUID = -6497956209061617684L;
 

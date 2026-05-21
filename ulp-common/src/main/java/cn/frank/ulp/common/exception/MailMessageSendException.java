@@ -18,15 +18,14 @@ package cn.frank.ulp.common.exception;
 
 import org.springframework.http.HttpStatus;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
  * 邮件消息发送失败
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/25 21:43
+ * @author Frank Zhang
  */
-public class MailMessageSendException extends TopIamException {
+public class MailMessageSendException extends UlpException {
 
     public MailMessageSendException() {
         super("message_send_error", "发送邮件消息失败", HttpStatus.INTERNAL_SERVER_ERROR);

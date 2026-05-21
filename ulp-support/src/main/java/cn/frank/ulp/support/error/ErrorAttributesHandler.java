@@ -25,7 +25,7 @@ import java.util.Map;
 public interface ErrorAttributesHandler {
     /**
      * 获取错误属性
-     * 
+     *
      * @param throwable 异常对象
      * @return 包含错误信息的Map
      */

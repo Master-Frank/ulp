@@ -16,14 +16,13 @@
  */
 package cn.frank.ulp.authentication.otp.sms.exception;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/1/2 23:00
+ * @author Frank Zhang
  */
-public class CaptchaNotExistException extends TopIamException {
+public class CaptchaNotExistException extends UlpException {
     public CaptchaNotExistException() {
         super("captcha_not_exist", "验证码不存在", DEFAULT_STATUS);
     }

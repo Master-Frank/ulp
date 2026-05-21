@@ -21,8 +21,7 @@ import cn.frank.ulp.support.constant.EiamConstants;
 /**
  * 设置常量
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/7/26 21:07
+ * @author Frank Zhang
  */
 public final class SettingConstants {
     /**

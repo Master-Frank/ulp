@@ -33,8 +33,7 @@ import lombok.Data;
 /**
  *SessionDetails
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/8/13 21:25
+ * @author Frank Zhang
  */
 @Data
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)

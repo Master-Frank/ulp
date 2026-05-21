@@ -34,8 +34,7 @@ import cn.frank.ulp.support.security.password.weak.PasswordWeakLib;
 /**
  * SecurityConfiguration
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2019/9/27 22:54
+ * @author Frank Zhang
  */
 @Configuration
 public class EiamPasswordConfiguration {

@@ -32,8 +32,7 @@ import io.swagger.v3.oas.models.info.Info;
 /**
  * ApiConfiguration
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2019/5/16 21:28
+ * @author Frank Zhang
  */
 @Configuration
 public class PortalApiConfiguration {
@@ -45,16 +44,16 @@ public class PortalApiConfiguration {
      */
     private Info info() {
         Contact contact = new Contact();
-        contact.setEmail("support@topiam.cn");
-        contact.setName("TOPIAM");
-        contact.setUrl("https://eiam.topiam.cn");
+        contact.setEmail("");
+        contact.setName("ULP");
+        contact.setUrl("");
         return new Info()
             //title
             .title(environment.getProperty("spring.application.name"))
             //描述
-            .description("TOPIAM 门户端 REST API 文档")
+            .description("ULP 门户端 REST API 文档")
             //服务条款网址
-            .termsOfService("https://eiam.topiam.cn")
+            .termsOfService("")
             //内容
             .contact(contact)
             //版本

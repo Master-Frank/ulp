@@ -22,7 +22,7 @@ import org.springframework.http.HttpStatus;
  * 未知认证类型异常
  * 当认证类型未知时抛出此异常
  */
-public class UnknownAuthenticationTypeException extends TopIamException {
+public class UnknownAuthenticationTypeException extends UlpException {
     /**
      * 构造函数
      *
@@ -31,7 +31,8 @@ public class UnknownAuthenticationTypeException extends TopIamException {
      * @param message 异常消息
      * @param httpStatus HTTP状态码
      */
-    public UnknownAuthenticationTypeException(Throwable cause, String errorCode, String message, HttpStatus httpStatus) {
+    public UnknownAuthenticationTypeException(Throwable cause, String errorCode, String message,
+                                              HttpStatus httpStatus) {
         super(cause, errorCode, message, httpStatus);
     }
 
@@ -52,7 +53,8 @@ public class UnknownAuthenticationTypeException extends TopIamException {
      * @param message 异常消息
      * @param httpStatus HTTP状态码
      */
-    public UnknownAuthenticationTypeException(String errorCode, String message, HttpStatus httpStatus) {
+    public UnknownAuthenticationTypeException(String errorCode, String message,
+                                              HttpStatus httpStatus) {
         super(errorCode, message, httpStatus);
     }
 

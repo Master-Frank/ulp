@@ -115,7 +115,8 @@ public class JsonUtils {
         }
     }
 
-    public static <T> T convertValue(Object fromValue, Class<T> toValueType) throws JsonUtilException {
+    public static <T> T convertValue(Object fromValue,
+                                     Class<T> toValueType) throws JsonUtilException {
         try {
             return fromValue == null ? null : MAPPER.convertValue(fromValue, toValueType);
         } catch (IllegalArgumentException e) {
@@ -163,14 +164,18 @@ public class JsonUtils {
             // ObjectMapper 上使用临时 mixin / filter 排除一级属性
             String json = writeValueAsString(value);
             @SuppressWarnings("unchecked")
-            Map<String, Object> map = readValue(json, new TypeReference<Map<String, Object>>() {});
+            Map<String, Object> map = readValue(json, new TypeReference<Map<String, Object>>() {
+            });
             for (String prop : properties) {
                 if (prop.contains(".")) {
                     String[] parts = prop.split("\\.", 2);
                     if (map.containsKey(parts[0])) {
                         Object child = map.get(parts[0]);
-                        map.put(parts[0], readValue(serializeExcludingProperties(child,
-                            new String[] { parts[1] }), new TypeReference<Map<String, Object>>() {}));
+                        map.put(parts[0],
+                            readValue(
+                                serializeExcludingProperties(child, new String[] { parts[1] }),
+                                new TypeReference<Map<String, Object>>() {
+                                }));
                     }
                 } else {
                     map.remove(prop);

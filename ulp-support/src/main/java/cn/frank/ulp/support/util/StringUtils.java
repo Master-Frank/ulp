@@ -25,11 +25,11 @@ import java.util.regex.Pattern;
  */
 public class StringUtils {
 
-    public static final String       SPLIT_DEFAULT  = ",";
+    public static final String   SPLIT_DEFAULT = ",";
 
-    private static final Pattern     BLANK_PATTERN  = Pattern.compile("\\s*|\t|\r|\n");
+    private static final Pattern BLANK_PATTERN = Pattern.compile("\\s*|\t|\r|\n");
 
-    private static final char[]      HEX_DIGITS     = "0123456789ABCDEF".toCharArray();
+    private static final char[]  HEX_DIGITS    = "0123456789ABCDEF".toCharArray();
 
     public StringUtils() {
     }

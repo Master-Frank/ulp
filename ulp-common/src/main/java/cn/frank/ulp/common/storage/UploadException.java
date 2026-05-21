@@ -23,8 +23,7 @@ import org.springframework.http.HttpStatus;
 /**
  * 存储服务异常
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/19 22:53
+ * @author Frank Zhang
  */
 public class UploadException extends StorageProviderException {
     @Serial

@@ -35,8 +35,7 @@ import cn.frank.ulp.console.service.setting.SmsTemplateService;
  * 短信模版模板 服务实现类
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-08-13
+ * @author Frank Zhang
  */
 @Service
 public class SmsTemplateServiceImpl extends SettingServiceImpl implements SmsTemplateService {

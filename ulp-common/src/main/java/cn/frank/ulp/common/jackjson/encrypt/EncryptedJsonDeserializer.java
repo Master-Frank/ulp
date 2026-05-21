@@ -25,8 +25,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2022/12/22 21:53
+ * @author Frank Zhang
  */
 public class EncryptedJsonDeserializer extends JsonDeserializer<Object> {
 

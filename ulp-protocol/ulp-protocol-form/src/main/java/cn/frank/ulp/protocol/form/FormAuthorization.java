@@ -21,8 +21,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/12/17 23:30
+ * @author Frank Zhang
  */
 public class FormAuthorization implements Serializable {
     @Serial

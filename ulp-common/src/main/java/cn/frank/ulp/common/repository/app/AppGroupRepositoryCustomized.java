@@ -26,8 +26,7 @@ import cn.frank.ulp.common.entity.app.query.AppGroupAssociationListQueryParam;
 import cn.frank.ulp.common.entity.app.query.AppGroupQueryParam;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2023/9/8 19:20
+ * @author Frank Zhang
  */
 public interface AppGroupRepositoryCustomized {
 

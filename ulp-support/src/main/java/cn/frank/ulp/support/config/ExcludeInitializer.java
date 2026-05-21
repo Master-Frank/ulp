@@ -26,6 +26,6 @@ import java.lang.annotation.Target;
  * 用于标记需要排除的系统初始化器
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
+@Target({ ElementType.TYPE })
 public @interface ExcludeInitializer {
 }

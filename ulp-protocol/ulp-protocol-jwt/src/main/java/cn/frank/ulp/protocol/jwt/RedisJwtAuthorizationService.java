@@ -43,8 +43,7 @@ import static cn.frank.ulp.protocol.jwt.constant.JwtProtocolConstants.JWT_PROTOC
 /**
  * redis
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/9/1 12:51
+ * @author Frank Zhang
  */
 public class RedisJwtAuthorizationService extends AbstractJwtAuthorizationService {
     private static final String CID_TO_AUTHORIZATIONS = "cid_to_authorizations:";

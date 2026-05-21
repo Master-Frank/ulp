@@ -40,8 +40,7 @@ import static cn.frank.ulp.common.constant.AccountConstants.ORG_CACHE_NAME;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/9/24 23:12
+ * @author Frank Zhang
  */
 @Repository
 @CacheConfig(cacheNames = { ORG_CACHE_NAME })
@@ -56,7 +55,7 @@ public class OrganizationRepositoryCustomizedImpl implements OrganizationReposit
     @CacheEvict(allEntries = true)
     public void batchSave(List<OrganizationEntity> list) {
         jdbcTemplate.batchUpdate(
-            "INSERT INTO eiam_organization (id_, code_, name_, parent_id, is_leaf, external_id, data_origin, type_, is_enabled, order_, path_, display_path, identity_source_id,create_by,create_time,update_by,update_time,remark_,is_deleted) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            "INSERT INTO ulp_organization (id_, code_, name_, parent_id, is_leaf, external_id, data_origin, type_, is_enabled, order_, path_, display_path, identity_source_id,create_by,create_time,update_by,update_time,remark_,is_deleted) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
             new BatchPreparedStatementSetter() {
                 @Override
                 public void setValues(@NotNull PreparedStatement ps, int i) throws SQLException {
@@ -98,7 +97,7 @@ public class OrganizationRepositoryCustomizedImpl implements OrganizationReposit
     @CacheEvict(allEntries = true)
     public void batchUpdate(List<OrganizationEntity> list) {
         jdbcTemplate.batchUpdate(
-            "UPDATE  eiam_organization SET code_=?, name_=?, parent_id=?, is_leaf=?, external_id=?, data_origin=?, type_=? ,is_enabled=?,order_=?, path_=?,display_path=?,identity_source_id=?,create_by=?,create_time=?,update_by=?,update_time=?,remark_=? WHERE id_=?",
+            "UPDATE  ulp_organization SET code_=?, name_=?, parent_id=?, is_leaf=?, external_id=?, data_origin=?, type_=? ,is_enabled=?,order_=?, path_=?,display_path=?,identity_source_id=?,create_by=?,create_time=?,update_by=?,update_time=?,remark_=? WHERE id_=?",
             new BatchPreparedStatementSetter() {
 
                 @Override

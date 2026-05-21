@@ -28,8 +28,7 @@ import jakarta.validation.constraints.NotBlank;
 /**
  * 微信开放平台扫码登录
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/9 22:07 21:
+ * @author Frank Zhang
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

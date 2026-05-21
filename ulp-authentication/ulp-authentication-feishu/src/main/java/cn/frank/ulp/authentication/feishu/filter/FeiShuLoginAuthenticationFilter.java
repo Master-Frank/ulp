@@ -56,8 +56,7 @@ import static cn.frank.ulp.authentication.feishu.constant.FeiShuAuthenticationCo
 /**
  * 飞书扫码登录过滤器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/8 21:11
+ * @author Frank Zhang
  */
 public class FeiShuLoginAuthenticationFilter extends
                                              AbstractIdentityProviderAuthenticationProcessingFilter {

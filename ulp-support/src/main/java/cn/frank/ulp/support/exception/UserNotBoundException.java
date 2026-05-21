@@ -20,7 +20,7 @@ package cn.frank.ulp.support.exception;
  * 用户未绑定异常
  * 当用户未绑定时抛出此异常
  */
-public class UserNotBoundException extends TopIamException {
+public class UserNotBoundException extends UlpException {
     /**
      * 构造函数
      *

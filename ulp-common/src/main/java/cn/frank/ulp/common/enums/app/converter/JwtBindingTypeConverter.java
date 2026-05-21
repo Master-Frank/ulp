@@ -24,8 +24,7 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2022/5/22 23:25
+ * @author Frank Zhang
  */
 @Converter(autoApply = true)
 public class JwtBindingTypeConverter implements AttributeConverter<JwtBindingType, String> {

@@ -24,8 +24,7 @@ import cn.frank.ulp.console.pojo.save.setting.SecurityBasicSaveParam;
  * 安全设置表 服务类
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-10-01
+ * @author Frank Zhang
  */
 public interface SecuritySettingService extends SettingService {
 

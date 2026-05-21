@@ -23,8 +23,7 @@ import static cn.frank.ulp.common.constant.AuthnConstants.AUTHN_PATH;
 import static cn.frank.ulp.support.security.constant.SecurityConstants.LOGIN_PATH;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2022/12/31 21:18
+ * @author Frank Zhang
  */
 public final class IdentityProviderType {
 

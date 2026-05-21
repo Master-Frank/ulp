@@ -34,8 +34,7 @@ import static cn.frank.ulp.audit.event.type.EventType.APP_SSO;
 /**
  * 认证失败监听
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/8 21:25
+ * @author Frank Zhang
  */
 public class JwtAuthenticationFailureEventListener implements
                                                    ApplicationListener<AbstractAuthenticationFailureEvent> {

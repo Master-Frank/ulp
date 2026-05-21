@@ -32,7 +32,7 @@ import cn.frank.ulp.support.security.userdetails.UserType;
 
 public final class SecurityUtils {
 
-    public static final String ANONYMOUS_USER = "anonymousUser";
+    public static final String                       ANONYMOUS_USER                = "anonymousUser";
 
     private static final AuthenticationTrustResolver AUTHENTICATION_TRUST_RESOLVER = new AuthenticationTrustResolverImpl();
 
@@ -79,14 +79,14 @@ public final class SecurityUtils {
                     return ((UserDetails) principal).getUsername();
                 }
                 if (principal instanceof org.springframework.security.core.userdetails.UserDetails) {
-                    return ((org.springframework.security.core.userdetails.UserDetails) principal).getUsername();
+                    return ((org.springframework.security.core.userdetails.UserDetails) principal)
+                        .getUsername();
                 }
                 if (principal instanceof String) {
                     return (String) principal;
                 }
                 return null;
-            })
-            .orElse(ANONYMOUS_USER);
+            }).orElse(ANONYMOUS_USER);
     }
 
     public static String getCurrentUserId() {
@@ -100,8 +100,7 @@ public final class SecurityUtils {
                     return (String) principal;
                 }
                 return null;
-            })
-            .orElse(ANONYMOUS_USER);
+            }).orElse(ANONYMOUS_USER);
     }
 
     public static UserDetails getCurrentUser() {
@@ -112,8 +111,7 @@ public final class SecurityUtils {
                     return (UserDetails) principal;
                 }
                 return null;
-            })
-            .orElse(null);
+            }).orElse(null);
     }
 
     public static UserType getCurrentUserType() {
@@ -124,8 +122,7 @@ public final class SecurityUtils {
                     return ((UserDetails) principal).getUserType();
                 }
                 return null;
-            })
-            .orElse(null);
+            }).orElse(null);
     }
 
     public static String getPrincipal(AbstractAuthenticationFailureEvent event) {
@@ -134,7 +131,8 @@ public final class SecurityUtils {
             return ((UserDetails) principal).getUsername();
         }
         if (principal instanceof org.springframework.security.core.userdetails.UserDetails) {
-            return ((org.springframework.security.core.userdetails.UserDetails) principal).getUsername();
+            return ((org.springframework.security.core.userdetails.UserDetails) principal)
+                .getUsername();
         }
         if (principal instanceof String) {
             return (String) principal;

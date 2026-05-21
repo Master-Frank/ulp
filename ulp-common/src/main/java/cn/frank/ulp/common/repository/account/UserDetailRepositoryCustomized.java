@@ -24,8 +24,7 @@ import cn.frank.ulp.common.entity.account.UserDetailEntity;
 /**
  * User Detail Repository Customized
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/29 21:27
+ * @author Frank Zhang
  */
 public interface UserDetailRepositoryCustomized {
     /**

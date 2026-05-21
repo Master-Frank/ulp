@@ -21,8 +21,7 @@ import cn.frank.ulp.support.enums.BaseEnum;
 /**
  * 开放平台状态码
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/23 22:06
+ * @author Frank Zhang
  */
 public enum OpenApiStatus implements BaseEnum {
                                                /**

@@ -24,8 +24,7 @@ import cn.frank.ulp.support.web.converter.EnumConvert;
 /**
  * 应用分组类型
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/9/9 16:22
+ * @author Frank Zhang
  */
 public enum AppGroupType implements BaseEnum {
                                               /**

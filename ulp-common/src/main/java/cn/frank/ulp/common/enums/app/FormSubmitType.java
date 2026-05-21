@@ -23,8 +23,7 @@ import cn.frank.ulp.support.web.converter.EnumConvert;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/12/21 22:20
+ * @author Frank Zhang
  */
 public enum FormSubmitType implements BaseEnum {
                                                 /**

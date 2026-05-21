@@ -59,8 +59,7 @@ import static cn.frank.ulp.authentication.common.constant.AuthenticationConstant
 /**
  * 企业微信扫码登录
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/8 21:11
+ * @author Frank Zhang
  */
 @SuppressWarnings("DuplicatedCode")
 public class WeChatWorkScanCodeLoginAuthenticationFilter extends

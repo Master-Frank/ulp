@@ -38,8 +38,7 @@ import static cn.frank.ulp.protocol.code.configurer.AuthenticationUtils.getAppli
 /**
  * 认证配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/01/14 22:58
+ * @author Frank Zhang
  */
 public final class JwtAuthorizationServerConfigurer extends
                                                     AbstractHttpConfigurer<JwtAuthorizationServerConfigurer, HttpSecurity> {

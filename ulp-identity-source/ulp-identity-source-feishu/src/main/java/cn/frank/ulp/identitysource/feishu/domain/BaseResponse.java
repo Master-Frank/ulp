@@ -21,8 +21,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2022-02-17 22:00
+ * @author Frank Zhang
  */
 @Data
 public class BaseResponse implements Serializable {

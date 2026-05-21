@@ -55,8 +55,7 @@ import static cn.frank.ulp.support.security.authentication.AuthenticationProvide
 /**
  * 认证成功处理程序
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/9/2 22:11
+ * @author Frank Zhang
  */
 public class ConsoleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 

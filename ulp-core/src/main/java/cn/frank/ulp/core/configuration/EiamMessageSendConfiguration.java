@@ -41,8 +41,7 @@ import static cn.frank.ulp.core.context.ContextService.getSmsProviderConfig;
 /**
  * 消息发送配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/25 23:48
+ * @author Frank Zhang
  */
 @Configuration
 public class EiamMessageSendConfiguration {

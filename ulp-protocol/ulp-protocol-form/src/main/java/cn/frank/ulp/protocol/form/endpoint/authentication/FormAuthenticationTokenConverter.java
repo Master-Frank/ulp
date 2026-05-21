@@ -33,8 +33,7 @@ import static cn.frank.ulp.protocol.form.constant.FormProtocolConstants.FORM_ERR
 import static cn.frank.ulp.protocol.form.exception.FormErrorCodes.SERVER_ERROR;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/8 00:14
+ * @author Frank Zhang
  */
 public final class FormAuthenticationTokenConverter implements AuthenticationConverter {
 

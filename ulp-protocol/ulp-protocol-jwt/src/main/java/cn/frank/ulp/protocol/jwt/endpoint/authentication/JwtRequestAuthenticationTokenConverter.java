@@ -41,8 +41,7 @@ import static cn.frank.ulp.support.util.HttpRequestUtils.getFormParameters;
 import static cn.frank.ulp.support.util.HttpRequestUtils.getQueryParameters;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/8 00:14
+ * @author Frank Zhang
  */
 public final class JwtRequestAuthenticationTokenConverter implements AuthenticationConverter {
     private static final Authentication ANONYMOUS_AUTHENTICATION = new AnonymousAuthenticationToken(

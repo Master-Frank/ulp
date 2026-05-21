@@ -47,8 +47,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.COLON;
 /**
  * ClusterSessionRegistryImpl
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/9/3 22:55
+ * @author Frank Zhang
  */
 @SuppressWarnings("unchecked")
 public class ClusterSessionRegistryImpl<T extends org.springframework.session.Session>

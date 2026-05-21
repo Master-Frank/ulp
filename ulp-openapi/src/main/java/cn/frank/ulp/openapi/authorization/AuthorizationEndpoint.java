@@ -47,8 +47,7 @@ import static cn.frank.ulp.openapi.constant.OpenApiV1Constants.AUTH_PATH;
  *
  * 实现OAuth2协议客户端模式
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/23 07:30
+ * @author Frank Zhang
  */
 @Tag(name = "访问凭证")
 @RestController

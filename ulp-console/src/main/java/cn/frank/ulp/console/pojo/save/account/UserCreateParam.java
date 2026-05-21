@@ -35,8 +35,7 @@ import jakarta.validation.constraints.NotBlank;
 /**
  * 用户创建请求入参
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/11 23:16
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "创建用户入参")

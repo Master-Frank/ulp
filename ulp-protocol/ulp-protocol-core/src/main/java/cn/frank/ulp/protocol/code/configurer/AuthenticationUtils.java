@@ -31,8 +31,7 @@ import cn.frank.ulp.support.security.authentication.WebAuthenticationDetailsSour
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/12/21 21:35
+ * @author Frank Zhang
  */
 public class AuthenticationUtils {
 

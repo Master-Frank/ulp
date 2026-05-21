@@ -27,8 +27,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 设置密码策略保存参数
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/25 21:16
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "密码策略保存参数")

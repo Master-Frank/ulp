@@ -18,9 +18,9 @@ package cn.frank.ulp.support.security.password.exception;
 
 import org.springframework.http.HttpStatus;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
-public class PasswordInvalidException extends TopIamException {
+public class PasswordInvalidException extends UlpException {
 
     public PasswordInvalidException(String message, Throwable cause) {
         super(message, cause);
@@ -34,7 +34,8 @@ public class PasswordInvalidException extends TopIamException {
         super(message, status);
     }
 
-    public PasswordInvalidException(Throwable cause, String errorCode, String message, HttpStatus status) {
+    public PasswordInvalidException(Throwable cause, String errorCode, String message,
+                                    HttpStatus status) {
         super(cause, errorCode, message, status);
     }
 
@@ -42,8 +43,8 @@ public class PasswordInvalidException extends TopIamException {
         super(errorCode, message, status);
     }
 
-    public PasswordInvalidException(String message, Throwable cause, String errorCode, HttpStatus status) {
+    public PasswordInvalidException(String message, Throwable cause, String errorCode,
+                                    HttpStatus status) {
         super(cause, errorCode, message, status);
     }
 }
-

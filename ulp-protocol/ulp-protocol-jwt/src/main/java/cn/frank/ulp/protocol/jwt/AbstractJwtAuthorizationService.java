@@ -27,8 +27,7 @@ import cn.frank.ulp.support.security.userdetails.UserDetails;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2024/1/7 21:47
+ * @author Frank Zhang
  */
 public abstract class AbstractJwtAuthorizationService implements JwtAuthorizationService {
     private final ApplicationServiceLoader applicationServiceLoader;

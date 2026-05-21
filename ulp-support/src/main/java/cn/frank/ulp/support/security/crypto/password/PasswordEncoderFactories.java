@@ -28,17 +28,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * 用于创建委托密码编码器
  */
 public class PasswordEncoderFactories {
-   
-   /**
+
+    /**
     * 创建委托密码编码器
     *
     * @return 密码编码器
     */
-   public PasswordEncoder createDelegatingPasswordEncoder() {
-      Map<String, PasswordEncoder> encoders = new HashMap<>();
-      String defaultEncoder = "bcrypt";
-      encoders.put("bcrypt", new BCryptPasswordEncoder());
-      encoders.put("noop", NoOpPasswordEncoder.getInstance());
-      return new DelegatingPasswordEncoder(defaultEncoder, encoders);
-   }
+    public PasswordEncoder createDelegatingPasswordEncoder() {
+        Map<String, PasswordEncoder> encoders = new HashMap<>();
+        String defaultEncoder = "bcrypt";
+        encoders.put("bcrypt", new BCryptPasswordEncoder());
+        encoders.put("noop", NoOpPasswordEncoder.getInstance());
+        return new DelegatingPasswordEncoder(defaultEncoder, encoders);
+    }
 }

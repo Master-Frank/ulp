@@ -64,7 +64,7 @@ import cn.frank.ulp.core.message.mail.MailMsgEventPublish;
 import cn.frank.ulp.core.message.sms.SmsMsgEventPublish;
 import cn.frank.ulp.support.exception.BadParamsException;
 import cn.frank.ulp.support.exception.InfoValidityFailException;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.repository.page.domain.Page;
 import cn.frank.ulp.support.repository.page.domain.PageModel;
 import cn.frank.ulp.support.security.password.PasswordPolicyManager;
@@ -86,8 +86,7 @@ import static cn.frank.ulp.support.util.PhoneUtils.getPhoneNumber;
  * 用户表 服务实现类
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-07-31
+ * @author Frank Zhang
  */
 @Slf4j
 @Service
@@ -137,7 +136,7 @@ public class UserServiceImpl implements UserService {
         if (optional.isEmpty()) {
             AuditContext.setContent("操作失败，用户不存在");
             log.warn(AuditContext.getContent());
-            throw new TopIamException(AuditContext.getContent());
+            throw new UlpException(AuditContext.getContent());
         }
         UserEntity userEntity = optional.get();
         // 重置用户密码
@@ -194,7 +193,7 @@ public class UserServiceImpl implements UserService {
         if (optional.isEmpty()) {
             AuditContext.setContent("操作失败，用户不存在");
             log.warn(AuditContext.getContent());
-            throw new TopIamException(AuditContext.getContent());
+            throw new UlpException(AuditContext.getContent());
         }
         AuditContext.setTarget(Target.builder().id(id).name(optional.get().getUsername())
             .type(TargetType.USER).build());
@@ -211,7 +210,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     public Boolean createUser(UserCreateParam param) {
         if (StringUtils.isBlank(param.getPhone()) && StringUtils.isBlank(param.getEmail())) {
-            throw new TopIamException("手机号或邮箱至少填写一个", HttpStatus.BAD_REQUEST);
+            throw new UlpException("手机号或邮箱至少填写一个", HttpStatus.BAD_REQUEST);
         }
         //手机号
         if (StringUtils.isNotEmpty(param.getPhone())) {
@@ -378,7 +377,7 @@ public class UserServiceImpl implements UserService {
         if (optional.isEmpty()) {
             AuditContext.setContent("删除失败，用户不存在");
             log.warn(AuditContext.getContent());
-            throw new TopIamException(AuditContext.getContent());
+            throw new UlpException(AuditContext.getContent());
         }
         //删除
         userRepository.deleteById(id);
@@ -450,7 +449,7 @@ public class UserServiceImpl implements UserService {
                         .setPhoneAreaCode(String.valueOf(phoneNumber.getCountryCode()))));
             } catch (NumberParseException e) {
                 log.error("校验手机号发生异常", e);
-                throw new TopIamException("校验手机号发生异常");
+                throw new UlpException("校验手机号发生异常");
             }
         }
         //邮箱
@@ -518,12 +517,12 @@ public class UserServiceImpl implements UserService {
     /**
      * UserRepository
      */
-    private final UserRepository userRepository;
+    private final UserRepository                userRepository;
 
     /**
      * UserIdpRepository
      */
-    private final UserIdpRepository userIdpRepository;
+    private final UserIdpRepository             userIdpRepository;
 
     /**
      * AppAccessPolicyRepository
@@ -538,7 +537,7 @@ public class UserServiceImpl implements UserService {
     /**
      * 组织
      */
-    private final OrganizationRepository organizationRepository;
+    private final OrganizationRepository        organizationRepository;
 
     /**
      * 组织成员
@@ -548,12 +547,12 @@ public class UserServiceImpl implements UserService {
     /**
      * 部门成员
      */
-    private final UserGroupMemberRepository userGroupMemberRepository;
+    private final UserGroupMemberRepository     userGroupMemberRepository;
 
     /**
      * 用户详情Repository
      */
-    private final UserDetailRepository userDetailsRepository;
+    private final UserDetailRepository          userDetailsRepository;
 
     /**
      * 修改密码历史Repository

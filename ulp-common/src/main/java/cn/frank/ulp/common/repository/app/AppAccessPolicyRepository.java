@@ -32,8 +32,7 @@ import cn.frank.ulp.common.enums.app.AppPolicySubjectType;
 /**
  * 应用授权策略 Repository
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/6/4 21:54
+ * @author Frank Zhang
  */
 @Repository
 public interface AppAccessPolicyRepository extends JpaRepository<AppAccessPolicyEntity, String>,

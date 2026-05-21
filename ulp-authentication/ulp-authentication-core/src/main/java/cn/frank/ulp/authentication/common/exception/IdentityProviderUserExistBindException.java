@@ -21,8 +21,7 @@ import org.springframework.http.HttpStatus;
 /**
  * idp 用户存在绑定
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/8/13 23:58
+ * @author Frank Zhang
  */
 public class IdentityProviderUserExistBindException extends UserBindIdentityProviderException {
     public IdentityProviderUserExistBindException() {

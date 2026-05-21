@@ -37,8 +37,7 @@ import static org.apache.commons.lang3.BooleanUtils.TRUE;
 /**
  * 默认邮件发送实现类
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021-10-02 21:40
+ * @author Frank Zhang
  **/
 public class DefaultMailProviderSendImpl implements MailProviderSend {
 

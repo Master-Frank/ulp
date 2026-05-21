@@ -24,8 +24,7 @@ import lombok.Data;
 /**
  * 用户身份提供商绑定 PO
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/2/10 22:46
+ * @author Frank Zhang
  */
 @Data
 public class UserIdpBindPO implements Serializable {

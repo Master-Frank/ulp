@@ -39,8 +39,7 @@ import jakarta.validation.constraints.NotNull;
 /**
  * 获取加密key
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/5/20 21:32
+ * @author Frank Zhang
  */
 @RestController
 @RequestMapping

@@ -27,8 +27,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 登录区域结果
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/01/24 23:16
+ * @author Frank Zhang
  */
 @Data
 @NoArgsConstructor

@@ -71,8 +71,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.*;
 /**
  * 身份源数据 pull post 处理器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/3/1 22:04
+ * @author Frank Zhang
  */
 @SuppressWarnings("DuplicatedCode")
 @Slf4j
@@ -385,7 +384,7 @@ public class DefaultIdentitySourceDeptPostProcessor extends AbstractIdentitySour
                                                       Boolean isLeaf) {
         //@formatter:off
         //添加节点
-        entityManager.createNativeQuery("INSERT INTO eiam_organization (id_, code_, name_, parent_id, is_leaf, external_id, data_origin, type_, is_enabled, path_, display_path, identity_source_id,create_by,update_by,is_deleted) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
+        entityManager.createNativeQuery("INSERT INTO ulp_organization (id_, code_, name_, parent_id, is_leaf, external_id, data_origin, type_, is_enabled, path_, display_path, identity_source_id,create_by,update_by,is_deleted) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
                 .setParameter(1,id)
                 .setParameter(2,RandomStringUtils.randomAlphanumeric(7))
                 .setParameter(3,identitySource.getName())

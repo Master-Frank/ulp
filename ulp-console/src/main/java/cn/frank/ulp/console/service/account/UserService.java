@@ -39,8 +39,7 @@ import cn.frank.ulp.support.repository.page.domain.PageModel;
  * 用户表 服务类
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-07-31
+ * @author Frank Zhang
  */
 public interface UserService {
 

@@ -28,8 +28,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * OpenApiResponse
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/25 03:40
+ * @author Frank Zhang
  */
 @Data
 public class OpenApiResponse<T> {

@@ -41,8 +41,7 @@ import cn.frank.ulp.protocol.form.exception.FormError;
 /**
  * A {@link HttpMessageConverter} for an {@link FormError Jwt Error}.
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/19 21:57
+ * @author Frank Zhang
  */
 public class FormErrorHttpMessageConverter extends AbstractHttpMessageConverter<FormError> {
 

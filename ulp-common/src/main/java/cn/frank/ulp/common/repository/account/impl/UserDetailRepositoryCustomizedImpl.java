@@ -34,8 +34,7 @@ import cn.frank.ulp.common.repository.account.UserDetailRepositoryCustomized;
 /**
  * User Detail Repository Customized
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/29 21:27
+ * @author Frank Zhang
  */
 @Repository
 public class UserDetailRepositoryCustomizedImpl implements UserDetailRepositoryCustomized {
@@ -48,7 +47,7 @@ public class UserDetailRepositoryCustomizedImpl implements UserDetailRepositoryC
     @Override
     public void batchSave(List<UserDetailEntity> data) {
         jdbcTemplate.batchUpdate(
-            "INSERT INTO eiam_user_detail (id_, user_id, id_type, id_card, website_,address_,create_by,create_time,update_by,update_time,remark_,is_deleted) values (?,?,?,?,?,?,?,?,?,?,?,?)",
+            "INSERT INTO ulp_user_detail (id_, user_id, id_type, id_card, website_,address_,create_by,create_time,update_by,update_time,remark_,is_deleted) values (?,?,?,?,?,?,?,?,?,?,?,?)",
             new BatchPreparedStatementSetter() {
 
                 @Override
@@ -84,7 +83,7 @@ public class UserDetailRepositoryCustomizedImpl implements UserDetailRepositoryC
     @Override
     public void batchUpdate(ArrayList<UserDetailEntity> list) {
         jdbcTemplate.batchUpdate(
-            "UPDATE  eiam_user_detail SET user_id=?,id_type=?, id_card=?, website_=? ,address_=?,create_by=?,create_time=?,update_by=?,update_time=?,remark_=? WHERE id_=?",
+            "UPDATE  ulp_user_detail SET user_id=?,id_type=?, id_card=?, website_=? ,address_=?,create_by=?,create_time=?,update_by=?,update_time=?,remark_=? WHERE id_=?",
             new BatchPreparedStatementSetter() {
 
                 @Override

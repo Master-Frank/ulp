@@ -42,8 +42,7 @@ import static cn.frank.ulp.core.setting.PasswordPolicySettingConstants.PASSWORD_
 /**
  * 密码过期锁定任务
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/4/17 22:22
+ * @author Frank Zhang
  */
 @RequiredArgsConstructor
 public class PasswordExpireLockTask implements PasswordExpireTask {

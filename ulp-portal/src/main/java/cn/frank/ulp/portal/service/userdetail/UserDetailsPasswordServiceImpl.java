@@ -28,8 +28,7 @@ import cn.frank.ulp.common.repository.account.UserRepository;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/10/19 14:10
+ * @author Frank Zhang
  */
 @Service
 public class UserDetailsPasswordServiceImpl implements UserDetailsPasswordService {
@@ -47,8 +46,7 @@ public class UserDetailsPasswordServiceImpl implements UserDetailsPasswordServic
      */
     @Override
     public UserDetails updatePassword(UserDetails user, String newPassword) {
-        String userId = ((cn.frank.ulp.support.security.userdetails.UserDetails) user)
-            .getId();
+        String userId = ((cn.frank.ulp.support.security.userdetails.UserDetails) user).getId();
         userRepository.updatePassword(userId, newPassword, LocalDateTime.now());
         return user;
     }

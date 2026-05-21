@@ -74,8 +74,7 @@ import static cn.frank.ulp.synchronizer.configuration.IdentitySourceBeanUtils.ge
 /**
  * 身份源Bean 注册
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/3/17 21:54
+ * @author Frank Zhang
  */
 @Slf4j
 @Configuration

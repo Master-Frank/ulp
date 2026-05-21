@@ -32,8 +32,7 @@ import static cn.frank.ulp.core.setting.SecuritySettingConstants.*;
 /**
  * 安全设置数据转换器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/10/4 21:00
+ * @author Frank Zhang
  */
 @Mapper(componentModel = "spring")
 public interface SecuritySettingConverter {

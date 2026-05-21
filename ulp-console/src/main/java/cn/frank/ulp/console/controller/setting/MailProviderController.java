@@ -45,8 +45,7 @@ import static cn.frank.ulp.common.constant.SettingConstants.SETTING_PATH;
 /**
  * 消息设置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/7/24 22:36
+ * @author Frank Zhang
  */
 @Validated
 @Tag(name = "邮件提供商")

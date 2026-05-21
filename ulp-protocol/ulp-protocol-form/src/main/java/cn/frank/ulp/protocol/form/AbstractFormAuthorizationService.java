@@ -26,8 +26,7 @@ import cn.frank.ulp.protocol.form.client.FormRegisteredClient;
 import cn.frank.ulp.support.security.userdetails.UserDetails;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2024/1/7 21:43
+ * @author Frank Zhang
  */
 public abstract class AbstractFormAuthorizationService implements FormAuthorizationService {
 

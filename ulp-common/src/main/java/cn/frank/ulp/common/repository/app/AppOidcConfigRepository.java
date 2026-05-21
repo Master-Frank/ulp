@@ -33,7 +33,7 @@ import cn.frank.ulp.common.entity.app.po.AppOidcConfigPO;
 import static cn.frank.ulp.common.constant.AppConstants.OIDC_CONFIG_CACHE_NAME;
 
 /**
- * @author TopIAM
+ * @author Frank Zhang
  */
 @Repository
 @CacheConfig(cacheNames = { OIDC_CONFIG_CACHE_NAME })

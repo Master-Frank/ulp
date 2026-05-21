@@ -54,8 +54,7 @@ import static cn.frank.ulp.protocol.oidc.constant.OidcProtocolConstants.OIDC_ERR
 /**
  * Configurer for the OAuth 2.0 Device Authorization Endpoint.
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/27 21:32
+ * @author Frank Zhang
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public final class OAuth2DeviceAuthorizationEndpointConfigurer extends AbstractConfigurer {

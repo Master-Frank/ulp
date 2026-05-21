@@ -24,7 +24,7 @@ import lombok.Data;
 /**
  * 短信发送入参
  *
- * @author TopIAM
+ * @author Frank Zhang
  */
 @Data
 public class SendSmsRequest implements Serializable {

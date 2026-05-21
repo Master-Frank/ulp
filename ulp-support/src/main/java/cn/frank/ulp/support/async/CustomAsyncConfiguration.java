@@ -36,53 +36,53 @@ import cn.frank.ulp.support.util.DesensitizationUtils;
  * Custom asynchronous configuration class
  * Used to configure beans related to asynchronous execution
  */
-@EnableAsync(
-   proxyTargetClass = true
-)
+@EnableAsync(proxyTargetClass = true)
 public class CustomAsyncConfiguration implements AsyncConfigurer {
-   
-   /**
+
+    /**
     * Thread pool task executor builder
     */
-   private final ThreadPoolTaskExecutorBuilder threadPoolTaskExecutorBuilder;
-   
-   /**
+    private final ThreadPoolTaskExecutorBuilder threadPoolTaskExecutorBuilder;
+
+    /**
     * Logger
     */
-   private final Logger logger;
+    private final Logger                        logger;
 
-   /**
+    /**
     * Get asynchronous uncaught exception handler
-    * 
+    *
     * @return Asynchronous uncaught exception handler
     */
-   public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-      return new SimpleAsyncUncaughtExceptionHandler();
-   }
+    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+        return new SimpleAsyncUncaughtExceptionHandler();
+    }
 
-   /**
+    /**
     * Get asynchronous executor
-    * 
+    *
     * @return Asynchronous executor
     */
-   public Executor getAsyncExecutor() {
-      this.logger.debug(DesensitizationUtils.decryptString("qMW^FV\\X\u0012~AF\\\\\u0012kSLY\u001fwGW\\GK]M"));
-      ThreadPoolTaskExecutor threadPoolTaskExecutor;
-      ThreadPoolTaskExecutor var10000 = threadPoolTaskExecutor = this.threadPoolTaskExecutorBuilder.build();
-      var10000.setThreadNamePrefix(DesensitizationUtils.decryptString("\ne\u000ec\u001fgso&O=_*E,\u0007"));
-      var10000.initialize();
-      return TtlExecutors.getTtlExecutor(
-              new ExceptionHandlingAsyncTaskExecutor(
-                      new DelegatingSecurityContextAsyncTaskExecutor(threadPoolTaskExecutor)));
-   }
+    public Executor getAsyncExecutor() {
+        this.logger.debug(
+            DesensitizationUtils.decryptString("qMW^FV\\X\u0012~AF\\\\\u0012kSLY\u001fwGW\\GK]M"));
+        ThreadPoolTaskExecutor threadPoolTaskExecutor;
+        ThreadPoolTaskExecutor var10000 = threadPoolTaskExecutor = this.threadPoolTaskExecutorBuilder
+            .build();
+        var10000.setThreadNamePrefix(
+            DesensitizationUtils.decryptString("\ne\u000ec\u001fgso&O=_*E,\u0007"));
+        var10000.initialize();
+        return TtlExecutors.getTtlExecutor(new ExceptionHandlingAsyncTaskExecutor(
+            new DelegatingSecurityContextAsyncTaskExecutor(threadPoolTaskExecutor)));
+    }
 
-   /**
+    /**
     * Constructor
-    * 
+    *
     * @param threadPoolTaskExecutorBuilder Thread pool task executor builder
     */
-   public CustomAsyncConfiguration(ThreadPoolTaskExecutorBuilder threadPoolTaskExecutorBuilder) {
-      this.logger = LoggerFactory.getLogger(CustomAsyncConfiguration.class);
-      this.threadPoolTaskExecutorBuilder = threadPoolTaskExecutorBuilder;
-   }
+    public CustomAsyncConfiguration(ThreadPoolTaskExecutorBuilder threadPoolTaskExecutorBuilder) {
+        this.logger = LoggerFactory.getLogger(CustomAsyncConfiguration.class);
+        this.threadPoolTaskExecutorBuilder = threadPoolTaskExecutorBuilder;
+    }
 }

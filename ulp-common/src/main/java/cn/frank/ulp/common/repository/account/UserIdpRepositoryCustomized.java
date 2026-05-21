@@ -24,8 +24,7 @@ import cn.frank.ulp.support.repository.page.domain.Page;
 /**
  * UserIdp Repository Customized
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/29 21:27
+ * @author Frank Zhang
  */
 public interface UserIdpRepositoryCustomized {
 

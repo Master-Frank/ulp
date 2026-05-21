@@ -16,15 +16,14 @@
  */
 package cn.frank.ulp.authentication.otp.mail.exception;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
  * 邮箱不存在异常
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/1/2 21:59
+ * @author Frank Zhang
  */
-public class MailNotExistException extends TopIamException {
+public class MailNotExistException extends UlpException {
     public MailNotExistException() {
         super("mail_not_exist", "邮箱不存在", DEFAULT_STATUS);
     }

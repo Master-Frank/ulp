@@ -44,7 +44,7 @@ import cn.frank.ulp.authentication.common.client.RegisteredIdentityProviderClien
 import cn.frank.ulp.authentication.common.filter.AbstractIdentityProviderAuthenticationProcessingFilter;
 import cn.frank.ulp.authentication.qq.QqIdentityProviderOAuth2Config;
 import cn.frank.ulp.core.context.ContextService;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.trace.TraceUtils;
 import cn.frank.ulp.support.util.HttpClientUtils;
 import cn.frank.ulp.support.util.UrlUtils;
@@ -61,8 +61,7 @@ import static cn.frank.ulp.authentication.qq.constant.QqAuthenticationConstants.
 /**
  * QQ登录
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/8 21:11
+ * @author Frank Zhang
  */
 @SuppressWarnings({ "AlibabaClassNamingShouldBeCamel", "DuplicatedCode" })
 public class QqOAuth2LoginAuthenticationFilter extends
@@ -142,7 +141,7 @@ public class QqOAuth2LoginAuthenticationFilter extends
         JSONObject result = JSON.parseObject(HttpClientUtils.doGet(URL_GET_ACCESS_TOKEN, param));
         if (!Objects.isNull(result.getString(ERROR_CODE))) {
             logger.error("获取access_token发生错误: {}" + result.toJSONString());
-            throw new TopIamException("获取access_token发生错误:  " + result.toJSONString());
+            throw new UlpException("获取access_token发生错误:  " + result.toJSONString());
         }
         // 获取openId信息
         param = new HashMap<>(16);
@@ -152,7 +151,7 @@ public class QqOAuth2LoginAuthenticationFilter extends
         result = JSON.parseObject(HttpClientUtils.doGet(URL_GET_OPEN_ID, param));
         if (!Objects.isNull(result.getString(ERROR_CODE))) {
             logger.error("获取QQ用户OpenID发生错误: {}" + result.toJSONString());
-            throw new TopIamException("获取QQ用户OpenID发生错误:  " + result.toJSONString());
+            throw new UlpException("获取QQ用户OpenID发生错误:  " + result.toJSONString());
         }
         // 返回
         String openId = result.getString(OidcScopes.OPENID);

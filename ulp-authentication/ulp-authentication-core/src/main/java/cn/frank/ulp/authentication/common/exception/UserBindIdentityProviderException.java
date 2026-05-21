@@ -18,14 +18,13 @@ package cn.frank.ulp.authentication.common.exception;
 
 import org.springframework.http.HttpStatus;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/8/13 23:58
+ * @author Frank Zhang
  */
-public class UserBindIdentityProviderException extends TopIamException {
+public class UserBindIdentityProviderException extends UlpException {
     public static final String USER_BIND_IDP_ERROR = "user_bind_idp_error";
 
     public UserBindIdentityProviderException() {

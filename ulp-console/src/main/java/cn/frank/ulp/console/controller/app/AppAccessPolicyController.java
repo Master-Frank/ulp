@@ -43,8 +43,7 @@ import static cn.frank.ulp.common.constant.AppConstants.APP_PATH;
 /**
  * 应用访问授权策略
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/6/4 21:58
+ * @author Frank Zhang
  */
 @Validated
 @Tag(name = "应用访问授权策略")

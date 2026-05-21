@@ -16,15 +16,14 @@
  */
 package cn.frank.ulp.application.exception;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
  * 应用未启用
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/7/8 22:23
+ * @author Frank Zhang
  */
-public class AppNotEnableException extends TopIamException {
+public class AppNotEnableException extends UlpException {
     public AppNotEnableException() {
         super("app_not_enable", "应用未启用", DEFAULT_STATUS);
     }

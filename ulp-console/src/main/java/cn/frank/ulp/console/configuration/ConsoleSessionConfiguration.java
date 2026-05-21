@@ -27,8 +27,7 @@ import cn.frank.ulp.core.security.session.ClusterSessionRegistryImpl;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/22 21:43
+ * @author Frank Zhang
  */
 @Configuration
 public class ConsoleSessionConfiguration {

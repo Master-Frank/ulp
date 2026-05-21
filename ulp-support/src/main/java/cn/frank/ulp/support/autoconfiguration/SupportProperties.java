@@ -21,39 +21,37 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 /**
  * Configuration properties class for the support module
- * Used to configure various properties of the TopIAM support module
+ * Used to configure various properties of the ULP support module
  */
-@ConfigurationProperties(
-   prefix = "topiam"
-)
+@ConfigurationProperties(prefix = "ulp")
 public class SupportProperties {
-    
+
     /**
      * Security configuration properties
      */
     @NestedConfigurationProperty
-    private Security security = new Security();
-    
+    private Security           security       = new Security();
+
     /**
      * Demo environment configuration properties
      */
     @NestedConfigurationProperty
-    private final Demo demo = new Demo();
-    
+    private final Demo         demo           = new Demo();
+
     /**
      * Default prefix
      */
-    public static final String DEFAULT_PREFIX = "topiam";
-    
+    public static final String DEFAULT_PREFIX = "ulp";
+
     /**
      * Server configuration properties
      */
     @NestedConfigurationProperty
-    private final Server server = new Server();
+    private final Server       server         = new Server();
 
     /**
      * Get server configuration properties
-     * 
+     *
      * @return Server configuration properties
      */
     public Server getServer() {
@@ -62,7 +60,7 @@ public class SupportProperties {
 
     /**
      * Get demo environment configuration properties
-     * 
+     *
      * @return Demo environment configuration properties
      */
     public Demo getDemo() {
@@ -71,7 +69,7 @@ public class SupportProperties {
 
     /**
      * Get security configuration properties
-     * 
+     *
      * @return Security configuration properties
      */
     public Security getSecurity() {
@@ -80,7 +78,7 @@ public class SupportProperties {
 
     /**
      * Set security configuration properties
-     * 
+     *
      * @param security Security configuration properties
      */
     public void setSecurity(Security security) {
@@ -91,7 +89,7 @@ public class SupportProperties {
      * Demo environment configuration class
      */
     public static class Demo {
-        
+
         /**
          * Whether demo environment is enabled
          */
@@ -106,7 +104,7 @@ public class SupportProperties {
 
         /**
          * Get demo environment enabled status
-         * 
+         *
          * @return Demo environment enabled status
          */
         public Boolean getOpen() {
@@ -115,7 +113,7 @@ public class SupportProperties {
 
         /**
          * Set demo environment enabled status
-         * 
+         *
          * @param open Demo environment enabled status
          */
         public void setOpen(Boolean open) {
@@ -127,7 +125,7 @@ public class SupportProperties {
      * Security configuration class
      */
     public static class Security {
-        
+
         /**
          * Jump configuration properties
          */
@@ -136,7 +134,7 @@ public class SupportProperties {
 
         /**
          * Set jump configuration properties
-         * 
+         *
          * @param jump Jump configuration properties
          */
         public void setJump(Jump jump) {
@@ -145,7 +143,7 @@ public class SupportProperties {
 
         /**
          * Get jump configuration properties
-         * 
+         *
          * @return Jump configuration properties
          */
         public Jump getJump() {
@@ -156,7 +154,7 @@ public class SupportProperties {
          * Jump configuration class
          */
         public static class Jump {
-            
+
             /**
              * Default redirect URL
              */
@@ -164,7 +162,7 @@ public class SupportProperties {
 
             /**
              * Get default redirect URL
-             * 
+             *
              * @return Default redirect URL
              */
             public String getDefaultRedirectUrl() {
@@ -173,7 +171,7 @@ public class SupportProperties {
 
             /**
              * Set default redirect URL
-             * 
+             *
              * @param defaultRedirectUrl Default redirect URL
              */
             public void setDefaultRedirectUrl(String defaultRedirectUrl) {
@@ -186,17 +184,17 @@ public class SupportProperties {
      * Server configuration class
      */
     public static class Server {
-        
+
         /**
          * OpenAPI public base URL
          */
         private String openApiPublicBaseUrl;
-        
+
         /**
          * Portal public base URL
          */
         private String portalPublicBaseUrl;
-        
+
         /**
          * Console public base URL
          */
@@ -204,7 +202,7 @@ public class SupportProperties {
 
         /**
          * Set portal public base URL
-         * 
+         *
          * @param portalPublicBaseUrl Portal public base URL
          */
         public void setPortalPublicBaseUrl(String portalPublicBaseUrl) {
@@ -213,7 +211,7 @@ public class SupportProperties {
 
         /**
          * Get portal public base URL
-         * 
+         *
          * @return Portal public base URL
          */
         public String getPortalPublicBaseUrl() {
@@ -222,7 +220,7 @@ public class SupportProperties {
 
         /**
          * Set console public base URL
-         * 
+         *
          * @param consolePublicBaseUrl Console public base URL
          */
         public void setConsolePublicBaseUrl(String consolePublicBaseUrl) {
@@ -231,7 +229,7 @@ public class SupportProperties {
 
         /**
          * Set OpenAPI public base URL
-         * 
+         *
          * @param openApiPublicBaseUrl OpenAPI public base URL
          */
         public void setOpenApiPublicBaseUrl(String openApiPublicBaseUrl) {
@@ -240,7 +238,7 @@ public class SupportProperties {
 
         /**
          * Get console public base URL
-         * 
+         *
          * @return Console public base URL
          */
         public String getConsolePublicBaseUrl() {
@@ -249,7 +247,7 @@ public class SupportProperties {
 
         /**
          * Get OpenAPI public base URL
-         * 
+         *
          * @return OpenAPI public base URL
          */
         public String getOpenApiPublicBaseUrl() {

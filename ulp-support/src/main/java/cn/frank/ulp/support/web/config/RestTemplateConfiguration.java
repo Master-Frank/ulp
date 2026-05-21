@@ -26,14 +26,14 @@ import org.springframework.web.client.RestTemplate;
  */
 @Configuration
 public class RestTemplateConfiguration {
-   
-   /**
+
+    /**
     * Rest模板Bean
-    * 
+    *
     * @return Rest模板
     */
-   @Bean
-   public RestTemplate restTemplate() {
-      return new RestTemplate();
-   }
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 }

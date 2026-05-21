@@ -19,8 +19,7 @@ package cn.frank.ulp.core.setting;
 /**
  * 存储提供商设置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/9 21:46
+ * @author Frank Zhang
  */
 public final class StorageProviderSettingConstants {
 

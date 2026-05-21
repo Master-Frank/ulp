@@ -39,15 +39,14 @@ import static jakarta.persistence.FetchType.LAZY;
 /**
  * 应用
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/11 21:07
+ * @author Frank Zhang
  */
 @Getter
 @Setter
 @ToString
 @Entity
 @Accessors(chain = true)
-@Table(name = "eiam_app")
+@Table(name = "ulp_app")
 @SoftDelete(columnName = IS_DELETED_COLUMN, converter = SoftDeleteConverter.class)
 public class AppEntity extends BaseEntity {
 

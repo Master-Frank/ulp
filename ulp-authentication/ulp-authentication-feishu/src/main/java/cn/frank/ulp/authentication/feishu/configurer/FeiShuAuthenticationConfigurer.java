@@ -38,8 +38,7 @@ import static cn.frank.ulp.support.security.util.HttpSecurityFilterOrderRegistra
 /**
  * 认证配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/19 23:58
+ * @author Frank Zhang
  */
 public final class FeiShuAuthenticationConfigurer extends
                                                   AbstractAuthenticationFilterConfigurer<HttpSecurity, FeiShuAuthenticationConfigurer, FeiShuLoginAuthenticationFilter> {

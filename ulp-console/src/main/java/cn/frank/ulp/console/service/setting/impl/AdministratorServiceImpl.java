@@ -62,7 +62,7 @@ import cn.frank.ulp.console.pojo.save.setting.AdministratorCreateParam;
 import cn.frank.ulp.console.pojo.update.setting.AdministratorUpdateParam;
 import cn.frank.ulp.console.service.setting.AdministratorService;
 import cn.frank.ulp.support.exception.InfoValidityFailException;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.repository.page.domain.Page;
 import cn.frank.ulp.support.repository.page.domain.PageModel;
 import cn.frank.ulp.support.security.password.exception.PasswordValidatedFailException;
@@ -73,8 +73,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.DEFAULT_ADMIN_USERNAME
 import static cn.frank.ulp.support.util.PhoneUtils.*;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/13 23:13
+ * @author Frank Zhang
  */
 @Service
 public class AdministratorServiceImpl implements AdministratorService {
@@ -109,7 +108,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     public Boolean createAdministrator(AdministratorCreateParam param) {
         //@formatter:off
         if (StringUtils.isBlank(param.getPhone()) && StringUtils.isBlank(param.getEmail())) {
-            throw new TopIamException("手机号或邮箱至少填写一个", HttpStatus.BAD_REQUEST);
+            throw new UlpException("手机号或邮箱至少填写一个", HttpStatus.BAD_REQUEST);
         }
         //手机号
         if (StringUtils.isNotEmpty(param.getPhone())) {
@@ -151,7 +150,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateAdministrator(AdministratorUpdateParam param) {
         //@formatter:off
-        AdministratorEntity entity = administratorRepository.findById(param.getId()).orElseThrow(() -> new TopIamException("管理员信息不存在"));
+        AdministratorEntity entity = administratorRepository.findById(param.getId()).orElseThrow(() -> new UlpException("管理员信息不存在"));
         AuditContext.setContent(entity.getUsername());
         administratorRepository.save(administratorConverter.administratorUpdateParamConvertToEntity(param, entity));
         AuditContext.setTarget(Target.builder().id(entity.getId())
@@ -174,7 +173,7 @@ public class AdministratorServiceImpl implements AdministratorService {
         if (administratorEntity.getUsername().equals(DEFAULT_ADMIN_USERNAME)) {
             AuditContext.setContent("默认超级管理员禁止删除");
             logger.warn(AuditContext.getContent());
-            throw new TopIamException("操作失败");
+            throw new UlpException("操作失败");
         }
         //执行删除
         administratorRepository.deleteById(id);
@@ -219,7 +218,7 @@ public class AdministratorServiceImpl implements AdministratorService {
         if (optional.isEmpty()) {
             AuditContext.setContent(message);
             logger.warn(AuditContext.getContent());
-            throw new TopIamException("操作失败");
+            throw new UlpException("操作失败");
         }
         return optional.get();
     }
@@ -282,7 +281,7 @@ public class AdministratorServiceImpl implements AdministratorService {
         return administratorRepository.findByUsername(username).orElseThrow(() -> {
             AuditContext.setContent("重置密码失败，管理员不存在");
             logger.warn(AuditContext.getContent());
-            return new TopIamException("操作失败");
+            return new UlpException("操作失败");
         });
     }
 
@@ -340,7 +339,7 @@ public class AdministratorServiceImpl implements AdministratorService {
                     .setPhoneAreaCode(String.valueOf(phoneNumber.getCountryCode()))));
             } catch (NumberParseException e) {
                 logger.error("校验手机号发生异常", e);
-                throw new TopIamException("校验手机号发生异常");
+                throw new UlpException("校验手机号发生异常");
             }
         }
         //用户名

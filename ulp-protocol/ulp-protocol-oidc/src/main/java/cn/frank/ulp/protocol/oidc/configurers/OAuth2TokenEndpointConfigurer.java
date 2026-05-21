@@ -68,8 +68,7 @@ import static cn.frank.ulp.support.security.util.HttpSecurityConfigUtils.getUser
 /**
  * Token 端点配置器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/27 21:08
+ * @author Frank Zhang
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public final class OAuth2TokenEndpointConfigurer extends AbstractConfigurer {

@@ -43,8 +43,7 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME
 /**
  * 身份源转换器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/2/13 21:37
+ * @author Frank Zhang
  */
 @Mapper(componentModel = "spring")
 public interface IdentitySourceSyncConverter {

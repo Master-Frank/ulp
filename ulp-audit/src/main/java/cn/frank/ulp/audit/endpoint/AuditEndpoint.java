@@ -43,8 +43,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.V1_API_PATH;
 /**
  * 系统审计
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/23 21:12
+ * @author Frank Zhang
  */
 @Validated
 @Tag(name = "系统审计")

@@ -37,8 +37,7 @@ import static cn.frank.ulp.identitysource.feishu.FeiShuConstant.APP_ACCESS_TOKEN
 /**
  * 飞书身份源客户端配置验证器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/4/13 23:09
+ * @author Frank Zhang
  */
 @Slf4j
 public class FeiShuConfigValidator implements
@@ -60,8 +59,8 @@ public class FeiShuConfigValidator implements
                 throw new ConstraintViolationException(validationResult.getConstraintViolations());
             }
 
-            GetAccessTokenRequest request = new GetAccessTokenRequest(
-                config.getAppId(), config.getAppSecret());
+            GetAccessTokenRequest request = new GetAccessTokenRequest(config.getAppId(),
+                config.getAppSecret());
             GetAccessTokenResponse response = postToken(request);
             if (response.getCode() != 0) {
                 throw new ApiCallException(response.getMsg());

@@ -24,8 +24,7 @@ import lombok.Data;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2024/2/27 09:43
+ * @author Frank Zhang
  */
 @Data
 public class EndpointMatcher implements Serializable {

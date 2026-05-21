@@ -21,7 +21,7 @@ package cn.frank.ulp.support.geo;
  * 定义根据IP地址获取地理位置信息的方法
  */
 public interface GeoLocationParser {
-    
+
     /**
      * 根据IP地址获取地理位置信息
      *

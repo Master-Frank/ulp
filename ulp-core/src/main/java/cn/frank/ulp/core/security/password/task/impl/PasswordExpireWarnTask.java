@@ -49,8 +49,7 @@ import static cn.frank.ulp.core.setting.PasswordPolicySettingConstants.*;
 /**
  * 密码过期前提醒任务
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/4/17 22:22
+ * @author Frank Zhang
  */
 @RequiredArgsConstructor
 public class PasswordExpireWarnTask implements PasswordExpireTask {

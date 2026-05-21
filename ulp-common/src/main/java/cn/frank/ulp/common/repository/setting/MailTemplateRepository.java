@@ -30,8 +30,7 @@ import cn.frank.ulp.common.enums.MailType;
  * 邮件模板 Repository 接口
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-08-13
+ * @author Frank Zhang
  */
 @Repository
 public interface MailTemplateRepository extends JpaRepository<MailTemplateEntity, Long> {

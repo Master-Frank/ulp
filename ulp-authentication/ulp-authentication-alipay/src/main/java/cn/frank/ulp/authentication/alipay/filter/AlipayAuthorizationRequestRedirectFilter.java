@@ -55,8 +55,7 @@ import static cn.frank.ulp.authentication.common.constant.AuthenticationConstant
 /**
  * 支付宝 登录请求重定向过滤器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/8/19 17:56
+ * @author Frank Zhang
  */
 @SuppressWarnings("DuplicatedCode")
 public class AlipayAuthorizationRequestRedirectFilter extends OncePerRequestFilter {

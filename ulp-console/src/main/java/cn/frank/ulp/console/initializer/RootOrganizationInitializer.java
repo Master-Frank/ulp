@@ -38,8 +38,7 @@ import static cn.frank.ulp.support.security.userdetails.DataOrigin.INPUT;
 /**
  * SystemInitializer
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2024/04/04 21:24
+ * @author Frank Zhang
  */
 @Component
 public class RootOrganizationInitializer extends AbstractSystemInitializer {

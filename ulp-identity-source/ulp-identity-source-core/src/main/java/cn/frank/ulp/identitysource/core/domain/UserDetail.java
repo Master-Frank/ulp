@@ -24,8 +24,7 @@ import lombok.NoArgsConstructor;
 /**
  * 用户详情
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/2/28 23:03
+ * @author Frank Zhang
  */
 @Data
 @NoArgsConstructor

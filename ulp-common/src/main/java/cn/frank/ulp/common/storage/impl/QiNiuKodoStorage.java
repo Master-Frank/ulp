@@ -46,8 +46,7 @@ import jakarta.validation.constraints.NotEmpty;
 /**
  * 七牛kodo
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/10 21:33
+ * @author Frank Zhang
  */
 @Slf4j
 public class QiNiuKodoStorage extends AbstractStorage {

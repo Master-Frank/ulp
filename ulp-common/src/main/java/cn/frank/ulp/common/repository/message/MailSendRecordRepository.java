@@ -24,8 +24,7 @@ import cn.frank.ulp.common.entity.message.MailSendRecordEntity;
 /**
  * MailSendRecordRepository
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/10/3 03:38
+ * @author Frank Zhang
  */
 @Repository
 public interface MailSendRecordRepository extends JpaRepository<MailSendRecordEntity, String> {

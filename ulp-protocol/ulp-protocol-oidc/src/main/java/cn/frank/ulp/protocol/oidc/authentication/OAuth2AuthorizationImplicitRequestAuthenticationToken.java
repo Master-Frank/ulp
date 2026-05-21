@@ -28,8 +28,7 @@ import org.springframework.util.Assert;
  * An {@link Authentication} implementation for the OAuth 2.0 Authorization Request
  * used in the Authorization Code Grant.
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/26 21:07
+ * @author Frank Zhang
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class OAuth2AuthorizationImplicitRequestAuthenticationToken extends

@@ -23,14 +23,14 @@ package cn.frank.ulp.support.enums;
 public interface BaseEnum {
     /**
      * 获取枚举编码
-     * 
+     *
      * @return 枚举编码
      */
     String getCode();
 
     /**
      * 获取枚举描述
-     * 
+     *
      * @return 枚举描述
      */
     String getDesc();

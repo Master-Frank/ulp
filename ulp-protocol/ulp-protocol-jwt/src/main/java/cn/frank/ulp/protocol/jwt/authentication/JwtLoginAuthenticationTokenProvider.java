@@ -49,8 +49,7 @@ import static cn.frank.ulp.support.security.util.SecurityUtils.isPrincipalAuthen
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/8 00:11
+ * @author Frank Zhang
  */
 public final class JwtLoginAuthenticationTokenProvider implements AuthenticationProvider {
 

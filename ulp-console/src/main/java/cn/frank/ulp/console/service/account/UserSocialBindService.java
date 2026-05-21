@@ -19,8 +19,7 @@ package cn.frank.ulp.console.service.account;
 /**
  * 应用用户关联表
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/29 21:25
+ * @author Frank Zhang
  */
 public interface UserSocialBindService {
 

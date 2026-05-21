@@ -28,8 +28,7 @@ import lombok.RequiredArgsConstructor;
 /**
  * 更新 maxmind 数据库
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/7 22:25
+ * @author Frank Zhang
  */
 @Component
 @RequiredArgsConstructor

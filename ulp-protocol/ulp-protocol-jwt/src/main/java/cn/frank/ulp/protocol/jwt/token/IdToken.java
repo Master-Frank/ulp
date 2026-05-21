@@ -25,8 +25,7 @@ import lombok.extern.jackson.Jacksonized;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/10 23:24
+ * @author Frank Zhang
  */
 @Data
 @Builder

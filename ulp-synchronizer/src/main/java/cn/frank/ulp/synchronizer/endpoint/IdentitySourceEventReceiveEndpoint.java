@@ -40,8 +40,7 @@ import static cn.frank.ulp.common.constant.SynchronizerConstants.EVENT_RECEIVE_P
 /**
  * 身份源回调事件端点
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/9/20 21:24
+ * @author Frank Zhang
  */
 @Slf4j
 @RestController

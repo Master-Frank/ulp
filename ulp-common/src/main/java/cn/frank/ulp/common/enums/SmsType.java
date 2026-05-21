@@ -26,8 +26,7 @@ import lombok.Getter;
 /**
  * 短信类型
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/25 21:19
+ * @author Frank Zhang
  */
 public enum SmsType implements BaseEnum {
                                          /**

@@ -57,14 +57,16 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class CustomAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
-    private static final Logger logger = LoggerFactory.getLogger(CustomAuthenticationFilter.class);
-    private static final AntPathRequestMatcher DEFAULT_ANT_PATH_REQUEST_MATCHER = new AntPathRequestMatcher("/login", "POST");
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final Logger                logger                           = LoggerFactory
+        .getLogger(CustomAuthenticationFilter.class);
+    private static final AntPathRequestMatcher DEFAULT_ANT_PATH_REQUEST_MATCHER = new AntPathRequestMatcher(
+        "/login", "POST");
+    private static final ObjectMapper          OBJECT_MAPPER                    = new ObjectMapper();
 
-    private final UserDetailsService userDetailsService;
-    private final PasswordPolicyManager passwordPolicyManager;
-    private final SessionRegistry sessionRegistry;
-    private final Executor taskExecutor;
+    private final UserDetailsService           userDetailsService;
+    private final PasswordPolicyManager        passwordPolicyManager;
+    private final SessionRegistry              sessionRegistry;
+    private final Executor                     taskExecutor;
 
     public CustomAuthenticationFilter(UserDetailsService userDetailsService,
                                       PasswordPolicyManager passwordPolicyManager,
@@ -74,17 +76,21 @@ public class CustomAuthenticationFilter extends AbstractAuthenticationProcessing
         this.userDetailsService = userDetailsService;
         this.passwordPolicyManager = passwordPolicyManager;
         this.sessionRegistry = sessionRegistry;
-        this.taskExecutor = asyncConfigurer != null ? asyncConfigurer.getAsyncExecutor() : Runnable::run;
+        this.taskExecutor = asyncConfigurer != null ? asyncConfigurer.getAsyncExecutor()
+            : Runnable::run;
         if (this.taskExecutor == null) {
             logger.debug("No async executor configured");
         }
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-        throws AuthenticationException, IOException, ServletException {
+    public Authentication attemptAuthentication(HttpServletRequest request,
+                                                HttpServletResponse response) throws AuthenticationException,
+                                                                              IOException,
+                                                                              ServletException {
         if (!HttpMethod.POST.name().equals(request.getMethod())) {
-            throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
+            throw new AuthenticationServiceException(
+                "Authentication method not supported: " + request.getMethod());
         }
 
         Map<String, String> params = readBody(request);
@@ -158,19 +164,22 @@ public class CustomAuthenticationFilter extends AbstractAuthenticationProcessing
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-                                            FilterChain chain, Authentication authResult)
-        throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request,
+                                            HttpServletResponse response, FilterChain chain,
+                                            Authentication authResult) throws IOException,
+                                                                       ServletException {
         super.successfulAuthentication(request, response, chain, authResult);
         if (this.sessionRegistry != null) {
-            this.sessionRegistry.registerNewSession(request.getSession(true).getId(), authResult.getPrincipal());
+            this.sessionRegistry.registerNewSession(request.getSession(true).getId(),
+                authResult.getPrincipal());
         }
     }
 
     @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-                                              AuthenticationException failed)
-        throws IOException, ServletException {
+    protected void unsuccessfulAuthentication(HttpServletRequest request,
+                                              HttpServletResponse response,
+                                              AuthenticationException failed) throws IOException,
+                                                                              ServletException {
         String errorMsg = "Invalid username or password";
         if (failed instanceof DisabledException) {
             errorMsg = "User account is disabled";
@@ -179,9 +188,7 @@ public class CustomAuthenticationFilter extends AbstractAuthenticationProcessing
         }
 
         ApiRestResult<Object> result = ApiRestResult.builder()
-            .status(String.valueOf(HttpStatus.UNAUTHORIZED.value()))
-            .message(errorMsg)
-            .build();
+            .status(String.valueOf(HttpStatus.UNAUTHORIZED.value())).message(errorMsg).build();
         HttpResponseUtils.flushResponseJson(response, HttpStatus.UNAUTHORIZED.value(), result);
     }
 }

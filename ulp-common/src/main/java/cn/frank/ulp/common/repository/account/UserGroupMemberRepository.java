@@ -30,8 +30,7 @@ import cn.frank.ulp.common.entity.account.UserGroupMemberEntity;
 /**
  * 用户组成员
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/30 03:04
+ * @author Frank Zhang
  */
 @Repository
 public interface UserGroupMemberRepository extends JpaRepository<UserGroupMemberEntity, String>,

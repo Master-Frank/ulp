@@ -33,8 +33,7 @@ import static cn.frank.ulp.common.constant.AuthnConstants.LOGIN_CONFIG;
 /**
  * 登录配置 Endpoint
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/8/3 23:15
+ * @author Frank Zhang
  */
 @Tag(name = "登录配置")
 @Slf4j

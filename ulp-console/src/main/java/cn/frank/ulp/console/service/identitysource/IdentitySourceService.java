@@ -34,8 +34,7 @@ import cn.frank.ulp.support.repository.page.domain.PageModel;
  * 身份源配置 服务类
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-08-16
+ * @author Frank Zhang
  */
 public interface IdentitySourceService {
 

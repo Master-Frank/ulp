@@ -50,8 +50,7 @@ import static cn.frank.ulp.protocol.code.configurer.AuthenticationUtils.getAuthe
 /**
  * Configurer for the OAuth 2.0 Authorization Endpoint.
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/27 21:42
+ * @author Frank Zhang
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public final class OAuth2AuthorizationEndpointConfigurer extends AbstractConfigurer {

@@ -26,8 +26,7 @@ import jakarta.persistence.Converter;
 /**
  * StorageProviderConverter
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/5 21:52
+ * @author Frank Zhang
  */
 @Converter(autoApply = true)
 public class StorageProviderConverter implements AttributeConverter<StorageProvider, String> {

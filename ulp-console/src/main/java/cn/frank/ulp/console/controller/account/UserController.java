@@ -60,8 +60,7 @@ import static cn.frank.ulp.common.constant.AccountConstants.USER_PATH;
 /**
  * 系统账户-用户
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/7/11 21:18
+ * @author Frank Zhang
  */
 @Validated
 @Tag(name = "用户管理")

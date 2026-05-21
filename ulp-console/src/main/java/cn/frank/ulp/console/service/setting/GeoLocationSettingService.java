@@ -23,8 +23,7 @@ import cn.frank.ulp.support.geo.GeoLocation;
 /**
  * ip设置接口
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/10/1 21:19
+ * @author Frank Zhang
  */
 public interface GeoLocationSettingService extends SettingService {
 

@@ -39,8 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * AbstractApplicationService
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/8/31 22:34
+ * @author Frank Zhang
  */
 @Slf4j
 public abstract class AbstractApplicationService implements ApplicationService {

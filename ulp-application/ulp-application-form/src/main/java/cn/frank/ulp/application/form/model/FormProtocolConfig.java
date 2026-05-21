@@ -33,8 +33,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * Form 协议配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/8/28 21:43
+ * @author Frank Zhang
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

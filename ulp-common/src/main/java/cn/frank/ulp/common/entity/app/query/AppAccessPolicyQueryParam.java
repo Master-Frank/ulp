@@ -23,8 +23,7 @@ import lombok.Data;
 /**
  * 应用授权策略查询参数
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/9/27 21:29
+ * @author Frank Zhang
  */
 @Data
 public class AppAccessPolicyQueryParam {

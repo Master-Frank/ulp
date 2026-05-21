@@ -25,8 +25,7 @@ import cn.frank.ulp.portal.pojo.request.AppAccountRequest;
 /**
  * 应用账户映射
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/8/25 21:08
+ * @author Frank Zhang
  */
 @Mapper(componentModel = "spring")
 public interface AppAccountConverter {

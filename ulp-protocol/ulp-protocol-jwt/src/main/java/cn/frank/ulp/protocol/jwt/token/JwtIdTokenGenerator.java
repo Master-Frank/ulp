@@ -27,8 +27,7 @@ import io.jsonwebtoken.Jwts;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/10 21:00
+ * @author Frank Zhang
  */
 public class JwtIdTokenGenerator implements IdTokenGenerator {
 

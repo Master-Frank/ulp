@@ -34,7 +34,8 @@ public class HttpRequestUtils {
     public static MultiValueMap<String, String> getFormParameters(HttpServletRequest request) {
         Map<String, String[]> parameterMap = request.getParameterMap();
         LinkedMultiValueMap<String, String> result = new LinkedMultiValueMap<>();
-        String queryString = StringUtils.hasText(request.getQueryString()) ? request.getQueryString()
+        String queryString = StringUtils.hasText(request.getQueryString())
+            ? request.getQueryString()
             : "";
         parameterMap.forEach((name, values) -> {
             if (!queryString.contains(name)) {
@@ -49,7 +50,8 @@ public class HttpRequestUtils {
     public static MultiValueMap<String, String> getQueryParameters(HttpServletRequest request) {
         Map<String, String[]> parameterMap = request.getParameterMap();
         LinkedMultiValueMap<String, String> result = new LinkedMultiValueMap<>();
-        String queryString = StringUtils.hasText(request.getQueryString()) ? request.getQueryString()
+        String queryString = StringUtils.hasText(request.getQueryString())
+            ? request.getQueryString()
             : "";
         parameterMap.forEach((name, values) -> {
             if (queryString.contains(name)) {

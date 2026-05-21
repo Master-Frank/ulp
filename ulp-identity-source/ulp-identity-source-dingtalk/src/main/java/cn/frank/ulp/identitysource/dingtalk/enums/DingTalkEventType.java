@@ -22,7 +22,7 @@ import cn.frank.ulp.support.enums.BaseEnum;
 
 /**
  * 钉钉事件类型
- * @author TopIAM
+ * @author Frank Zhang
  */
 public enum DingTalkEventType implements BaseEnum {
                                                    /**

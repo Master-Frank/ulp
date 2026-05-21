@@ -24,8 +24,7 @@ import cn.frank.ulp.common.message.enums.SmsProvider;
 /**
  * 短信发送
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/27 21:03
+ * @author Frank Zhang
  */
 public interface SmsProviderSend {
 

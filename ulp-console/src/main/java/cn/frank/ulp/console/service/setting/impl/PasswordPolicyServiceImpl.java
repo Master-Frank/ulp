@@ -39,8 +39,7 @@ import static cn.frank.ulp.core.setting.PasswordPolicySettingConstants.PASSWORD_
  * 密码策略 服务实现类
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-08-17
+ * @author Frank Zhang
  */
 @Service
 public class PasswordPolicyServiceImpl extends SettingServiceImpl implements PasswordPolicyService {

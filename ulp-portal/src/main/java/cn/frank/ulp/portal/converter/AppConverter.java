@@ -42,8 +42,7 @@ import static cn.frank.ulp.common.constant.ProtocolConstants.OidcEndpointConstan
 /**
  * Converter
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/7/7 23:05
+ * @author Frank Zhang
  */
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface AppConverter {

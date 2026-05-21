@@ -29,8 +29,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 应用列表返回
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/9/27 21:29
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "应用列表返回")

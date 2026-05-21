@@ -21,8 +21,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.V1_API_PATH;
 /**
  * 认证常量
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/8 21:29
+ * @author Frank Zhang
  */
 public class PortalConstants {
 

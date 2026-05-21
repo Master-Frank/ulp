@@ -34,7 +34,7 @@ import cn.frank.ulp.common.entity.app.AppJwtConfigEntity;
 import cn.frank.ulp.common.entity.app.po.AppJwtConfigPO;
 import cn.frank.ulp.common.enums.app.*;
 import cn.frank.ulp.common.repository.app.*;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.util.BeanUtils;
 import cn.frank.ulp.support.validation.ValidationUtils;
 
@@ -49,8 +49,7 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME
 /**
  * JWT 用户应用
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/8/20 23:20
+ * @author Frank Zhang
  */
 @Component
 @Slf4j
@@ -72,7 +71,7 @@ public class JwtStandardApplicationServiceImpl extends AbstractJwtApplicationSer
             mapper.configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
             model = mapper.readValue(value, AppJwtSaveConfigParam.class);
         } catch (Exception e) {
-            throw new TopIamException(e.getMessage());
+            throw new UlpException(e.getMessage());
         }
         //@formatter:off
         ValidationUtils.ValidationResult<AppJwtSaveConfigParam> validationResult = ValidationUtils.validateEntity(model);
@@ -143,7 +142,7 @@ public class JwtStandardApplicationServiceImpl extends AbstractJwtApplicationSer
      */
     @Override
     public String getDescription() {
-        return "JWT（JSON Web Token）是在网络应用环境声明的一种基于 JSON 的开放标准。TopIAM 使用 JWT 进行分布式站点的单点登录 （SSO）。JWT 单点登录基于非对称加密，由 TopIAM 将用户状态和信息使用私钥加密，传递给应用后，应用使用公钥解密并进行验证。使用场景非常广泛，集成简单。";
+        return "JWT（JSON Web Token）是在网络应用环境声明的一种基于 JSON 的开放标准。ULP 使用 JWT 进行分布式站点的单点登录 （SSO）。JWT 单点登录基于非对称加密，由 ULP 将用户状态和信息使用私钥加密，传递给应用后，应用使用公钥解密并进行验证。使用场景非常广泛，集成简单。";
     }
 
     /**

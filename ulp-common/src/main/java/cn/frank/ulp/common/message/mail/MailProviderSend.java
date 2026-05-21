@@ -21,8 +21,7 @@ import cn.frank.ulp.common.message.enums.MailProvider;
 /**
  * 邮件收发统一接口
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/27 21:06
+ * @author Frank Zhang
  */
 public interface MailProviderSend {
 

@@ -41,8 +41,7 @@ import cn.frank.ulp.protocol.jwt.exception.JwtError;
 /**
  * A {@link HttpMessageConverter} for an {@link JwtError Jwt Error}.
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/19 21:57
+ * @author Frank Zhang
  */
 public class JwtErrorHttpMessageConverter extends AbstractHttpMessageConverter<JwtError> {
 

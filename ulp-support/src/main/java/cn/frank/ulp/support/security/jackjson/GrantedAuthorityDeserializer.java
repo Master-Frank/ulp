@@ -28,12 +28,14 @@ import cn.frank.ulp.support.security.core.GrantedAuthority;
 public class GrantedAuthorityDeserializer extends JsonDeserializer<GrantedAuthority> {
 
     @Override
-    public GrantedAuthority deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+    public GrantedAuthority deserialize(JsonParser jp,
+                                        DeserializationContext ctxt) throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         JsonNode typeNode = node.get("type");
         JsonNode authorityNode = node.get("authority");
         String type = typeNode == null || typeNode.isNull() ? "" : typeNode.asText();
-        String authority = authorityNode == null || authorityNode.isNull() ? "" : authorityNode.asText();
+        String authority = authorityNode == null || authorityNode.isNull() ? ""
+            : authorityNode.asText();
         return new GrantedAuthority(type, authority);
     }
 }

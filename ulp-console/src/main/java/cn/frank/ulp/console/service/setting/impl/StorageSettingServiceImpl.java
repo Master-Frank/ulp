@@ -35,7 +35,7 @@ import cn.frank.ulp.console.pojo.result.setting.StorageProviderConfigResult;
 import cn.frank.ulp.console.pojo.save.setting.StorageConfigSaveParam;
 import cn.frank.ulp.console.service.setting.StorageSettingService;
 import cn.frank.ulp.support.context.ApplicationContextService;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import static cn.frank.ulp.core.context.ContextService.addImgSrcHostContentSecurityPolicy;
 import static cn.frank.ulp.core.setting.StorageProviderSettingConstants.STORAGE_BEAN_NAME;
 import static cn.frank.ulp.core.setting.StorageProviderSettingConstants.STORAGE_PROVIDER_KEY;
@@ -43,8 +43,7 @@ import static cn.frank.ulp.core.setting.StorageProviderSettingConstants.STORAGE_
 /**
  * 存储设置接口
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/1 21:43
+ * @author Frank Zhang
  */
 @Service
 public class StorageSettingServiceImpl extends SettingServiceImpl implements StorageSettingService {
@@ -87,7 +86,7 @@ public class StorageSettingServiceImpl extends SettingServiceImpl implements Sto
             return setting;
         } catch (JsonProcessingException e) {
             logger.error("保存存储配置发生异常", e);
-            throw new TopIamException("保存存储配置发生异常");
+            throw new UlpException("保存存储配置发生异常");
         }
     }
 

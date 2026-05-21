@@ -28,8 +28,8 @@ import cn.frank.ulp.support.security.password.PasswordPolicyManager;
 import cn.frank.ulp.support.security.userdetails.UserDetailsService;
 import cn.frank.ulp.support.security.web.CustomAuthenticationFilter;
 
-public final class CustomSecurityConfiguration<H extends HttpSecurityBuilder<H>>
-    extends AbstractHttpConfigurer<CustomSecurityConfiguration<H>, H> {
+public final class CustomSecurityConfiguration<H extends HttpSecurityBuilder<H>> extends
+                                              AbstractHttpConfigurer<CustomSecurityConfiguration<H>, H> {
 
     @Override
     public void configure(H builder) {

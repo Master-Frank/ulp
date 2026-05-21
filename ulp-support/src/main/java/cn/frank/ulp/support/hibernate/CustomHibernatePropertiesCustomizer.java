@@ -22,13 +22,13 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomi
 
 public class CustomHibernatePropertiesCustomizer implements HibernatePropertiesCustomizer {
 
-    private static final String FORMAT_SQL              = "hibernate.format_sql";
+    private static final String FORMAT_SQL               = "hibernate.format_sql";
 
-    private static final String SHOW_SQL                = "hibernate.show_sql";
+    private static final String SHOW_SQL                 = "hibernate.show_sql";
 
-    private static final String USE_SQL_COMMENTS        = "hibernate.use_sql_comments";
+    private static final String USE_SQL_COMMENTS         = "hibernate.use_sql_comments";
 
-    private static final String QUERY_SUBSTITUTIONS     = "hibernate.query.substitutions";
+    private static final String QUERY_SUBSTITUTIONS      = "hibernate.query.substitutions";
 
     private static final String PHYSICAL_NAMING_STRATEGY = "hibernate.physical_naming_strategy";
 

@@ -24,8 +24,7 @@ import cn.frank.ulp.support.security.password.authentication.NeedChangePasswordA
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/3/22 21:02
+ * @author Frank Zhang
  */
 public class AuthenticationTrustResolverImpl implements AuthenticationTrustResolver {
     private final AuthenticationTrustResolver delegate = new org.springframework.security.authentication.AuthenticationTrustResolverImpl();

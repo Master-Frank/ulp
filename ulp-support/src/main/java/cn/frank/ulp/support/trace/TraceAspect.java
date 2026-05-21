@@ -34,29 +34,29 @@ import lombok.extern.slf4j.Slf4j;
 @Aspect
 @Component
 public class TraceAspect {
-   
-   /**
+
+    /**
     * 跟踪切点
     */
-   @Pointcut("@annotation(cn.frank.ulp.support.trace.Trace)")
-   public void tracePointcut() {
-   }
+    @Pointcut("@annotation(cn.frank.ulp.support.trace.Trace)")
+    public void tracePointcut() {
+    }
 
-   /**
+    /**
     * 环绕通知
-    * 
+    *
     * @param proceedingJoinPoint 连接点
     * @return 方法执行结果
     * @throws Throwable 异常
     */
-   @Around("tracePointcut()")
-   public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-      String traceId = UUID.randomUUID().toString();
-      TraceUtils.put(traceId);
-      try {
-         return proceedingJoinPoint.proceed();
-      } finally {
-         TraceUtils.remove();
-      }
-   }
+    @Around("tracePointcut()")
+    public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        String traceId = UUID.randomUUID().toString();
+        TraceUtils.put(traceId);
+        try {
+            return proceedingJoinPoint.proceed();
+        } finally {
+            TraceUtils.remove();
+        }
+    }
 }

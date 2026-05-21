@@ -26,8 +26,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/12/13 23:45
+ * @author Frank Zhang
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

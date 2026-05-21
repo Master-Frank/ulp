@@ -31,7 +31,7 @@ import org.springframework.util.Assert;
 
 import cn.frank.ulp.authentication.common.authentication.IdentityProviderBindAuthentication;
 import cn.frank.ulp.authentication.common.authentication.IdentityProviderNotBindAuthentication;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.result.ApiRestResult;
 import cn.frank.ulp.support.security.util.SecurityUtils;
 import cn.frank.ulp.support.util.HttpResponseUtils;
@@ -46,8 +46,7 @@ import static cn.frank.ulp.support.security.constant.SecurityConstants.LOGIN_PAT
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn  on  2023/8/6 23:43
+ * @author Frank Zhang
  */
 @Slf4j
 public class IdentityProviderBindUserAuthenticationFilter extends
@@ -127,7 +126,7 @@ public class IdentityProviderBindUserAuthenticationFilter extends
                 ApiRestResult.err().message(e.getMessage()).status(EX000101.getCode()));
         }
         //自定义异常
-        catch (TopIamException e) {
+        catch (UlpException e) {
             HttpResponseUtils.flushResponseJson(response, HttpStatus.BAD_REQUEST.value(),
                 ApiRestResult.err(e.getMessage(), e.getErrorCode()));
         }

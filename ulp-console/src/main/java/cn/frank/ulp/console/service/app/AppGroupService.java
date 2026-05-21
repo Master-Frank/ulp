@@ -33,8 +33,7 @@ import cn.frank.ulp.support.repository.page.domain.PageModel;
  * 应用分组管理 服务类
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023-08-31
+ * @author Frank Zhang
  */
 public interface AppGroupService {
 

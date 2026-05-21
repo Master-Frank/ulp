@@ -19,8 +19,7 @@ package cn.frank.ulp.application.context;
 /**
  * ApplicationContextHolder
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/10/29 22:37
+ * @author Frank Zhang
  */
 public final class ApplicationContextHolder {
     private static final ThreadLocal<ApplicationContext> HOLDER = new ThreadLocal<>();

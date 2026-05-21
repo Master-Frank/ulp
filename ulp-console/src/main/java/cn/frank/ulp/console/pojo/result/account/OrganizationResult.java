@@ -28,8 +28,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 获取组织
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/11 21:27
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "获取组织")

@@ -29,8 +29,7 @@ import jakarta.validation.constraints.NotNull;
 /**
  * 应用修改入参
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/7/18 23:26
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "应用修改入参")

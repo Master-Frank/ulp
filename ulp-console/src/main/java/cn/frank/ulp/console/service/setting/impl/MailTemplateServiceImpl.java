@@ -52,8 +52,7 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME
  * 邮件模板 服务实现类
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-08-13
+ * @author Frank Zhang
  */
 @Service
 @CacheConfig(cacheNames = SETTING_EMAIL_TEMPLATE_CACHE_NAME)

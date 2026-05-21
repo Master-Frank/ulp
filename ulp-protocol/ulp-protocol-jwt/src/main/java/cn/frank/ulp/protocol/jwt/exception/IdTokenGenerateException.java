@@ -21,8 +21,7 @@ import static cn.frank.ulp.protocol.jwt.exception.JwtErrorCodes.GENERATE_ID_TOKE
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/10 21:01
+ * @author Frank Zhang
  */
 public class IdTokenGenerateException extends JwtAuthenticationException {
 

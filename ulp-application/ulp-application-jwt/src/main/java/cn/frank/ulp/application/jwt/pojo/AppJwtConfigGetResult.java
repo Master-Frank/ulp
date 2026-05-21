@@ -28,8 +28,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * JWT 配置返回
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/02/12 22:46
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "JWT 配置返回响应")

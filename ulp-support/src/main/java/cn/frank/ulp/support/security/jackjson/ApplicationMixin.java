@@ -21,5 +21,5 @@ package cn.frank.ulp.support.security.jackjson;
  * 用于扩展应用功能
  */
 public class ApplicationMixin {
-   // Mixin类通常用于提供额外的功能或属性
+    // Mixin类通常用于提供额外的功能或属性
 }

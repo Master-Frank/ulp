@@ -26,17 +26,17 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * 表示地理位置信息的提供者
  */
 public class GeoLocationProvider implements Serializable {
-    
+
     /**
      * 提供者标识
      */
-    private String provider;
-    
+    private String                    provider;
+
     /**
      * 提供者名称
      */
-    private String name;
-    
+    private String                    name;
+
     /**
      * 无提供者的默认实例
      */
@@ -117,7 +117,8 @@ public class GeoLocationProvider implements Serializable {
             return true;
         } else if (obj != null && this.getClass() == obj.getClass()) {
             GeoLocationProvider that = (GeoLocationProvider) obj;
-            return (new EqualsBuilder()).append(this.provider, that.provider).append(this.name, that.name).isEquals();
+            return (new EqualsBuilder()).append(this.provider, that.provider)
+                .append(this.name, that.name).isEquals();
         } else {
             return false;
         }

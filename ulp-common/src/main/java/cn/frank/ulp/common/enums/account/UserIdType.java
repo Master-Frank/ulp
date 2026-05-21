@@ -24,8 +24,7 @@ import cn.frank.ulp.support.web.converter.EnumConvert;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/10/6 22:11
+ * @author Frank Zhang
  */
 public enum UserIdType implements BaseEnum {
                                             /**

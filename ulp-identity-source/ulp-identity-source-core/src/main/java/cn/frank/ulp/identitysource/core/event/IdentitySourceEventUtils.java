@@ -24,8 +24,7 @@ import cn.frank.ulp.support.context.ApplicationContextService;
 /**
  * 身份源配置事件工具
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/3/19 22:42
+ * @author Frank Zhang
  */
 public class IdentitySourceEventUtils {
     public static final String IDENTITY_SOURCE_EVENT = "eiam-identity-source-event";

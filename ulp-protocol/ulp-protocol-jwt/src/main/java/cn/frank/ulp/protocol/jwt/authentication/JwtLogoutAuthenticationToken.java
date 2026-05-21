@@ -28,8 +28,7 @@ import lombok.Getter;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/9/4 13:43
+ * @author Frank Zhang
  */
 public class JwtLogoutAuthenticationToken extends AbstractAuthenticationToken {
 

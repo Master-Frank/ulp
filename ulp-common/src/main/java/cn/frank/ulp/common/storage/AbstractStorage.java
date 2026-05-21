@@ -23,8 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/10 21:36
+ * @author Frank Zhang
  */
 public class AbstractStorage implements Storage {
     protected StorageConfig    config;

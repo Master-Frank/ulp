@@ -42,7 +42,7 @@ import cn.frank.ulp.console.pojo.result.setting.EmailProviderConfigResult;
 import cn.frank.ulp.console.pojo.result.setting.SmsProviderConfigResult;
 import cn.frank.ulp.console.pojo.save.setting.MailProviderSaveParam;
 import cn.frank.ulp.console.pojo.save.setting.SmsProviderSaveParam;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.validation.ValidationUtils;
 
 import jakarta.validation.ValidationException;
@@ -53,8 +53,7 @@ import static cn.frank.ulp.core.setting.MessageSettingConstants.MESSAGE_SMS_PROV
 /**
  * 消息设置转换器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/10/1 23:18
+ * @author Frank Zhang
  */
 @Mapper(componentModel = "spring")
 public interface MessageSettingConverter {
@@ -84,7 +83,7 @@ public interface MessageSettingConverter {
             String value = objectMapper.writeValueAsString(mailProviderConfig);
             entity.setValue(value);
         }catch (JsonProcessingException e){
-            throw new TopIamException("配置转换异常",e.getMessage());
+            throw new UlpException("配置转换异常",e.getMessage());
         }
         entity.setDesc(desc);
         //@formatter:no

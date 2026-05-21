@@ -24,8 +24,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 批量获取组织结果
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/11 21:27
+ * @author Frank Zhang
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

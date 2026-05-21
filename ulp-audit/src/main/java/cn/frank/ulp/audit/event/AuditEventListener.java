@@ -33,8 +33,7 @@ import cn.frank.ulp.audit.repository.AuditRepository;
 /**
  * 事件监听
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/12 22:49
+ * @author Frank Zhang
  */
 @Component
 @Async

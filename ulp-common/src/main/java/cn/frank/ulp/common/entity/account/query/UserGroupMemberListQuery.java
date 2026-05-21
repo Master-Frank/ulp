@@ -30,8 +30,7 @@ import jakarta.validation.constraints.NotEmpty;
 /**
  * 查询用户列表入参
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/11 23:08
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "查询用户组成员列表入参")

@@ -26,10 +26,10 @@ import org.slf4j.MDC;
  * Used to pass MDC context information in asynchronous tasks
  */
 public class AsyncLoggingUtils {
-    
+
     /**
      * Wrap Supplier to pass MDC context
-     * 
+     *
      * @param supplier Original Supplier
      * @return Wrapped Supplier that can be used with MDC context in asynchronous tasks
      * @param <U> Return value type

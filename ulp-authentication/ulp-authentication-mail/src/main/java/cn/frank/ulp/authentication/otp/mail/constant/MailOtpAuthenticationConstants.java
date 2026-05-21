@@ -21,8 +21,7 @@ import static cn.frank.ulp.support.security.constant.SecurityConstants.LOGIN_PAT
 /**
  * 验证码认证常量
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/19 23:19
+ * @author Frank Zhang
  */
 public final class MailOtpAuthenticationConstants {
 

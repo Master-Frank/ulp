@@ -44,8 +44,7 @@ import static cn.frank.ulp.core.setting.GeoIpProviderConstants.IPADDRESS_SETTING
 /**
  * IP地址库
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/13 22:09
+ * @author Frank Zhang
  */
 @Validated
 @Tag(name = "IP地址库")

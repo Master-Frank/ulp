@@ -28,8 +28,7 @@ import cn.frank.ulp.support.repository.page.domain.Page;
 /**
  * 用户身份提供商绑定
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/11/3 21:08
+ * @author Frank Zhang
  */
 @Mapper(componentModel = "spring")
 public interface UserIdpBindConverter {

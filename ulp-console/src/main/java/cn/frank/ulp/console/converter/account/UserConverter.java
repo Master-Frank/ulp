@@ -63,8 +63,7 @@ import static cn.frank.ulp.support.util.PhoneUtils.getPhoneNumber;
 /**
  * 用户映射
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/14 21:45
+ * @author Frank Zhang
  */
 @Mapper(componentModel = "spring")
 public interface UserConverter {

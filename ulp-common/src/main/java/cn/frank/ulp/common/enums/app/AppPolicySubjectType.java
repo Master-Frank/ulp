@@ -25,8 +25,7 @@ import cn.frank.ulp.support.web.converter.EnumConvert;
  * 权限策略主体类型
  * 用户、角色、组织机构
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/4 21:05
+ * @author Frank Zhang
  */
 public enum AppPolicySubjectType implements BaseEnum {
                                                       /**

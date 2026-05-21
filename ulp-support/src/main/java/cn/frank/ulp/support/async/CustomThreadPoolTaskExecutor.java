@@ -26,11 +26,11 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 public class CustomThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
 
-    private static final long        serialVersionUID = 1735074699085892566L;
+    private static final long   serialVersionUID = 1735074699085892566L;
 
-    private Map<String, String>      mdcContextMap;
+    private Map<String, String> mdcContextMap;
 
-    private boolean                  useFixedContext;
+    private boolean             useFixedContext;
 
     private Map<String, String> getMdcContextMap() {
         return this.useFixedContext ? this.mdcContextMap : MDC.getCopyOfContextMap();

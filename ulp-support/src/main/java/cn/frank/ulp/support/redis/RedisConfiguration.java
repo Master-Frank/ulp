@@ -45,81 +45,81 @@ import cn.frank.ulp.support.util.PhoneUtils;
  */
 @Configuration
 public class RedisConfiguration {
-   
-   /**
+
+    /**
     * Redis连接工厂Bean
-    * 
+    *
     * @param redisProperties Redis属性
     * @return Redis连接工厂
     */
-   @Bean
-   public LettuceConnectionFactory redisConnectionFactory(RedisProperties redisProperties) {
-      RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
-      configuration.setHostName(redisProperties.getHost());
-      configuration.setPort(redisProperties.getPort());
-      configuration.setDatabase(redisProperties.getDatabase());
-      if (redisProperties.getPassword() != null) {
-         configuration.setPassword(RedisPassword.of(redisProperties.getPassword()));
-      }
+    @Bean
+    public LettuceConnectionFactory redisConnectionFactory(RedisProperties redisProperties) {
+        RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
+        configuration.setHostName(redisProperties.getHost());
+        configuration.setPort(redisProperties.getPort());
+        configuration.setDatabase(redisProperties.getDatabase());
+        if (redisProperties.getPassword() != null) {
+            configuration.setPassword(RedisPassword.of(redisProperties.getPassword()));
+        }
 
-      return new LettuceConnectionFactory(configuration);
-   }
+        return new LettuceConnectionFactory(configuration);
+    }
 
-   /**
+    /**
     * Redis模板Bean
-    * 
+    *
     * @param connectionFactory Redis连接工厂
     * @return Redis模板
     */
-   @Bean
-   public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
-      RedisTemplate<String, Object> template = new RedisTemplate<>();
-      template.setKeySerializer(new StringRedisSerializer());
-      template.setValueSerializer(new StringRedisSerializer());
-      template.setHashKeySerializer(new StringRedisSerializer());
-      template.setHashValueSerializer(new StringRedisSerializer());
-      template.setConnectionFactory(connectionFactory);
-      return template;
-   }
+    @Bean
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setValueSerializer(new StringRedisSerializer());
+        template.setHashKeySerializer(new StringRedisSerializer());
+        template.setHashValueSerializer(new StringRedisSerializer());
+        template.setConnectionFactory(connectionFactory);
+        return template;
+    }
 
-   /**
+    /**
     * Redis缓存管理器Bean
-    * 
+    *
     * @param connectionFactory Redis连接工厂
     * @param cachePrefixGenerator 缓存前缀生成器
     * @return Redis缓存管理器
     */
-   @Bean
-   public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory, CachePrefixGenerator cachePrefixGenerator) {
-      RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
-              .entryTtl(Duration.ofHours(1))
-              .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-              .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-              .computePrefixWith(cachePrefixGenerator)
-              .disableCachingNullValues();
-      return RedisCacheManager.builder(connectionFactory).cacheDefaults(config).build();
-   }
+    @Bean
+    public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory,
+                                          CachePrefixGenerator cachePrefixGenerator) {
+        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
+            .entryTtl(Duration.ofHours(1))
+            .serializeKeysWith(RedisSerializationContext.SerializationPair
+                .fromSerializer(new StringRedisSerializer()))
+            .serializeValuesWith(RedisSerializationContext.SerializationPair
+                .fromSerializer(new StringRedisSerializer()))
+            .computePrefixWith(cachePrefixGenerator).disableCachingNullValues();
+        return RedisCacheManager.builder(connectionFactory).cacheDefaults(config).build();
+    }
 
-   /**
+    /**
     * Redisson客户端Bean
-    * 
+    *
     * @param redisProperties Redis属性
     * @return Redisson客户端
     */
-   @Bean(
-      destroyMethod = "shutdown"
-   )
-   public RedissonClient redisson(RedisProperties redisProperties) {
-      Config config = new Config();
-      String host = redisProperties.getHost();
-      int port = redisProperties.getPort();
-      String password = redisProperties.getPassword();
-      Assert.hasText(host, PhoneUtils.decryptString("\u0001g0`'|6D'`1{-|"));
-      config.useSingleServer().setAddress("redis://" + host + ":" + port);
-      if (StringUtils.hasText(password)) {
-         config.useSingleServer().setPassword(password);
-      }
+    @Bean(destroyMethod = "shutdown")
+    public RedissonClient redisson(RedisProperties redisProperties) {
+        Config config = new Config();
+        String host = redisProperties.getHost();
+        int port = redisProperties.getPort();
+        String password = redisProperties.getPassword();
+        Assert.hasText(host, PhoneUtils.decryptString("\u0001g0`'|6D'`1{-|"));
+        config.useSingleServer().setAddress("redis://" + host + ":" + port);
+        if (StringUtils.hasText(password)) {
+            config.useSingleServer().setPassword(password);
+        }
 
-      return Redisson.create(config);
-   }
+        return Redisson.create(config);
+    }
 }

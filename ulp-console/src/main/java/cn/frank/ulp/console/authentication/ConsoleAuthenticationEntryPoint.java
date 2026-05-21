@@ -36,8 +36,7 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 /**
  * 认证入口点
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/9/2 22:11
+ * @author Frank Zhang
  */
 public class ConsoleAuthenticationEntryPoint extends AbstractAuthenticationEntryPoint {
     /**

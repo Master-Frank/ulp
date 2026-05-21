@@ -22,8 +22,7 @@ import static org.springframework.util.ResourceUtils.CLASSPATH_URL_PREFIX;
 /**
  * 消息设置常量
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/5 21:53
+ * @author Frank Zhang
  */
 public final class MessageSettingConstants {
     /**

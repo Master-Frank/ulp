@@ -16,15 +16,14 @@
  */
 package cn.frank.ulp.common.exception;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
  * 不支持该身份源提供商
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2024/4/10 22:23
+ * @author Frank Zhang
  */
-public class IdentitySourceProviderNotSupportedException extends TopIamException {
+public class IdentitySourceProviderNotSupportedException extends UlpException {
     public IdentitySourceProviderNotSupportedException() {
         super("identity_source_provider_not_supported", "不支持该身份源提供商", DEFAULT_STATUS);
     }

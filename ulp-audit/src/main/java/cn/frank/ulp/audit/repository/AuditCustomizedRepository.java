@@ -26,8 +26,7 @@ import cn.frank.ulp.audit.repository.result.AuthnQuantityResult;
 /**
  * 组织成员
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/10/2 02:53
+ * @author Frank Zhang
  */
 public interface AuditCustomizedRepository {
 

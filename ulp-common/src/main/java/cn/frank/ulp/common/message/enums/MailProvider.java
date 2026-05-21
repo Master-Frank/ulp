@@ -24,7 +24,7 @@ import cn.frank.ulp.support.web.converter.EnumConvert;
 /**
  * 邮件提供商配置
  *
- * @author TopIAM
+ * @author Frank Zhang
  */
 public enum MailProvider implements BaseEnum {
 

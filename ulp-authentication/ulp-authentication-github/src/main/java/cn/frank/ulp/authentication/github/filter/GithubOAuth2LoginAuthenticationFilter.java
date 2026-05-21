@@ -45,7 +45,7 @@ import cn.frank.ulp.authentication.common.client.RegisteredIdentityProviderClien
 import cn.frank.ulp.authentication.common.filter.AbstractIdentityProviderAuthenticationProcessingFilter;
 import cn.frank.ulp.authentication.github.GithubIdentityProviderOAuth2Config;
 import cn.frank.ulp.core.context.ContextService;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.trace.TraceUtils;
 import cn.frank.ulp.support.util.UrlUtils;
 
@@ -59,8 +59,7 @@ import static cn.frank.ulp.authentication.github.constant.GithubAuthenticationCo
 /**
  * GITHUB登录
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/8 21:11
+ * @author Frank Zhang
  */
 @SuppressWarnings({ "AlibabaClassNamingShouldBeCamel", "DuplicatedCode" })
 public class GithubOAuth2LoginAuthenticationFilter extends
@@ -137,7 +136,7 @@ public class GithubOAuth2LoginAuthenticationFilter extends
         JSONObject result = request(URL_GET_ACCESS_TOKEN, HttpMethod.POST, null, param);
         if (Objects.nonNull(result.getString(ERROR_CODE))) {
             logger.error("获取access_token发生错误: {}" + result.toJSONString());
-            throw new TopIamException("获取access_token发生错误:  " + result.toJSONString());
+            throw new UlpException("获取access_token发生错误:  " + result.toJSONString());
         }
         // 获取id信息
         result = request(URL_GET_USER_INFO, HttpMethod.GET,
@@ -147,7 +146,7 @@ public class GithubOAuth2LoginAuthenticationFilter extends
             param);
         if (!Objects.isNull(result.getString(ERROR_CODE))) {
             logger.error("获取GITHUB用户OpenID发生错误: {}" + result.toJSONString());
-            throw new TopIamException("获取GITHUB用户OpenID发生错误:  " + result.toJSONString());
+            throw new UlpException("获取GITHUB用户OpenID发生错误:  " + result.toJSONString());
         }
         // 返回
         String id = result.getString("id");

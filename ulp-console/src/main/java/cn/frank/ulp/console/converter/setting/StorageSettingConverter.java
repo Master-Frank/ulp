@@ -43,8 +43,7 @@ import static cn.frank.ulp.core.setting.StorageProviderSettingConstants.STORAGE_
 /**
  * 对象存储设置转换器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/10/1 23:18
+ * @author Frank Zhang
  */
 @Mapper(componentModel = "spring")
 public interface StorageSettingConverter {

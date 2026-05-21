@@ -22,7 +22,7 @@ package cn.frank.ulp.support.exception;
  * 当请求的模板在系统中不存在时抛出此异常，用于标识资源未找到的情况。
  * </p>
  */
-public class TemplateNotExistException extends TopIamException {
+public class TemplateNotExistException extends UlpException {
 
     /**
      * 构造函数

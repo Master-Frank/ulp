@@ -62,8 +62,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.DEFAULT_DATE_TIME_FORM
 /**
  * 会话管理
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/8 21:39
+ * @author Frank Zhang
  */
 @Tag(name = "会话管理")
 @RestController
@@ -139,8 +138,7 @@ public class SessionManageEndpoint {
 /**
  * 在线用户
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/8 21:42
+ * @author Frank Zhang
  */
 @Data
 @Accessors(chain = true)

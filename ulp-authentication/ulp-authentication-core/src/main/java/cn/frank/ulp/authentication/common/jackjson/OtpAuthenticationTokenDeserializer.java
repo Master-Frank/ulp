@@ -32,10 +32,9 @@ import com.fasterxml.jackson.databind.node.MissingNode;
 import cn.frank.ulp.authentication.common.authentication.OtpAuthentication;
 
 /**
- * TopIamAuthenticationTokenDeserializer
+ * AuthenticationTokenDeserializer
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/10 22:25
+ * @author Frank Zhang
  */
 @SuppressWarnings("DuplicatedCode")
 class OtpAuthenticationTokenDeserializer extends JsonDeserializer<OtpAuthentication> {

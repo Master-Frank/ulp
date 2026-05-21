@@ -20,8 +20,7 @@ import org.springframework.security.core.AuthenticationException;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/25 22:23
+ * @author Frank Zhang
  */
 public class InvalidBearerTokenException extends AuthenticationException {
 

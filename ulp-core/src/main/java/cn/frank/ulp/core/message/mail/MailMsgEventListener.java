@@ -52,8 +52,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.COLON;
 /**
  * 消息通知事件
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/25 21:07
+ * @author Frank Zhang
  */
 @Async
 @Component

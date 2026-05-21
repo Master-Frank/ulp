@@ -16,14 +16,14 @@
  */
 package cn.frank.ulp.identitysource.core.exception;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
  * 接口调用异常
  *
- * @author TopIAM
+ * @author Frank Zhang
  */
-public class ApiCallException extends TopIamException {
+public class ApiCallException extends UlpException {
     /**
      * Constructs a new runtime exception with the specified detail message.
      * The cause is not initialized, and may subsequently be initialized by a

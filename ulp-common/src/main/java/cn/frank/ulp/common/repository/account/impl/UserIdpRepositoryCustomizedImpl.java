@@ -35,8 +35,7 @@ import static cn.frank.ulp.common.constant.AccountConstants.USER_CACHE_NAME;
 /**
  * UserIdp Repository Customized
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/29 21:27
+ * @author Frank Zhang
  */
 @Repository
 @CacheConfig(cacheNames = { USER_CACHE_NAME })

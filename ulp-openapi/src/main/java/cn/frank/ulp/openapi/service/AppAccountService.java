@@ -25,8 +25,7 @@ import cn.frank.ulp.support.repository.page.domain.PageModel;
 /**
  * 应用账户
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/6/4 19:07
+ * @author Frank Zhang
  */
 public interface AppAccountService {
 

@@ -28,7 +28,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 import lombok.AllArgsConstructor;
 
@@ -37,8 +37,7 @@ import jakarta.validation.ConstraintViolationException;
 /**
  * 全局异常处理
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/20 21:55
+ * @author Frank Zhang
  */
 @AllArgsConstructor
 @RestControllerAdvice
@@ -60,12 +59,12 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * TopIamException
+     * UlpException
      *
      * @return {@link ModelAndView}
      */
-    @ExceptionHandler(value = TopIamException.class)
-    public ModelAndView topIamException(WebRequest request, TopIamException e) {
+    @ExceptionHandler(value = UlpException.class)
+    public ModelAndView ulpException(WebRequest request, UlpException e) {
         request.setAttribute(WebUtils.ERROR_STATUS_CODE_ATTRIBUTE, e.getHttpStatus().value(),
             WebRequest.SCOPE_REQUEST);
         logger.error("Global exception catch", e);

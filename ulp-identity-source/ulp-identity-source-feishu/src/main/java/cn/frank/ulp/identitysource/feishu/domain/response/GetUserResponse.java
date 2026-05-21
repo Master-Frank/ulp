@@ -28,7 +28,7 @@ import lombok.Data;
 /**
  * user
  *
- * @author TopIAM
+ * @author Frank Zhang
  */
 @Data
 public class GetUserResponse implements Serializable {

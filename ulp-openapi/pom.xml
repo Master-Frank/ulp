@@ -42,7 +42,7 @@
     <!-- build -->
     <build>
         <!--打包后名称-->
-        <finalName>topiam-employee-openapi-${project.version}</finalName>
+        <finalName>ulp-openapi-${project.version}</finalName>
         <plugins>
             <!--spring-boot-maven-plugin-->
             <plugin>

@@ -28,8 +28,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2022/3/21 21:52
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "查询认证源列表入参")

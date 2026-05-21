@@ -40,8 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 存储配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/10 21:01
+ * @author Frank Zhang
  */
 @Slf4j
 @Configuration

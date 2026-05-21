@@ -117,9 +117,9 @@ public class WebLogAspect {
             return "";
         }
         Object[] params = Arrays.stream(args)
-            .filter(arg -> !(arg instanceof HttpServletRequest)
-                           && !(arg instanceof HttpServletResponse)
-                           && !(arg instanceof MultipartFile))
+            .filter(
+                arg -> !(arg instanceof HttpServletRequest) && !(arg instanceof HttpServletResponse)
+                       && !(arg instanceof MultipartFile))
             .toArray();
         return params.length == 0 ? ""
             : ServletContextService.getParameterMap(request).toString() + " "

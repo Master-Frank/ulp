@@ -29,8 +29,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2022/7/10 01:45
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "保存 OIDC 应用配置参数")

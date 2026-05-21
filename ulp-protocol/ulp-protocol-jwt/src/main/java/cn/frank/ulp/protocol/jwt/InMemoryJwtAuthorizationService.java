@@ -21,8 +21,7 @@ import cn.frank.ulp.application.ApplicationServiceLoader;
 /**
  * 内存
  *
- * @author TopIAM
- * Created by support@topiam.cn
+ * @author Frank Zhang
  */
 public class InMemoryJwtAuthorizationService extends AbstractJwtAuthorizationService {
 

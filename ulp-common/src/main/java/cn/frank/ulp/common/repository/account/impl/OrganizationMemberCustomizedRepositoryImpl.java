@@ -34,8 +34,7 @@ import lombok.RequiredArgsConstructor;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/10/2 02:54
+ * @author Frank Zhang
  */
 @Repository
 @RequiredArgsConstructor
@@ -45,7 +44,7 @@ public class OrganizationMemberCustomizedRepositoryImpl implements
     @Override
     public void batchSave(List<OrganizationMemberEntity> list) {
         jdbcTemplate.batchUpdate(
-            "INSERT INTO eiam_organization_member (id_, org_id, user_id, create_by, create_time, update_by, update_time, remark_, is_deleted) VALUES (?,?,?,?,?,?,?,?,?)",
+            "INSERT INTO ulp_organization_member (id_, org_id, user_id, create_by, create_time, update_by, update_time, remark_, is_deleted) VALUES (?,?,?,?,?,?,?,?,?)",
             new BatchPreparedStatementSetter() {
 
                 @Override

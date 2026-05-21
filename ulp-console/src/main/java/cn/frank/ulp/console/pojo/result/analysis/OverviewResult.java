@@ -25,8 +25,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 概述总计结果
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/11/22 23:16
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "概述总计响应")

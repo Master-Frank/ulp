@@ -26,6 +26,6 @@ import java.lang.annotation.Target;
  * 用于标识需要解密的请求参数
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.PARAMETER})
+@Target({ ElementType.PARAMETER })
 public @interface DecryptRequestBody {
 }

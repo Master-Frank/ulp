@@ -19,7 +19,7 @@ package cn.frank.ulp.identitysource.core.enums;
 /**
  * 事件通知类型
  *
- * @author TopIAM
+ * @author Frank Zhang
  */
 public enum IdentitySourceEventReceiveType {
                                             /**

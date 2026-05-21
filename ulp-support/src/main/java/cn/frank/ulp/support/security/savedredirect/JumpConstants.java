@@ -21,8 +21,8 @@ package cn.frank.ulp.support.security.savedredirect;
  * 定义跳转相关的常量
  */
 public class JumpConstants {
-   /**
+    /**
     * 跳转路径
     */
-   public static final String JUMP_PATH = "/api/v1/jump";
+    public static final String JUMP_PATH = "/api/v1/jump";
 }

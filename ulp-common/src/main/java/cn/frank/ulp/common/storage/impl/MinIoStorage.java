@@ -49,8 +49,7 @@ import jakarta.validation.constraints.NotEmpty;
 /**
  * minio
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/10 21:32
+ * @author Frank Zhang
  */
 @Slf4j
 public class MinIoStorage extends AbstractStorage {

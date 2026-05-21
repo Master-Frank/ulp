@@ -38,7 +38,7 @@ import cn.frank.ulp.console.pojo.save.authn.IdentityProviderCreateParam;
 import cn.frank.ulp.console.pojo.update.authn.IdpUpdateParam;
 import cn.frank.ulp.console.service.authn.IdentityProviderService;
 import cn.frank.ulp.support.context.ApplicationContextService;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.repository.page.domain.Page;
 import cn.frank.ulp.support.repository.page.domain.PageModel;
 import cn.frank.ulp.support.util.BeanUtils;
@@ -52,8 +52,7 @@ import static cn.frank.ulp.common.constant.ConfigBeanNameConstants.DEFAULT_SECUR
  * 认证源配置 服务实现类
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-08-16
+ * @author Frank Zhang
  */
 @Slf4j
 @Service
@@ -176,7 +175,7 @@ public class IdentityProviderServiceImpl implements IdentityProviderService {
         if (optional.isEmpty()) {
             AuditContext.setContent("删除失败，认证源不存在");
             log.warn(AuditContext.getContent());
-            throw new TopIamException(AuditContext.getContent());
+            throw new UlpException(AuditContext.getContent());
         }
         identityProviderRepository.deleteById(id);
         ApplicationContextService.refresh(DEFAULT_SECURITY_FILTER_CHAIN);
@@ -199,7 +198,7 @@ public class IdentityProviderServiceImpl implements IdentityProviderService {
         if (optional.isEmpty()) {
             AuditContext.setContent("删除失败，认证源不存在");
             log.warn(AuditContext.getContent());
-            throw new TopIamException(AuditContext.getContent());
+            throw new UlpException(AuditContext.getContent());
         }
         boolean result = identityProviderRepository.updateIdentityProviderStatus(id, enabled) > 0;
         ApplicationContextService.refresh(DEFAULT_SECURITY_FILTER_CHAIN);

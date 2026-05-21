@@ -16,15 +16,14 @@
  */
 package cn.frank.ulp.common.exception.app;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
  * 应用账户不存在异常
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/7/8 22:49
+ * @author Frank Zhang
  */
-public class AppAccountNotExistException extends TopIamException {
+public class AppAccountNotExistException extends UlpException {
 
     public AppAccountNotExistException() {
         super("app_account_not_exist", "应用账户不存在", DEFAULT_STATUS);

@@ -36,75 +36,77 @@ import lombok.Generated;
  * 验证新密码是否与历史密码重复
  */
 public final class HistoryPasswordValidator implements PasswordValidator {
-   @Generated
-   private static final Logger logger = LoggerFactory.getLogger(HistoryPasswordValidator.class);
-   
-   /**
+    @Generated
+    private static final Logger   logger = LoggerFactory.getLogger(HistoryPasswordValidator.class);
+
+    /**
     * 是否启用验证
     */
-   private final Boolean enabled;
-   
-   /**
+    private final Boolean         enabled;
+
+    /**
     * 密码编码器
     */
-   private final PasswordEncoder passwordEncoder;
-   
-   /**
+    private final PasswordEncoder passwordEncoder;
+
+    /**
     * 历史密码列表
     */
-   private final List<String> historyPasswords;
+    private final List<String>    historyPasswords;
 
-   /**
+    /**
     * 验证密码
     *
     * @param password 密码
     * @throws PasswordInvalidException 密码无效异常
     */
-   @Override
-   public void validate(String password) throws PasswordInvalidException {
-      if (this.enabled) {
-         for (String historyPassword : this.historyPasswords) {
-            if (this.passwordEncoder.matches(password, historyPassword)) {
-               throw new PasswordHistoryInvalidException("密码不能与历史密码重复");
+    @Override
+    public void validate(String password) throws PasswordInvalidException {
+        if (this.enabled) {
+            for (String historyPassword : this.historyPasswords) {
+                if (this.passwordEncoder.matches(password, historyPassword)) {
+                    throw new PasswordHistoryInvalidException("密码不能与历史密码重复");
+                }
             }
-         }
-      }
-   }
+        }
+    }
 
-   /**
+    /**
     * 构造函数
     *
     * @param enabled 是否启用
     * @param historyPasswords 历史密码列表
     * @param passwordEncoder 密码编码器
     */
-   @Generated
-   public HistoryPasswordValidator(Boolean enabled, List<String> historyPasswords, PasswordEncoder passwordEncoder) {
-      this.enabled = enabled;
-      this.historyPasswords = historyPasswords;
-      this.passwordEncoder = passwordEncoder;
-   }
+    @Generated
+    public HistoryPasswordValidator(Boolean enabled, List<String> historyPasswords,
+                                    PasswordEncoder passwordEncoder) {
+        this.enabled = enabled;
+        this.historyPasswords = historyPasswords;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-   /**
+    /**
     * 构造函数
     *
     * @param enabled 是否启用
     */
-   public HistoryPasswordValidator(Boolean enabled) {
-      this.enabled = enabled;
-      this.historyPasswords = Lists.newArrayList();
-      this.passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-   }
+    public HistoryPasswordValidator(Boolean enabled) {
+        this.enabled = enabled;
+        this.historyPasswords = Lists.newArrayList();
+        this.passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
 
-   /**
+    /**
     * 构造函数
     *
     * @param historyPasswords 历史密码列表
     * @param passwordEncoder 密码编码器
     */
-   public HistoryPasswordValidator(List<String> historyPasswords, PasswordEncoder passwordEncoder) {
-      this.enabled = Boolean.TRUE;
-      this.historyPasswords = historyPasswords;
-      this.passwordEncoder = passwordEncoder;
-   }
+    public HistoryPasswordValidator(List<String> historyPasswords,
+                                    PasswordEncoder passwordEncoder) {
+        this.enabled = Boolean.TRUE;
+        this.historyPasswords = historyPasswords;
+        this.passwordEncoder = passwordEncoder;
+    }
 }

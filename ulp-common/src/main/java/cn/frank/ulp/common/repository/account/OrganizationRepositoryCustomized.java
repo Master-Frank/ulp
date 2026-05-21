@@ -22,8 +22,7 @@ import cn.frank.ulp.common.entity.account.OrganizationEntity;
 import cn.frank.ulp.common.entity.account.po.OrganizationPO;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2022/2/13 21:27
+ * @author Frank Zhang
  */
 public interface OrganizationRepositoryCustomized {
 

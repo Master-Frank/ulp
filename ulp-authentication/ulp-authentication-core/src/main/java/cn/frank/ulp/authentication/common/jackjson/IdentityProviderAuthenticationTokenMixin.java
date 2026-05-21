@@ -25,8 +25,7 @@ import com.fasterxml.jackson.annotation.*;
 import cn.frank.ulp.authentication.common.IdentityProviderType;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/10 22:25
+ * @author Frank Zhang
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, isGetterVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.ANY)

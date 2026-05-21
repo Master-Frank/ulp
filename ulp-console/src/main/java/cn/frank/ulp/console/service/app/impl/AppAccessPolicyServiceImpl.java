@@ -40,7 +40,7 @@ import cn.frank.ulp.console.pojo.query.app.AppAccessPolicyQuery;
 import cn.frank.ulp.console.pojo.result.app.AppAccessPolicyResult;
 import cn.frank.ulp.console.pojo.save.app.AppAccessPolicyCreateParam;
 import cn.frank.ulp.console.service.app.AppAccessPolicyService;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.repository.page.domain.Page;
 import cn.frank.ulp.support.repository.page.domain.PageModel;
 import cn.frank.ulp.support.util.BeanUtils;
@@ -53,8 +53,7 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME
 /**
  * 应用访问权限策略 Service
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/6/4 21:56
+ * @author Frank Zhang
  */
 @Service
 @Slf4j
@@ -124,7 +123,7 @@ public class AppAccessPolicyServiceImpl implements AppAccessPolicyService {
         if (optional.isEmpty()) {
             AuditContext.setContent("删除失败，应用授权策略不存在");
             log.warn(AuditContext.getContent());
-            throw new TopIamException(AuditContext.getContent());
+            throw new UlpException(AuditContext.getContent());
         }
         AppAccessPolicyEntity entity = optional.get();
         appAccessPolicyRepository.deleteById(id);
@@ -145,7 +144,7 @@ public class AppAccessPolicyServiceImpl implements AppAccessPolicyService {
         if (optional.isEmpty()) {
             AuditContext.setContent("启用失败，应用授权策略不存在");
             log.warn(AuditContext.getContent());
-            throw new TopIamException(AuditContext.getContent());
+            throw new UlpException(AuditContext.getContent());
         }
         Integer count = appAccessPolicyRepository.updateStatus(id, Boolean.TRUE);
         AppAccessPolicyEntity entity = optional.get();
@@ -166,7 +165,7 @@ public class AppAccessPolicyServiceImpl implements AppAccessPolicyService {
         if (optional.isEmpty()) {
             AuditContext.setContent("禁用失败，应用授权策略不存在");
             log.warn(AuditContext.getContent());
-            throw new TopIamException(AuditContext.getContent());
+            throw new UlpException(AuditContext.getContent());
         }
         AppAccessPolicyEntity entity = optional.get();
         Integer count = appAccessPolicyRepository.updateStatus(id, Boolean.FALSE);

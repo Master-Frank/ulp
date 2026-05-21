@@ -21,10 +21,10 @@ package cn.frank.ulp.support;
  * Provides system version information
  */
 public class Version {
-    
+
     /**
      * Get version number
-     * 
+     *
      * @return version number string
      */
     public static String getVersion() {

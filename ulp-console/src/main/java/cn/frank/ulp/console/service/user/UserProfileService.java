@@ -21,8 +21,7 @@ import cn.frank.ulp.console.pojo.update.user.*;
 /**
  * 账户服务
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/4/3 22:20
+ * @author Frank Zhang
  */
 public interface UserProfileService {
 

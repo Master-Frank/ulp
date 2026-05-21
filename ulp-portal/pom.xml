@@ -54,7 +54,7 @@
     <!-- build -->
     <build>
         <!--打包后名称-->
-        <finalName>topiam-employee-portal-${project.version}</finalName>
+        <finalName>ulp-portal-${project.version}</finalName>
         <plugins>
             <!--spring-boot-maven-plugin-->
             <plugin>

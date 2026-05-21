@@ -51,8 +51,7 @@ import jakarta.validation.constraints.NotEmpty;
 /**
  * 腾讯cos
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/10 21:29
+ * @author Frank Zhang
  */
 @Slf4j
 public class TencentCosStorage extends AbstractStorage {

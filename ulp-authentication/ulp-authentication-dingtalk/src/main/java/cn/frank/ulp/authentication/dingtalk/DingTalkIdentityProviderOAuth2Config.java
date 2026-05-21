@@ -28,8 +28,7 @@ import jakarta.validation.constraints.NotBlank;
 /**
  * 钉钉Oauth配置参数
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/8 21:36
+ * @author Frank Zhang
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

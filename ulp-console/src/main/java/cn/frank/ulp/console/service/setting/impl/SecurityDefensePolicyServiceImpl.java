@@ -29,7 +29,7 @@ import cn.frank.ulp.console.pojo.result.setting.SecurityDefensePolicyConfigResul
 import cn.frank.ulp.console.pojo.save.setting.SecurityDefensePolicyParam;
 import cn.frank.ulp.console.service.setting.SecurityDefensePolicyService;
 import cn.frank.ulp.support.context.ApplicationContextService;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.security.util.ContentSecurityPolicyUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -37,8 +37,7 @@ import static cn.frank.ulp.common.constant.ConfigBeanNameConstants.DEFAULT_SECUR
 import static cn.frank.ulp.core.setting.SecuritySettingConstants.SECURITY_DEFENSE_POLICY_KEY;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2023-03-09
+ * @author Frank Zhang
  */
 @Slf4j
 @Service
@@ -60,7 +59,7 @@ public class SecurityDefensePolicyServiceImpl extends SettingServiceImpl
         } catch (ContentSecurityPolicyUtils.ContentSecurityPolicyPolicyException e) {
             ContentSecurityPolicyUtils.PolicyError error = e.getError();
             log.error("解析内容安全策略异常：{}", error.toString());
-            throw new TopIamException("内容安全策略格式错误");
+            throw new UlpException("内容安全策略格式错误");
         }
         //删除安全防御策略
         SECURITY_DEFENSE_POLICY_KEY.forEach(settingRepository::deleteByName);

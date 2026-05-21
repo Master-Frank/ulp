@@ -26,8 +26,7 @@ import jakarta.persistence.Converter;
 /**
  * 应用证书使用类型转换器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/11 23:48
+ * @author Frank Zhang
  */
 @Converter(autoApply = true)
 public class AppCertUsingTypeConverter implements AttributeConverter<AppCertUsingType, String> {

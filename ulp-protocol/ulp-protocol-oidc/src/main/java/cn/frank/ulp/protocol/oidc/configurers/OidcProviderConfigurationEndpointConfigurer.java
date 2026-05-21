@@ -31,8 +31,7 @@ import static cn.frank.ulp.common.constant.ProtocolConstants.OidcEndpointConstan
 /**
  * OIDC 服务配置端点配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/27 21:09
+ * @author Frank Zhang
  */
 public final class OidcProviderConfigurationEndpointConfigurer extends AbstractConfigurer {
 

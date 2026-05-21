@@ -21,8 +21,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 /**
  *  IdentitySourceBeanUtils
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/9/21 23:22
+ * @author Frank Zhang
  */
 public class IdentitySourceBeanUtils {
 

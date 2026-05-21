@@ -51,8 +51,7 @@ import static cn.frank.ulp.common.constant.AccountConstants.USER_CACHE_NAME;
 /**
  * User Repository Customized
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/29 21:27
+ * @author Frank Zhang
  */
 @Repository
 @AllArgsConstructor
@@ -210,7 +209,7 @@ public class UserRepositoryCustomizedImpl implements UserRepositoryCustomized {
     public void batchSave(List<UserEntity> list) {
         //@formatter:off
         jdbcTemplate.batchUpdate(
-            "INSERT INTO eiam_user (id_, username_, password_, email_, phone_, phone_area_code, full_name,nick_name, avatar_, external_id, expire_date, status_, email_verified, phone_verified, auth_total,last_auth_ip,last_auth_time,expand_,data_origin,identity_source_id,last_update_password_time ,create_by,create_time,update_by,update_time,remark_,is_deleted) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ",
+            "INSERT INTO ulp_user (id_, username_, password_, email_, phone_, phone_area_code, full_name,nick_name, avatar_, external_id, expire_date, status_, email_verified, phone_verified, auth_total,last_auth_ip,last_auth_time,expand_,data_origin,identity_source_id,last_update_password_time ,create_by,create_time,update_by,update_time,remark_,is_deleted) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ",
             new BatchPreparedStatementSetter() {
 
                 @Override
@@ -258,7 +257,7 @@ public class UserRepositoryCustomizedImpl implements UserRepositoryCustomized {
     public void batchUpdate(List<UserEntity> list) {
         //@formatter:off
         jdbcTemplate.batchUpdate(
-            "UPDATE eiam_user SET username_=?, password_=?, email_=?, phone_=?, phone_area_code=?,full_name=?,nick_name=?, avatar_=?, external_id=?, expire_date=?, status_=?, email_verified=?, phone_verified=?, auth_total=?,last_auth_ip=?,last_auth_time=?,expand_=?,data_origin=?,identity_source_id=?,last_update_password_time =?,create_by=?,create_time=?,update_by=?,update_time=?,remark_=? WHERE  id_=?",
+            "UPDATE ulp_user SET username_=?, password_=?, email_=?, phone_=?, phone_area_code=?,full_name=?,nick_name=?, avatar_=?, external_id=?, expire_date=?, status_=?, email_verified=?, phone_verified=?, auth_total=?,last_auth_ip=?,last_auth_time=?,expand_=?,data_origin=?,identity_source_id=?,last_update_password_time =?,create_by=?,create_time=?,update_by=?,update_time=?,remark_=? WHERE  id_=?",
             new BatchPreparedStatementSetter() {
 
                 @Override

@@ -16,15 +16,14 @@
  */
 package cn.frank.ulp.common.exception;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
  * OTP 发送异常
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/8/7 23:03
+ * @author Frank Zhang
  */
-public class OtpSendException extends TopIamException {
+public class OtpSendException extends UlpException {
 
     public OtpSendException(String message) {
         super("otp_send_error", message, DEFAULT_STATUS);

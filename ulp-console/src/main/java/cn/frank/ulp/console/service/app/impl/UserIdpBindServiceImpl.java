@@ -31,7 +31,7 @@ import cn.frank.ulp.common.repository.account.UserIdpRepository;
 import cn.frank.ulp.console.converter.app.UserIdpBindConverter;
 import cn.frank.ulp.console.pojo.result.app.UserIdpBindListResult;
 import cn.frank.ulp.console.service.app.UserIdpBindService;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.repository.page.domain.Page;
 
 import lombok.AllArgsConstructor;
@@ -40,8 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 用户身份提供商绑定
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/11 21:10
+ * @author Frank Zhang
  */
 @Component
 @Slf4j
@@ -55,7 +54,7 @@ public class UserIdpBindServiceImpl implements UserIdpBindService {
         if (optional.isEmpty()) {
             AuditContext.setContent("解绑失败，用户身份提供商绑定关系不存在");
             log.warn(AuditContext.getContent());
-            throw new TopIamException(AuditContext.getContent());
+            throw new UlpException(AuditContext.getContent());
         }
         UserIdpBindPO bind = optional.get();
         userIdpRepository.deleteById(id);

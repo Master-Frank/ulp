@@ -26,8 +26,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/7/23 21:33
+ * @author Frank Zhang
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

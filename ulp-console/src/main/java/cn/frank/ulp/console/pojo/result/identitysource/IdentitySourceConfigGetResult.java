@@ -30,7 +30,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 获取身份源配置
  *
- * @author TopIAM
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "获取身份源配置")

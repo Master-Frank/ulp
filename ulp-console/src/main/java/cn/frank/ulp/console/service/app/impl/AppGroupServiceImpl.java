@@ -50,7 +50,7 @@ import cn.frank.ulp.console.pojo.save.app.AppGroupCreateParam;
 import cn.frank.ulp.console.pojo.update.app.AppGroupUpdateParam;
 import cn.frank.ulp.console.service.app.AppGroupService;
 import cn.frank.ulp.support.exception.InfoValidityFailException;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.repository.page.domain.Page;
 import cn.frank.ulp.support.repository.page.domain.PageModel;
 import cn.frank.ulp.support.util.BeanUtils;
@@ -63,8 +63,7 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME
 /**
  * AppGroupServiceImpl
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/8/31 14:23
+ * @author Frank Zhang
  */
 @Service
 @Slf4j
@@ -180,7 +179,7 @@ public class AppGroupServiceImpl implements AppGroupService {
         if (optional.isEmpty()) {
             AuditContext.setContent("操作失败，应用分组不存在");
             log.warn(AuditContext.getContent());
-            throw new TopIamException(AuditContext.getContent());
+            throw new UlpException(AuditContext.getContent());
         }
         return optional.get();
     }
@@ -199,7 +198,7 @@ public class AppGroupServiceImpl implements AppGroupService {
         if (optional.isEmpty()) {
             AuditContext.setContent("操作失败，应用组不存在");
             log.warn(AuditContext.getContent());
-            throw new TopIamException(AuditContext.getContent());
+            throw new UlpException(AuditContext.getContent());
         }
         appIds.forEach(appId -> appGroupAssociationRepository.deleteByGroupIdAndAppId(id, appId));
         List<Target> targets = new ArrayList<>(appIds.stream()

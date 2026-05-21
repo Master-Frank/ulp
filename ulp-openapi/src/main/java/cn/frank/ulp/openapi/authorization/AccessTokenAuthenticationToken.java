@@ -24,8 +24,7 @@ import org.springframework.util.Assert;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/25 23:29
+ * @author Frank Zhang
  */
 public class AccessTokenAuthenticationToken extends AbstractAuthenticationToken {
 

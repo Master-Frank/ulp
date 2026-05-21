@@ -26,8 +26,7 @@ import cn.frank.ulp.support.web.converter.EnumConvert;
 /**
  * 身份源类型
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/3/21 23:07
+ * @author Frank Zhang
  */
 public enum IdentityProviderCategory implements BaseEnum {
                                                           /**

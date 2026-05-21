@@ -33,8 +33,7 @@ import io.jsonwebtoken.*;
 /**
  * JWT 工具类
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/02/12 21:58
+ * @author Frank Zhang
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

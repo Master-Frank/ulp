@@ -26,8 +26,7 @@ import lombok.Data;
 /**
  * access token入参
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022-02-17 23:59
+ * @author Frank Zhang
  */
 @Data
 @AllArgsConstructor

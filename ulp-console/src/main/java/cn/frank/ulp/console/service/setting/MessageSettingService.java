@@ -24,8 +24,7 @@ import cn.frank.ulp.console.pojo.save.setting.SmsProviderSaveParam;
 /**
  * 消息设置接口
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/10/1 21:19
+ * @author Frank Zhang
  */
 public interface MessageSettingService extends SettingService {
     /**

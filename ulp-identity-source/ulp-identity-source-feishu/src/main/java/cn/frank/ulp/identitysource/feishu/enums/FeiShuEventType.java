@@ -22,7 +22,7 @@ import cn.frank.ulp.support.enums.BaseEnum;
 
 /**
  * 飞书事件类型
- * @author TopIAM
+ * @author Frank Zhang
  */
 public enum FeiShuEventType implements BaseEnum {
                                                  /**

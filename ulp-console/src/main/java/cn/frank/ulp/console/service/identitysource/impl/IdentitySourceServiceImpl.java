@@ -51,7 +51,7 @@ import cn.frank.ulp.identitysource.dingtalk.DingTalkConfig;
 import cn.frank.ulp.identitysource.dingtalk.DingTalkConfigValidator;
 import cn.frank.ulp.identitysource.feishu.FeiShuConfig;
 import cn.frank.ulp.identitysource.feishu.FeiShuConfigValidator;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.repository.page.domain.Page;
 import cn.frank.ulp.support.repository.page.domain.PageModel;
 import cn.frank.ulp.support.util.BeanUtils;
@@ -66,8 +66,7 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME
  * 身份源配置 服务类
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-08-16
+ * @author Frank Zhang
  */
 @Slf4j
 @Service
@@ -150,7 +149,7 @@ public class IdentitySourceServiceImpl implements IdentitySourceService {
         if (optional.isEmpty()) {
             AuditContext.setContent("操作失败，身份源不存在");
             log.warn(AuditContext.getContent());
-            throw new TopIamException(AuditContext.getContent());
+            throw new UlpException(AuditContext.getContent());
         }
         Integer count = identitySourceRepository.updateIdentitySourceStatus(id, Boolean.FALSE);
         AuditContext.setTarget(Target.builder().id(id).name(optional.get().getName())
@@ -171,7 +170,7 @@ public class IdentitySourceServiceImpl implements IdentitySourceService {
         if (optional.isEmpty()) {
             AuditContext.setContent("操作失败，身份源不存在");
             log.warn(AuditContext.getContent());
-            throw new TopIamException(AuditContext.getContent());
+            throw new UlpException(AuditContext.getContent());
         }
         Integer count = identitySourceRepository.updateIdentitySourceStatus(id, Boolean.TRUE);
         AuditContext.setTarget(Target.builder().id(id).name(optional.get().getName())
@@ -192,7 +191,7 @@ public class IdentitySourceServiceImpl implements IdentitySourceService {
         if (optional.isEmpty()) {
             AuditContext.setContent("操作失败，身份源不存在");
             log.warn(AuditContext.getContent());
-            throw new TopIamException(AuditContext.getContent());
+            throw new UlpException(AuditContext.getContent());
         }
         identitySourceRepository.deleteById(id);
         AuditContext.setTarget(Target.builder().id(id).name(optional.get().getName())
@@ -233,7 +232,7 @@ public class IdentitySourceServiceImpl implements IdentitySourceService {
         if (optional.isEmpty()) {
             AuditContext.setContent("操作失败，身份源不存在");
             log.warn(AuditContext.getContent());
-            throw new TopIamException(AuditContext.getContent());
+            throw new UlpException(AuditContext.getContent());
         }
         identitySourceRepository.updateStrategyConfig(id, strategyConfig);
         AuditContext.setTarget(Target.builder().id(id).name(optional.get().getName())
@@ -266,7 +265,7 @@ public class IdentitySourceServiceImpl implements IdentitySourceService {
                             .readValue(param.getConfig().toJSONString(), FeiShuConfig.class);
                     yield new FeiShuConfigValidator().validate(config);
                 }
-                default -> throw new TopIamException("暂未支持此提供商连接验证");
+                default -> throw new UlpException("暂未支持此提供商连接验证");
             };
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

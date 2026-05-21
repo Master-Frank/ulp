@@ -39,8 +39,7 @@ import jakarta.validation.ConstraintViolationException;
 /**
  * 钉钉身份源客户端配置验证器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/4/13 23:09
+ * @author Frank Zhang
  */
 @Slf4j
 public class DingTalkConfigValidator implements IdentitySourceConfigValidator<DingTalkConfig> {

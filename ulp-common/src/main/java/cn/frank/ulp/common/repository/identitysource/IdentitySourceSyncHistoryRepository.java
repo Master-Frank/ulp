@@ -25,8 +25,7 @@ import cn.frank.ulp.common.entity.identitysource.IdentitySourceSyncHistoryEntity
 /**
  * 身份源同步结果
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/3/15 21:35
+ * @author Frank Zhang
  */
 @Repository
 public interface IdentitySourceSyncHistoryRepository extends

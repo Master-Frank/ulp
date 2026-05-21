@@ -16,15 +16,14 @@
  */
 package cn.frank.ulp.application.exception;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
  * 应用证书不存在
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/7/8 22:21
+ * @author Frank Zhang
  */
-public class AppCertNotExistException extends TopIamException {
+public class AppCertNotExistException extends UlpException {
     public AppCertNotExistException() {
         super("应用证书不存在");
     }

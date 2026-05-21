@@ -38,15 +38,14 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.IS_DELETED_COLUMN;
  * 设置表
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-10-01
+ * @author Frank Zhang
  */
 @Getter
 @Setter
 @ToString
 @Entity
 @Accessors(chain = true)
-@Table(name = "eiam_setting")
+@Table(name = "ulp_setting")
 @SoftDelete(columnName = IS_DELETED_COLUMN, converter = SoftDeleteConverter.class)
 public class SettingEntity extends BaseEntity {
     @Serial

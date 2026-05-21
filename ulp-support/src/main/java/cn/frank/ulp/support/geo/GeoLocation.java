@@ -26,63 +26,63 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
  * 包含IP地址对应的地理位置信息
  */
 public class GeoLocation implements Serializable {
-    private static final long serialVersionUID = 991484919483509517L;
-    
+    private static final long   serialVersionUID = 991484919483509517L;
+
     /**
      * IP地址
      */
-    private String ip;
-    
+    private String              ip;
+
     /**
      * 大洲代码
      */
-    private String continentCode;
-    
+    private String              continentCode;
+
     /**
      * 大洲名称
      */
-    private String continentName;
-    
+    private String              continentName;
+
     /**
      * 国家代码
      */
-    private String countryCode;
-    
+    private String              countryCode;
+
     /**
      * 国家名称
      */
-    private String countryName;
-    
+    private String              countryName;
+
     /**
      * 城市代码
      */
-    private String cityCode;
-    
+    private String              cityCode;
+
     /**
      * 城市名称
      */
-    private String cityName;
-    
+    private String              cityName;
+
     /**
      * 省份代码
      */
-    private String provinceCode;
-    
+    private String              provinceCode;
+
     /**
      * 省份名称
      */
-    private String provinceName;
-    
+    private String              provinceName;
+
     /**
      * 纬度
      */
-    private Double latitude;
-    
+    private Double              latitude;
+
     /**
      * 经度
      */
-    private Double longitude;
-    
+    private Double              longitude;
+
     /**
      * 地理位置提供者
      */
@@ -110,9 +110,10 @@ public class GeoLocation implements Serializable {
      * @param longitude 经度
      * @param provider 地理位置提供者
      */
-    public GeoLocation(String ip, String continentCode, String continentName, String countryCode, 
-                       String countryName, String cityCode, String cityName, String provinceCode, 
-                       String provinceName, Double latitude, Double longitude, GeoLocationProvider provider) {
+    public GeoLocation(String ip, String continentCode, String continentName, String countryCode,
+                       String countryName, String cityCode, String cityName, String provinceCode,
+                       String provinceName, Double latitude, Double longitude,
+                       GeoLocationProvider provider) {
         this.ip = ip;
         this.continentCode = continentCode;
         this.continentName = continentName;
@@ -369,17 +370,17 @@ public class GeoLocation implements Serializable {
      */
     @JsonPOJOBuilder(withPrefix = "")
     public static class GeoLocationBuilder {
-        private String ip;
-        private String continentCode;
-        private String continentName;
-        private String countryCode;
-        private String countryName;
-        private String cityCode;
-        private String cityName;
-        private String provinceCode;
-        private String provinceName;
-        private Double latitude;
-        private Double longitude;
+        private String              ip;
+        private String              continentCode;
+        private String              continentName;
+        private String              countryCode;
+        private String              countryName;
+        private String              cityCode;
+        private String              cityName;
+        private String              provinceCode;
+        private String              provinceName;
+        private Double              latitude;
+        private Double              longitude;
         private GeoLocationProvider provider;
 
         /**
@@ -498,9 +499,9 @@ public class GeoLocation implements Serializable {
          * @return GeoLocation实例
          */
         public GeoLocation build() {
-            return new GeoLocation(this.ip, this.continentCode, this.continentName, this.countryCode,
-                    this.countryName, this.cityCode, this.cityName, this.provinceCode,
-                    this.provinceName, this.latitude, this.longitude, this.provider);
+            return new GeoLocation(this.ip, this.continentCode, this.continentName,
+                this.countryCode, this.countryName, this.cityCode, this.cityName, this.provinceCode,
+                this.provinceName, this.latitude, this.longitude, this.provider);
         }
 
         /**

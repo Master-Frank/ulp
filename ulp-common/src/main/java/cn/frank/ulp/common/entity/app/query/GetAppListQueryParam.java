@@ -24,8 +24,7 @@ import lombok.Data;
 /**
  * 查询应用列表
  *
- * @author TOPIAM
- * Created by support@topiam.cn on 2024/11/4 14:22
+ * @author Frank Zhang
  */
 @Data
 public class GetAppListQueryParam implements Serializable {

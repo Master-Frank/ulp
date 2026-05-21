@@ -27,8 +27,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 安全策略
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023-03-09
+ * @author Frank Zhang
  */
 @Schema(description = "获取安全策略")
 @Data

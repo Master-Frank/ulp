@@ -43,15 +43,14 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.IS_DELETED_COLUMN;
 /**
  * APP Form 配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/12/13 22:31
+ * @author Frank Zhang
  */
 @Getter
 @Setter
 @ToString
 @Entity
 @Accessors(chain = true)
-@Table(name = "eiam_app_form_config")
+@Table(name = "ulp_app_form_config")
 @SoftDelete(columnName = IS_DELETED_COLUMN, converter = SoftDeleteConverter.class)
 public class AppFormConfigEntity extends BaseEntity {
 

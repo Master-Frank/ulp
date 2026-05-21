@@ -16,15 +16,14 @@
  */
 package cn.frank.ulp.application.exception;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
  * 应用不存在异常
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/7/8 22:23
+ * @author Frank Zhang
  */
-public class AppNotExistException extends TopIamException {
+public class AppNotExistException extends UlpException {
     public AppNotExistException() {
         super("app_not_exist", "应用不存在", DEFAULT_STATUS);
     }

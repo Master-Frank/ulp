@@ -26,8 +26,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 安全高级配置结果
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/10/4 21:58
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "安全高级配置响应")

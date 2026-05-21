@@ -33,8 +33,7 @@ import cn.frank.ulp.common.entity.account.UserDetailEntity;
  * 用户详情表 Repository 接口
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-08-07
+ * @author Frank Zhang
  */
 @Repository
 public interface UserDetailRepository extends JpaRepository<UserDetailEntity, String>,

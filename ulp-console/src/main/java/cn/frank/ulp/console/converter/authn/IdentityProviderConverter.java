@@ -49,7 +49,7 @@ import cn.frank.ulp.console.pojo.result.authn.IdentityProviderResult;
 import cn.frank.ulp.console.pojo.save.authn.IdentityProviderCreateParam;
 import cn.frank.ulp.console.pojo.update.authn.IdpUpdateParam;
 import cn.frank.ulp.core.context.ContextService;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.repository.page.domain.Page;
 import cn.frank.ulp.support.validation.ValidationUtils;
 
@@ -63,8 +63,7 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME
 /**
  * 身份提供商转换器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/22 23:59
+ * @author Frank Zhang
  */
 @Mapper(componentModel = "spring")
 public interface IdentityProviderConverter {
@@ -114,7 +113,7 @@ public interface IdentityProviderConverter {
         IdentityProviderCategory category = IdentityProviderCategory.getType(param.getCategory());
         if (!category.getProviders().stream().map(IdentityProviderType::value).toList()
             .contains(param.getType())) {
-            throw new TopIamException("认证源类型与认证源提供商不匹配");
+            throw new UlpException("认证源类型与认证源提供商不匹配");
         }
         try {
             IdentityProviderConfig identityProviderConfig = getIdentityProviderConfig(
@@ -267,7 +266,7 @@ public interface IdentityProviderConverter {
         else if (type.equals(ALIPAY_OAUTH.value())) {
             identityProviderConfig = config.to(AlipayIdentityProviderOAuth2Config.class);
         } else {
-            throw new TopIamException("不支持此身份提供商");
+            throw new UlpException("不支持此身份提供商");
         }
         if (!Objects.nonNull(identityProviderConfig)) {
             throw new NullPointerException("提供商配置不能为空");

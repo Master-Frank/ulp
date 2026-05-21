@@ -22,8 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/11/25 14:03
+ * @author Frank Zhang
  */
 public final class SpringSecurityEndpointUtils<T> {
 

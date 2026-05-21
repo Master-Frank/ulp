@@ -52,7 +52,8 @@ import jakarta.servlet.http.HttpSession;
  */
 public final class ServletContextService {
     @Generated
-    private static final Logger logger = LoggerFactory.getLogger(ServletContextService.class);
+    private static final Logger          logger = LoggerFactory
+        .getLogger(ServletContextService.class);
     private static final List<MediaType> DEFAULT_MEDIA_TYPES;
 
     /**
@@ -72,7 +73,8 @@ public final class ServletContextService {
      */
     public static List<MediaType> getAcceptedMediaTypes(HttpServletRequest request) {
         String acceptHeader = request.getHeader("Accept");
-        return StringUtils.hasText(acceptHeader) ? MediaType.parseMediaTypes(acceptHeader) : DEFAULT_MEDIA_TYPES;
+        return StringUtils.hasText(acceptHeader) ? MediaType.parseMediaTypes(acceptHeader)
+            : DEFAULT_MEDIA_TYPES;
     }
 
     /**
@@ -125,7 +127,8 @@ public final class ServletContextService {
      * @param maxAge cookie max age
      * @return HttpServletResponse object
      */
-    public static HttpServletResponse setCookie(HttpServletResponse response, String name, String value, String path, int maxAge) {
+    public static HttpServletResponse setCookie(HttpServletResponse response, String name,
+                                                String value, String path, int maxAge) {
         Cookie cookie = new Cookie(name, value);
         cookie.setPath(path);
         URLEncoder.encode(value, StandardCharsets.UTF_8);
@@ -140,7 +143,8 @@ public final class ServletContextService {
      * @return HttpServletRequest object
      */
     public static HttpServletRequest getRequest() {
-        return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+        return ((ServletRequestAttributes) Objects
+            .requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
     }
 
     /**
@@ -165,7 +169,7 @@ public final class ServletContextService {
         String contextPath = request.getContextPath();
         StringBuilder urlBuilder = new StringBuilder();
         urlBuilder.append(scheme).append("://").append(serverName);
-        
+
         if ("http".equals(scheme)) {
             if (serverPort == 80) {
                 // Use default port, no need to add
@@ -189,7 +193,8 @@ public final class ServletContextService {
      * @return server root path
      */
     public static String getServerRootPath(HttpServletRequest request) {
-        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+               + request.getContextPath() + "/";
     }
 
     /**
@@ -264,7 +269,8 @@ public final class ServletContextService {
      * @return HttpServletResponse object
      */
     public static HttpServletResponse getResponse() {
-        return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getResponse();
+        return ((ServletRequestAttributes) Objects
+            .requireNonNull(RequestContextHolder.getRequestAttributes())).getResponse();
     }
 
     /**
@@ -355,7 +361,8 @@ public final class ServletContextService {
         if (HttpMethod.GET.name().equals(method)) {
             String queryString = request.getQueryString();
             if (queryString != null) {
-                return new String(queryString.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8).replaceAll("\\+", " ");
+                return new String(queryString.getBytes(StandardCharsets.ISO_8859_1),
+                    StandardCharsets.UTF_8).replaceAll("\\+", " ");
             } else {
                 return "";
             }
@@ -378,7 +385,7 @@ public final class ServletContextService {
             int queryIndex = decodedUrl.indexOf('?'); // "?" character
             if (queryIndex != -1) {
                 String[] paramPairs = decodedUrl.substring(queryIndex + 1).split("&"); // "&" character
-                
+
                 for (String paramPair : paramPairs) {
                     int equalsIndex = paramPair.indexOf('='); // "=" character
                     if (equalsIndex != -1) {

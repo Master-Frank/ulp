@@ -26,8 +26,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 社交认证源平台列表，带有元素字段，避免前端重复画页面，基本都是input
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/26 21:57
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "社交认证源平台列表")

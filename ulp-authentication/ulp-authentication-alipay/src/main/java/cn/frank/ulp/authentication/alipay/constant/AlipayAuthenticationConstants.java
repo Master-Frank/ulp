@@ -19,8 +19,7 @@ package cn.frank.ulp.authentication.alipay.constant;
 /**
  * 支付宝 认证常量
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/8/19 15:18
+ * @author Frank Zhang
  */
 public class AlipayAuthenticationConstants {
 

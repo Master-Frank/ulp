@@ -56,7 +56,7 @@ import cn.frank.ulp.identitysource.core.domain.User;
 import cn.frank.ulp.identitysource.core.enums.IdentitySourceEventReceiveType;
 import cn.frank.ulp.identitysource.core.processor.IdentitySourceEventPostProcessor;
 import cn.frank.ulp.identitysource.core.processor.modal.IdentitySourceEventProcessData;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.repository.base.IdEntity;
 import cn.frank.ulp.support.security.password.PasswordGenerator;
 
@@ -71,8 +71,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.SYSTEM_DEFAULT_USER_NA
 /**
  * 身份源数据 event 处理器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/3/1 22:04
+ * @author Frank Zhang
  */
 @Slf4j
 @Component
@@ -113,7 +112,7 @@ public class DefaultIdentitySourceEventPostProcessor extends AbstractIdentitySou
         } else if (IdentitySourceEventReceiveType.DEPT_REMOVE.equals(eventType)) {
             removeOrganizations(eventData.getData(), eventTime, identitySource);
         } else {
-            throw new TopIamException(eventData.getProvider().getName() + "身份提供商事件回调非法事件");
+            throw new UlpException(eventData.getProvider().getName() + "身份提供商事件回调非法事件");
         }
         stopWatch.stop();
         log.info("处理数据上游回调数据结束, 执行时长: {} ms", stopWatch.getTotalTimeMillis());
@@ -591,17 +590,17 @@ public class DefaultIdentitySourceEventPostProcessor extends AbstractIdentitySou
     /**
      * UserRepository
      */
-    private final UserRepository userRepository;
+    private final UserRepository                      userRepository;
 
     /**
      * OrganizationRepository
      */
-    private final OrganizationRepository organizationRepository;
+    private final OrganizationRepository              organizationRepository;
 
     /**
      * OrganizationMemberRepository
      */
-    private final OrganizationMemberRepository organizationMemberRepository;
+    private final OrganizationMemberRepository        organizationMemberRepository;
 
     /**
      * IdentitySourceEventRecordRepository
@@ -611,12 +610,12 @@ public class DefaultIdentitySourceEventPostProcessor extends AbstractIdentitySou
     /**
      * UserDetailRepository
      */
-    private final UserDetailRepository userDetailRepository;
+    private final UserDetailRepository                userDetailRepository;
 
     /**
      * UserGroupMemberRepository
      */
-    private final UserGroupMemberRepository userGroupMemberRepository;
+    private final UserGroupMemberRepository           userGroupMemberRepository;
 
     public DefaultIdentitySourceEventPostProcessor(MailMsgEventPublish mailMsgEventPublish,
                                                    PasswordEncoder passwordEncoder,

@@ -30,8 +30,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * Form 配置返回
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/5/31 22:46
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "Form 配置返回响应")

@@ -42,8 +42,7 @@ import static cn.frank.ulp.common.constant.AccountConstants.ORG_CACHE_NAME;
  * 组织架构 Repository 接口
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-08-09
+ * @author Frank Zhang
  */
 @Repository
 @CacheConfig(cacheNames = { ORG_CACHE_NAME })

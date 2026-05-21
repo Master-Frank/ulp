@@ -23,8 +23,7 @@ import cn.frank.ulp.common.entity.account.po.UserPO;
 import cn.frank.ulp.common.entity.account.query.UserGroupMemberListQuery;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2022/2/13 21:27
+ * @author Frank Zhang
  */
 public interface UserGroupMemberRepositoryCustomized {
     /**

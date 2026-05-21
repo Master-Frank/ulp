@@ -24,8 +24,7 @@ import cn.frank.ulp.support.web.converter.EnumConvert;
 /**
  * 用户状态
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/7/31 22:50
+ * @author Frank Zhang
  */
 public enum UserStatus implements BaseEnum {
                                             /**

@@ -47,8 +47,7 @@ import static cn.frank.ulp.support.util.HttpRequestUtils.*;
 /**
  * OAuth2 授权简化模式请求身份验证转换器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/26 22:47
+ * @author Frank Zhang
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public final class OAuth2AuthorizationImplicitRequestAuthenticationConverter implements

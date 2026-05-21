@@ -53,8 +53,7 @@ import static cn.frank.ulp.support.exception.enums.ExceptionStatus.EX000102;
 /**
  * AbstractOTPAuthenticationFilter
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/16 21:34
+ * @author Frank Zhang
  */
 public class MailOtpAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 

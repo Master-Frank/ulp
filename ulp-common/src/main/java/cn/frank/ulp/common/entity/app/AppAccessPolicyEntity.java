@@ -35,15 +35,14 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.IS_DELETED_COLUMN;
 /**
  * 应用授权策略
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/6/4 21:29
+ * @author Frank Zhang
  */
 @Getter
 @Setter
 @ToString
 @Entity
 @Accessors(chain = true)
-@Table(name = "eiam_app_access_policy")
+@Table(name = "ulp_app_access_policy")
 @SoftDelete(columnName = IS_DELETED_COLUMN, converter = SoftDeleteConverter.class)
 public class AppAccessPolicyEntity extends BaseEntity {
     /**

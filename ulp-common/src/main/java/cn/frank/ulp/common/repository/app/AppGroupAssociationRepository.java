@@ -31,8 +31,7 @@ import cn.frank.ulp.common.entity.app.AppGroupAssociationEntity;
 /**
  * 应用组成员
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023年09月06日22:03:18
+ * @author Frank Zhang
  */
 @Repository
 public interface AppGroupAssociationRepository extends

@@ -58,8 +58,7 @@ import static cn.frank.ulp.authentication.common.constant.AuthenticationConstant
  * <p>
  * 用于处理
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/8 21:49
+ * @author Frank Zhang
  */
 @Getter
 public abstract class AbstractIdentityProviderAuthenticationProcessingFilter extends

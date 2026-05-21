@@ -44,7 +44,7 @@ import cn.frank.ulp.core.setting.MessageSettingConstants;
 import cn.frank.ulp.core.setting.SecuritySettingConstants;
 import cn.frank.ulp.support.autoconfiguration.SupportProperties;
 import cn.frank.ulp.support.context.ApplicationContextService;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.security.util.ContentSecurityPolicyUtils;
 import static cn.frank.ulp.common.constant.AuthnConstants.FE_LOGIN;
 import static cn.frank.ulp.common.constant.ConfigBeanNameConstants.DEFAULT_SECURITY_FILTER_CHAIN;
@@ -52,10 +52,9 @@ import static cn.frank.ulp.core.setting.MessageSettingConstants.MESSAGE_SMS_PROV
 import static cn.frank.ulp.core.setting.SecuritySettingConstants.*;
 
 /**
- * TopIAM 上下文
+ * ULP 上下文
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/7/28 21:53
+ * @author Frank Zhang
  */
 public final class ContextService {
 
@@ -97,7 +96,7 @@ public final class ContextService {
                     smsConfig.setSecretKey(EncryptContextHelp.decrypt(smsConfig.getSecretKey()));
                     return config;
                 }
-                throw new TopIamException("暂未支持此短信 [" + provider + "] 提供商配置获取");
+                throw new UlpException("暂未支持此短信 [" + provider + "] 提供商配置获取");
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
@@ -212,7 +211,7 @@ public final class ContextService {
         directive.removeHost(host);
         directive.addHost(host, (severity, message) -> {
             logger.error("添加操作内容安全策略 img-src host 异常：{}", message);
-            throw new TopIamException(message);
+            throw new UlpException(message);
         });
         settingEntity.setValue(parse.toString());
         getSettingRepository().save(settingEntity);

@@ -31,7 +31,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 邮件服务商配置查询结果
  *
- * @author TopIAM
+ * @author Frank Zhang
  */
 @Data
 @Builder

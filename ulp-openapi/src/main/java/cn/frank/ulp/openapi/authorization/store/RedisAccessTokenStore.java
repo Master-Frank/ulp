@@ -29,8 +29,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.COLON;
 /**
  * RedisTokenStore
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/5/8 21:54
+ * @author Frank Zhang
  */
 public class RedisAccessTokenStore implements AccessTokenStore {
 

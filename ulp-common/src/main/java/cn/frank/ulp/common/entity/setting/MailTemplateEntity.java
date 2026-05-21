@@ -39,15 +39,14 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.IS_DELETED_COLUMN;
  * 邮件模板
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-08-13
+ * @author Frank Zhang
  */
 @Getter
 @Setter
 @ToString
 @Entity
 @Accessors(chain = true)
-@Table(name = "eiam_mail_template")
+@Table(name = "ulp_mail_template")
 @SoftDelete(columnName = IS_DELETED_COLUMN, converter = SoftDeleteConverter.class)
 public class MailTemplateEntity extends BaseEntity {
 

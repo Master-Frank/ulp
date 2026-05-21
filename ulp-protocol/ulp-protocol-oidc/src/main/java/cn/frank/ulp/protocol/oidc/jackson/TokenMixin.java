@@ -23,8 +23,7 @@ import org.springframework.security.oauth2.core.OAuth2Token;
 import com.fasterxml.jackson.annotation.*;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/30 21:10
+ * @author Frank Zhang
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)

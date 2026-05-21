@@ -21,8 +21,7 @@ import lombok.Data;
 /**
  * 应用账户查询入参
  *
- * @author TOPIAM
- * Created by support@topiam.cn on 2024/11/4 14:26
+ * @author Frank Zhang
  */
 @Data
 public class AppAccountQueryParam {

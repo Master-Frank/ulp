@@ -26,8 +26,7 @@ import jakarta.persistence.Converter;
 /**
  * LanguageConverter
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/5 21:49
+ * @author Frank Zhang
  */
 @Converter(autoApply = true)
 public class LanguageConverter implements AttributeConverter<Language, String> {

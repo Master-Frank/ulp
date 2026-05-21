@@ -38,14 +38,17 @@ import org.apache.commons.lang3.RandomStringUtils;
  */
 public class AvatarUtils {
 
-    public static final String  RANDOM_AVATAR    = "https://api.multiavatar.com/";
+    public static final String   RANDOM_AVATAR   = "https://api.multiavatar.com/";
 
     private static final Pattern CHINESE_PATTERN = Pattern.compile("[\u4e00-\u9fa5]");
 
-    private static final Color[] BG_COLORS       = new Color[] { new Color(244, 67, 54),
-        new Color(233, 30, 99), new Color(156, 39, 176), new Color(103, 58, 183),
-        new Color(63, 81, 181), new Color(33, 150, 243), new Color(0, 188, 212),
-        new Color(0, 150, 136), new Color(76, 175, 80), new Color(255, 152, 0) };
+    private static final Color[] BG_COLORS       = new Color[] { new Color(244, 67, 54), new Color(
+        233, 30, 99), new Color(156, 39, 176), new Color(103, 58, 183), new Color(63, 81, 181),
+                                                                 new Color(33, 150, 243),
+                                                                 new Color(0, 188, 212),
+                                                                 new Color(0, 150, 136),
+                                                                 new Color(76, 175, 80),
+                                                                 new Color(255, 152, 0) };
 
     public AvatarUtils() {
     }
@@ -66,8 +69,7 @@ public class AvatarUtils {
             Graphics2D g = (Graphics2D) img.getGraphics();
             g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
                 RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
+            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             Color bg = BG_COLORS[new Random().nextInt(BG_COLORS.length)];
             g.setBackground(bg);

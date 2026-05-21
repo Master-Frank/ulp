@@ -47,8 +47,7 @@ import static cn.frank.ulp.common.constant.ConfigBeanNameConstants.FORM_PROTOCOL
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/3 21:15
+ * @author Frank Zhang
  */
 @AutoConfigureBefore(PortalSecurityConfiguration.class)
 @Configuration(proxyBeanMethods = false)

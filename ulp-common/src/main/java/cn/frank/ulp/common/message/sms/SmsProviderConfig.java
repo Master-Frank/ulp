@@ -26,8 +26,7 @@ import jakarta.validation.constraints.NotNull;
 /**
  * 验证码提供商配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/10/1 21:10
+ * @author Frank Zhang
  */
 public class SmsProviderConfig implements Serializable {
 

@@ -36,8 +36,7 @@ import cn.frank.ulp.application.oidc.model.OidcProtocolConfig;
 /**
  * OidcConfigRegisteredClientRepositoryWrapper
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/3 21:46
+ * @author Frank Zhang
  */
 public class OidcConfigRegisteredClientRepositoryWrapper implements RegisteredClientRepository {
 

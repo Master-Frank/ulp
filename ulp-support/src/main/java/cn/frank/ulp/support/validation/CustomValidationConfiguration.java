@@ -23,7 +23,7 @@ public class CustomValidationConfiguration {
 
     @Bean
     public ValidationConfigurationCustomizer validationConfigurationCustomizer() {
-        return (configuration) -> configuration
-            .addProperty("hibernate.validator.fail_fast", "true");
+        return (configuration) -> configuration.addProperty("hibernate.validator.fail_fast",
+            "true");
     }
 }

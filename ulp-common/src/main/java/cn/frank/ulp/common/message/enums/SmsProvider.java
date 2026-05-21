@@ -25,8 +25,7 @@ import cn.frank.ulp.support.web.converter.EnumConvert;
 /**
  * 短信平台
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/19
+ * @author Frank Zhang
  */
 public enum SmsProvider implements Serializable {
 

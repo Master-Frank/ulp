@@ -31,8 +31,7 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME
 /**
  * 设置impl
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/9 22:29
+ * @author Frank Zhang
  */
 @AllArgsConstructor
 public class SettingServiceImpl implements SettingService {

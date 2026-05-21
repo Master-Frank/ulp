@@ -24,8 +24,7 @@ import cn.frank.ulp.support.web.converter.EnumConvert;
 /**
  * 用户性别
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/7/17 21:28
+ * @author Frank Zhang
  */
 public enum UserGender implements BaseEnum {
                                             /**

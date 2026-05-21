@@ -47,8 +47,7 @@ import static cn.frank.ulp.common.geo.maxmind.MaxmindGeoLocationParserImpl.MAXMI
 /**
  * 地理位置库
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/27 01:58
+ * @author Frank Zhang
  */
 @Configuration
 public class EiamGeoLocationConfiguration {

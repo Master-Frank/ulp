@@ -35,8 +35,7 @@ import static cn.frank.ulp.core.setting.MessageSettingConstants.MESSAGE_SMS_PROV
 /**
  * 消息设置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/10/1 21:19
+ * @author Frank Zhang
  */
 @Service
 public class MessageSettingServiceImpl extends SettingServiceImpl implements MessageSettingService {

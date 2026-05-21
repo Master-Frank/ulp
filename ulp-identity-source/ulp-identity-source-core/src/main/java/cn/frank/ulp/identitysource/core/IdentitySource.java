@@ -19,15 +19,14 @@ package cn.frank.ulp.identitysource.core;
 import java.util.Map;
 
 import cn.frank.ulp.common.enums.TriggerType;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * 身份源Provider
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/2/28 22:35
+ * @author Frank Zhang
  */
 public interface IdentitySource<T extends IdentitySourceConfig> {
     /**
@@ -66,7 +65,7 @@ public interface IdentitySource<T extends IdentitySourceConfig> {
      * @return {@link Map}
      */
     default Object event(HttpServletRequest request, String body) {
-        throw new TopIamException("暂未实现");
+        throw new UlpException("暂未实现");
     }
 
 }

@@ -61,7 +61,7 @@ import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemWriter;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
  * 证书工具类（基于 BouncyCastle）.
@@ -70,7 +70,7 @@ public class CertUtils {
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CertUtils.class);
 
-    private static final String BC = "BC";
+    private static final String           BC  = "BC";
 
     static {
         if (Security.getProvider(BC) == null) {
@@ -92,8 +92,7 @@ public class CertUtils {
     }
 
     public static String isRoot(X509Certificate cert) {
-        return String
-            .valueOf(cert.getSubjectX500Principal().equals(cert.getIssuerX500Principal()))
+        return String.valueOf(cert.getSubjectX500Principal().equals(cert.getIssuerX500Principal()))
             .toUpperCase();
     }
 
@@ -212,13 +211,14 @@ public class CertUtils {
             return (X509Certificate) factory.generateCertificate(new ByteArrayInputStream(der));
         } catch (CertificateException | NoSuchProviderException e) {
             log.error(e.getMessage());
-            throw new TopIamException(e.getMessage(), e);
+            throw new UlpException(e.getMessage(), e);
         }
     }
 
     public static X509Certificate loadCertFromInputStream(InputStream is) throws Exception {
         try {
-            return (X509Certificate) CertificateFactory.getInstance("X.509").generateCertificate(is);
+            return (X509Certificate) CertificateFactory.getInstance("X.509")
+                .generateCertificate(is);
         } catch (CertificateException e) {
             log.error("证书加载失败");
             throw new Exception("证书加载失败 X.509", e);
@@ -226,17 +226,15 @@ public class CertUtils {
     }
 
     public static String keyCleanup(String key) {
-        return key.replaceAll("-----BEGIN [^-]+-----", "")
-            .replaceAll("-----END [^-]+-----", "")
-            .replaceAll("\\s", "")
-            .trim();
+        return key.replaceAll("-----BEGIN [^-]+-----", "").replaceAll("-----END [^-]+-----", "")
+            .replaceAll("\\s", "").trim();
     }
 
     public static String encodePem(Certificate cert) {
         try {
             return toPem("CERTIFICATE", cert.getEncoded());
         } catch (CertificateEncodingException e) {
-            throw new TopIamException("证书编码失败", e);
+            throw new UlpException("证书编码失败", e);
         }
     }
 

@@ -18,8 +18,7 @@ package cn.frank.ulp.common.constant;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/10/5 15:11
+ * @author Frank Zhang
  */
 public class UserConstants {
 

@@ -19,8 +19,7 @@ package cn.frank.ulp.protocol.form.constant;
 /**
  * 协议常量
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/8 21:29
+ * @author Frank Zhang
  */
 public class FormProtocolConstants {
 
@@ -33,5 +32,5 @@ public class FormProtocolConstants {
     public static final String APP_ACCOUNT_PASSWORD = "password";
     public static final String OTHER_FIELDS         = "otherFields";
 
-    public static final String FORM_ERROR_URI       = "https://eiam.topiam.cn";
+    public static final String FORM_ERROR_URI       = "";
 }

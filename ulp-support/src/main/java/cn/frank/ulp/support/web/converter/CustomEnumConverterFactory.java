@@ -31,7 +31,8 @@ public class CustomEnumConverterFactory implements ConverterFactory<String, Enum
         return new StringToEnumConverter<>(targetType);
     }
 
-    private static final class StringToEnumConverter<T extends Enum<?>> implements Converter<String, T> {
+    private static final class StringToEnumConverter<T extends Enum<?>>
+                                                    implements Converter<String, T> {
 
         private final Class<T> targetType;
 

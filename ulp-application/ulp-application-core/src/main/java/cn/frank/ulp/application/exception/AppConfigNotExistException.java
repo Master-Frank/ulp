@@ -16,15 +16,14 @@
  */
 package cn.frank.ulp.application.exception;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
  * 应用配置不存在
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/7/8 22:21
+ * @author Frank Zhang
  */
-public class AppConfigNotExistException extends TopIamException {
+public class AppConfigNotExistException extends UlpException {
     public AppConfigNotExistException() {
         super("app_config_not_exist", "应用配置不存在", DEFAULT_STATUS);
     }

@@ -28,8 +28,7 @@ import cn.frank.ulp.application.context.ApplicationContextHolder;
 /**
  * RedisOAuth2AuthorizationService
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/10/31 21:41
+ * @author Frank Zhang
  */
 @SuppressWarnings({ "AlibabaServiceOrDaoClassShouldEndWithImpl",
                     "AlibabaClassNamingShouldBeCamel" })

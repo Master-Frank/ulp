@@ -29,8 +29,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 认证源详情
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/21 21:21
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "获取社交认证源")

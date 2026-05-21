@@ -28,7 +28,7 @@ import java.lang.annotation.Target;
  * 用于标记需要进行跟踪的方法
  */
 @Documented
-@Target({ElementType.METHOD, ElementType.ANNOTATION_TYPE})
+@Target({ ElementType.METHOD, ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 public @interface Trace {

@@ -17,8 +17,7 @@
 package cn.frank.ulp.console.service.account;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/29 22:46
+ * @author Frank Zhang
  */
 public interface UserAccountAssociateService {
 

@@ -22,8 +22,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 /**
  * servlet 3.0 +
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/7/9
+ * @author Frank Zhang
  */
 public class ServletInitializer extends SpringBootServletInitializer {
 

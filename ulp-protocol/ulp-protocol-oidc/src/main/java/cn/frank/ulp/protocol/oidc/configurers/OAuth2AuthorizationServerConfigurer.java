@@ -58,8 +58,7 @@ import static cn.frank.ulp.support.security.util.HttpSecurityConfigUtils.getOpti
 /**
  * OAuth2 授权服务器配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/27 21:43
+ * @author Frank Zhang
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public final class OAuth2AuthorizationServerConfigurer extends

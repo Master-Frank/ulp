@@ -26,8 +26,7 @@ import cn.frank.ulp.common.message.sms.tencent.TencentSmsProviderSend;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/10 21:40
+ * @author Frank Zhang
  */
 public class SmsSendProviderFactory {
 

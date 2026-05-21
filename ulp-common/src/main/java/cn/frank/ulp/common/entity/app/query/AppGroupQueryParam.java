@@ -25,8 +25,7 @@ import lombok.Data;
 /**
  * 查询分组列表入参
  *
- * @author TOPIAM
- * Created by support@topiam.cn on 2024/11/4 14:23
+ * @author Frank Zhang
  */
 @Data
 public class AppGroupQueryParam implements Serializable {

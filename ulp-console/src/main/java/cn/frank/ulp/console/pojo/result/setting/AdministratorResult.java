@@ -28,8 +28,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 管理员详情
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/26 21:45
+ * @author Frank Zhang
  */
 @Schema(description = "根据ID获取管理员")
 @Data

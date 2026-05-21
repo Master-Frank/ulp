@@ -49,8 +49,7 @@ import static jakarta.servlet.RequestDispatcher.*;
  * <p>
  * 返回JSON前端处理
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/9/2 22:11
+ * @author Frank Zhang
  */
 public class PortalAuthenticationFailureHandler implements
                                                 org.springframework.security.web.authentication.AuthenticationFailureHandler {

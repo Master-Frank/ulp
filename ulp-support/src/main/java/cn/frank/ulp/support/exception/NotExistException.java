@@ -20,7 +20,7 @@ package cn.frank.ulp.support.exception;
  * 不存在异常
  * 当访问的资源不存在时抛出此异常
  */
-public class NotExistException extends TopIamException {
+public class NotExistException extends UlpException {
     private static final long serialVersionUID = 2175948631919084666L;
 
     /**

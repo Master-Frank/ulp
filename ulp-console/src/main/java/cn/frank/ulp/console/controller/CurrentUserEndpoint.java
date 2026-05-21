@@ -46,8 +46,7 @@ import static cn.frank.ulp.support.util.DesensitizationUtils.phoneEncrypt;
 /**
  * 当前用户
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/23 21:49
+ * @author Frank Zhang
  */
 @Slf4j
 @RestController
@@ -57,8 +56,7 @@ public class CurrentUserEndpoint {
     @GetMapping(CURRENT_USER)
     public ApiRestResult<CurrentUserResult> getCurrentUser() {
         //当前用户名
-        UserDetails userDetails = SecurityUtils
-            .getCurrentUser();
+        UserDetails userDetails = SecurityUtils.getCurrentUser();
         Optional<AdministratorEntity> optional = administratorRepository
             .findById(userDetails.getId());
         if (optional.isEmpty()) {
@@ -91,8 +89,7 @@ public class CurrentUserEndpoint {
     /**
      * 当前用户结果返回
      *
-     * @author TopIAM
-     * Created by support@topiam.cn on 2020/10/26 23:16
+     * @author Frank Zhang
      */
     @Data
     @Schema(description = "当前用户响应")

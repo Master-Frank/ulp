@@ -28,8 +28,7 @@ import jakarta.validation.constraints.NotNull;
 /**
  * 应用访问授权策略添加参数
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/9/27 21:29
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "应用访问授权策略添加参数")

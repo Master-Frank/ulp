@@ -34,15 +34,14 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.IS_DELETED_COLUMN;
 /**
  * 应用账户
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/5/31 21:51
+ * @author Frank Zhang
  */
 @Getter
 @Setter
 @ToString
 @Entity
 @Accessors(chain = true)
-@Table(name = "eiam_app_account")
+@Table(name = "ulp_app_account")
 @SoftDelete(columnName = IS_DELETED_COLUMN, converter = SoftDeleteConverter.class)
 public class AppAccountEntity extends BaseEntity {
     /**

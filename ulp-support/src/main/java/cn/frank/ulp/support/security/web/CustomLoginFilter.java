@@ -32,14 +32,15 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class CustomLoginFilter extends AbstractAuthenticationProcessingFilter {
 
-    public static final String SECURITY_FORM_USERNAME_KEY = "username";
-    public static final String SECURITY_FORM_PASSWORD_KEY = "password";
+    public static final String                 SECURITY_FORM_USERNAME_KEY       = "username";
+    public static final String                 SECURITY_FORM_PASSWORD_KEY       = "password";
 
-    private static final AntPathRequestMatcher DEFAULT_ANT_PATH_REQUEST_MATCHER = new AntPathRequestMatcher("/login", "POST");
+    private static final AntPathRequestMatcher DEFAULT_ANT_PATH_REQUEST_MATCHER = new AntPathRequestMatcher(
+        "/login", "POST");
 
-    private String usernameParameter = SECURITY_FORM_USERNAME_KEY;
-    private String passwordParameter = SECURITY_FORM_PASSWORD_KEY;
-    private boolean postOnly = true;
+    private String                             usernameParameter                = SECURITY_FORM_USERNAME_KEY;
+    private String                             passwordParameter                = SECURITY_FORM_PASSWORD_KEY;
+    private boolean                            postOnly                         = true;
 
     public CustomLoginFilter() {
         super(DEFAULT_ANT_PATH_REQUEST_MATCHER);
@@ -50,10 +51,11 @@ public class CustomLoginFilter extends AbstractAuthenticationProcessingFilter {
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-        throws AuthenticationException {
+    public Authentication attemptAuthentication(HttpServletRequest request,
+                                                HttpServletResponse response) throws AuthenticationException {
         if (this.postOnly && !"POST".equals(request.getMethod())) {
-            throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
+            throw new AuthenticationServiceException(
+                "Authentication method not supported: " + request.getMethod());
         }
         String username = obtainUsername(request);
         String password = obtainPassword(request);
@@ -91,7 +93,8 @@ public class CustomLoginFilter extends AbstractAuthenticationProcessingFilter {
         return value;
     }
 
-    protected void setDetails(HttpServletRequest request, UsernamePasswordAuthenticationToken authRequest) {
+    protected void setDetails(HttpServletRequest request,
+                              UsernamePasswordAuthenticationToken authRequest) {
         authRequest.setDetails(this.authenticationDetailsSource.buildDetails(request));
     }
 

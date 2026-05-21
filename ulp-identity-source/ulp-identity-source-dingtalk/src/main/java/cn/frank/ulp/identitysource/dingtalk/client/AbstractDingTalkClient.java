@@ -39,8 +39,7 @@ import static cn.frank.ulp.identitysource.dingtalk.DingTalkConstants.LOGGER_NAME
 /**
  * AbstractDingTalkDataProcessor
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/2/28 03:40
+ * @author Frank Zhang
  */
 @Slf4j(topic = LOGGER_NAME)
 public abstract class AbstractDingTalkClient extends AbstractIdentitySourceClient<DingTalkConfig> {

@@ -31,8 +31,7 @@ import cn.frank.ulp.common.repository.app.AppRepository;
 /**
  * Form 应用配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/8/23 21:58
+ * @author Frank Zhang
  */
 public abstract class AbstractFormApplicationService extends AbstractApplicationService
                                                      implements FormApplicationService {

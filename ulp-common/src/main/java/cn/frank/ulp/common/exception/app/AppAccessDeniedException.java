@@ -18,14 +18,13 @@ package cn.frank.ulp.common.exception.app;
 
 import org.springframework.http.HttpStatus;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2024/3/4 16:14
+ * @author Frank Zhang
  */
-public class AppAccessDeniedException extends TopIamException {
+public class AppAccessDeniedException extends UlpException {
 
     public AppAccessDeniedException() {
         super("app_access_denied", "应用访问权限不足", HttpStatus.FORBIDDEN);

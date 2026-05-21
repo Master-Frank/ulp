@@ -34,8 +34,7 @@ import static cn.frank.ulp.audit.event.type.EventType.APP_SSO;
 /**
  * 监听登录成功事件
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/9/3
+ * @author Frank Zhang
  */
 public class FormAuthenticationSuccessEventListener implements
                                                     ApplicationListener<AuthenticationSuccessEvent> {

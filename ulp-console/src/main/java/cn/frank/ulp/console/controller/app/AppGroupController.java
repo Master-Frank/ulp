@@ -51,8 +51,7 @@ import static cn.frank.ulp.common.constant.AppConstants.APP_PATH;
 /**
  * 分组管理
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/8/31 15:35
+ * @author Frank Zhang
  */
 @Validated
 @Tag(name = "应用分组管理")

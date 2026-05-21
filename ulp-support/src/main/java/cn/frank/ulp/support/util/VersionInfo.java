@@ -21,24 +21,24 @@ package cn.frank.ulp.support.util;
  * 提供系统版本信息的工具类
  */
 public class VersionInfo {
-   
-   /**
+
+    /**
     * 序列化版本UID
     */
-   public static final long SERIAL_VERSION_UID = (long) getVersion().hashCode();
-   
-   // 合成字段
-   private static final int D = 0;
-   
-   // 合成字段
-   private static final int b = 0;
-   
-   // 合成字段
-   private static final int SYNTHETIC_FIELD = 2;
+    public static final long SERIAL_VERSION_UID = (long) getVersion().hashCode();
+
+    // 合成字段
+    private static final int D                  = 0;
+
+    // 合成字段
+    private static final int b                  = 0;
+
+    // 合成字段
+    private static final int SYNTHETIC_FIELD    = 2;
 
     /**
      * 获取版本信息
-     * 
+     *
      * @return 版本字符串
      */
     public static String getVersion() {

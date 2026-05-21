@@ -38,8 +38,7 @@ import static cn.frank.ulp.support.util.CertUtils.readPublicKey;
 /**
  * OIDC 应用配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/8/23 21:58
+ * @author Frank Zhang
  */
 public abstract class AbstractOidcApplicationService extends AbstractCertApplicationService
                                                      implements OidcApplicationService {
@@ -126,11 +125,11 @@ public abstract class AbstractOidcApplicationService extends AbstractCertApplica
     /**
      * AppCertRepository
      */
-    protected final AppCertRepository appCertRepository;
+    protected final AppCertRepository       appCertRepository;
     /**
      * ApplicationRepository
      */
-    protected final AppRepository appRepository;
+    protected final AppRepository           appRepository;
     /**
      * AppOidcConfigRepository
      */

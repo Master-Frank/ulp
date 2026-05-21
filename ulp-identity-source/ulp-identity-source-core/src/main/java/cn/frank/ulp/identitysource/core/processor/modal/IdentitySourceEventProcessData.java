@@ -29,7 +29,7 @@ import lombok.Data;
 /**
  * 身份源回调事件数据
  *
- * @author TopIAM
+ * @author Frank Zhang
  */
 @Data
 @AllArgsConstructor

@@ -29,8 +29,7 @@ import lombok.EqualsAndHashCode;
 /**
  * 列表反参
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022-02-17 22:42
+ * @author Frank Zhang
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

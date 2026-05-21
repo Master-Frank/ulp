@@ -33,8 +33,7 @@ import io.swagger.v3.oas.models.SpecVersion;
 /**
  * Jwt openapi 定制器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/11/25 13:53
+ * @author Frank Zhang
  */
 public class JwtOpenApiCustomizer implements GlobalOpenApiCustomizer, ApplicationContextAware {
 

@@ -40,8 +40,8 @@ import lombok.Data;
 public class RsaUtils {
 
     /** 算法名（保留字段以兼容旧调用方）。 */
-    public static final String PUBLIC_KEY  = "RSA";
-    public static final String PRIVATE_KEY = "RSA";
+    public static final String PUBLIC_KEY       = "RSA";
+    public static final String PRIVATE_KEY      = "RSA";
 
     /** 默认密钥长度。 */
     private static final int   DEFAULT_KEY_SIZE = 2048;

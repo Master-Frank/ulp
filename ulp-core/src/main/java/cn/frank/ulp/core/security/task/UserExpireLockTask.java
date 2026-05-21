@@ -34,8 +34,7 @@ import lombok.RequiredArgsConstructor;
 /**
  * 用户过期锁定任务
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/4/17 21:22
+ * @author Frank Zhang
  */
 @RequiredArgsConstructor
 public class UserExpireLockTask {

@@ -26,7 +26,7 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.IS_DELETED_COLUMN;
 /**
  * dept
  *
- * @author TopIAM
+ * @author Frank Zhang
  */
 @Data
 public class GetDepartmentResponse implements Serializable {
@@ -114,7 +114,7 @@ public class GetDepartmentResponse implements Serializable {
     /**
      * I18n
      *
-     * @author TopIAM
+     * @author Frank Zhang
      */
     @Data
     public static class I18nName implements Serializable {
@@ -138,7 +138,7 @@ public class GetDepartmentResponse implements Serializable {
     /**
      * status
      *
-     * @author TopIAM
+     * @author Frank Zhang
      */
     @Data
     public static class Status implements Serializable {

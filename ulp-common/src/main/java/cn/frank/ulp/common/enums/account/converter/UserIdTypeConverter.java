@@ -25,8 +25,7 @@ import jakarta.persistence.Converter;
 
 /**
  * 证件类型
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/11 23:48
+ * @author Frank Zhang
  */
 @Converter(autoApply = true)
 public class UserIdTypeConverter implements AttributeConverter<UserIdType, String> {

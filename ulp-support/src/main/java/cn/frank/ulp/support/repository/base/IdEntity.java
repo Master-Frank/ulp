@@ -35,37 +35,37 @@ import jakarta.persistence.MappedSuperclass;
 @MappedSuperclass
 public class IdEntity implements Serializable {
 
-   /**
+    /**
     * 主键ID
     */
-   private String id;
+    private String            id;
 
-   private static final long serialVersionUID = -7087131058152893045L;
+    private static final long serialVersionUID = -7087131058152893045L;
 
-   /**
+    /**
     * 获取ID
     *
     * @return ID
     */
-   @Id
-   @UuidGenerator(style = Style.TIME)
-   @Access(AccessType.PROPERTY)
-   @Column(name = "id_")
-   public String getId() {
-      return this.id;
-   }
+    @Id
+    @UuidGenerator(style = Style.TIME)
+    @Access(AccessType.PROPERTY)
+    @Column(name = "id_")
+    public String getId() {
+        return this.id;
+    }
 
-   @Override
-   public String toString() {
-      return "IdEntity(id=" + this.getId() + ")";
-   }
+    @Override
+    public String toString() {
+        return "IdEntity(id=" + this.getId() + ")";
+    }
 
-   /**
+    /**
     * 设置ID
     *
     * @param id ID
     */
-   public void setId(String id) {
-      this.id = id;
-   }
+    public void setId(String id) {
+        this.id = id;
+    }
 }

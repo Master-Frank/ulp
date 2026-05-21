@@ -26,8 +26,7 @@ import cn.frank.ulp.common.entity.account.ThirdPartyUserEntity;
 /**
  * 三方用户表
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/11/30 22:18
+ * @author Frank Zhang
  */
 @Repository
 public interface ThirdPartyUserRepository extends JpaRepository<ThirdPartyUserEntity, String> {

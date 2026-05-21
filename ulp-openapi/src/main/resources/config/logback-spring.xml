@@ -153,7 +153,7 @@
     <logger name="org.springframework.security.oauth2.server" level="TRACE"/>
     <logger name="cn.frank.ulp.protocol.oidc" level="TRACE"/>
     <logger name="cn.frank.ulp.support" level="DEBUG"/>
-    <logger name="cn.topiam" level="INFO">
+    <logger name="cn.frank.ulp" level="INFO">
         <appender-ref ref="ERROR-OUT"/>
         <appender-ref ref="WARN-OUT"/>
         <appender-ref ref="INFO-OUT"/>

@@ -65,8 +65,7 @@ import static cn.frank.ulp.protocol.form.exception.FormErrorCodes.SERVER_ERROR;
 import static cn.frank.ulp.support.context.ServletContextService.isHtmlRequest;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/8 00:14
+ * @author Frank Zhang
  */
 public final class FormAuthenticationEndpointFilter extends OncePerRequestFilter {
     /**

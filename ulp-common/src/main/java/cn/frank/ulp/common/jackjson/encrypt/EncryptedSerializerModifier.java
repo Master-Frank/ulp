@@ -26,8 +26,7 @@ import com.fasterxml.jackson.databind.ser.BeanPropertyWriter;
 import com.fasterxml.jackson.databind.ser.BeanSerializerModifier;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2022/12/22 21:53
+ * @author Frank Zhang
  */
 public class EncryptedSerializerModifier extends BeanSerializerModifier {
 

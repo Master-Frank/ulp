@@ -71,7 +71,7 @@
     <!-- build -->
     <build>
         <!--打包后名称-->
-        <finalName>topiam-employee-console-${project.version}</finalName>
+        <finalName>ulp-console-${project.version}</finalName>
         <plugins>
             <!--spring-boot-maven-plugin-->
             <plugin>

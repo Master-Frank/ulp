@@ -30,8 +30,7 @@ import jakarta.validation.constraints.NotNull;
 /**
  * 编辑组织架构入参
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/11 23:16
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "修改组织机构入参")

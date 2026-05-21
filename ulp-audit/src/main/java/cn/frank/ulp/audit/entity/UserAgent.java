@@ -25,8 +25,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * UserAgent
- * @author TopIAM
- * Created by support@topiam.cn on 2022/11/5 23:31
+ * @author Frank Zhang
  */
 @Data
 @Builder

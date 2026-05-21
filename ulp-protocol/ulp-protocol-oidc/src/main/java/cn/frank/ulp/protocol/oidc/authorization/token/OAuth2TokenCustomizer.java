@@ -38,8 +38,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.DEFAULT_DATE_TIME_FORM
 /**
  * 令牌定制器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/12/26 21:44
+ * @author Frank Zhang
  */
 @Setter
 @SuppressWarnings({ "AlibabaClassNamingShouldBeCamel" })

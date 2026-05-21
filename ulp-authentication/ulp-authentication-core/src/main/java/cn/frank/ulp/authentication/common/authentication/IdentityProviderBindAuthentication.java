@@ -26,8 +26,7 @@ import lombok.Getter;
 /**
  * Idp Authentication
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/16 21:34
+ * @author Frank Zhang
  */
 @Getter
 public class IdentityProviderBindAuthentication extends AbstractAuthenticationToken

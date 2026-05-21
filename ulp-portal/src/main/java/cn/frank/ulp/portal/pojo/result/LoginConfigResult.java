@@ -28,8 +28,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 /**
  * LoginConfigResult
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/8/13 21:29
+ * @author Frank Zhang
  */
 @Builder
 @Data

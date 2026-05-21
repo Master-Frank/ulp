@@ -25,9 +25,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 @JsonTypeInfo(use = Id.CLASS)
-@JsonAutoDetect(fieldVisibility = Visibility.ANY,
-    getterVisibility = Visibility.NONE,
-    isGetterVisibility = Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class GrantedAuthorityMixin {
 

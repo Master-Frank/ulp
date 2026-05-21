@@ -49,8 +49,7 @@ import static cn.frank.ulp.audit.enums.TargetType.IDENTITY_SOURCE;
 /**
  * 同步身份源同步
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/3/16 21:04
+ * @author Frank Zhang
  */
 @Slf4j
 @Service

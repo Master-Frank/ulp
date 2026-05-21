@@ -25,7 +25,7 @@ import org.springframework.security.oauth2.core.OAuth2Error;
  * This exception is thrown by {@link OAuth2AuthorizationResourceOwnerPasswordAuthenticationProvider}
  * when an attempt to authenticate the OAuth 2.0 Authorization Request (or Consent) fails.
  *
- * @author TopIAM
+ * @author Frank Zhang
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class OAuth2AuthorizationResourceOwnerPasswordAuthenticationException extends

@@ -24,7 +24,7 @@ import cn.frank.ulp.support.web.converter.EnumConvert;
 /**
  * 同步状态
  *
- * @author TopIAM
+ * @author Frank Zhang
  */
 public enum SyncStatus implements BaseEnum {
                                             /**

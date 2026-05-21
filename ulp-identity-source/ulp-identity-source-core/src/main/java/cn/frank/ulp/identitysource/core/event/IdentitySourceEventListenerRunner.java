@@ -35,8 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 身份源配置事件刷新
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/3/20 21:45
+ * @author Frank Zhang
  */
 @Slf4j
 @RequiredArgsConstructor

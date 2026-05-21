@@ -30,29 +30,29 @@ import cn.frank.ulp.support.security.crypto.password.PasswordEncoderFactories;
  * 用于配置安全相关的Bean
  */
 public class CustomSecurityBeansConfiguration {
-   
-   /**
+
+    /**
     * 日志记录器
     */
-   private final Logger logger = LoggerFactory.getLogger(CustomSecurityBeansConfiguration.class);
+    private final Logger logger = LoggerFactory.getLogger(CustomSecurityBeansConfiguration.class);
 
-   /**
+    /**
     * 密码编码器Bean
-    * 
+    *
     * @return 密码编码器
     */
-   @Bean
-   public PasswordEncoder passwordEncoder() {
-      return (new PasswordEncoderFactories()).createDelegatingPasswordEncoder();
-   }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return (new PasswordEncoderFactories()).createDelegatingPasswordEncoder();
+    }
 
-   /**
+    /**
     * 安全上下文持有者策略Bean
-    * 
+    *
     * @return 安全上下文持有者策略
     */
-   @Bean
-   public SecurityContextHolderStrategy securityContextHolderStrategy() {
-      return SecurityContextHolder.getContextHolderStrategy();
-   }
+    @Bean
+    public SecurityContextHolderStrategy securityContextHolderStrategy() {
+        return SecurityContextHolder.getContextHolderStrategy();
+    }
 }

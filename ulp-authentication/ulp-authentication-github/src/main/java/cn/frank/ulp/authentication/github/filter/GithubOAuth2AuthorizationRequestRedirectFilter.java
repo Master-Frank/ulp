@@ -54,8 +54,7 @@ import static cn.frank.ulp.authentication.github.filter.GithubOAuth2LoginAuthent
 /**
  * 微信扫码登录请求重定向过滤器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/6/20 21:22
+ * @author Frank Zhang
  */
 @SuppressWarnings("ALL")
 public class GithubOAuth2AuthorizationRequestRedirectFilter extends OncePerRequestFilter {

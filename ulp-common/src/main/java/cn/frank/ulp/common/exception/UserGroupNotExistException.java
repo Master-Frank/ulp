@@ -18,13 +18,12 @@ package cn.frank.ulp.common.exception;
 
 import org.springframework.http.HttpStatus;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2024/04/11 21:30
+ * @author Frank Zhang
  */
-public class UserGroupNotExistException extends TopIamException {
+public class UserGroupNotExistException extends UlpException {
 
     public UserGroupNotExistException() {
         this("用户组不存在");

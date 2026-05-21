@@ -32,8 +32,7 @@ import org.springframework.util.Assert;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/29 21:56
+ * @author Frank Zhang
  */
 public class AccessTokenAuthenticationManagerResolver implements
                                                       AuthenticationManagerResolver<HttpServletRequest> {

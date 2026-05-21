@@ -39,8 +39,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/12/2 18:18
+ * @author Frank Zhang
  */
 @Slf4j
 public class BindIdentityProviderTemplate {

@@ -40,8 +40,7 @@ import static cn.frank.ulp.common.constant.AnalysisConstants.ANALYSIS_PATH;
 /**
  * 统计分析
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/10/13 22:00
+ * @author Frank Zhang
  */
 @Validated
 @Tag(name = "统计分析")

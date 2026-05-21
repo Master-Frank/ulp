@@ -27,8 +27,7 @@ import cn.frank.ulp.console.pojo.save.setting.PasswordPolicySaveParam;
  * 密码策略 服务类
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-08-17
+ * @author Frank Zhang
  */
 public interface PasswordPolicyService extends SettingService {
 

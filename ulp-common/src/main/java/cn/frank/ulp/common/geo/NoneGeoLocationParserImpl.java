@@ -23,8 +23,7 @@ import cn.frank.ulp.support.geo.GeoLocationProvider;
 /**
  * None
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/27 21:20
+ * @author Frank Zhang
  */
 public class NoneGeoLocationParserImpl implements GeoLocationParser {
 

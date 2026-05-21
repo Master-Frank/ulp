@@ -21,8 +21,7 @@ import cn.frank.ulp.protocol.code.RegisteredClientRepository;
 /**
  * 客户端存储库
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/12/17 20:11
+ * @author Frank Zhang
  */
 public interface JwtRegisteredClientRepository extends
                                                RegisteredClientRepository<JwtRegisteredClient> {

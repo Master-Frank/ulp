@@ -30,22 +30,22 @@ import org.springframework.web.context.request.WebRequest;
 
 import com.google.common.collect.Maps;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 
 public class CustomErrorAttributes extends DefaultErrorAttributes {
 
-    public static final String     ERRORS     = "errors";
-    public static final String     REQUEST_ID = "requestId";
-    public static final String     SUCCESS    = "success";
-    public static final String     MESSAGE    = "message";
-    public static final String     STATUS     = "status";
-    public static final String     EXCEPTION  = "exception";
-    public static final String     TRACE      = "trace";
-    public static final String     ERROR      = "error";
-    public static final String     PATH       = "path";
+    public static final String           ERRORS     = "errors";
+    public static final String           REQUEST_ID = "requestId";
+    public static final String           SUCCESS    = "success";
+    public static final String           MESSAGE    = "message";
+    public static final String           STATUS     = "status";
+    public static final String           EXCEPTION  = "exception";
+    public static final String           TRACE      = "trace";
+    public static final String           ERROR      = "error";
+    public static final String           PATH       = "path";
 
     private final ErrorAttributesHandler errorAttributesHandler;
 
@@ -70,10 +70,10 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
         errorAttributes.put(REQUEST_ID,
             webRequest.getAttribute("REQUEST_ID", RequestAttributes.SCOPE_REQUEST));
 
-        if (error instanceof TopIamException) {
-            TopIamException topIamException = (TopIamException) error;
-            errorAttributes.put(MESSAGE, topIamException.getMessage());
-            errorAttributes.put(STATUS, topIamException.getHttpStatus().value());
+        if (error instanceof UlpException) {
+            UlpException ulpException = (UlpException) error;
+            errorAttributes.put(MESSAGE, ulpException.getMessage());
+            errorAttributes.put(STATUS, ulpException.getHttpStatus().value());
         }
 
         if (error instanceof ConstraintViolationException) {

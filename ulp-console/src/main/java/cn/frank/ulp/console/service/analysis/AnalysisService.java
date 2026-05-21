@@ -28,8 +28,7 @@ import cn.frank.ulp.console.pojo.result.analysis.OverviewResult;
 /**
  * 统计 service
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/11/22 22:25
+ * @author Frank Zhang
  */
 public interface AnalysisService {
 

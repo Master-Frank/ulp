@@ -71,8 +71,7 @@ import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
 /**
  * OIDC openapi 定制器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/11/25 13:53
+ * @author Frank Zhang
  */
 public class OidcOpenApiCustomizer implements GlobalOpenApiCustomizer, ApplicationContextAware {
 

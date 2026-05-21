@@ -56,8 +56,7 @@ import static cn.frank.ulp.identitysource.feishu.FeiShuConstant.*;
 /**
  * 飞书提供商client
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/29 21:56
+ * @author Frank Zhang
  */
 @Slf4j(topic = LOGGER_NAME)
 public class FeiShuClient extends AbstractFeiShuClient implements IdentitySourceClient {

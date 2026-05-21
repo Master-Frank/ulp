@@ -44,8 +44,7 @@ import static cn.frank.ulp.support.security.util.HttpSecurityConfigUtils.getOpti
 /**
  * Utility methods for the OAuth 2.0 Configurers.
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/27 21:38
+ * @author Frank Zhang
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public final class OAuth2ConfigurerUtils {

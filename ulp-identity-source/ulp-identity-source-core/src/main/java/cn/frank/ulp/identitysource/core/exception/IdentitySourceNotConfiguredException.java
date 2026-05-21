@@ -18,15 +18,14 @@ package cn.frank.ulp.identitysource.core.exception;
 
 import org.springframework.http.HttpStatus;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
  * 身份源未配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/7/8 22:23
+ * @author Frank Zhang
  */
-public class IdentitySourceNotConfiguredException extends TopIamException {
+public class IdentitySourceNotConfiguredException extends UlpException {
     public IdentitySourceNotConfiguredException() {
         super("identity_source_not_configured", "身份源未配置", HttpStatus.BAD_REQUEST);
     }

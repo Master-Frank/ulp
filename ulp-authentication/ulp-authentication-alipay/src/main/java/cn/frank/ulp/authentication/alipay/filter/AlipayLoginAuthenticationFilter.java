@@ -45,7 +45,7 @@ import cn.frank.ulp.authentication.common.client.RegisteredIdentityProviderClien
 import cn.frank.ulp.authentication.common.client.RegisteredIdentityProviderClientRepository;
 import cn.frank.ulp.authentication.common.filter.AbstractIdentityProviderAuthenticationProcessingFilter;
 import cn.frank.ulp.core.context.ContextService;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.trace.TraceUtils;
 import cn.frank.ulp.support.util.UrlUtils;
 
@@ -59,8 +59,7 @@ import static cn.frank.ulp.authentication.common.constant.AuthenticationConstant
 /**
  * 支付宝 登录过滤器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/8/19 17:58
+ * @author Frank Zhang
  */
 @SuppressWarnings("DuplicatedCode")
 public class AlipayLoginAuthenticationFilter extends
@@ -126,11 +125,11 @@ public class AlipayLoginAuthenticationFilter extends
         }
         try {
             AlipayClient client = new AlipayClient(
-                new Client(new Context(getConfig(idpOauthConfig), "topiam")));
+                new Client(new Context(getConfig(idpOauthConfig), "ulp")));
             AlipaySystemOauthTokenResponse token = client.getOauthToken(code);
             if (!StringUtils.isBlank(token.getCode())) {
                 logger.error("支付宝认证获取 access_token 失败: [" + token.getHttpBody() + "]");
-                throw new TopIamException(token.getSubMsg());
+                throw new UlpException(token.getSubMsg());
             }
             //执行逻辑
             IdentityProviderUserDetails identityProviderUserDetails = IdentityProviderUserDetails

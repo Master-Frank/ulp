@@ -31,7 +31,7 @@ import cn.frank.ulp.audit.enums.TargetType;
 import cn.frank.ulp.common.entity.account.UserEntity;
 import cn.frank.ulp.common.repository.account.UserRepository;
 import cn.frank.ulp.portal.service.UserService;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.security.password.exception.PasswordValidatedFailException;
 import cn.frank.ulp.support.security.userdetails.UserDetails;
 import cn.frank.ulp.support.security.userdetails.UserDetailsService;
@@ -39,8 +39,7 @@ import cn.frank.ulp.support.security.userdetails.UserDetailsService;
 /**
  * UserDetailsServiceImpl
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/10/25 21:41
+ * @author Frank Zhang
  */
 @Component(value = "userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -139,7 +138,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return userRepository.findByUsername(username).orElseThrow(() -> {
             AuditContext.setContent("重置密码失败，用户不存在");
             logger.warn(AuditContext.getContent());
-            return new TopIamException("操作失败");
+            return new UlpException("操作失败");
         });
     }
 

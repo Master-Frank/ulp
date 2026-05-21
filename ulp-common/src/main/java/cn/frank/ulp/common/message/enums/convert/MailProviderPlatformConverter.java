@@ -26,8 +26,7 @@ import jakarta.persistence.Converter;
 /**
  * MailProviderPlatformReadingConverter
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/5 21:45
+ * @author Frank Zhang
  */
 @Converter(autoApply = true)
 public class MailProviderPlatformConverter implements AttributeConverter<MailProvider, String> {

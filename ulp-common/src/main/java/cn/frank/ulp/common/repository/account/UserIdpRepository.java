@@ -29,8 +29,7 @@ import cn.frank.ulp.common.entity.account.UserIdpBindEntity;
 /**
  * 用户身份绑定表
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/4/3 22:18
+ * @author Frank Zhang
  */
 @Repository
 public interface UserIdpRepository extends JpaRepository<UserIdpBindEntity, String>,

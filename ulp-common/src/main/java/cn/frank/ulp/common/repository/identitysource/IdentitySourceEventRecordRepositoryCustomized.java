@@ -23,8 +23,7 @@ import cn.frank.ulp.common.entity.identitysource.IdentitySourceEventRecordEntity
 /**
  * 身份源事件记录
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/3/15 21:35
+ * @author Frank Zhang
  */
 public interface IdentitySourceEventRecordRepositoryCustomized {
     /**

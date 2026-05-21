@@ -30,8 +30,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 查询分组列表入参
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/8/31 9:08
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "查询分组列表入参")

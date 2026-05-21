@@ -28,7 +28,7 @@ import javax.crypto.spec.SecretKeySpec;
 /**
  * 数据解密
  *
- * @author TopIAM
+ * @author Frank Zhang
  */
 @SuppressWarnings("AlibabaUndefineMagicConstant")
 public class FeiShuEventDecryptUtils {

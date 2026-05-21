@@ -34,7 +34,7 @@ import cn.frank.ulp.common.entity.app.po.AppJwtConfigPO;
 import static cn.frank.ulp.common.constant.AppConstants.JWT_CONFIG_CACHE_NAME;
 
 /**
- * @author TopIAM
+ * @author Frank Zhang
  */
 @Repository
 @CacheConfig(cacheNames = { JWT_CONFIG_CACHE_NAME })

@@ -24,8 +24,7 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/11 23:48
+ * @author Frank Zhang
  */
 @Converter(autoApply = true)
 public class SsoScopeConverter implements AttributeConverter<AuthorizationType, String> {

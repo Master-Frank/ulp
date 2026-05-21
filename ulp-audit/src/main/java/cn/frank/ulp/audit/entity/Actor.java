@@ -27,34 +27,33 @@ import lombok.NonNull;
 
 /**
  * Actor
- * @author TopIAM
- * Created by support@topiam.cn on 2022/11/5 23:30
+ * @author Frank Zhang
  */
 @Data
 @Builder
 public class Actor implements Serializable {
 
-    public static final String                                       ACTOR_ID         = "actor.id.keyword";
-    public static final String                                       ACTOR_TYPE       = "actor.type.keyword";
+    public static final String ACTOR_ID         = "actor.id.keyword";
+    public static final String ACTOR_TYPE       = "actor.type.keyword";
 
-    public static final String                                       ACTOR_AUTH_TYPE  = "actor.auth_type.keyword";
+    public static final String ACTOR_AUTH_TYPE  = "actor.auth_type.keyword";
 
     @Serial
-    private static final long                                        serialVersionUID = -1144169992714000310L;
+    private static final long  serialVersionUID = -1144169992714000310L;
     /**
      * 行动者ID
      */
     @NonNull
-    private String                                                   id;
+    private String             id;
 
     /**
      * 行动者类型
      */
     @NonNull
-    private UserType type;
+    private UserType           type;
 
     /**
      * 身份验证类型
      */
-    private String                                                   authType;
+    private String             authType;
 }

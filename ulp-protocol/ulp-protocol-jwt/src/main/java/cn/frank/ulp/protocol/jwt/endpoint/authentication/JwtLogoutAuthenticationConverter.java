@@ -36,8 +36,7 @@ import static cn.frank.ulp.protocol.jwt.endpoint.JwtAuthenticationEndpointUtils.
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/9/4 16:01
+ * @author Frank Zhang
  */
 public final class JwtLogoutAuthenticationConverter implements AuthenticationConverter {
     private static final Authentication ANONYMOUS_AUTHENTICATION = new AnonymousAuthenticationToken(

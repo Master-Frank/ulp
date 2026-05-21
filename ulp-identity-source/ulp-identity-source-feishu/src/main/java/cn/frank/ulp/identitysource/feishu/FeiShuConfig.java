@@ -29,8 +29,7 @@ import jakarta.validation.constraints.NotEmpty;
 /**
  * 飞书配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/2/28 23:17
+ * @author Frank Zhang
  */
 @Getter
 @Setter

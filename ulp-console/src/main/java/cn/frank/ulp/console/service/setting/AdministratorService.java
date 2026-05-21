@@ -33,8 +33,7 @@ import cn.frank.ulp.support.security.userdetails.UserDetails;
 /**
  * 管理员
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/13 23:12
+ * @author Frank Zhang
  */
 public interface AdministratorService {
     /**

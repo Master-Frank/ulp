@@ -19,8 +19,7 @@ package cn.frank.ulp.authentication.qq.constant;
 /**
  * 企业微信
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/9 22:19
+ * @author Frank Zhang
  */
 public final class QqAuthenticationConstants {
     /**

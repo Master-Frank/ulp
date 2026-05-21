@@ -32,8 +32,7 @@ import cn.frank.ulp.common.entity.account.po.OrganizationMemberPO;
 /**
  * 组织机构成员
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/30 03:06
+ * @author Frank Zhang
  */
 @Repository
 public interface OrganizationMemberRepository extends

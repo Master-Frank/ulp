@@ -25,8 +25,7 @@ import lombok.Data;
 /**
  * 入参
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022-02-17 22:45
+ * @author Frank Zhang
  */
 @Data
 public class BaseRequest implements Serializable {

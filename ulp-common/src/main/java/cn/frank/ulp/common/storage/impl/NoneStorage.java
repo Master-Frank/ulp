@@ -26,8 +26,7 @@ import cn.frank.ulp.common.storage.StorageProviderException;
 /**
  * 本地存储配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/10 21:32
+ * @author Frank Zhang
  */
 public class NoneStorage implements Storage {
 

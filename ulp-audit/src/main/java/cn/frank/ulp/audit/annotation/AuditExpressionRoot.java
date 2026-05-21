@@ -26,8 +26,7 @@ import lombok.AllArgsConstructor;
 /**
  * AuditExpressionRoot
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/28 22:48
+ * @author Frank Zhang
  */
 @AllArgsConstructor
 public class AuditExpressionRoot implements AuditExpressionOperations {

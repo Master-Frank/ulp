@@ -39,8 +39,7 @@ import static cn.frank.ulp.common.constant.SettingConstants.SETTING_PATH;
 /**
  * 安全防御策略
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023-03-09
+ * @author Frank Zhang
  */
 @Validated
 @Tag(name = "安全防御策略")

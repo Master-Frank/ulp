@@ -26,8 +26,7 @@ import jakarta.validation.constraints.NotBlank;
 /**
  * 支付宝 登录配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/8/19 16:09
+ * @author Frank Zhang
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

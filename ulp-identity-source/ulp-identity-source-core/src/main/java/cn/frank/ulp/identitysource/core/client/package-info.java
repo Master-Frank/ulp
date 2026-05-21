@@ -17,7 +17,6 @@
 /**
  * 数据处理器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/2/28 21:07
+ * @author Frank Zhang
  */
 package cn.frank.ulp.identitysource.core.client;

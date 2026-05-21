@@ -27,33 +27,33 @@ import cn.frank.ulp.support.web.useragent.UserAgent;
  */
 public class WebJacksonModule extends Module {
 
-   /**
+    /**
     * 设置模块
     *
     * @param context 设置上下文
     */
-   @Override
-   public void setupModule(SetupContext context) {
-      context.setMixInAnnotations(UserAgent.class, UserAgentMixin.class);
-   }
+    @Override
+    public void setupModule(SetupContext context) {
+        context.setMixInAnnotations(UserAgent.class, UserAgentMixin.class);
+    }
 
-   /**
+    /**
     * 获取版本
     *
     * @return 版本
     */
-   @Override
-   public Version version() {
-      return new Version(1, 0, 0, null, null, null);
-   }
+    @Override
+    public Version version() {
+        return new Version(1, 0, 0, null, null, null);
+    }
 
-   /**
+    /**
     * 获取模块名
     *
     * @return 模块名
     */
-   @Override
-   public String getModuleName() {
-      return WebJacksonModule.class.getName();
-   }
+    @Override
+    public String getModuleName() {
+        return WebJacksonModule.class.getName();
+    }
 }

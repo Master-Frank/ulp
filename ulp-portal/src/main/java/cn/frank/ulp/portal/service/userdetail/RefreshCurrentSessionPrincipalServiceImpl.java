@@ -25,8 +25,7 @@ import cn.frank.ulp.support.security.userdetails.UserDetails;
 /**
  * 刷新当前用户会话 Principal 实现
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2024/3/2 14:06
+ * @author Frank Zhang
  */
 @Service
 public class RefreshCurrentSessionPrincipalServiceImpl implements

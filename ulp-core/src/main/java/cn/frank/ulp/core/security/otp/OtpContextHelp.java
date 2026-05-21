@@ -35,7 +35,7 @@ import cn.frank.ulp.common.enums.SmsType;
 import cn.frank.ulp.common.exception.OtpSendException;
 import cn.frank.ulp.core.message.mail.MailMsgEventPublish;
 import cn.frank.ulp.core.message.sms.SmsMsgEventPublish;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 import lombok.extern.slf4j.Slf4j;
 import static cn.frank.ulp.core.context.ContextService.getCodeValidTime;
@@ -45,8 +45,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.COLON;
 /**
  * OtpUtils
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/8/16 22:21
+ * @author Frank Zhang
  */
 @Slf4j
 @Component
@@ -64,7 +63,7 @@ public class OtpContextHelp {
         RBucket<Boolean> intervalBucket = redissonClient
             .getBucket(getRedisKey(OTP_CODE_INTERVAL_PREFIX, recipient, type, channel));
         if (intervalBucket.isExists()) {
-            throw new TopIamException(SEND_FREQUENTLY);
+            throw new UlpException(SEND_FREQUENTLY);
         } else {
             // 验证码
             String code = RandomStringUtils.randomNumeric(6);

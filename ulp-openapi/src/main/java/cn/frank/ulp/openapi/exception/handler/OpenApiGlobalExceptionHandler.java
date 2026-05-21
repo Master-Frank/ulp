@@ -31,8 +31,7 @@ import jakarta.validation.ConstraintViolationException;
 /**
  * 全局异常处理
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/20 21:55
+ * @author Frank Zhang
  */
 @AllArgsConstructor
 @RestControllerAdvice

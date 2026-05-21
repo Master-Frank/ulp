@@ -23,8 +23,7 @@ import cn.frank.ulp.support.security.userdetails.UserDetails;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2024/3/2 22:21
+ * @author Frank Zhang
  */
 public interface UserService {
     /**

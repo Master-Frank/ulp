@@ -74,8 +74,7 @@ public class HttpClientUtils {
         }
     }
 
-    public static String get(String url, Map<String, String> params,
-                             BasicHeader... headers) {
+    public static String get(String url, Map<String, String> params, BasicHeader... headers) {
         try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
             HttpGet get = new HttpGet();
             RequestConfig config = RequestConfig.custom().setConnectTimeout(5000)
@@ -143,8 +142,7 @@ public class HttpClientUtils {
     public static String post(String url, Map<String, String> params) throws IOException {
         try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
             HttpPost post = new HttpPost(url);
-            post.setEntity(
-                new UrlEncodedFormEntity(toPairs(params), StandardCharsets.UTF_8));
+            post.setEntity(new UrlEncodedFormEntity(toPairs(params), StandardCharsets.UTF_8));
             try (CloseableHttpResponse response = client.execute(post)) {
                 return readBody(response);
             } finally {

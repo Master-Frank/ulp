@@ -39,8 +39,7 @@ import static cn.frank.ulp.support.context.ServletContextService.isHtmlRequest;
 /**
  * 认证入口点
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/9/2 22:11
+ * @author Frank Zhang
  */
 @SuppressWarnings("DuplicatedCode")
 public class PortalAuthenticationEntryPoint extends AbstractAuthenticationEntryPoint {

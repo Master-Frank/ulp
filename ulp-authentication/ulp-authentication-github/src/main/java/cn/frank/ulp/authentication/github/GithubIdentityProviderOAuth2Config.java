@@ -28,8 +28,7 @@ import jakarta.validation.constraints.NotBlank;
 /**
  * GITHUB 认证配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/4/4 23:58
+ * @author Frank Zhang
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

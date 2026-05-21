@@ -33,8 +33,7 @@ import static cn.frank.ulp.openapi.constant.OpenApiV1Constants.OPEN_API_V1_PATH;
 /**
  * OpenAPI 文档
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/9/5 21:00
+ * @author Frank Zhang
  */
 @Configuration
 public class OpenApiConfiguration {
@@ -57,16 +56,16 @@ public class OpenApiConfiguration {
      */
     private Info info() {
         Contact contact = new Contact();
-        contact.setEmail("support@topiam.cn");
-        contact.setName("TopIAM");
-        contact.setUrl("https://eiam.topiam.cn");
+        contact.setEmail("");
+        contact.setName("ULP");
+        contact.setUrl("");
         return new Info()
             //title
             .title(environment.getProperty("spring.application.name"))
             //描述
             .description("REST API 文档")
             //服务条款网址
-            .termsOfService("https://eiam.topiam.cn")
+            .termsOfService("")
             //内容
             .contact(contact)
             //版本

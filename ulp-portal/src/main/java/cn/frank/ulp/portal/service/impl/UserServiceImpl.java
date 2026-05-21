@@ -46,8 +46,7 @@ import cn.frank.ulp.support.security.userdetails.UserDetails;
 /**
  * UserService
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2024/3/2 22:22
+ * @author Frank Zhang
  */
 @Service
 public class UserServiceImpl implements UserService {

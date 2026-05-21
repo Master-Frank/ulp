@@ -42,8 +42,7 @@ import static cn.frank.ulp.support.util.RsaUtils.getKeys;
 /**
  * AbstractCertificateApplicationService
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/8/31 22:34
+ * @author Frank Zhang
  */
 public abstract class AbstractCertApplicationService extends AbstractApplicationService {
     private final Logger         logger = LoggerFactory
@@ -66,7 +65,7 @@ public abstract class AbstractCertApplicationService extends AbstractApplication
             //算法
             config.setSignAlgo("SHA256WITHRSA");
             RsaUtils.RsaResult keys = getKeys(config.getKeyLong());
-            X500Name x500Name = getX500Name("app_" + appCode, "TOPIAM", "Jinan", "Shandong", "CN",
+            X500Name x500Name = getX500Name("app_" + appCode, "ULP", "Jinan", "Shandong", "CN",
                 "EIAM");
             //发行者
             config.setIssuer(x500Name.toString());
@@ -109,7 +108,7 @@ public abstract class AbstractCertApplicationService extends AbstractApplication
     /**
      * AppCertRepository
      */
-    protected final AppCertRepository appCertRepository;
+    protected final AppCertRepository         appCertRepository;
 
     /**
      *AppAccessPolicyRepository

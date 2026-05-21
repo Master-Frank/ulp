@@ -23,8 +23,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/9 21:05
+ * @author Frank Zhang
  */
 @Getter
 @Setter

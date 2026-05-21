@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
  * 分布式锁注解
  * 用于方法级别的分布式锁控制
  */
-@Target({ElementType.METHOD})
+@Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Lock {

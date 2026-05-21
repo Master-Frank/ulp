@@ -29,8 +29,7 @@ import lombok.Data;
 /**
  * Event
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/11/5 23:33
+ * @author Frank Zhang
  */
 @Data
 @Builder

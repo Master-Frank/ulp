@@ -32,8 +32,7 @@ import static cn.frank.ulp.protocol.jwt.exception.JwtErrorCodes.SERVER_ERROR;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/9/4 16:11
+ * @author Frank Zhang
  */
 public final class JwtLogoutAuthenticationProvider implements AuthenticationProvider {
     private final Logger logger = LoggerFactory.getLogger(JwtLogoutAuthenticationProvider.class);

@@ -22,8 +22,7 @@ import java.time.Instant;
 /**
  * 注册客户端
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/12/18 08:35
+ * @author Frank Zhang
  */
 public interface RegisteredClient extends Serializable {
     /**

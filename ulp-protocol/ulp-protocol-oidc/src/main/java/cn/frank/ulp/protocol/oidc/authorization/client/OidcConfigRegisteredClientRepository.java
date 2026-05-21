@@ -33,8 +33,7 @@ import cn.frank.ulp.common.entity.app.po.AppOidcConfigPO;
 import cn.frank.ulp.common.repository.app.AppOidcConfigRepository;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2022/7/9 00:47
+ * @author Frank Zhang
  */
 public class OidcConfigRegisteredClientRepository implements RegisteredClientRepository {
 

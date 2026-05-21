@@ -17,8 +17,7 @@
 package cn.frank.ulp.protocol.oidc.endpoint;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2023/11/26 12:47
+ * @author Frank Zhang
  */
 public final class OAuth2ParameterNames {
     /**

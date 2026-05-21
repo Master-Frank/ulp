@@ -16,15 +16,14 @@
  */
 package cn.frank.ulp.common.exception.app;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
  * 默认应用账户已存在
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/7/8 22:49
+ * @author Frank Zhang
  */
-public class AppDefaultAccountExistException extends TopIamException {
+public class AppDefaultAccountExistException extends UlpException {
 
     public AppDefaultAccountExistException() {
         super("app_default_account_exist", "默认应用账户已存在", DEFAULT_STATUS);

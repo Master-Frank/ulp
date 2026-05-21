@@ -16,7 +16,6 @@
  */
 /**
  * utils
- * @author TopIAM
- * Created by support@topiam.cn on 2019/12/18 23:49
+ * @author Frank Zhang
  */
 package cn.frank.ulp.core.security.util;

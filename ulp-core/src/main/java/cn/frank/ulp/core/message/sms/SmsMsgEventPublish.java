@@ -31,7 +31,7 @@ import com.alibaba.fastjson2.JSON;
 import cn.frank.ulp.common.entity.setting.config.SmsConfig;
 import cn.frank.ulp.common.enums.MessageCategory;
 import cn.frank.ulp.common.enums.SmsType;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -44,8 +44,7 @@ import static cn.frank.ulp.core.message.MsgVariable.VERIFY_CODE;
 /**
  * 短信消息发送
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/25 21:07
+ * @author Frank Zhang
  */
 @Component
 @Slf4j
@@ -92,12 +91,12 @@ public class SmsMsgEventPublish {
         SmsConfig smsConfig = getSmsProviderConfig();
         List<SmsConfig.TemplateConfig> templates = smsConfig.getTemplates();
         if (CollectionUtils.isEmpty(templates)) {
-            throw new TopIamException("未配置[" + type.getDesc() + "]短信模板");
+            throw new UlpException("未配置[" + type.getDesc() + "]短信模板");
         }
         Optional<SmsConfig.TemplateConfig> template = templates.stream()
             .filter(item -> type == item.getType()).findFirst();
         SmsConfig.TemplateConfig templateConfig = template
-            .orElseThrow(() -> new TopIamException("未配置[" + type.getDesc() + "]短信模板"));
+            .orElseThrow(() -> new UlpException("未配置[" + type.getDesc() + "]短信模板"));
         parameter.put(TEMPLATE_CODE, templateConfig.getCode());
         parameter.put(CONTENT, JSON.toJSONString(parameter));
         // publish event

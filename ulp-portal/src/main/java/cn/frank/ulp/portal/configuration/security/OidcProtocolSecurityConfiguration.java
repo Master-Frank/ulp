@@ -68,8 +68,7 @@ import static cn.frank.ulp.common.constant.ConfigBeanNameConstants.OIDC_PROTOCOL
 /**
  * OIDC 协议配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/2 21:16
+ * @author Frank Zhang
  */
 @AutoConfigureBefore(PortalSecurityConfiguration.class)
 @Configuration(proxyBeanMethods = false)

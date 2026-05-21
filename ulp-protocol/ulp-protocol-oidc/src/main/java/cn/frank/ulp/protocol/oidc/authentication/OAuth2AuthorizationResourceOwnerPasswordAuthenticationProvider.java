@@ -66,7 +66,7 @@ import static cn.frank.ulp.support.security.util.SecurityUtils.isPrincipalAuthen
 /**
  * An {@link AuthenticationProvider} implementation for the OAuth 2.0 Authorization Code Grant.
  *
- * @author TopIAM
+ * @author Frank Zhang
  * @see <a target="_blank" href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.1">Section 4.1 Authorization Code Grant</a>
  * @see <a target="_blank" href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.3">Section 4.1.3 Access Token Request</a>
  */

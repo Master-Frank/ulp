@@ -17,7 +17,6 @@
 /**
  * Configuration
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/7/10 22:26
+ * @author Frank Zhang
  */
 package cn.frank.ulp.console.configuration;

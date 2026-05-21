@@ -25,8 +25,7 @@ import cn.frank.ulp.support.web.converter.EnumConvert;
 /**
  * 邮件安全方式
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/19 23:09
+ * @author Frank Zhang
  */
 public enum MailSafetyType implements Serializable {
                                                     /**

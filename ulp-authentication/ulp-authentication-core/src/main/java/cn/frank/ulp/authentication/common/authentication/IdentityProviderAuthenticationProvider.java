@@ -51,8 +51,7 @@ import jakarta.validation.constraints.NotBlank;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn  on  2023/8/6 23:45
+ * @author Frank Zhang
  */
 public class IdentityProviderAuthenticationProvider implements AuthenticationProvider {
 

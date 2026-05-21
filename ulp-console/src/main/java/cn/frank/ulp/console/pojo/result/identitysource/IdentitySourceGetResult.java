@@ -33,7 +33,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.DEFAULT_DATE_TIME_FORM
 /**
  * 身份源源详情
  *
- * @author TopIAM
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "身份源源详情")

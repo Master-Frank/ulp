@@ -23,28 +23,28 @@ import org.springframework.http.HttpStatus;
  * 当密码包含用户个人信息时抛出此异常
  */
 public class PasswordIncludeUserInfoInvalidException extends PasswordInvalidException {
-   
-   /**
+
+    /**
     * 构造函数
     *
     * @param message 消息
     * @param code 代码
     * @param status HTTP状态码
     */
-   public PasswordIncludeUserInfoInvalidException(String message, String code, HttpStatus status) {
-      super(message, code, status);
-   }
+    public PasswordIncludeUserInfoInvalidException(String message, String code, HttpStatus status) {
+        super(message, code, status);
+    }
 
-   /**
+    /**
     * 构造函数
     *
     * @param message 消息
     */
-   public PasswordIncludeUserInfoInvalidException(String message) {
-      super(message, HttpStatus.BAD_REQUEST);
-   }
+    public PasswordIncludeUserInfoInvalidException(String message) {
+        super(message, HttpStatus.BAD_REQUEST);
+    }
 
-   /**
+    /**
     * 构造函数
     *
     * @param message 消息
@@ -52,27 +52,28 @@ public class PasswordIncludeUserInfoInvalidException extends PasswordInvalidExce
     * @param code 代码
     * @param status HTTP状态码
     */
-   public PasswordIncludeUserInfoInvalidException(String message, Throwable cause, String code, HttpStatus status) {
-      super(message, cause, code, status);
-   }
+    public PasswordIncludeUserInfoInvalidException(String message, Throwable cause, String code,
+                                                   HttpStatus status) {
+        super(message, cause, code, status);
+    }
 
-   /**
+    /**
     * 构造函数
     *
     * @param message 消息
     * @param status HTTP状态码
     */
-   public PasswordIncludeUserInfoInvalidException(String message, HttpStatus status) {
-      super(message, status);
-   }
+    public PasswordIncludeUserInfoInvalidException(String message, HttpStatus status) {
+        super(message, status);
+    }
 
-   /**
+    /**
     * 构造函数
     *
     * @param message 消息
     * @param cause 原因
     */
-   public PasswordIncludeUserInfoInvalidException(String message, Throwable cause) {
-      super(message, cause);
-   }
+    public PasswordIncludeUserInfoInvalidException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

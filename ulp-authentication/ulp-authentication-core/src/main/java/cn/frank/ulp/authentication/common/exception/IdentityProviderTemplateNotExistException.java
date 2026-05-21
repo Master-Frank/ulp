@@ -16,16 +16,15 @@
  */
 package cn.frank.ulp.authentication.common.exception;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 /**
  * 身份提供商模版不存在
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/7/8 22:49
+ * @author Frank Zhang
  */
-public class IdentityProviderTemplateNotExistException extends TopIamException {
+public class IdentityProviderTemplateNotExistException extends UlpException {
 
     public IdentityProviderTemplateNotExistException() {
         super("idp_template_not_exist", "身份提供商模版不存在", BAD_REQUEST);

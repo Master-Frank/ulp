@@ -30,8 +30,7 @@ import jakarta.validation.constraints.NotNull;
 /**
  * 保存邮件服务商配置入参
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/11 21:27
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "保存邮件服务商配置入参")

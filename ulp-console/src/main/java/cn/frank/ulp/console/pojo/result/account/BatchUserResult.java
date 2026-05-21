@@ -26,8 +26,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 批量查询用户响应
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/11 23:22
+ * @author Frank Zhang
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

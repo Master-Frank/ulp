@@ -44,7 +44,7 @@ import cn.frank.ulp.common.enums.app.AppProtocol;
 import cn.frank.ulp.common.enums.app.AppType;
 import cn.frank.ulp.common.enums.app.AuthorizationType;
 import cn.frank.ulp.common.repository.app.*;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.util.BeanUtils;
 import cn.frank.ulp.support.validation.ValidationUtils;
 
@@ -59,8 +59,7 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME
 /**
  * OIDC 用户应用
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/8/20 23:20
+ * @author Frank Zhang
  */
 @Component
 public class OidcStandardApplicationServiceImpl extends AbstractOidcApplicationService {
@@ -144,7 +143,7 @@ public class OidcStandardApplicationServiceImpl extends AbstractOidcApplicationS
             mapper.configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
             model = mapper.readValue(value, AppOidcStandardSaveConfigParam.class);
         } catch (Exception e) {
-            throw new TopIamException(e.getMessage());
+            throw new UlpException(e.getMessage());
         }
         //@formatter:off
         ValidationUtils.ValidationResult<AppOidcStandardSaveConfigParam> validationResult = ValidationUtils.validateEntity(model);

@@ -44,7 +44,7 @@ import cn.frank.ulp.core.context.ContextService;
 import cn.frank.ulp.identitysource.core.IdentitySourceConfig;
 import cn.frank.ulp.identitysource.dingtalk.DingTalkConfig;
 import cn.frank.ulp.identitysource.feishu.FeiShuConfig;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.util.BeanUtils;
 import cn.frank.ulp.support.validation.ValidationUtils;
 
@@ -58,8 +58,7 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME
 /**
  * 身份源转换器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/2/13 21:37
+ * @author Frank Zhang
  */
 @Mapper(componentModel = "spring")
 public interface IdentitySourceConverter {
@@ -274,7 +273,7 @@ public interface IdentitySourceConverter {
             }
             identitySourceResult.setBasicConfig(value);
         } catch (JsonProcessingException e) {
-            throw new TopIamException(e.getMessage());
+            throw new UlpException(e.getMessage());
         }
         return identitySourceResult;
     }

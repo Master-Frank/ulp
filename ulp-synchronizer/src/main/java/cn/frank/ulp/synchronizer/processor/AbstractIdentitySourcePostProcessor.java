@@ -68,8 +68,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.SYSTEM_DEFAULT_USER_NA
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/9/25 00:32
+ * @author Frank Zhang
  */
 @Slf4j
 public class AbstractIdentitySourcePostProcessor {
@@ -333,7 +332,7 @@ public class AbstractIdentitySourcePostProcessor {
         /**
          * 状态
          */
-        private SyncStatus status;
+        private SyncStatus               status;
 
         /**
          * 原因

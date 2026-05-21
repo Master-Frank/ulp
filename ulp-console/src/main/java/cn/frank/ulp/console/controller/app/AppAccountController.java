@@ -42,8 +42,7 @@ import static cn.frank.ulp.common.constant.AppConstants.APP_PATH;
 /**
  * 应用账户资源
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/6/4 21:06
+ * @author Frank Zhang
  */
 @Validated
 @Tag(name = "应用账户")

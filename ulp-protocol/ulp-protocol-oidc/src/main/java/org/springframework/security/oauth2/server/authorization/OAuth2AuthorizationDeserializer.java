@@ -39,8 +39,7 @@ import static org.springframework.security.oauth2.server.authorization.OAuth2Aut
 /**
  * OAuth2AuthorizationDeserializer
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/30 21:10
+ * @author Frank Zhang
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class OAuth2AuthorizationDeserializer extends JsonDeserializer<OAuth2Authorization> {

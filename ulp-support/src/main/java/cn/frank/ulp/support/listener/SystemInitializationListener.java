@@ -32,7 +32,8 @@ import jakarta.annotation.PostConstruct;
 @Component
 public class SystemInitializationListener implements ApplicationListener<ContextRefreshedEvent> {
 
-    private static final Logger     log = LoggerFactory.getLogger(SystemInitializationListener.class);
+    private static final Logger           log = LoggerFactory
+        .getLogger(SystemInitializationListener.class);
 
     private final List<SystemInitializer> initializers;
 

@@ -47,8 +47,7 @@ import static cn.frank.ulp.common.constant.ConfigBeanNameConstants.JWT_PROTOCOL_
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/3 21:16
+ * @author Frank Zhang
  */
 @AutoConfigureBefore(PortalSecurityConfiguration.class)
 @Configuration(proxyBeanMethods = false)

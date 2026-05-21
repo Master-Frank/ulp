@@ -21,8 +21,7 @@ import static cn.frank.ulp.protocol.code.constant.ProtocolConstants.PROTOCOL_CAC
 import static cn.frank.ulp.support.constant.EiamConstants.COLON;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/4 21:19
+ * @author Frank Zhang
  */
 public class OidcProtocolConstants {
 
@@ -35,7 +34,7 @@ public class OidcProtocolConstants {
     public static final OAuth2TokenType ID_TOKEN                   = new OAuth2TokenType(
         "id_token");
 
-    public static final String          OIDC_ERROR_URI             = "https://eiam.topiam.cn/docs/application/oidc/faq/#%E9%94%99%E8%AF%AF%E7%A0%81";
+    public static final String          OIDC_ERROR_URI             = "";
 
     public final class ConfigurationSettingNames {
         private static final String SETTINGS_NAMESPACE = "settings.";

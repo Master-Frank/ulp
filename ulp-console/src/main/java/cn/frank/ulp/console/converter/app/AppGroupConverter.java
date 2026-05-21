@@ -38,8 +38,7 @@ import cn.frank.ulp.support.repository.page.domain.Page;
 /**
  * 分组映射
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/8/31 15:45
+ * @author Frank Zhang
  */
 @Mapper(componentModel = "spring")
 public interface AppGroupConverter {

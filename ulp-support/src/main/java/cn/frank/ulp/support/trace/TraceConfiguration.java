@@ -25,14 +25,14 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class TraceConfiguration {
-   
-   /**
+
+    /**
     * 跟踪工具Bean
-    * 
+    *
     * @return 跟踪工具
     */
-   @Bean
-   public TraceUtils traceUtils() {
-      return new TraceUtils();
-   }
+    @Bean
+    public TraceUtils traceUtils() {
+        return new TraceUtils();
+    }
 }

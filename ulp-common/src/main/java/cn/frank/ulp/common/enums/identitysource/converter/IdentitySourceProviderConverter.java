@@ -26,8 +26,7 @@ import jakarta.persistence.Converter;
 /**
  * 身份源提供商
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/13 22:18
+ * @author Frank Zhang
  */
 @Converter(autoApply = true)
 public class IdentitySourceProviderConverter implements

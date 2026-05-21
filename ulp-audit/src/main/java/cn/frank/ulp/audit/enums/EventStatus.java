@@ -25,8 +25,7 @@ import lombok.Getter;
 /**
  * 事件状态
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/11/6 21:57
+ * @author Frank Zhang
  */
 @Getter
 public enum EventStatus {

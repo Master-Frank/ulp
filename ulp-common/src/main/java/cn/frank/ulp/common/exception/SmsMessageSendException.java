@@ -18,15 +18,14 @@ package cn.frank.ulp.common.exception;
 
 import org.springframework.http.HttpStatus;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
  * 短信消息发送失败
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/8/26 18:01
+ * @author Frank Zhang
  */
-public class SmsMessageSendException extends TopIamException {
+public class SmsMessageSendException extends UlpException {
     public SmsMessageSendException() {
         super("message_send_error", "发送短信消息失败", HttpStatus.INTERNAL_SERVER_ERROR);
     }

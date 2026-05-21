@@ -26,8 +26,7 @@ import jakarta.persistence.Converter;
 /**
  * SmsPlatformWritingConverter
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/5 21:52
+ * @author Frank Zhang
  */
 @Converter(autoApply = true)
 public class SmsProviderConverter implements AttributeConverter<SmsProvider, String> {

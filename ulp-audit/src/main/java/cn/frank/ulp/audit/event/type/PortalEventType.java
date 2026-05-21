@@ -27,8 +27,7 @@ import static cn.frank.ulp.audit.event.PortalResource.MY_APP_RESOURCE;
 /**
  * 门户端审计事件类型
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/24 22:58
+ * @author Frank Zhang
  */
 public class PortalEventType {
     /**

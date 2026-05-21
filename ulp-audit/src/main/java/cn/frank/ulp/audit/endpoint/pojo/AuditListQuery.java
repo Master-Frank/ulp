@@ -36,8 +36,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.DEFAULT_DATE_TIME_FORM
 /**
  * 查询审计日志列表入参
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/23 21:22
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "查询审计日志列表入参")

@@ -21,8 +21,7 @@ import java.util.List;
 import cn.frank.ulp.common.entity.setting.SettingEntity;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/9 22:30
+ * @author Frank Zhang
  */
 public interface SettingService {
     /**

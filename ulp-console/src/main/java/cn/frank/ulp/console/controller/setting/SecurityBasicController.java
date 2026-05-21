@@ -39,8 +39,7 @@ import static cn.frank.ulp.common.constant.SettingConstants.SECURITY_PATH;
 /**
  * 安全设置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/10/4 21:37
+ * @author Frank Zhang
  */
 @Validated
 @Tag(name = "安全基础设置")

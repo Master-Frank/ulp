@@ -21,5 +21,5 @@ package cn.frank.ulp.support.geo;
  * 用于扩展地理位置功能
  */
 public class GeoLocationMixin {
-   // Mixin类通常用于提供额外的功能或属性
+    // Mixin类通常用于提供额外的功能或属性
 }

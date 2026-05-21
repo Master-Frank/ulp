@@ -50,7 +50,7 @@ import cn.frank.ulp.console.pojo.result.account.UserGroupMemberListResult;
 import cn.frank.ulp.console.pojo.save.account.UserGroupCreateParam;
 import cn.frank.ulp.console.pojo.update.account.UserGroupUpdateParam;
 import cn.frank.ulp.console.service.account.UserGroupService;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.repository.page.domain.Page;
 import cn.frank.ulp.support.repository.page.domain.PageModel;
 import cn.frank.ulp.support.util.BeanUtils;
@@ -63,8 +63,7 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME
 /**
  * 用户组实现service
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/10/11 21:30
+ * @author Frank Zhang
  */
 @Slf4j
 @Service
@@ -192,7 +191,7 @@ public class UserGroupServiceImpl implements UserGroupService {
         if (optional.isEmpty()) {
             AuditContext.setContent("操作失败，用户组不存在");
             log.warn(AuditContext.getContent());
-            throw new TopIamException(AuditContext.getContent());
+            throw new UlpException(AuditContext.getContent());
         }
         List<UserGroupMemberEntity> list = new ArrayList<>();
         Lists.newArrayList(userIds).forEach(id -> {
@@ -248,7 +247,7 @@ public class UserGroupServiceImpl implements UserGroupService {
         if (optional.isEmpty()) {
             AuditContext.setContent("操作失败，用户组不存在");
             log.warn(AuditContext.getContent());
-            throw new TopIamException(AuditContext.getContent());
+            throw new UlpException(AuditContext.getContent());
         }
         userIds.forEach(userId -> userGroupMemberRepository.deleteByGroupIdAndUserId(id, userId));
         List<Target> targets;

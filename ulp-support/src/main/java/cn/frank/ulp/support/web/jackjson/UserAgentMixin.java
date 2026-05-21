@@ -21,5 +21,5 @@ package cn.frank.ulp.support.web.jackjson;
  * 用于扩展用户代理功能
  */
 public class UserAgentMixin {
-   // Mixin类通常用于提供额外的功能或属性
+    // Mixin类通常用于提供额外的功能或属性
 }

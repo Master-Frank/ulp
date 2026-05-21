@@ -24,8 +24,7 @@ import cn.frank.ulp.support.web.converter.EnumConvert;
 /**
  * JWT id_token Subject 类型
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/02/15
+ * @author Frank Zhang
  */
 public enum JwtIdTokenSubjectType implements BaseEnum {
                                                        /**

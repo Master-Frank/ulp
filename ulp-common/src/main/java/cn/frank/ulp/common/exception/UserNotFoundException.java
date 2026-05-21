@@ -18,15 +18,14 @@ package cn.frank.ulp.common.exception;
 
 import org.springframework.http.HttpStatus;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
  * 未找到用户异常
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/8/8 22:09
+ * @author Frank Zhang
  */
-public class UserNotFoundException extends TopIamException {
+public class UserNotFoundException extends UlpException {
     public UserNotFoundException() {
         super("user_not_found_error", "未找到用户异常", HttpStatus.UNAUTHORIZED);
     }

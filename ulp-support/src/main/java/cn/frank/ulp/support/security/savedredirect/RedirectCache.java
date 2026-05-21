@@ -21,16 +21,16 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public interface RedirectCache {
 
-    String TOPIAM_SECURITY_SAVED_REDIRECT = "TOPIAM_SECURITY_SAVED_REDIRECT";
+    String ULP_SECURITY_SAVED_REDIRECT = "ULP_SECURITY_SAVED_REDIRECT";
 
     SavedRedirect getRedirect(HttpServletRequest request, HttpServletResponse response);
 
     void removeRedirect(HttpServletRequest request, HttpServletResponse response);
 
-    void saveRedirect(HttpServletRequest request, HttpServletResponse response, RedirectType redirectType);
+    void saveRedirect(HttpServletRequest request, HttpServletResponse response,
+                      RedirectType redirectType);
 
     enum RedirectType {
-        PARAMETER,
-        REQUEST
+                       PARAMETER, REQUEST
     }
 }

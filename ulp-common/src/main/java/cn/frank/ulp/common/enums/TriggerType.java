@@ -24,8 +24,7 @@ import cn.frank.ulp.support.web.converter.EnumConvert;
 /**
  * 触发类型
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/3/9 23:47
+ * @author Frank Zhang
  */
 public enum TriggerType implements BaseEnum {
                                              /**

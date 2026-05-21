@@ -30,8 +30,7 @@ import jakarta.validation.constraints.NotNull;
 /**
  * 认证源修改参数入参
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/21 21:21
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "认证源修改参数")

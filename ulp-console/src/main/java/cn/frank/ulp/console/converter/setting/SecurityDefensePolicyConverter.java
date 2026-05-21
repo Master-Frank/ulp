@@ -33,8 +33,7 @@ import static cn.frank.ulp.core.setting.SecuritySettingConstants.*;
 /**
  * 安全防御策略映射
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023-03-09
+ * @author Frank Zhang
  */
 @Mapper(componentModel = "spring")
 public interface SecurityDefensePolicyConverter {

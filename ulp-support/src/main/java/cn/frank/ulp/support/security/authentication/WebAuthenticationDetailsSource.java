@@ -27,12 +27,12 @@ import cn.frank.ulp.support.web.useragent.UserAgentParser;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-public class WebAuthenticationDetailsSource
-    implements AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> {
+public class WebAuthenticationDetailsSource implements
+                                            AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> {
 
     private final GeoLocationParser geoLocationParser;
 
-    private final UserAgentParser userAgentParser;
+    private final UserAgentParser   userAgentParser;
 
     public WebAuthenticationDetailsSource(GeoLocationParser geoLocationParser,
                                           UserAgentParser userAgentParser) {

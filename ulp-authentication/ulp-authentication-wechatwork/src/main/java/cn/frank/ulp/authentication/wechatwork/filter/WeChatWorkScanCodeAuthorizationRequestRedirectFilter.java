@@ -52,8 +52,7 @@ import static cn.frank.ulp.authentication.common.constant.AuthenticationConstant
 /**
  * 微信扫码登录请求重定向过滤器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/6/20 21:22
+ * @author Frank Zhang
  */
 @SuppressWarnings("DuplicatedCode")
 public class WeChatWorkScanCodeAuthorizationRequestRedirectFilter extends OncePerRequestFilter {

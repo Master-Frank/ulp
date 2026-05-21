@@ -38,15 +38,14 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.IS_DELETED_COLUMN;
 /**
  * 邮件发送记录
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/8/1 21:41
+ * @author Frank Zhang
  */
 @Entity
 @Accessors(chain = true)
 @Getter
 @Setter
 @ToString
-@Table(name = "eiam_mail_send_record")
+@Table(name = "ulp_mail_send_record")
 @SoftDelete(columnName = IS_DELETED_COLUMN, converter = SoftDeleteConverter.class)
 public class MailSendRecordEntity extends BaseEntity {
     /**

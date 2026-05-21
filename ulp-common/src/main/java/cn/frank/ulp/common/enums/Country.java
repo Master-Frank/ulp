@@ -26,8 +26,7 @@ import cn.frank.ulp.support.web.converter.EnumConvert;
  * 国家编码
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/05/14
+ * @author Frank Zhang
  */
 public enum Country implements BaseEnum {
                                          /**

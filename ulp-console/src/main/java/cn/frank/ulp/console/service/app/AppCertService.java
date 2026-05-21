@@ -24,8 +24,7 @@ import cn.frank.ulp.console.pojo.result.app.AppCertListResult;
 /**
  * APP 证书
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/5/31 21:45
+ * @author Frank Zhang
  */
 public interface AppCertService {
     /**

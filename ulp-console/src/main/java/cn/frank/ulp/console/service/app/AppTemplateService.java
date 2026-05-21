@@ -24,8 +24,7 @@ import cn.frank.ulp.console.pojo.result.app.AppTemplateResult;
 /**
  * 应用模板服务
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/11/29 22:22
+ * @author Frank Zhang
  */
 public interface AppTemplateService {
     /**

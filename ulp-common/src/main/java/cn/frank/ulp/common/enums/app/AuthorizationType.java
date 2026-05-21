@@ -24,8 +24,7 @@ import cn.frank.ulp.support.web.converter.EnumConvert;
 /**
  * SSO 授权类型
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/5/27 23:25
+ * @author Frank Zhang
  */
 public enum AuthorizationType implements BaseEnum {
                                                    /**

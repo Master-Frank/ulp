@@ -35,8 +35,7 @@ import lombok.RequiredArgsConstructor;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/10/2 02:54
+ * @author Frank Zhang
  */
 @Repository
 @RequiredArgsConstructor
@@ -56,7 +55,7 @@ public class AuditCustomizedRepositoryImpl implements AuditCustomizedRepository 
                             actor_auth_type AS key_,
                             COUNT(*) AS count_
                         FROM
-                            eiam_audit
+                            ulp_audit
                         WHERE
                             event_type IN (:types)
                             AND event_time BETWEEN :startTime
@@ -82,7 +81,7 @@ public class AuditCustomizedRepositoryImpl implements AuditCustomizedRepository 
                             COUNT(*) AS count_,
                             event_status AS status_
                          FROM
-                            eiam_audit
+                            ulp_audit
                          WHERE
                             event_type IN (:types)
                             AND event_time BETWEEN :startTime
@@ -109,7 +108,7 @@ public class AuditCustomizedRepositoryImpl implements AuditCustomizedRepository 
                             JSON_EXTRACT( target_, '$[0].id' ) AS key_,
                             COUNT(*) AS count_
                          FROM
-                            eiam_audit
+                            ulp_audit
                          WHERE
                             event_type = :type
                             AND event_time BETWEEN :startTime
@@ -136,7 +135,7 @@ public class AuditCustomizedRepositoryImpl implements AuditCustomizedRepository 
                             JSON_EXTRACT( geo_location, '$.provinceCode' ) AS key_,
                             COUNT(*) AS count_
                          FROM
-                            eiam_audit
+                            ulp_audit
                          WHERE
                             event_type IN (:types)
                             AND event_time BETWEEN :startTime

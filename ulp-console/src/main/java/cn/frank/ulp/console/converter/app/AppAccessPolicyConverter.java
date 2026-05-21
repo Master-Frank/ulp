@@ -37,8 +37,7 @@ import cn.frank.ulp.support.repository.page.domain.Page;
 /**
  * 应用授权策略 Converter
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/6/4 21:57
+ * @author Frank Zhang
  */
 @Mapper(componentModel = "spring")
 public interface AppAccessPolicyConverter {

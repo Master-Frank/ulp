@@ -42,7 +42,8 @@ public class HttpSecurityConfigUtils {
     }
 
     public static UserDetailsService getUserDetailsService(HttpSecurity httpSecurity) {
-        UserDetailsService userDetailsService = httpSecurity.getSharedObject(UserDetailsService.class);
+        UserDetailsService userDetailsService = httpSecurity
+            .getSharedObject(UserDetailsService.class);
         if (userDetailsService == null) {
             userDetailsService = getOptionalBean(httpSecurity, UserDetailsService.class);
             httpSecurity.setSharedObject(UserDetailsService.class, userDetailsService);
@@ -51,20 +52,23 @@ public class HttpSecurityConfigUtils {
     }
 
     public static <T> T getOptionalBean(HttpSecurity httpSecurity, Class<T> type) {
-        ApplicationContext applicationContext = httpSecurity.getSharedObject(ApplicationContext.class);
-        Map<String, T> beans = BeanFactoryUtils.beansOfTypeIncludingAncestors(applicationContext, type);
+        ApplicationContext applicationContext = httpSecurity
+            .getSharedObject(ApplicationContext.class);
+        Map<String, T> beans = BeanFactoryUtils.beansOfTypeIncludingAncestors(applicationContext,
+            type);
         if (beans.size() > 1) {
-            throw new NoUniqueBeanDefinitionException(type, beans.size(),
-                "Expected single matching bean of type '" + type.getName() + "' but found "
-                    + beans.size() + ": "
-                    + StringUtils.collectionToCommaDelimitedString(beans.keySet()));
+            throw new NoUniqueBeanDefinitionException(
+                type, beans.size(), "Expected single matching bean of type '" + type.getName()
+                                    + "' but found " + beans.size() + ": "
+                                    + StringUtils.collectionToCommaDelimitedString(beans.keySet()));
         }
         return beans.isEmpty() ? null : beans.values().iterator().next();
     }
 
     @SuppressWarnings("unchecked")
     public static <T> T getOptionalBean(HttpSecurity httpSecurity, ResolvableType type) {
-        ApplicationContext applicationContext = httpSecurity.getSharedObject(ApplicationContext.class);
+        ApplicationContext applicationContext = httpSecurity
+            .getSharedObject(ApplicationContext.class);
         String[] names = applicationContext.getBeanNamesForType(type);
         if (names.length > 1) {
             throw new NoUniqueBeanDefinitionException(type, names);

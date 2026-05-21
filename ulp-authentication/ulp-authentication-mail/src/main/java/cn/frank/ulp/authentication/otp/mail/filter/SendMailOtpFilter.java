@@ -46,8 +46,7 @@ import static cn.frank.ulp.support.security.constant.SecurityConstants.LOGIN_PAT
 /**
  * 发送OTP
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/1/1 22:01
+ * @author Frank Zhang
  */
 public class SendMailOtpFilter extends OncePerRequestFilter {
 

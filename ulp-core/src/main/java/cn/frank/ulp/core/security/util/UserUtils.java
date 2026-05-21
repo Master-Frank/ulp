@@ -33,8 +33,7 @@ import cn.frank.ulp.support.security.util.SecurityUtils;
 /**
  * 用户工具
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/8/13 21:50
+ * @author Frank Zhang
  */
 public final class UserUtils {
     private static final Logger logger = LoggerFactory.getLogger(UserUtils.class);
@@ -55,8 +54,7 @@ public final class UserUtils {
     }
 
     public static UserDetailEntity getUserDetails() {
-        return getUserDetails(
-            SecurityUtils.getCurrentUserId());
+        return getUserDetails(SecurityUtils.getCurrentUserId());
     }
 
     public static UserDetailEntity getUserDetails(String userId) {

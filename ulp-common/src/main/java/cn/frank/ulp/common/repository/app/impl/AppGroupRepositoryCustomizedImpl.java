@@ -39,8 +39,7 @@ import jakarta.persistence.TypedQuery;
 import static cn.frank.ulp.common.enums.app.AuthorizationType.ALL_ACCESS;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2023/9/8 19:20
+ * @author Frank Zhang
  */
 @Repository
 @AllArgsConstructor

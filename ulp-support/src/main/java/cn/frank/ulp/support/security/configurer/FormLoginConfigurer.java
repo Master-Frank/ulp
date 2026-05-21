@@ -25,8 +25,8 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import cn.frank.ulp.support.security.authentication.WebAuthenticationDetailsSource;
 
-public class FormLoginConfigurer<H extends HttpSecurityBuilder<H>>
-    extends AbstractAuthenticationFilterConfigurer<H, FormLoginConfigurer<H>, UsernamePasswordAuthenticationFilter> {
+public class FormLoginConfigurer<H extends HttpSecurityBuilder<H>> extends
+                                AbstractAuthenticationFilterConfigurer<H, FormLoginConfigurer<H>, UsernamePasswordAuthenticationFilter> {
 
     public FormLoginConfigurer() {
         super(new UsernamePasswordAuthenticationFilter(), "/api/v1/login");
@@ -34,7 +34,8 @@ public class FormLoginConfigurer<H extends HttpSecurityBuilder<H>>
 
     @Override
     public void init(H builder) throws Exception {
-        builder.addFilterBefore(this.getAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        builder.addFilterBefore(this.getAuthenticationFilter(),
+            UsernamePasswordAuthenticationFilter.class);
         this.authenticationDetailsSource(getAuthenticationDetailsSource(builder));
         super.init(builder);
     }
@@ -45,7 +46,8 @@ public class FormLoginConfigurer<H extends HttpSecurityBuilder<H>>
     }
 
     public static <B extends HttpSecurityBuilder<B>> WebAuthenticationDetailsSource getAuthenticationDetailsSource(B builder) {
-        WebAuthenticationDetailsSource detailsSource = builder.getSharedObject(WebAuthenticationDetailsSource.class);
+        WebAuthenticationDetailsSource detailsSource = builder
+            .getSharedObject(WebAuthenticationDetailsSource.class);
         if (detailsSource == null) {
             detailsSource = getBean(builder, WebAuthenticationDetailsSource.class);
             builder.setSharedObject(WebAuthenticationDetailsSource.class, detailsSource);

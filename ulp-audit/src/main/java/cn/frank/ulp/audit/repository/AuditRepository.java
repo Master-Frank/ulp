@@ -30,8 +30,7 @@ import cn.frank.ulp.audit.event.type.EventType;
 /**
  * 行为审计repository
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/11 22:32
+ * @author Frank Zhang
  */
 @Repository
 public interface AuditRepository extends JpaRepository<AuditEntity, String>,

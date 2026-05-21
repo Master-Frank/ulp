@@ -25,8 +25,7 @@ import lombok.Setter;
 /**
  * 组织 PO
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/5/30 21:27
+ * @author Frank Zhang
  */
 @Getter
 @Setter

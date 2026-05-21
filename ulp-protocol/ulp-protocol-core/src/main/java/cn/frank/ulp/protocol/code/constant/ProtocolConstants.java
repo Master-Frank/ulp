@@ -20,8 +20,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.COLON;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/4 21:19
+ * @author Frank Zhang
  */
 public class ProtocolConstants {
 

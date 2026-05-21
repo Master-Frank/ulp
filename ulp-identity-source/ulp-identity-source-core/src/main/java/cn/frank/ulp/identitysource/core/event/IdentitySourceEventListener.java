@@ -19,8 +19,7 @@ package cn.frank.ulp.identitysource.core.event;
 /**
  * 身份源监听
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/9/20 22:24
+ * @author Frank Zhang
  */
 public interface IdentitySourceEventListener {
     /**

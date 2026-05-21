@@ -24,8 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import cn.frank.ulp.authentication.common.authentication.IdentityProviderUserDetails;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/10 22:25
+ * @author Frank Zhang
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonDeserialize(builder = IdentityProviderUserDetails.IdpUserDetailsBuilder.class)

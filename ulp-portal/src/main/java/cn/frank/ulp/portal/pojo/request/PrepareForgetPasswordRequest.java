@@ -28,8 +28,7 @@ import jakarta.validation.constraints.NotEmpty;
 /**
  * 忘记密码预认证
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/02/27 21:15
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "忘记密码预认证")

@@ -21,8 +21,7 @@ import cn.frank.ulp.support.constant.EiamConstants;
 /**
  * 同步器常量
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/9/20 22:31
+ * @author Frank Zhang
  */
 public final class SynchronizerConstants {
 

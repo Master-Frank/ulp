@@ -55,8 +55,7 @@ import static cn.frank.ulp.support.util.StringUtils.replaceBlank;
 /**
  * 发布审计事件
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/8/1 21:04
+ * @author Frank Zhang
  */
 @Component
 public class AuditEventPublish {

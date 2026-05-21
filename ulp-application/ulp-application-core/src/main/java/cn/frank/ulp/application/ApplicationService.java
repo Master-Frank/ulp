@@ -31,8 +31,7 @@ import cn.frank.ulp.common.enums.app.AuthorizationType;
 /**
  * 应用接口
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/8/20 23:20
+ * @author Frank Zhang
  */
 public interface ApplicationService {
 

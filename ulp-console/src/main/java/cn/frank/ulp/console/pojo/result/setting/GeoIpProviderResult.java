@@ -30,8 +30,7 @@ import jakarta.validation.constraints.NotNull;
 /**
  * 获取地理位置服务商配置信息
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/11 21:27
+ * @author Frank Zhang
  */
 @Data
 @Builder

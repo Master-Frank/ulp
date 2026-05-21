@@ -59,8 +59,7 @@ import static cn.frank.ulp.authentication.feishu.filter.FeiShuLoginAuthenticatio
  *
  * https://open.feishu.cn/document/common-capabilities/sso/web-application-sso/qr-sdk-documentation
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/8 21:11
+ * @author Frank Zhang
  */
 public class FeiShuAuthorizationRequestRedirectFilter extends OncePerRequestFilter {
 

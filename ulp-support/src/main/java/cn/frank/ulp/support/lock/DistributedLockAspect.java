@@ -34,7 +34,7 @@ import org.springframework.util.StringUtils;
 @Component
 public class DistributedLockAspect {
 
-    private static final Logger log = LoggerFactory.getLogger(DistributedLockAspect.class);
+    private static final Logger  log = LoggerFactory.getLogger(DistributedLockAspect.class);
 
     private final RedissonClient redissonClient;
 
@@ -52,7 +52,7 @@ public class DistributedLockAspect {
             locked = rlock.tryLock(0L, lock.time(), TimeUnit.SECONDS);
             if (!locked) {
                 log.debug("Failed to acquire distributed lock: {}", key);
-                throw new TopIamLockException("Failed to acquire distributed lock: " + key);
+                throw new UlpLockException("Failed to acquire distributed lock: " + key);
             }
             return proceedingJoinPoint.proceed();
         } finally {

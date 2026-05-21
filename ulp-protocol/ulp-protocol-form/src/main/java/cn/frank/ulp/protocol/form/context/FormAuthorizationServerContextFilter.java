@@ -55,8 +55,7 @@ import static cn.frank.ulp.support.util.HttpRequestUtils.getRequestHeaders;
 /**
  * 上下文过滤器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/26 23:55
+ * @author Frank Zhang
  */
 public final class FormAuthorizationServerContextFilter extends OncePerRequestFilter {
 

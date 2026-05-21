@@ -33,8 +33,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.DEFAULT_DATE_TIME_FORM
 /**
  * 身份源同步记录详情列表
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/2/25 23:05
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "身份源同步历史列表")

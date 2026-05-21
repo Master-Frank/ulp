@@ -26,8 +26,7 @@ import cn.frank.ulp.protocol.form.authentication.FormAuthenticationToken;
 /**
  * FormAuthorizationModule
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/30 21:07
+ * @author Frank Zhang
  */
 public class FormAuthorizationModule extends SimpleModule {
 

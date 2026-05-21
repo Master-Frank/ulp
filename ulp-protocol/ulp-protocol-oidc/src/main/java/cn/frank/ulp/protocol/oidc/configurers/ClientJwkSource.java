@@ -33,8 +33,7 @@ import cn.frank.ulp.application.oidc.model.OidcProtocolConfig;
 /**
  * 客户端JWK
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/27 22:50
+ * @author Frank Zhang
  */
 public class ClientJwkSource implements JWKSource<SecurityContext> {
 

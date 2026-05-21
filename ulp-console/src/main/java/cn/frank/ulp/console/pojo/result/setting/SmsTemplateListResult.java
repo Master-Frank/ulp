@@ -30,8 +30,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 短信配置结果
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/17 23:05
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "获取短信模板列表")

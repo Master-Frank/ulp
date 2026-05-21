@@ -60,8 +60,7 @@ import static cn.frank.ulp.support.security.constant.SecurityConstants.LOGOUT_PA
 /**
  * AbstractConfiguration
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/3 21:08
+ * @author Frank Zhang
  */
 public class AbstractSecurityConfiguration {
 

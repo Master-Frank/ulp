@@ -36,8 +36,7 @@ import static cn.frank.ulp.support.security.util.HttpSecurityFilterOrderRegistra
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn  on  2023/8/6 23:43
+ * @author Frank Zhang
  */
 public class IdentityProviderBindAuthenticationConfigurer extends
                                                           AbstractAuthenticationFilterConfigurer<HttpSecurity, IdentityProviderBindAuthenticationConfigurer, IdentityProviderBindUserAuthenticationFilter> {

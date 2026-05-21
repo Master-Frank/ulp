@@ -16,13 +16,12 @@
  */
 package cn.frank.ulp.common.exception.app;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2024/2/18 18:13
+ * @author Frank Zhang
  */
-public class AppCreateCertException extends TopIamException {
+public class AppCreateCertException extends UlpException {
 
     public AppCreateCertException() {
         super("app_create_cert_error", "创建应用证书失败", DEFAULT_STATUS);

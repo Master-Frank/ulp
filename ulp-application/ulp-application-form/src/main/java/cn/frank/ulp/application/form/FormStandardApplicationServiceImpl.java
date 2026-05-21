@@ -39,7 +39,7 @@ import cn.frank.ulp.common.repository.app.AppAccountRepository;
 import cn.frank.ulp.common.repository.app.AppFormConfigRepository;
 import cn.frank.ulp.common.repository.app.AppGroupAssociationRepository;
 import cn.frank.ulp.common.repository.app.AppRepository;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.validation.ValidationUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -50,8 +50,7 @@ import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKN
 /**
  * Form 用户应用
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/8/20 23:20
+ * @author Frank Zhang
  */
 @Slf4j
 @Component
@@ -73,7 +72,7 @@ public class FormStandardApplicationServiceImpl extends AbstractFormApplicationS
             mapper.configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
             model = mapper.readValue(value, AppFormSaveConfigParam.class);
         } catch (Exception e) {
-            throw new TopIamException(e.getMessage());
+            throw new UlpException(e.getMessage());
         }
         //@formatter:off
         ValidationUtils.ValidationResult<AppFormSaveConfigParam> validationResult = ValidationUtils.validateEntity(model);
@@ -149,7 +148,7 @@ public class FormStandardApplicationServiceImpl extends AbstractFormApplicationS
      */
     @Override
     public String getDescription() {
-        return "表单代填可以模拟用户在登录页输入用户名和密码，再通过表单提交的一种登录方式。应用的账号密码在 TOPIAM 中使用 AES256 加密算法本地加密存储。很多旧系统、不支持标准认证协议的系统或不支持改造的系统可以使用表单代填实现统一身份管理。表单中有图片验证码、CSRF token、动态参数的场景不适用。";
+        return "表单代填可以模拟用户在登录页输入用户名和密码，再通过表单提交的一种登录方式。应用的账号密码在 ULP 中使用 AES256 加密算法本地加密存储。很多旧系统、不支持标准认证协议的系统或不支持改造的系统可以使用表单代填实现统一身份管理。表单中有图片验证码、CSRF token、动态参数的场景不适用。";
     }
 
     /**

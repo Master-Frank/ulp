@@ -34,8 +34,7 @@ import static cn.frank.ulp.core.message.mail.MailUtils.readEmailContent;
 /**
  * 消息服务数据映射
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/17 23:12
+ * @author Frank Zhang
  */
 @Mapper(componentModel = "spring")
 public interface MailTemplateConverter {

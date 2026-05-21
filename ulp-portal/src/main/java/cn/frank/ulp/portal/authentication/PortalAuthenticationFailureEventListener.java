@@ -48,8 +48,7 @@ import static cn.frank.ulp.support.security.userdetails.UserType.USER;
 /**
  * 认证失败
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/9/3 22:42
+ * @author Frank Zhang
  */
 public class PortalAuthenticationFailureEventListener implements
                                                       ApplicationListener<AbstractAuthenticationFailureEvent> {

@@ -27,8 +27,7 @@ import cn.frank.ulp.support.repository.page.domain.PageModel;
 /**
  * 审计service
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/10 23:06
+ * @author Frank Zhang
  */
 public interface AuditService {
     /**

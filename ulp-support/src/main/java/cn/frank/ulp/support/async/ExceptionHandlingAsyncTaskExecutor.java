@@ -30,21 +30,22 @@ import org.springframework.lang.NonNull;
  * Exception handling asynchronous task executor
  * Wraps AsyncTaskExecutor to provide a unified exception handling mechanism
  */
-public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor, InitializingBean, DisposableBean {
-    
+public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor, InitializingBean,
+                                                DisposableBean {
+
     /**
      * Delegated asynchronous task executor
      */
     private final AsyncTaskExecutor delegateExecutor;
-    
+
     /**
      * Logger
      */
-    private final Logger logger;
+    private final Logger            logger;
 
     /**
      * Submit Runnable task
-     * 
+     *
      * @param task Task to execute
      * @return Future object that can be used to check task status
      */
@@ -56,7 +57,7 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor, In
 
     /**
      * Wrap Runnable task to handle exceptions
-     * 
+     *
      * @param task Original task
      * @return Wrapped task
      */
@@ -72,7 +73,7 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor, In
 
     /**
      * Handle exception
-     * 
+     *
      * @param ex Exception object
      */
     public void handle(Exception ex) {
@@ -81,7 +82,7 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor, In
 
     /**
      * Initialize after properties are set
-     * 
+     *
      * @throws Exception Initialization exception
      */
     @Override
@@ -93,7 +94,7 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor, In
 
     /**
      * Constructor
-     * 
+     *
      * @param delegateExecutor Delegated asynchronous task executor
      */
     public ExceptionHandlingAsyncTaskExecutor(AsyncTaskExecutor delegateExecutor) {
@@ -103,7 +104,7 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor, In
 
     /**
      * Destroy method
-     * 
+     *
      * @throws Exception Destruction exception
      */
     @Override
@@ -115,7 +116,7 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor, In
 
     /**
      * Wrap Callable task to handle exceptions
-     * 
+     *
      * @param task Original task
      * @param <T> Task return value type
      * @return Wrapped task
@@ -133,7 +134,7 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor, In
 
     /**
      * Execute task
-     * 
+     *
      * @param task Task to execute
      */
     @Override
@@ -143,7 +144,7 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor, In
 
     /**
      * Submit Callable task
-     * 
+     *
      * @param task Task to execute
      * @param <T> Task return value type
      * @return Future object that can be used to get task result

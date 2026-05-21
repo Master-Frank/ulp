@@ -37,8 +37,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.COLON;
 /**
  * 身份源同步任务
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/3/20 21:41
+ * @author Frank Zhang
  */
 @RequiredArgsConstructor
 public class IdentitySourceSyncTask implements Runnable {

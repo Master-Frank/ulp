@@ -51,39 +51,42 @@ import jakarta.servlet.http.HttpSession;
 @Component
 @ControllerAdvice
 public class DecryptRequestBodyAdvice extends RequestBodyAdviceAdapter {
-   
-   /**
+
+    /**
     * 解密请求体
     *
     * @param inputStream 输入流
     * @return 解密后的字符串
     * @throws IOException IO异常
     */
-   public static String decryptBody(InputStream inputStream) throws IOException {
-      String encryptedData;
-      if (StringUtils.isBlank(encryptedData = JSONObject.parseObject(IOUtils.toString(inputStream, StandardCharsets.UTF_8)).getString(SecretType.ENCRYPT.getCode()))) {
-         throw new EncryptSecretNotExistException();
-      } else {
-         HttpSession session = ServletContextService.getSession();
+    public static String decryptBody(InputStream inputStream) throws IOException {
+        String encryptedData;
+        if (StringUtils.isBlank(encryptedData = JSONObject
+            .parseObject(IOUtils.toString(inputStream, StandardCharsets.UTF_8))
+            .getString(SecretType.ENCRYPT.getCode()))) {
+            throw new EncryptSecretNotExistException();
+        } else {
+            HttpSession session = ServletContextService.getSession();
 
-         try {
-            String secretKey;
-            if (StringUtils.isBlank(secretKey = (String) session.getAttribute(SecretType.ENCRYPT.getKey()))) {
-               throw new DecryptException("解密密钥不存在", HttpStatus.BAD_REQUEST);
+            try {
+                String secretKey;
+                if (StringUtils.isBlank(
+                    secretKey = (String) session.getAttribute(SecretType.ENCRYPT.getKey()))) {
+                    throw new DecryptException("解密密钥不存在", HttpStatus.BAD_REQUEST);
+                }
+
+                encryptedData = AesUtils.decrypt(encryptedData, secretKey);
+            } catch (Throwable throwable) {
+                session.removeAttribute(SecretType.ENCRYPT.getKey());
+                throw throwable;
             }
 
-            encryptedData = AesUtils.decrypt(encryptedData, secretKey);
-         } catch (Throwable throwable) {
             session.removeAttribute(SecretType.ENCRYPT.getKey());
-            throw throwable;
-         }
+            return encryptedData;
+        }
+    }
 
-         session.removeAttribute(SecretType.ENCRYPT.getKey());
-         return encryptedData;
-      }
-   }
-
-   /**
+    /**
     * 在读取请求体之前处理
     *
     * @param inputMessage 输入消息
@@ -93,29 +96,34 @@ public class DecryptRequestBodyAdvice extends RequestBodyAdviceAdapter {
     * @return HttpInputMessage
     * @throws IOException IO异常
     */
-   @NonNull
-   @Override
-   public HttpInputMessage beforeBodyRead(@NonNull final HttpInputMessage inputMessage, @NonNull MethodParameter parameter, @NonNull Type targetType, @NonNull Class<? extends HttpMessageConverter<?>> converterType) throws IOException {
-      HttpInputMessage result;
-      return (result = (HttpInputMessage) decryptBody(inputMessage.getBody(), (decryptedBody) -> {
-         final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(decryptedBody.getBytes(StandardCharsets.UTF_8));
-         return new HttpInputMessage() {
-            @Override
-            @NonNull
-            public InputStream getBody() {
-               return byteArrayInputStream;
-            }
+    @NonNull
+    @Override
+    public HttpInputMessage beforeBodyRead(@NonNull final HttpInputMessage inputMessage,
+                                           @NonNull MethodParameter parameter,
+                                           @NonNull Type targetType,
+                                           @NonNull Class<? extends HttpMessageConverter<?>> converterType) throws IOException {
+        HttpInputMessage result;
+        return (result = (HttpInputMessage) decryptBody(inputMessage.getBody(), (decryptedBody) -> {
+            final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
+                decryptedBody.getBytes(StandardCharsets.UTF_8));
+            return new HttpInputMessage() {
+                @Override
+                @NonNull
+                public InputStream getBody() {
+                    return byteArrayInputStream;
+                }
 
-            @Override
-            @NonNull
-            public HttpHeaders getHeaders() {
-               return inputMessage.getHeaders();
-            }
-         };
-      })) != null ? result : super.beforeBodyRead(inputMessage, parameter, targetType, converterType);
-   }
+                @Override
+                @NonNull
+                public HttpHeaders getHeaders() {
+                    return inputMessage.getHeaders();
+                }
+            };
+        })) != null ? result
+            : super.beforeBodyRead(inputMessage, parameter, targetType, converterType);
+    }
 
-   /**
+    /**
     * 解密请求体
     *
     * @param inputStream 输入流
@@ -124,12 +132,13 @@ public class DecryptRequestBodyAdvice extends RequestBodyAdviceAdapter {
     * @return 解密结果
     * @throws IOException IO异常
     */
-   @Nullable
-   public static <T> T decryptBody(InputStream inputStream, Function<String, T> function) throws IOException {
-      return function.apply(decryptBody(inputStream));
-   }
+    @Nullable
+    public static <T> T decryptBody(InputStream inputStream,
+                                    Function<String, T> function) throws IOException {
+        return function.apply(decryptBody(inputStream));
+    }
 
-   /**
+    /**
     * 是否支持该参数
     *
     * @param methodParameter 方法参数
@@ -137,12 +146,14 @@ public class DecryptRequestBodyAdvice extends RequestBodyAdviceAdapter {
     * @param converterType 转换器类型
     * @return 是否支持
     */
-   @Override
-   public boolean supports(MethodParameter methodParameter, @NonNull Type targetType, @NonNull Class<? extends HttpMessageConverter<?>> converterType) {
-      if (!methodParameter.hasMethodAnnotation(DecryptRequestBody.class) && !methodParameter.hasParameterAnnotation(DecryptRequestBody.class)) {
-         return false;
-      } else {
-         return true;
-      }
-   }
+    @Override
+    public boolean supports(MethodParameter methodParameter, @NonNull Type targetType,
+                            @NonNull Class<? extends HttpMessageConverter<?>> converterType) {
+        if (!methodParameter.hasMethodAnnotation(DecryptRequestBody.class)
+            && !methodParameter.hasParameterAnnotation(DecryptRequestBody.class)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

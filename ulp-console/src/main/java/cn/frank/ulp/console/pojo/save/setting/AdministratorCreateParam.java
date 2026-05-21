@@ -26,8 +26,7 @@ import jakarta.validation.constraints.NotEmpty;
 /**
  * 管理员创建参数
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/26 21:46
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "创建管理员入参")

@@ -54,7 +54,7 @@ import cn.frank.ulp.authentication.common.client.RegisteredIdentityProviderClien
 import cn.frank.ulp.authentication.common.filter.AbstractIdentityProviderAuthenticationProcessingFilter;
 import cn.frank.ulp.authentication.dingtalk.DingTalkIdentityProviderOAuth2Config;
 import cn.frank.ulp.core.context.ContextService;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.trace.TraceUtils;
 import cn.frank.ulp.support.util.UrlUtils;
 
@@ -69,8 +69,7 @@ import static cn.frank.ulp.authentication.dingtalk.constant.DingTalkAuthenticati
  * <p>
  * https://open.dingtalk.com/document/orgapp-server/tutorial-obtaining-user-personal-information
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/8 21:11
+ * @author Frank Zhang
  */
 @SuppressWarnings("DuplicatedCode")
 public class DingtalkOAuth2AuthenticationFilter extends
@@ -158,7 +157,7 @@ public class DingtalkOAuth2AuthenticationFilter extends
             user = client.getUserWithOptions("me", getUserHeaders, new RuntimeOptions());
         } catch (Exception e) {
             logger.error("钉钉认证获取用户信息失败: {}", e);
-            throw new TopIamException("钉钉认证获取用户信息失败", e);
+            throw new UlpException("钉钉认证获取用户信息失败", e);
         }
         //执行逻辑
         GetUserResponseBody body = user.getBody();

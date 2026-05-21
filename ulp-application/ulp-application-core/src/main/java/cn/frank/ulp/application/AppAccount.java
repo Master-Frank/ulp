@@ -23,8 +23,7 @@ import lombok.Data;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/10 21:07
+ * @author Frank Zhang
  */
 @Data
 public class AppAccount implements Serializable {

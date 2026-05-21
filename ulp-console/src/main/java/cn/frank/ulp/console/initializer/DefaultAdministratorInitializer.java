@@ -43,15 +43,14 @@ import static cn.frank.ulp.support.constant.EiamConstants.ROOT_NODE;
 /**
  * DefaultAdministratorInitialize
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/11/26 21:44
+ * @author Frank Zhang
  */
 @Component
 public class DefaultAdministratorInitializer extends AbstractSystemInitializer {
 
     private final Logger        logger                      = LoggerFactory
         .getLogger(DefaultAdministratorInitializer.class);
-    private static final String DIR_NAME                    = ".topiam";
+    private static final String DIR_NAME                    = ".ulp";
     private static final String USER_HOME                   = "user.home";
     private static final String INITIAL_PASSWORD_VALUE_NAME = "initial.password.value";
     // generate: 自动生成，setting: 读取[INITIAL_PASSWORD_VALUE]设置的固定值，没有设置使用[INITIAL_PASSWORD_DEFAULT]的默认值
@@ -95,7 +94,7 @@ public class DefaultAdministratorInitializer extends AbstractSystemInitializer {
                             *************************************************************
                             *************************************************************
 
-                            TOPIAM console initial setup is required. An admin administrator has been created and a initialize password.
+                            ULP console initial setup is required. An admin administrator has been created and a initialize password.
                             Please use the following password to proceed to installation:
 
                             %s

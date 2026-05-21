@@ -21,8 +21,7 @@ import cn.frank.ulp.common.message.enums.SmsProvider;
 /**
  * None
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/4/20 23:48
+ * @author Frank Zhang
  */
 public class SmsNoneProviderSend implements SmsProviderSend {
     @Override

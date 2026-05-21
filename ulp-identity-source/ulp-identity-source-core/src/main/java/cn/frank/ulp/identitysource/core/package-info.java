@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/29 21:12
+ * @author Frank Zhang
  */
 package cn.frank.ulp.identitysource.core;

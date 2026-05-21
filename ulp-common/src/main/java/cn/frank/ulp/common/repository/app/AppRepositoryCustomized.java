@@ -28,8 +28,7 @@ import cn.frank.ulp.common.entity.app.query.GetAppListQueryParam;
 /**
  * 应用 Repository Customized
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/5/26 23:40
+ * @author Frank Zhang
  */
 public interface AppRepositoryCustomized {
     /**

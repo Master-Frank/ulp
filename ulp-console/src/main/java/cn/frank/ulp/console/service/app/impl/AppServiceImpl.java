@@ -46,7 +46,7 @@ import cn.frank.ulp.console.pojo.save.app.AppCreateParam;
 import cn.frank.ulp.console.pojo.update.app.AppSaveConfigParam;
 import cn.frank.ulp.console.pojo.update.app.AppUpdateParam;
 import cn.frank.ulp.console.service.app.AppService;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.repository.page.domain.Page;
 import cn.frank.ulp.support.repository.page.domain.PageModel;
 import cn.frank.ulp.support.util.BeanUtils;
@@ -59,8 +59,7 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME
 /**
  * ApplicationServiceImpl
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/11/29 22:23
+ * @author Frank Zhang
  */
 @Service
 @Slf4j
@@ -75,8 +74,7 @@ public class AppServiceImpl implements AppService {
      * @return {@link AppListResult}
      */
     @Override
-    public Page<AppListResult> getAppList(PageModel pageModel,
-                                          AppQuery query) {
+    public Page<AppListResult> getAppList(PageModel pageModel, AppQuery query) {
         //查询条件
         Specification<AppEntity> specification = appConverter
             .queryAppListParamConvertToSpecification(query);
@@ -256,7 +254,7 @@ public class AppServiceImpl implements AppService {
         if (optional.isEmpty()) {
             AuditContext.setContent("操作失败，应用不存在");
             log.warn(AuditContext.getContent());
-            throw new TopIamException(AuditContext.getContent());
+            throw new UlpException(AuditContext.getContent());
         }
         return optional.get();
     }

@@ -22,8 +22,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.V1_API_PATH;
 /**
  * 应用管理常量
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/7/26 21:07
+ * @author Frank Zhang
  */
 public final class AppConstants {
 

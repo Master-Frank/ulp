@@ -28,8 +28,7 @@ import cn.frank.ulp.portal.pojo.result.IdentityProviderResult;
 /**
  * AuthenticationConverter
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/3/25 21:52
+ * @author Frank Zhang
  */
 @Mapper(componentModel = "spring")
 public interface LoginConfigConverter {

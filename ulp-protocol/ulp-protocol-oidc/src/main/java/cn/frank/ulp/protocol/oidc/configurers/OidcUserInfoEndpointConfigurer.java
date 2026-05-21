@@ -57,8 +57,7 @@ import static cn.frank.ulp.protocol.oidc.constant.OidcProtocolConstants.OIDC_ERR
 /**
  * OIDC 用户信息端点配置器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/27 21:07
+ * @author Frank Zhang
  */
 public final class OidcUserInfoEndpointConfigurer extends AbstractConfigurer {
 

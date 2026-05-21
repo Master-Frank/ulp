@@ -36,8 +36,7 @@ import jakarta.servlet.http.HttpServletResponse;
 /**
  * Token认证过滤器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/4/14 21:22
+ * @author Frank Zhang
  */
 public class AccessTokenAuthenticationFilter extends OncePerRequestFilter {
     private final Logger                logger = LoggerFactory
@@ -70,7 +69,7 @@ public class AccessTokenAuthenticationFilter extends OncePerRequestFilter {
     /**
      *ACCESS_TOKEN_HEADER
      */
-    public static final String ACCESS_TOKEN_HEADER = "x-topiam-access-token";
+    public static final String ACCESS_TOKEN_HEADER = "x-ulp-access-token";
 
     private String resolveFromAuthorizationHeader(HttpServletRequest request) {
         return request.getHeader(ACCESS_TOKEN_HEADER);

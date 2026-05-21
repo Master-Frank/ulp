@@ -22,7 +22,7 @@ import cn.frank.ulp.support.enums.BaseEnum;
 import cn.frank.ulp.support.web.converter.EnumConvert;
 
 /**
- * @author TopIAM
+ * @author Frank Zhang
  */
 
 public enum IdentitySourceActionType implements BaseEnum {

@@ -46,8 +46,7 @@ import jakarta.validation.constraints.NotEmpty;
 /**
  * 阿里云OSS
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/10 21:28
+ * @author Frank Zhang
  */
 @Slf4j
 public class AliYunOssStorage extends AbstractStorage {

@@ -16,15 +16,14 @@
  */
 package cn.frank.ulp.identitysource.core.exception;
 
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 
 /**
  * 身份源不存在异常
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/7/8 22:23
+ * @author Frank Zhang
  */
-public class IdentitySourceNotExistException extends TopIamException {
+public class IdentitySourceNotExistException extends UlpException {
     public IdentitySourceNotExistException() {
         super("identity_source_not_exist", "身份源不存在", DEFAULT_STATUS);
     }

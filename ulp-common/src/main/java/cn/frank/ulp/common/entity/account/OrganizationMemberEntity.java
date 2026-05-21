@@ -37,15 +37,14 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.IS_DELETED_COLUMN;
 /**
  * 组织机构成员
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/30 21:06
+ * @author Frank Zhang
  */
 @Getter
 @Setter
 @ToString
 @Accessors(chain = true)
 @Entity
-@Table(name = "eiam_organization_member")
+@Table(name = "ulp_organization_member")
 @SoftDelete(columnName = IS_DELETED_COLUMN, converter = SoftDeleteConverter.class)
 public class OrganizationMemberEntity extends BaseEntity {
     /**

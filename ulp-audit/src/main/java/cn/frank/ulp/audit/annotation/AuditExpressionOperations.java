@@ -21,8 +21,7 @@ import org.springframework.security.core.Authentication;
 /**
  * Audit 解析器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/28 22:45
+ * @author Frank Zhang
  */
 public interface AuditExpressionOperations {
 

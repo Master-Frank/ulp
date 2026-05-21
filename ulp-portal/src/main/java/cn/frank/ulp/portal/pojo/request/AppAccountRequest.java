@@ -26,8 +26,7 @@ import jakarta.validation.constraints.NotNull;
 /**
  * AppAccountRequest 应用账户新增入参
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/8/25 22:13
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "应用账户新增入参")

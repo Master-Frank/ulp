@@ -27,8 +27,7 @@ import lombok.Getter;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/12/17 22:20
+ * @author Frank Zhang
  */
 @Getter
 public class JwtAuthentication implements Serializable {

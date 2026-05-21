@@ -29,7 +29,7 @@ public class SessionCookieNameValidator implements ConstraintValidator<Phone, St
 
     public static final String COOKIE_NAME_REGEX = "^[a-zA-Z0-9_\\-]+$";
 
-    private Pattern cookieNamePattern;
+    private Pattern            cookieNamePattern;
 
     @Override
     public void initialize(Phone constraintAnnotation) {

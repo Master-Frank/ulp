@@ -24,8 +24,7 @@ import java.util.Map;
 /**
  * 安全配置常量 key
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/12/5 21:53
+ * @author Frank Zhang
  */
 public final class SecuritySettingConstants {
     /**
@@ -138,7 +137,7 @@ public final class SecuritySettingConstants {
         SECURITY_DEFENSE_POLICY_DEFAULT_SETTINGS.put(
             SECURITY_DEFENSE_POLICY_CONTENT_SECURITY_POLICY,
             "default-src 'self' data:; " + "frame-src 'self' login.dingtalk.com open.weixin.qq.com open.work.weixin.qq.com passport.feishu.cn data:; "
-                                                             + "frame-ancestors 'self' eiam.topiam.cn data:; "
+                                                             + "frame-ancestors 'self' data:; "
                                                              + "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com sf3-cn.feishucdn.com;"
                                                              + "style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline'; "
                                                              + "img-src 'self' https://img.alicdn.com https://static-legacy.dingtalk.com  https://joeschmoe.io https://api.multiavatar.com blob: data:; "

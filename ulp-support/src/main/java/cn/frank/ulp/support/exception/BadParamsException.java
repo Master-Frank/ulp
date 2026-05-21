@@ -20,7 +20,7 @@ package cn.frank.ulp.support.exception;
  * 参数错误异常
  * 当传递的参数不符合要求时抛出此异常
  */
-public class BadParamsException extends TopIamException {
+public class BadParamsException extends UlpException {
     /**
      * 构造函数
      *

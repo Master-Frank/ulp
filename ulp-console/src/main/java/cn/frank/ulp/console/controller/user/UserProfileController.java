@@ -33,8 +33,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.V1_API_PATH;
 /**
  * 账户管理
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/12 21:39
+ * @author Frank Zhang
  */
 @RestController
 @RequestMapping(value = V1_API_PATH + "/user/profile")

@@ -25,38 +25,38 @@ import jakarta.persistence.MappedSuperclass;
  */
 @MappedSuperclass
 public abstract class BaseTenantEntity extends BaseEntity {
-   private static final long serialVersionUID = 4720107236271252583L;
-   public static final String ANONYMOUS_TENANT = "anonymousTenant";
-   
-   /**
+    private static final long  serialVersionUID = 4720107236271252583L;
+    public static final String ANONYMOUS_TENANT = "anonymousTenant";
+
+    /**
     * 租户ID
     */
-   @Column(name = "tenant_id")
-   private String tenantId;
-   
-   public static final String TENANT_COLUMN = "tenant_id";
-   public static final String TENANT = "tenantId";
+    @Column(name = "tenant_id")
+    private String             tenantId;
 
-   /**
+    public static final String TENANT_COLUMN    = "tenant_id";
+    public static final String TENANT           = "tenantId";
+
+    /**
     * 获取租户ID
     *
     * @return 租户ID
     */
-   public String getTenantId() {
-      return this.tenantId;
-   }
+    public String getTenantId() {
+        return this.tenantId;
+    }
 
-   /**
+    /**
     * 设置租户ID
     *
     * @param tenantId 租户ID
     */
-   public void setTenantId(String tenantId) {
-      this.tenantId = tenantId;
-   }
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 
-   @Override
-   public String toString() {
-      return "BaseTenantEntity(tenantId=" + this.getTenantId() + ")";
-   }
+    @Override
+    public String toString() {
+        return "BaseTenantEntity(tenantId=" + this.getTenantId() + ")";
+    }
 }

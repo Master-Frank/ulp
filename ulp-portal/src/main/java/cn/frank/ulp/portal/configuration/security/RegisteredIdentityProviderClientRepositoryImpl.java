@@ -32,8 +32,7 @@ import cn.frank.ulp.common.entity.authn.IdentityProviderEntity;
 import cn.frank.ulp.common.repository.authentication.IdentityProviderRepository;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2024/3/24 20:39
+ * @author Frank Zhang
  */
 @Component
 public class RegisteredIdentityProviderClientRepositoryImpl implements

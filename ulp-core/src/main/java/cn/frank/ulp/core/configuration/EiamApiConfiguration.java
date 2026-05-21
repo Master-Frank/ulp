@@ -25,8 +25,7 @@ import static cn.frank.ulp.support.constant.EiamConstants.CONTEXT_ENDPOINT_GROUP
 /**
  * ApiConfiguration
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2019/5/16 21:28
+ * @author Frank Zhang
  */
 @Configuration
 public class EiamApiConfiguration {

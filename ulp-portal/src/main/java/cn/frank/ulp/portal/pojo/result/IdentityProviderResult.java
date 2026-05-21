@@ -26,8 +26,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 三方登录提供商
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/3/31 21:58
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "三方登录提供商")

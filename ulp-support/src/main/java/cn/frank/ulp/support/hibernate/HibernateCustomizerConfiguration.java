@@ -24,6 +24,6 @@ import org.springframework.context.annotation.Import;
  * 用于导入Hibernate属性自定义器
  */
 @Configuration
-@Import({CustomHibernatePropertiesCustomizer.class})
+@Import({ CustomHibernatePropertiesCustomizer.class })
 public class HibernateCustomizerConfiguration {
 }

@@ -36,8 +36,7 @@ import static cn.frank.ulp.common.constant.ProtocolConstants.FormEndpointConstan
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/5 21:59
+ * @author Frank Zhang
  */
 public class FormAuthenticationEndpointConfigurer extends AbstractConfigurer {
     private RequestMatcher requestMatcher;

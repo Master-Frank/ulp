@@ -19,8 +19,7 @@ package cn.frank.ulp.authentication.wechat.constant;
 /**
  * 微信认证常量
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/9 22:19
+ * @author Frank Zhang
  */
 public final class WeChatAuthenticationConstants {
     /**

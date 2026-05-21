@@ -28,14 +28,14 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @Configuration
 @EnableJpaAuditing
 public class AuditorConfiguration {
-   
-   /**
+
+    /**
     * 审计员感知器Bean
-    * 
+    *
     * @return 审计员感知器
     */
-   @Bean
-   public AuditorAware<String> auditorAware() {
-      return new CustomAuditorAware();
-   }
+    @Bean
+    public AuditorAware<String> auditorAware() {
+        return new CustomAuditorAware();
+    }
 }

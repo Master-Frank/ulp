@@ -27,8 +27,7 @@ import cn.frank.ulp.common.entity.account.UserGroupEntity;
  * 用户组表 Repository 接口
  * </p>
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020-07-31
+ * @author Frank Zhang
  */
 @Repository
 public interface UserGroupRepository extends JpaRepository<UserGroupEntity, String>,

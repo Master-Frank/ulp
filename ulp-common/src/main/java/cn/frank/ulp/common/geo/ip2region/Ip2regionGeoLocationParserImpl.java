@@ -36,8 +36,7 @@ import static cn.frank.ulp.common.geo.District.PROVINCE_DISTRICT;
 /**
  * Ip2regionGeo
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/10/30 19:11
+ * @author Frank Zhang
  */
 @Slf4j
 public class Ip2regionGeoLocationParserImpl implements GeoLocationParser, DisposableBean {

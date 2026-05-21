@@ -29,27 +29,26 @@ import liquibase.integration.spring.SpringLiquibase;
 /**
  * liquibase配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/7/28 21:52
+ * @author Frank Zhang
  */
 @Configuration
-public class EiamLiquibaseConfiguration implements Serializable {
+public class UlpLiquibaseConfiguration implements Serializable {
 
     /**
-     * TopIAM Liquibase
+     * ULP Liquibase
      *
      * @param dataSource {@link DataSource}
      * @return {@link SpringLiquibase}
      */
     @Bean
-    public SpringLiquibase topIamLiquibase(DataSource dataSource) {
+    public SpringLiquibase ulpLiquibase(DataSource dataSource) {
         SpringLiquibase liquibase = new SpringLiquibase();
-        liquibase.setChangeLog("classpath*:db/eiam-changelog-master.xml");
+        liquibase.setChangeLog("classpath*:db/ulp-changelog-master.xml");
         liquibase.setDataSource(dataSource);
         liquibase.setShouldRun(true);
         liquibase.setResourceLoader(new DefaultResourceLoader());
-        liquibase.setDatabaseChangeLogTable("eiam_changelog_table");
-        liquibase.setDatabaseChangeLogLockTable("eiam_changelog_lock_table");
+        liquibase.setDatabaseChangeLogTable("ulp_changelog_table");
+        liquibase.setDatabaseChangeLogLockTable("ulp_changelog_lock_table");
         return liquibase;
     }
 }

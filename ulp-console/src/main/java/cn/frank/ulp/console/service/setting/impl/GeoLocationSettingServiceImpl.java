@@ -36,8 +36,7 @@ import static cn.frank.ulp.core.setting.GeoIpProviderConstants.IPADDRESS_SETTING
 /**
  * ip设置接口
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/1 21:43
+ * @author Frank Zhang
  */
 @Slf4j
 @Service

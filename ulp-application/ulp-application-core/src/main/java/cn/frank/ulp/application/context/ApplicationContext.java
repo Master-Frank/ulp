@@ -21,8 +21,7 @@ import java.util.Map;
 /**
  * 应用上下文
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/6/30 23:52
+ * @author Frank Zhang
  */
 public interface ApplicationContext {
     /**

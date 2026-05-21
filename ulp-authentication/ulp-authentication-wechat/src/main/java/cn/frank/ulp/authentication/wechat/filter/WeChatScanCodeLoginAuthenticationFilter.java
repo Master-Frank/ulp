@@ -43,7 +43,7 @@ import cn.frank.ulp.authentication.common.client.RegisteredIdentityProviderClien
 import cn.frank.ulp.authentication.common.filter.AbstractIdentityProviderAuthenticationProcessingFilter;
 import cn.frank.ulp.authentication.wechat.WeChatIdentityProviderOAuth2Config;
 import cn.frank.ulp.core.context.ContextService;
-import cn.frank.ulp.support.exception.TopIamException;
+import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.util.HttpClientUtils;
 import cn.frank.ulp.support.util.UrlUtils;
 
@@ -58,8 +58,7 @@ import static cn.frank.ulp.authentication.wechat.constant.WeChatAuthenticationCo
 /**
  * 微信扫码登录过滤器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/12/8 21:11
+ * @author Frank Zhang
  */
 @SuppressWarnings("DuplicatedCode")
 public class WeChatScanCodeLoginAuthenticationFilter extends
@@ -139,7 +138,7 @@ public class WeChatScanCodeLoginAuthenticationFilter extends
         JSONObject result = JSON.parseObject(HttpClientUtils.get(ACCESS_TOKEN, param));
         if (result.containsKey(ERROR_CODE)) {
             logger.error("获取access_token发生错误:  " + result.toJSONString());
-            throw new TopIamException("获取access_token发生错误:  " + result.toJSONString());
+            throw new UlpException("获取access_token发生错误:  " + result.toJSONString());
         }
         // 获取user信息
         param = new HashMap<>(16);
@@ -150,7 +149,7 @@ public class WeChatScanCodeLoginAuthenticationFilter extends
         result = JSON.parseObject(HttpClientUtils.get(USER_INFO, param));
         if (result.containsKey(ERROR_CODE)) {
             logger.error("获取微信用户个人信息发生错误:  " + result.toJSONString());
-            throw new TopIamException("获取微信用户个人信息发生错误:  " + result.toJSONString());
+            throw new UlpException("获取微信用户个人信息发生错误:  " + result.toJSONString());
         }
         // 返回
         IdentityProviderUserDetails identityProviderUserDetails = IdentityProviderUserDetails

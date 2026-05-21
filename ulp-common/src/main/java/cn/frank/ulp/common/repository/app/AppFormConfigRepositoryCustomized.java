@@ -19,8 +19,7 @@ package cn.frank.ulp.common.repository.app;
 import cn.frank.ulp.common.entity.app.po.AppFormConfigPO;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2022/12/13 22:58
+ * @author Frank Zhang
  */
 public interface AppFormConfigRepositoryCustomized {
     /**

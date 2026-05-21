@@ -40,7 +40,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class SessionRefreshFilter extends GenericFilterBean {
 
-    private SecurityContextRepository securityContextRepository = new HttpSessionSecurityContextRepository();
+    private SecurityContextRepository                   securityContextRepository = new HttpSessionSecurityContextRepository();
 
     private final RefreshCurrentSessionPrincipalService refreshCurrentSessionPrincipalService;
 
@@ -49,8 +49,8 @@ public class SessionRefreshFilter extends GenericFilterBean {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-        throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
+                         FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
@@ -62,10 +62,12 @@ public class SessionRefreshFilter extends GenericFilterBean {
             Object principal = authentication.getPrincipal();
             if (principal instanceof UserDetails) {
                 String userId = ((UserDetails) principal).getId();
-                UserDetails latest = this.refreshCurrentSessionPrincipalService.getPrincipal(userId);
+                UserDetails latest = this.refreshCurrentSessionPrincipalService
+                    .getPrincipal(userId);
                 if (Objects.nonNull(latest)) {
                     UsernamePasswordAuthenticationToken refreshed = UsernamePasswordAuthenticationToken
-                        .authenticated(latest, authentication.getCredentials(), latest.getAuthorities());
+                        .authenticated(latest, authentication.getCredentials(),
+                            latest.getAuthorities());
                     refreshed.setDetails(authentication.getDetails());
                     context.setAuthentication(refreshed);
                     SecurityContextHolder.setContext(context);

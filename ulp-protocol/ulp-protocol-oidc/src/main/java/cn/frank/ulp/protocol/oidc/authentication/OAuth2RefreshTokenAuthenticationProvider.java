@@ -57,8 +57,7 @@ import static cn.frank.ulp.protocol.oidc.authentication.OAuth2AuthenticationProv
 /**
  * 刷新令牌处理器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/12/9 20:16
+ * @author Frank Zhang
  */
 public final class OAuth2RefreshTokenAuthenticationProvider implements AuthenticationProvider {
     private static final String                               ERROR_URI           = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";

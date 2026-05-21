@@ -43,8 +43,7 @@ import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME
 /**
  * 密码策略管理器
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/4/17 22:21
+ * @author Frank Zhang
  */
 public class DefaultPasswordPolicyManager implements PasswordPolicyManager {
 

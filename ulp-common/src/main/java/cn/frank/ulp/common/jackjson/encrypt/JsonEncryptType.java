@@ -17,8 +17,7 @@
 package cn.frank.ulp.common.jackjson.encrypt;
 
 /**
- * @author TopIAM
- * Created by support@topiam.cn on 2022/12/22 21:53
+ * @author Frank Zhang
  */
 public enum JsonEncryptType {
                              /**

@@ -34,7 +34,7 @@ public final class ApplicationContextService {
 
     /**
      * Refresh all configurations
-     * 
+     *
      * @deprecated
      */
     @Deprecated
@@ -82,7 +82,8 @@ public final class ApplicationContextService {
      * @param config Configuration name
      */
     public static void refresh(String config) {
-        ((RedissonClient) getBean(RedissonClient.class)).getTopic("eiam-config-refresh").publish(config);
+        ((RedissonClient) getBean(RedissonClient.class)).getTopic("eiam-config-refresh")
+            .publish(config);
     }
 
     /**

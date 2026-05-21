@@ -26,8 +26,7 @@ import jakarta.persistence.Converter;
 /**
  * 规则效果
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/11/4 21:07
+ * @author Frank Zhang
  */
 @Converter(autoApply = true)
 public class AppPolicySubjectConverter implements AttributeConverter<AppPolicySubjectType, String> {

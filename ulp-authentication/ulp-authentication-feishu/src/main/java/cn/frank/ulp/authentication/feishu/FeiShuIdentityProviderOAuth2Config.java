@@ -28,8 +28,7 @@ import jakarta.validation.constraints.NotBlank;
 /**
  * 飞书扫码 认证配置
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/12/19 22:58
+ * @author Frank Zhang
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

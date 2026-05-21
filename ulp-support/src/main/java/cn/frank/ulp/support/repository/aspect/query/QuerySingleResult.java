@@ -28,7 +28,7 @@ import java.lang.annotation.Target;
  * 用于标记只返回单个结果的查询方法
  */
 @Documented
-@Target({ElementType.METHOD, ElementType.ANNOTATION_TYPE})
+@Target({ ElementType.METHOD, ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 public @interface QuerySingleResult {

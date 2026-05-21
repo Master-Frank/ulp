@@ -21,8 +21,7 @@ import java.util.Optional;
 /**
  * 身份提供商客户端服务
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2024/3/24 18:30
+ * @author Frank Zhang
  */
 public interface RegisteredIdentityProviderClientRepository {
 

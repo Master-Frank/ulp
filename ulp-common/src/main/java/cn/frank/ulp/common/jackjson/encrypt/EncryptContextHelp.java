@@ -32,8 +32,7 @@ import static cn.frank.ulp.common.constant.SettingConstants.AES_SECRET;
 /**
  * EncryptContextHelp
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/12/22 21:53
+ * @author Frank Zhang
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EncryptContextHelp {

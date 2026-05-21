@@ -27,9 +27,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum SecretType implements BaseEnum, Serializable {
 
-    LOGIN("login", "TOPIAM_LOGIN_SECRET", "登录密钥"),
+                                                          LOGIN("login", "ULP_LOGIN_SECRET",
+                                                                "登录密钥"),
 
-    ENCRYPT("encrypt", "TOPIAM_ENCRYPT_SECRET", "加密密钥");
+                                                          ENCRYPT("encrypt", "ULP_ENCRYPT_SECRET",
+                                                                  "加密密钥");
 
     @JsonValue
     private final String code;

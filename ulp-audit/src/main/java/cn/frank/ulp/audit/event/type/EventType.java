@@ -30,8 +30,7 @@ import lombok.Getter;
 /**
  * 事件类型
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2021/9/29 21:00
+ * @author Frank Zhang
  */
 @Getter
 public enum EventType {

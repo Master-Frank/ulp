@@ -27,8 +27,7 @@ import cn.frank.ulp.authentication.common.authentication.OtpAuthentication;
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn  on  2023/7/14 21:45
+ * @author Frank Zhang
  */
 public class AuthenticationJacksonModule extends Module {
 

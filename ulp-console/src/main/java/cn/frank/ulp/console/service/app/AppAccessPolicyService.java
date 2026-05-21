@@ -25,8 +25,7 @@ import cn.frank.ulp.support.repository.page.domain.PageModel;
 /**
  * 应用访问权限策略 Service
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/6/4 21:55
+ * @author Frank Zhang
  */
 public interface AppAccessPolicyService {
 

@@ -35,8 +35,7 @@ import static cn.frank.ulp.core.context.ContextService.getAutoUnlockTime;
 /**
  * 用户锁定自动解锁任务
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2022/4/17 21:22
+ * @author Frank Zhang
  */
 @RequiredArgsConstructor
 public class UserUnlockTask {

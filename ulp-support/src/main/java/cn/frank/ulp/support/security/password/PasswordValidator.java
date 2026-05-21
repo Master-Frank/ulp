@@ -23,12 +23,12 @@ import cn.frank.ulp.support.security.password.exception.PasswordInvalidException
  * 定义密码验证的方法
  */
 public interface PasswordValidator {
-   
-   /**
+
+    /**
     * 验证密码
     *
     * @param password 密码
     * @throws PasswordInvalidException 密码无效异常
     */
-   void validate(String password) throws PasswordInvalidException;
+    void validate(String password) throws PasswordInvalidException;
 }

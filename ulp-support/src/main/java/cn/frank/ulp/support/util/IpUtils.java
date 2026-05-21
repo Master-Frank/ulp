@@ -68,9 +68,9 @@ public class IpUtils {
             }
             if (isUnknown(ip)) {
                 ip = request.getRemoteAddr();
-                if (org.apache.commons.lang3.StringUtils.equalsAny(ip, "127.0.0.1", "0:0:0:0:0:0:0:1")) {
-                    ip = Objects.toString(InetAddress.getLocalHost().getHostAddress(),
-                        "127.0.0.1");
+                if (org.apache.commons.lang3.StringUtils.equalsAny(ip, "127.0.0.1",
+                    "0:0:0:0:0:0:0:1")) {
+                    ip = Objects.toString(InetAddress.getLocalHost().getHostAddress(), "127.0.0.1");
                 }
             }
             return org.apache.commons.lang3.StringUtils.substringBefore(ip, ",");

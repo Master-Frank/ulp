@@ -27,8 +27,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 获取分组返回
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/8/31 11:25
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "获取分组返回响应")

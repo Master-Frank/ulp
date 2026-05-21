@@ -42,8 +42,7 @@ import static cn.frank.ulp.protocol.oidc.constant.OidcProtocolConstants.ID_TOKEN
 /**
  * 监听登录成功事件
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/9/3
+ * @author Frank Zhang
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class OAuth2AuthenticationSuccessEventListener implements

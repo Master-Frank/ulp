@@ -27,8 +27,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * 邮件模板配置结果
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2020/8/17 23:05
+ * @author Frank Zhang
  */
 @Data
 @Schema(description = "获取邮件模板")

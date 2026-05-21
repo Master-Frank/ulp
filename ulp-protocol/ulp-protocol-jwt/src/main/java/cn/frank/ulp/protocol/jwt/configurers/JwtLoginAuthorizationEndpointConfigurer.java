@@ -36,8 +36,7 @@ import static cn.frank.ulp.common.constant.ProtocolConstants.JwtEndpointConstant
 
 /**
  *
- * @author TopIAM
- * Created by support@topiam.cn on 2023/7/5 21:58
+ * @author Frank Zhang
  */
 public class JwtLoginAuthorizationEndpointConfigurer extends AbstractConfigurer {
 
