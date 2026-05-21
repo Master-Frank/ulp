@@ -81,7 +81,7 @@ public interface OrganizationConverter {
     @Mapping(target = "createTime", ignore = true)
     @Mapping(target = "createBy", ignore = true)
     @Mapping(target = "order", source = "order", defaultValue = "9999L")
-    @Mapping(target = "parentId", source = "parentId", defaultExpression = "java(cn.frank.ulp.support.constant.EiamConstants.ROOT_NODE)")
+    @Mapping(target = "parentId", source = "parentId", defaultExpression = "java(cn.frank.ulp.support.constant.UlpConstants.ROOT_NODE)")
     @Mapping(target = "externalId", source = "externalId", defaultExpression = "java(new org.springframework.util.JdkIdGenerator().generateId().toString())")
     OrganizationEntity orgCreateParamConvertToEntity(OrganizationCreateParam param);
 

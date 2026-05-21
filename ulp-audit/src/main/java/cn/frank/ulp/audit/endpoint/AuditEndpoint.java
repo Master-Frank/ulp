@@ -38,7 +38,7 @@ import lombok.AllArgsConstructor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotNull;
-import static cn.frank.ulp.support.constant.EiamConstants.V1_API_PATH;
+import static cn.frank.ulp.support.constant.UlpConstants.V1_API_PATH;
 
 /**
  * 系统审计

@@ -24,7 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import cn.frank.ulp.openapi.authorization.AccessToken;
-import static cn.frank.ulp.support.constant.EiamConstants.COLON;
+import static cn.frank.ulp.support.constant.UlpConstants.COLON;
 
 /**
  * RedisTokenStore

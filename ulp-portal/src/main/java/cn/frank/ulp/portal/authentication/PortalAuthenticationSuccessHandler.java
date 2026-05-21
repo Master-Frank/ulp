@@ -57,7 +57,7 @@ import jakarta.servlet.http.HttpSession;
 import static cn.frank.ulp.audit.event.type.EventType.LOGIN_PORTAL;
 import static cn.frank.ulp.authentication.common.constant.AuthenticationConstants.BIND_REDIRECT;
 import static cn.frank.ulp.core.context.ContextService.getPortalPublicBaseUrl;
-import static cn.frank.ulp.support.constant.EiamConstants.CAPTCHA_CODE_SESSION;
+import static cn.frank.ulp.support.constant.UlpConstants.CAPTCHA_CODE_SESSION;
 import static cn.frank.ulp.support.context.ServletContextService.isHtmlRequest;
 import static cn.frank.ulp.support.security.authentication.AuthenticationProvider.USERNAME_PASSWORD;
 import static cn.frank.ulp.support.security.savedredirect.JumpConstants.JUMP_PATH;

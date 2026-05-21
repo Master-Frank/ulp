@@ -16,7 +16,7 @@
  */
 package cn.frank.ulp.common.constant;
 
-import cn.frank.ulp.support.constant.EiamConstants;
+import cn.frank.ulp.support.constant.UlpConstants;
 import static cn.frank.ulp.support.security.constant.SecurityConstants.LOGIN_PATH;
 
 /**
@@ -25,7 +25,7 @@ import static cn.frank.ulp.support.security.constant.SecurityConstants.LOGIN_PAT
  * @author Frank Zhang
  */
 public final class AuthnConstants {
-    public final static String AUTHN_PATH   = EiamConstants.V1_API_PATH + "/authn";
+    public final static String AUTHN_PATH   = UlpConstants.V1_API_PATH + "/authn";
 
     /**
      * 登录配置

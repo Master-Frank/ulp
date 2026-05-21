@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import cn.frank.ulp.support.constant.EiamConstants;
+import cn.frank.ulp.support.constant.UlpConstants;
 import cn.frank.ulp.support.geo.GeoLocation;
 import cn.frank.ulp.support.security.userdetails.UserType;
 import cn.frank.ulp.support.web.useragent.UserAgent;
@@ -80,13 +80,13 @@ public class Session implements Serializable {
     /**
      * 登录时间
      */
-    @JsonFormat(pattern = EiamConstants.DEFAULT_DATE_TIME_FORMATTER_PATTERN)
+    @JsonFormat(pattern = UlpConstants.DEFAULT_DATE_TIME_FORMATTER_PATTERN)
     private LocalDateTime     authenticationTime;
 
     /**
      * 最后请求时间
      */
-    @JsonFormat(pattern = EiamConstants.DEFAULT_DATE_TIME_FORMATTER_PATTERN)
+    @JsonFormat(pattern = UlpConstants.DEFAULT_DATE_TIME_FORMATTER_PATTERN)
     private LocalDateTime     lastRequestTime;
 
 }

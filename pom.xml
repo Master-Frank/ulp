@@ -442,7 +442,7 @@
                 <artifactId>woodstox-core</artifactId>
                 <version>${woodstox-core.version}</version>
             </dependency>
-            <!-- dlp-support (in-tree replacement for the former eiam-support private jar) -->
+            <!-- ulp-support (in-tree support library) -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>ulp-support</artifactId>

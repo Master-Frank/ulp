@@ -17,7 +17,7 @@
 package cn.frank.ulp.protocol.jwt.constant;
 
 import static cn.frank.ulp.protocol.code.constant.ProtocolConstants.PROTOCOL_CACHE_PREFIX;
-import static cn.frank.ulp.support.constant.EiamConstants.COLON;
+import static cn.frank.ulp.support.constant.UlpConstants.COLON;
 
 /**
  * 协议常量

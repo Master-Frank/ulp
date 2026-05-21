@@ -43,7 +43,7 @@ import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.model.CityResponse;
 import com.maxmind.geoip2.record.*;
 
-import cn.frank.ulp.support.constant.EiamConstants;
+import cn.frank.ulp.support.constant.UlpConstants;
 import cn.frank.ulp.support.geo.GeoLocation;
 import cn.frank.ulp.support.geo.GeoLocationParser;
 import cn.frank.ulp.support.geo.GeoLocationProvider;
@@ -89,7 +89,7 @@ public class MaxmindGeoLocationParserImpl implements GeoLocationParser {
         this.maxmindProviderConfig = maxmindProviderConfig;
         this.restTemplate = restTemplate;
         download();
-        this.reader = new DatabaseReader.Builder(new File(EiamConstants.IPADDRESS_FILE_PATH))
+        this.reader = new DatabaseReader.Builder(new File(UlpConstants.IPADDRESS_FILE_PATH))
             .withCache(new CHMCache()).locales(List.of("zh-CN")).build();
     }
 
@@ -155,14 +155,14 @@ public class MaxmindGeoLocationParserImpl implements GeoLocationParser {
                     .build();
             ResponseEntity<byte[]> bytes = Failsafe.with(retryPolicy).get(() -> restTemplate.exchange(String.format(DOWNLOAD_URL, maxmindProviderConfig.getSessionKey()), HttpMethod.GET, null, byte[].class));
             //@formatter:on
-            File path = new File(EiamConstants.IPADDRESS_FILE_DIRECTORY);
+            File path = new File(UlpConstants.IPADDRESS_FILE_DIRECTORY);
             try {
                 if (!path.exists()) {
                     if (!path.mkdirs()) {
                         throw new IOException("创建文件路径失败");
                     }
                 }
-                File file = new File(EiamConstants.IPADDRESS_FILE_TAR);
+                File file = new File(UlpConstants.IPADDRESS_FILE_TAR);
                 if (!file.exists()) {
                     if (!file.createNewFile()) {
                         throw new IOException("创建IP库文件失败");
@@ -174,7 +174,7 @@ public class MaxmindGeoLocationParserImpl implements GeoLocationParser {
                 } catch (Exception e) {
                     log.error("IP库文件写入异常: {}", e.getMessage());
                 }
-                unTar(file, EiamConstants.IPADDRESS_FILE_DIRECTORY);
+                unTar(file, UlpConstants.IPADDRESS_FILE_DIRECTORY);
             } catch (Exception e) {
                 log.error("下载IP库发生异常: {}", e.getMessage());
             }
@@ -196,14 +196,14 @@ public class MaxmindGeoLocationParserImpl implements GeoLocationParser {
                 .onRetry(event -> log.error("检查IP库更新发生网络异常, 开始第: {} 次重试",event.getExecutionCount()))
                 .build();
         return Failsafe.with(retryPolicy).get(() -> {
-            File ipDb = new File(EiamConstants.IPADDRESS_FILE_TAR);
+            File ipDb = new File(UlpConstants.IPADDRESS_FILE_TAR);
             if (ipDb.exists()) {
                 try {
                     ResponseEntity<byte[]> sha256FileByte = restTemplate.exchange(
                             String.format(SHA256_URL,
                                     this.maxmindProviderConfig.getSessionKey()),
                             HttpMethod.GET, null, byte[].class);
-                    File sha256File = new File(EiamConstants.SHA256_FILE_PATH);
+                    File sha256File = new File(UlpConstants.SHA256_FILE_PATH);
                     FileUtils.writeByteArrayToFile(sha256File,
                             Objects.requireNonNull(sha256FileByte.getBody()));
                     String sha256 = FileUtils.readFileToString(sha256File, StandardCharsets.UTF_8);

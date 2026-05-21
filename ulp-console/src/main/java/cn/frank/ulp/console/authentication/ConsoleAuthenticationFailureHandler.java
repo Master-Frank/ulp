@@ -29,7 +29,7 @@ import cn.frank.ulp.support.util.HttpResponseUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import static cn.frank.ulp.support.constant.EiamConstants.CAPTCHA_CODE_SESSION;
+import static cn.frank.ulp.support.constant.UlpConstants.CAPTCHA_CODE_SESSION;
 import static cn.frank.ulp.support.exception.enums.ExceptionStatus.*;
 
 /**

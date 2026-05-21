@@ -16,7 +16,7 @@
  */
 package cn.frank.ulp.protocol.code.constant;
 
-import static cn.frank.ulp.support.constant.EiamConstants.COLON;
+import static cn.frank.ulp.support.constant.UlpConstants.COLON;
 
 /**
  *

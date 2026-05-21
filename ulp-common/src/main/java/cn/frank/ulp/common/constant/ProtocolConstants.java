@@ -19,7 +19,7 @@ package cn.frank.ulp.common.constant;
 import lombok.Data;
 import static com.nimbusds.openid.connect.sdk.op.OIDCProviderConfigurationRequest.OPENID_PROVIDER_WELL_KNOWN_PATH;
 
-import static cn.frank.ulp.support.constant.EiamConstants.V1_API_PATH;
+import static cn.frank.ulp.support.constant.UlpConstants.V1_API_PATH;
 
 /**
  * 协议常量

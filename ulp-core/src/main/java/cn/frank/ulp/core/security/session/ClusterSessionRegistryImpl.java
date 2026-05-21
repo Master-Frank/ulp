@@ -42,7 +42,7 @@ import cn.frank.ulp.support.security.authentication.WebAuthenticationDetails;
 import cn.frank.ulp.support.security.userdetails.UserDetails;
 
 import lombok.Getter;
-import static cn.frank.ulp.support.constant.EiamConstants.COLON;
+import static cn.frank.ulp.support.constant.UlpConstants.COLON;
 
 /**
  * ClusterSessionRegistryImpl

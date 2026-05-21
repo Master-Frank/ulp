@@ -16,8 +16,8 @@
  */
 package cn.frank.ulp.common.constant;
 
-import static cn.frank.ulp.support.constant.EiamConstants.ROOT_NODE;
-import static cn.frank.ulp.support.constant.EiamConstants.V1_API_PATH;
+import static cn.frank.ulp.support.constant.UlpConstants.ROOT_NODE;
+import static cn.frank.ulp.support.constant.UlpConstants.V1_API_PATH;
 
 /**
  * 账户常量

@@ -33,7 +33,7 @@ import cn.frank.ulp.support.util.BeanUtils;
 import lombok.Setter;
 import static org.springframework.security.oauth2.core.oidc.OidcScopes.*;
 
-import static cn.frank.ulp.support.constant.EiamConstants.DEFAULT_DATE_TIME_FORMATTER;
+import static cn.frank.ulp.support.constant.UlpConstants.DEFAULT_DATE_TIME_FORMATTER;
 
 /**
  * 令牌定制器

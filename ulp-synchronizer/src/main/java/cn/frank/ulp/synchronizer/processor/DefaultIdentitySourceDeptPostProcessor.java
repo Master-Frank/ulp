@@ -66,7 +66,7 @@ import jakarta.persistence.EntityManager;
 import static java.util.stream.Collectors.toList;
 
 import static cn.frank.ulp.common.constant.AccountConstants.ROOT_DEPT_ID;
-import static cn.frank.ulp.support.constant.EiamConstants.*;
+import static cn.frank.ulp.support.constant.UlpConstants.*;
 
 /**
  * 身份源数据 pull post 处理器

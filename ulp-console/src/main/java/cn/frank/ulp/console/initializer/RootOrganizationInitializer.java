@@ -32,7 +32,7 @@ import cn.frank.ulp.common.repository.account.OrganizationRepository;
 import cn.frank.ulp.support.config.AbstractSystemInitializer;
 import cn.frank.ulp.support.config.InitializationException;
 import cn.frank.ulp.support.security.util.SecurityUtils;
-import static cn.frank.ulp.support.constant.EiamConstants.*;
+import static cn.frank.ulp.support.constant.UlpConstants.*;
 import static cn.frank.ulp.support.security.userdetails.DataOrigin.INPUT;
 
 /**

@@ -27,7 +27,7 @@ import cn.frank.ulp.support.context.ApplicationContextService;
  * @author Frank Zhang
  */
 public class IdentitySourceEventUtils {
-    public static final String IDENTITY_SOURCE_EVENT = "eiam-identity-source-event";
+    public static final String IDENTITY_SOURCE_EVENT = "ulp-identity-source-event";
 
     /**
      * refresh

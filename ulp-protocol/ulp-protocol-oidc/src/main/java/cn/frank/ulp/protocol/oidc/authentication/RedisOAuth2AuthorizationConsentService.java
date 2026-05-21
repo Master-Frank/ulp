@@ -22,7 +22,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsent;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.util.Assert;
-import static cn.frank.ulp.support.constant.EiamConstants.COLON;
+import static cn.frank.ulp.support.constant.UlpConstants.COLON;
 
 /**
  * @author Frank Zhang

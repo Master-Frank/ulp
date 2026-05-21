@@ -16,7 +16,7 @@
  */
 package cn.frank.ulp.common.constant;
 
-import cn.frank.ulp.support.constant.EiamConstants;
+import cn.frank.ulp.support.constant.UlpConstants;
 
 /**
  * SessionConstants
@@ -24,7 +24,7 @@ import cn.frank.ulp.support.constant.EiamConstants;
  * @author Frank Zhang
  */
 public final class SessionConstants {
-    public final static String SESSION_PATH   = EiamConstants.V1_API_PATH + "/session";
+    public final static String SESSION_PATH   = UlpConstants.V1_API_PATH + "/session";
 
     /**
      * CURRENT_USER

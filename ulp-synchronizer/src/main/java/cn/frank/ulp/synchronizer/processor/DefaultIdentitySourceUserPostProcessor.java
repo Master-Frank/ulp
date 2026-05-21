@@ -66,7 +66,7 @@ import lombok.extern.slf4j.Slf4j;
 import jakarta.persistence.EntityManager;
 import static java.util.stream.Collectors.toSet;
 
-import static cn.frank.ulp.support.constant.EiamConstants.SYSTEM_DEFAULT_USER_NAME;
+import static cn.frank.ulp.support.constant.UlpConstants.SYSTEM_DEFAULT_USER_NAME;
 
 /**
  * 身份源数据 pull post 处理器

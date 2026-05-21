@@ -31,7 +31,7 @@
 
     <artifactId>ulp-common</artifactId>
     <dependencies>
-        <!-- dlp-support (replaces former eiam-support private jar; propagated transitively to all modules via eiam-common) -->
+        <!-- ulp-support (propagated transitively to all modules via ulp-common) -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>ulp-support</artifactId>

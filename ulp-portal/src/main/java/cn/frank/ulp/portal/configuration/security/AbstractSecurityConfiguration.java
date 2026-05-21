@@ -53,8 +53,8 @@ import static org.springframework.security.web.header.writers.XXssProtectionHead
 import static org.springframework.web.cors.CorsConfiguration.ALL;
 
 import static cn.frank.ulp.core.setting.SecuritySettingConstants.*;
-import static cn.frank.ulp.support.constant.EiamConstants.DEFAULT_CSRF_COOKIE_NAME;
-import static cn.frank.ulp.support.constant.EiamConstants.DEFAULT_CSRF_HEADER_NAME;
+import static cn.frank.ulp.support.constant.UlpConstants.DEFAULT_CSRF_COOKIE_NAME;
+import static cn.frank.ulp.support.constant.UlpConstants.DEFAULT_CSRF_HEADER_NAME;
 import static cn.frank.ulp.support.security.constant.SecurityConstants.LOGOUT_PATH;
 
 /**

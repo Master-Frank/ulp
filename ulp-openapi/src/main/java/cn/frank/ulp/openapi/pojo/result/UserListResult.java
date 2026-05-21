@@ -26,7 +26,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import static cn.frank.ulp.support.constant.EiamConstants.DEFAULT_DATE_TIME_FORMATTER_PATTERN;
+import static cn.frank.ulp.support.constant.UlpConstants.DEFAULT_DATE_TIME_FORMATTER_PATTERN;
 
 /**
  * 用户分页查询结果

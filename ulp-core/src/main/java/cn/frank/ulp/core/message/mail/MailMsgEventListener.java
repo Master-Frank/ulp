@@ -47,7 +47,7 @@ import freemarker.template.Template;
 import static org.apache.commons.codec.CharEncoding.UTF_8;
 import static org.springframework.web.util.HtmlUtils.htmlUnescape;
 
-import static cn.frank.ulp.support.constant.EiamConstants.COLON;
+import static cn.frank.ulp.support.constant.UlpConstants.COLON;
 
 /**
  * 消息通知事件

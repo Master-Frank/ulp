@@ -18,7 +18,7 @@
 FROM azul/zulu-openjdk:17-jre as build
 WORKDIR /workspace/app
 
-ARG JAR_FILE=target/topiam-employee-portal-*.jar
+ARG JAR_FILE=target/ulp-portal-*.jar
 COPY ${JAR_FILE} target/application.jar
 RUN java -Djarmode=layertools -jar target/application.jar extract --destination target/extracted
 
@@ -27,7 +27,7 @@ FROM azul/zulu-openjdk:17-jre
 
 
 ARG EXTRACTED=/workspace/app/target/extracted
-WORKDIR topiam
+WORKDIR ulp
 COPY --from=build ${EXTRACTED}/dependencies/ ./
 COPY --from=build ${EXTRACTED}/spring-boot-loader/ ./
 COPY --from=build ${EXTRACTED}/snapshot-dependencies/ ./

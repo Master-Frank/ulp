@@ -18,7 +18,7 @@ package cn.frank.ulp.protocol.oidc.constant;
 
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import static cn.frank.ulp.protocol.code.constant.ProtocolConstants.PROTOCOL_CACHE_PREFIX;
-import static cn.frank.ulp.support.constant.EiamConstants.COLON;
+import static cn.frank.ulp.support.constant.UlpConstants.COLON;
 
 /**
  * @author Frank Zhang

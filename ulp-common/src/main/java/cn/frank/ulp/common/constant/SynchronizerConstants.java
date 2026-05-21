@@ -16,7 +16,7 @@
  */
 package cn.frank.ulp.common.constant;
 
-import cn.frank.ulp.support.constant.EiamConstants;
+import cn.frank.ulp.support.constant.UlpConstants;
 
 /**
  * 同步器常量
@@ -28,7 +28,7 @@ public final class SynchronizerConstants {
     /**
      * 同步器路径
      */
-    public final static String SYNCHRONIZER_PATH  = EiamConstants.V1_API_PATH + "/synchronizer";
+    public final static String SYNCHRONIZER_PATH  = UlpConstants.V1_API_PATH + "/synchronizer";
 
     /**
      * 同步器事件接收路径

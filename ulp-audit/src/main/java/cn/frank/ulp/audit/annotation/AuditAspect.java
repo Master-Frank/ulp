@@ -48,7 +48,7 @@ import lombok.AllArgsConstructor;
 
 import jakarta.validation.ConstraintViolationException;
 import static cn.frank.ulp.audit.event.AuditEventPublish.getActor;
-import static cn.frank.ulp.support.constant.EiamConstants.COLON;
+import static cn.frank.ulp.support.constant.UlpConstants.COLON;
 
 /**
  * 审计切面

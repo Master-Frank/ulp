@@ -1,5 +1,5 @@
 /*
- * ulp-support - ULP support library (replaces the former eiam-support private jar).
+ * ulp-support - United Login Platform
  * Copyright (c) 2022-Present Frank Zhang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");

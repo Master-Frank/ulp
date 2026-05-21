@@ -37,7 +37,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import static org.springframework.boot.web.servlet.support.ErrorPageFilter.ERROR_REQUEST_URI;
 
-import static cn.frank.ulp.support.constant.EiamConstants.CAPTCHA_CODE_SESSION;
+import static cn.frank.ulp.support.constant.UlpConstants.CAPTCHA_CODE_SESSION;
 import static cn.frank.ulp.support.context.ServletContextService.isHtmlRequest;
 import static cn.frank.ulp.support.exception.enums.ExceptionStatus.EX000101;
 import static cn.frank.ulp.support.exception.enums.ExceptionStatus.EX000105;

@@ -28,7 +28,7 @@ import cn.frank.ulp.support.result.ApiRestResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import static cn.frank.ulp.common.constant.UserConstants.*;
-import static cn.frank.ulp.support.constant.EiamConstants.V1_API_PATH;
+import static cn.frank.ulp.support.constant.UlpConstants.V1_API_PATH;
 
 /**
  * 账户管理

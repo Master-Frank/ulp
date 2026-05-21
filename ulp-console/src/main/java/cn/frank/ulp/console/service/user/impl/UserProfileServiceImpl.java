@@ -58,7 +58,7 @@ import cn.frank.ulp.support.util.PhoneUtils;
 
 import jakarta.servlet.http.HttpSession;
 import static cn.frank.ulp.core.message.sms.SmsMsgEventPublish.USERNAME;
-import static cn.frank.ulp.support.constant.EiamConstants.FORGET_PASSWORD_TOKEN_ID;
+import static cn.frank.ulp.support.constant.UlpConstants.FORGET_PASSWORD_TOKEN_ID;
 import static cn.frank.ulp.support.exception.enums.ExceptionStatus.EX000102;
 import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_BY;
 import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME;

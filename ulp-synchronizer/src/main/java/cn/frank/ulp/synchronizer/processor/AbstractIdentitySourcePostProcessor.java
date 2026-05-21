@@ -64,7 +64,7 @@ import jakarta.persistence.EntityManager;
 import static cn.frank.ulp.common.enums.UserStatus.DISABLED;
 import static cn.frank.ulp.common.enums.UserStatus.ENABLED;
 import static cn.frank.ulp.common.enums.identitysource.IdentitySourceProvider.*;
-import static cn.frank.ulp.support.constant.EiamConstants.SYSTEM_DEFAULT_USER_NAME;
+import static cn.frank.ulp.support.constant.UlpConstants.SYSTEM_DEFAULT_USER_NAME;
 
 /**
  *

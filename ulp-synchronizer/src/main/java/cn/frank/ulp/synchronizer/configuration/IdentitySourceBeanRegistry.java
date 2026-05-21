@@ -67,8 +67,8 @@ import cn.frank.ulp.support.trace.TraceUtils;
 import cn.frank.ulp.synchronizer.task.IdentitySourceSyncTask;
 
 import lombok.extern.slf4j.Slf4j;
-import static cn.frank.ulp.support.constant.EiamConstants.CACHE_LOCK_KEY_PREFIX;
-import static cn.frank.ulp.support.constant.EiamConstants.COLON;
+import static cn.frank.ulp.support.constant.UlpConstants.CACHE_LOCK_KEY_PREFIX;
+import static cn.frank.ulp.support.constant.UlpConstants.COLON;
 import static cn.frank.ulp.synchronizer.configuration.IdentitySourceBeanUtils.getSourceBeanName;
 
 /**

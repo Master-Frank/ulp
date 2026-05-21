@@ -42,7 +42,7 @@ import cn.frank.ulp.support.util.BeanUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import static cn.frank.ulp.support.constant.EiamConstants.ROOT_NODE;
+import static cn.frank.ulp.support.constant.UlpConstants.ROOT_NODE;
 import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_BY;
 import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME;
 

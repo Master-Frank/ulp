@@ -39,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 import static cn.frank.ulp.core.context.ContextService.getCodeValidTime;
 import static cn.frank.ulp.core.context.ContextService.getMailProviderConfig;
 import static cn.frank.ulp.core.message.MsgVariable.*;
-import static cn.frank.ulp.support.constant.EiamConstants.DEFAULT_DATE_TIME_FORMATTER;
+import static cn.frank.ulp.support.constant.UlpConstants.DEFAULT_DATE_TIME_FORMATTER;
 
 /**
  * 邮件消息发送

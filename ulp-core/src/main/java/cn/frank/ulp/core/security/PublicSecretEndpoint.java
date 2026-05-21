@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.frank.ulp.support.constant.EiamConstants;
+import cn.frank.ulp.support.constant.UlpConstants;
 import cn.frank.ulp.support.context.ServletContextService;
 import cn.frank.ulp.support.enums.SecretType;
 import cn.frank.ulp.support.result.ApiRestResult;
@@ -45,7 +45,7 @@ import jakarta.validation.constraints.NotNull;
 @RequestMapping
 public class PublicSecretEndpoint {
 
-    public static final String PUBLIC_SECRET_PATH = EiamConstants.V1_API_PATH + "/public_secret";
+    public static final String PUBLIC_SECRET_PATH = UlpConstants.V1_API_PATH + "/public_secret";
 
     /**
      * 获取加密key

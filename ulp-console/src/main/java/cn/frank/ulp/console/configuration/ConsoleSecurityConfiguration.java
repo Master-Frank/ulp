@@ -74,7 +74,7 @@ import static cn.frank.ulp.common.constant.SessionConstants.CURRENT_STATUS;
 import static cn.frank.ulp.common.constant.SynchronizerConstants.EVENT_RECEIVE_PATH;
 import static cn.frank.ulp.core.security.PublicSecretEndpoint.PUBLIC_SECRET_PATH;
 import static cn.frank.ulp.core.setting.SecuritySettingConstants.*;
-import static cn.frank.ulp.support.constant.EiamConstants.*;
+import static cn.frank.ulp.support.constant.UlpConstants.*;
 import static cn.frank.ulp.support.security.constant.SecurityConstants.LOGOUT_PATH;
 
 /**

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    ulp-support - ULP support library (replaces the former eiam-support private jar).
+    ulp-support - United Login Platform
     Copyright (c) 2022-Present Frank Zhang
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,7 +29,7 @@
 
     <artifactId>ulp-support</artifactId>
     <name>${project.artifactId}</name>
-    <description>ULP support library (replaces the former eiam-support private jar).</description>
+    <description>ULP support library</description>
 
     <dependencies>
         <dependency>

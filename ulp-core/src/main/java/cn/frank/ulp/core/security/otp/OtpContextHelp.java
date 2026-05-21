@@ -40,7 +40,7 @@ import cn.frank.ulp.support.exception.UlpException;
 import lombok.extern.slf4j.Slf4j;
 import static cn.frank.ulp.core.context.ContextService.getCodeValidTime;
 import static cn.frank.ulp.core.message.MsgVariable.TIME_TO_LIVE;
-import static cn.frank.ulp.support.constant.EiamConstants.COLON;
+import static cn.frank.ulp.support.constant.UlpConstants.COLON;
 
 /**
  * OtpUtils

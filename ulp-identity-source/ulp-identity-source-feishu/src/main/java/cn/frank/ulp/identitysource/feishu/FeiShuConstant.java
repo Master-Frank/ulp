@@ -18,7 +18,7 @@ package cn.frank.ulp.identitysource.feishu;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import static cn.frank.ulp.support.constant.EiamConstants.COLON;
+import static cn.frank.ulp.support.constant.UlpConstants.COLON;
 
 /**
  * 常量

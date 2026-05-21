@@ -19,8 +19,8 @@ package cn.frank.ulp.core.configuration;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import static cn.frank.ulp.support.constant.EiamConstants.CONTEXT_ENDPOINT;
-import static cn.frank.ulp.support.constant.EiamConstants.CONTEXT_ENDPOINT_GROUP_NAME;
+import static cn.frank.ulp.support.constant.UlpConstants.CONTEXT_ENDPOINT;
+import static cn.frank.ulp.support.constant.UlpConstants.CONTEXT_ENDPOINT_GROUP_NAME;
 
 /**
  * ApiConfiguration

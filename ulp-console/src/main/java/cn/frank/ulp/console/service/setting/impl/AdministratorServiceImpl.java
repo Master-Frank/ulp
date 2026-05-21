@@ -69,7 +69,7 @@ import cn.frank.ulp.support.security.password.exception.PasswordValidatedFailExc
 import cn.frank.ulp.support.security.userdetails.UserDetails;
 import cn.frank.ulp.support.security.userdetails.UserType;
 import cn.frank.ulp.support.util.PhoneUtils;
-import static cn.frank.ulp.support.constant.EiamConstants.DEFAULT_ADMIN_USERNAME;
+import static cn.frank.ulp.support.constant.UlpConstants.DEFAULT_ADMIN_USERNAME;
 import static cn.frank.ulp.support.util.PhoneUtils.*;
 
 /**

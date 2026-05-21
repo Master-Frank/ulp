@@ -96,7 +96,7 @@ import static cn.frank.ulp.common.constant.SessionConstants.CURRENT_STATUS;
 import static cn.frank.ulp.core.security.PublicSecretEndpoint.PUBLIC_SECRET_PATH;
 import static cn.frank.ulp.portal.constant.PortalConstants.*;
 import static cn.frank.ulp.protocol.code.configurer.AuthenticationUtils.getAuthenticationDetailsSource;
-import static cn.frank.ulp.support.constant.EiamConstants.API_PATH;
+import static cn.frank.ulp.support.constant.UlpConstants.API_PATH;
 
 /**
  * PortalSecurityConfiguration

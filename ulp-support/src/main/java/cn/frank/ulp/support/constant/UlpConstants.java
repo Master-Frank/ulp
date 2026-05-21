@@ -1,5 +1,5 @@
 /*
- * ulp-support - ULP support library (replaces the former eiam-support private jar).
+ * ulp-support - United Login Platform
  * Copyright (c) 2022-Present Frank Zhang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,7 +29,7 @@ import cn.frank.ulp.support.util.PhoneUtils;
  * 系统常量定义接口
  * 包含系统中使用的各种常量定义
  */
-public interface EiamConstants {
+public interface UlpConstants {
     /** HTTP头部标识 */
     String            HTTP_HEADER                         = "HttpHeader";
 

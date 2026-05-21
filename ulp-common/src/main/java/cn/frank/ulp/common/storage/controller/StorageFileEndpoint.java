@@ -30,7 +30,7 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 
 import cn.frank.ulp.common.storage.Storage;
-import cn.frank.ulp.support.constant.EiamConstants;
+import cn.frank.ulp.support.constant.UlpConstants;
 import cn.frank.ulp.support.result.ApiRestResult;
 
 import lombok.AllArgsConstructor;
@@ -59,7 +59,7 @@ public class StorageFileEndpoint {
     /**
      * 存储API路径
      */
-    public final static String STORAGE_PATH = EiamConstants.V1_API_PATH + "/storage";
+    public final static String STORAGE_PATH = UlpConstants.V1_API_PATH + "/storage";
 
     /**
      * 上传文件

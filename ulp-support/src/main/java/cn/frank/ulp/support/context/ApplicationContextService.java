@@ -1,5 +1,5 @@
 /*
- * ulp-support - ULP support library (replaces the former eiam-support private jar).
+ * ulp-support - United Login Platform
  * Copyright (c) 2022-Present Frank Zhang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,6 +21,8 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.ResolvableType;
 import org.springframework.lang.NonNull;
+
+import cn.frank.ulp.support.configrefresh.ConfigRefreshConstants;
 
 /**
  * Application context service class
@@ -82,8 +84,8 @@ public final class ApplicationContextService {
      * @param config Configuration name
      */
     public static void refresh(String config) {
-        ((RedissonClient) getBean(RedissonClient.class)).getTopic("eiam-config-refresh")
-            .publish(config);
+        ((RedissonClient) getBean(RedissonClient.class))
+            .getTopic(ConfigRefreshConstants.CONFIG_REFRESH_TOPIC).publish(config);
     }
 
     /**

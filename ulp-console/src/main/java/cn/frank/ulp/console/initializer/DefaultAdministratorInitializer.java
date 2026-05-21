@@ -37,8 +37,8 @@ import cn.frank.ulp.common.repository.account.OrganizationMemberRepository;
 import cn.frank.ulp.common.repository.setting.AdministratorRepository;
 import cn.frank.ulp.support.config.AbstractSystemInitializer;
 import cn.frank.ulp.support.config.InitializationException;
-import static cn.frank.ulp.support.constant.EiamConstants.DEFAULT_ADMIN_USERNAME;
-import static cn.frank.ulp.support.constant.EiamConstants.ROOT_NODE;
+import static cn.frank.ulp.support.constant.UlpConstants.DEFAULT_ADMIN_USERNAME;
+import static cn.frank.ulp.support.constant.UlpConstants.ROOT_NODE;
 
 /**
  * DefaultAdministratorInitialize

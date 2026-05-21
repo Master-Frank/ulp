@@ -16,7 +16,7 @@
  */
 package cn.frank.ulp.portal.constant;
 
-import static cn.frank.ulp.support.constant.EiamConstants.V1_API_PATH;
+import static cn.frank.ulp.support.constant.UlpConstants.V1_API_PATH;
 
 /**
  * 认证常量

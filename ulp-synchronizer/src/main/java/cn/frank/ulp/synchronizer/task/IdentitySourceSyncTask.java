@@ -31,8 +31,8 @@ import cn.frank.ulp.identitysource.core.IdentitySourceConfig;
 import cn.frank.ulp.support.trace.TraceUtils;
 
 import lombok.RequiredArgsConstructor;
-import static cn.frank.ulp.support.constant.EiamConstants.CACHE_LOCK_KEY_PREFIX;
-import static cn.frank.ulp.support.constant.EiamConstants.COLON;
+import static cn.frank.ulp.support.constant.UlpConstants.CACHE_LOCK_KEY_PREFIX;
+import static cn.frank.ulp.support.constant.UlpConstants.COLON;
 
 /**
  * 身份源同步任务

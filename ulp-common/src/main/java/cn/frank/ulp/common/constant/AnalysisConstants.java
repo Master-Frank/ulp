@@ -16,7 +16,7 @@
  */
 package cn.frank.ulp.common.constant;
 
-import static cn.frank.ulp.support.constant.EiamConstants.V1_API_PATH;
+import static cn.frank.ulp.support.constant.UlpConstants.V1_API_PATH;
 
 /**
  * 统计分析API常量

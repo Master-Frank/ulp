@@ -16,8 +16,8 @@
  */
 package cn.frank.ulp.common.constant;
 
-import static cn.frank.ulp.support.constant.EiamConstants.COLON;
-import static cn.frank.ulp.support.constant.EiamConstants.V1_API_PATH;
+import static cn.frank.ulp.support.constant.UlpConstants.COLON;
+import static cn.frank.ulp.support.constant.UlpConstants.V1_API_PATH;
 
 /**
  * 应用管理常量

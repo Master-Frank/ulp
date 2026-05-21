@@ -16,7 +16,7 @@
  */
 package cn.frank.ulp.common.constant;
 
-import cn.frank.ulp.support.constant.EiamConstants;
+import cn.frank.ulp.support.constant.UlpConstants;
 
 /**
  * 设置常量
@@ -27,7 +27,7 @@ public final class SettingConstants {
     /**
      * 系统设置API路径
      */
-    public final static String SETTING_PATH       = EiamConstants.V1_API_PATH + "/setting";
+    public final static String SETTING_PATH       = UlpConstants.V1_API_PATH + "/setting";
 
     /**
      * 安全设置API路径

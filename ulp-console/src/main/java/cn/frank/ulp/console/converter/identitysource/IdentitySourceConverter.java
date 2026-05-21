@@ -52,7 +52,7 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.validation.ConstraintViolationException;
 import static cn.frank.ulp.common.constant.SynchronizerConstants.EVENT_RECEIVE_PATH;
 import static cn.frank.ulp.common.entity.identitysource.IdentitySourceEntity.NAME_FIELD_NAME;
-import static cn.frank.ulp.support.constant.EiamConstants.PATH_SEPARATOR;
+import static cn.frank.ulp.support.constant.UlpConstants.PATH_SEPARATOR;
 import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME;
 
 /**
