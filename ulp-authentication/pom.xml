@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    eiam-authentication - United Login Platform
+    Copyright © 2022-Present Charles Network Technology Co., Ltd.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>cn.frank.ulp</groupId>
+        <artifactId>ulp-parent</artifactId>
+        <version>1.1.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ulp-authentication</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>ulp-authentication-core</module>
+        <module>ulp-authentication-dingtalk</module>
+        <module>ulp-authentication-feishu</module>
+        <module>ulp-authentication-qq</module>
+        <module>ulp-authentication-wechat</module>
+        <module>ulp-authentication-wechatwork</module>
+        <module>ulp-authentication-all</module>
+        <module>ulp-authentication-mail</module>
+        <module>ulp-authentication-sms</module>
+        <module>ulp-authentication-github</module>
+        <module>ulp-authentication-gitee</module>
+        <module>ulp-authentication-alipay</module>
+    </modules>
+
+    <dependencies>
+        <!-- core -->
+        <dependency>
+            <groupId>cn.frank.ulp</groupId>
+            <artifactId>ulp-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+</project>

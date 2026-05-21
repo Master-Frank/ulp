@@ -16,8 +16,8 @@
         <relativePath/>
     </parent>
 
-    <groupId>cn.topiam</groupId>
-    <artifactId>dlp</artifactId>
+    <groupId>cn.frank.ulp</groupId>
+    <artifactId>ulp-parent</artifactId>
     <version>1.1.0</version>
     <packaging>pom</packaging>
     <name>ULP</name>
@@ -106,18 +106,18 @@
 
     <!--模块-->
     <modules>
-        <module>dlp-support</module>
-        <module>eiam-core</module>
-        <module>eiam-common</module>
-        <module>eiam-application</module>
-        <module>eiam-protocol</module>
-        <module>eiam-console</module>
-        <module>eiam-portal</module>
-        <module>eiam-identity-source</module>
-        <module>eiam-openapi</module>
-        <module>eiam-authentication</module>
-        <module>eiam-audit</module>
-        <module>eiam-synchronizer</module>
+        <module>ulp-support</module>
+        <module>ulp-core</module>
+        <module>ulp-common</module>
+        <module>ulp-application</module>
+        <module>ulp-protocol</module>
+        <module>ulp-console</module>
+        <module>ulp-portal</module>
+        <module>ulp-identity-source</module>
+        <module>ulp-openapi</module>
+        <module>ulp-authentication</module>
+        <module>ulp-audit</module>
+        <module>ulp-synchronizer</module>
     </modules>
 
     <repositories>
@@ -437,7 +437,7 @@
             <!-- dlp-support (in-tree replacement for the former eiam-support private jar) -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>dlp-support</artifactId>
+                <artifactId>ulp-support</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

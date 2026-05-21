@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    eiam-protocol - United Login Platform
+    Copyright © 2022-Present Charles Network Technology Co., Ltd.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>cn.frank.ulp</groupId>
+        <artifactId>ulp-parent</artifactId>
+        <version>1.1.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ulp-protocol</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>ulp-protocol-form</module>
+        <module>ulp-protocol-jwt</module>
+        <module>ulp-protocol-oidc</module>
+        <module>ulp-protocol-core</module>
+        <module>ulp-protocol-all</module>
+    </modules>
+    <dependencies>
+        <!--all-->
+        <dependency>
+            <groupId>cn.frank.ulp</groupId>
+            <artifactId>ulp-application-all</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>
