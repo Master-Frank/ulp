@@ -18,6 +18,7 @@ package cn.frank.ulp.support.web.config;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -32,6 +33,7 @@ import cn.frank.ulp.support.web.useragent.UserAgentParser;
  * 自定义Web MVC配置器
  * 用于配置Web相关的组件和过滤器
  */
+@Configuration
 public class CustomWebMvcConfigurer implements WebMvcConfigurer {
 
     /**

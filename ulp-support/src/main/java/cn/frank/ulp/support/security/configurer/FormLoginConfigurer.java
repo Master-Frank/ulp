@@ -24,12 +24,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import cn.frank.ulp.support.security.authentication.WebAuthenticationDetailsSource;
+import cn.frank.ulp.support.security.web.CustomLoginFilter;
 
 public class FormLoginConfigurer<H extends HttpSecurityBuilder<H>> extends
                                 AbstractAuthenticationFilterConfigurer<H, FormLoginConfigurer<H>, UsernamePasswordAuthenticationFilter> {
 
     public FormLoginConfigurer() {
-        super(new UsernamePasswordAuthenticationFilter(), "/api/v1/login");
+        super(new CustomLoginFilter(), "/api/v1/login");
     }
 
     @Override

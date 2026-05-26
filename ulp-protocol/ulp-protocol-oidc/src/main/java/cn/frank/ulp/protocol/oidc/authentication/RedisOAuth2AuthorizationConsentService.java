@@ -31,11 +31,11 @@ import static cn.frank.ulp.support.constant.UlpConstants.COLON;
                     "AlibabaServiceOrDaoClassShouldEndWithImpl" })
 public class RedisOAuth2AuthorizationConsentService implements OAuth2AuthorizationConsentService {
 
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<Object, Object> redisTemplate;
 
     private static final Long                   TIMEOUT = 10L;
 
-    public RedisOAuth2AuthorizationConsentService(RedisTemplate<String, Object> redisTemplate) {
+    public RedisOAuth2AuthorizationConsentService(RedisTemplate<Object, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 

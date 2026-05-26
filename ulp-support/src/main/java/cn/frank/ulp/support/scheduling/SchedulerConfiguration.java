@@ -16,18 +16,14 @@
  */
 package cn.frank.ulp.support.scheduling;
 
-import java.util.Map;
-import java.util.concurrent.Executor;
-
-import org.slf4j.MDC;
 import org.springframework.boot.task.ThreadPoolTaskSchedulerBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
-
-import cn.frank.ulp.support.async.CustomThreadPoolTaskExecutor;
 
 /**
  * 调度配置类
@@ -42,26 +38,15 @@ public class SchedulerConfiguration implements SchedulingConfigurer {
     */
     private final ThreadPoolTaskSchedulerBuilder threadPoolTaskSchedulerBuilder;
 
-    /**
-    * 配置任务调度
-    *
-    * @param taskRegistrar 任务注册器
-    */
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
         taskRegistrar.setScheduler(this.taskScheduler());
     }
 
-    /**
-    * 任务调度器Bean
-    *
-    * @return 任务调度器
-    */
-    @Bean(destroyMethod = "shutdown")
-    public Executor taskScheduler() {
-        Map<String, String> mdcContextMap = MDC.getCopyOfContextMap();
-        CustomThreadPoolTaskExecutor executor = new CustomThreadPoolTaskExecutor(mdcContextMap);
-        executor.initialize();
-        return executor;
+    @Bean(name = "taskScheduler", destroyMethod = "shutdown")
+    public TaskScheduler taskScheduler() {
+        ThreadPoolTaskScheduler scheduler = this.threadPoolTaskSchedulerBuilder.build();
+        scheduler.initialize();
+        return scheduler;
     }
 
     /**

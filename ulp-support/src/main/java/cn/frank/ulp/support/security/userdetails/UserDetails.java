@@ -29,6 +29,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.util.Assert;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Generated;
@@ -181,10 +182,15 @@ public class UserDetails extends User {
     * @param accountNonLocked 账户是否未锁定
     * @param authorities 权限集合
     */
-    public UserDetails(String id, String username, String password, UserType userType,
-                       boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired,
-                       boolean accountNonLocked,
-                       Collection<? extends GrantedAuthority> authorities) {
+    @JsonCreator
+    public UserDetails(@JsonProperty("id") String id, @JsonProperty("username") String username,
+                       @JsonProperty("password") String password,
+                       @JsonProperty("userType") UserType userType,
+                       @JsonProperty("enabled") boolean enabled,
+                       @JsonProperty("accountNonExpired") boolean accountNonExpired,
+                       @JsonProperty("credentialsNonExpired") boolean credentialsNonExpired,
+                       @JsonProperty("accountNonLocked") boolean accountNonLocked,
+                       @JsonProperty("authorities") Collection<? extends GrantedAuthority> authorities) {
         super(username, Objects.isNull(password) ? "" : password, enabled, accountNonExpired,
             credentialsNonExpired, accountNonLocked, authorities);
         this.id = id;
@@ -242,10 +248,7 @@ public class UserDetails extends User {
     */
     @Override
     public int hashCode() {
-        Object[] values = new Object[2];
-        values[0] = super.hashCode();
-        values[1] = this.email;
-        return Objects.hash(values);
+        return super.hashCode();
     }
 
     /**

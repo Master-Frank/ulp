@@ -23,7 +23,6 @@ import org.springframework.security.web.csrf.CsrfTokenRequestHandler;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import cn.frank.ulp.support.util.PhoneUtils;
 import cn.frank.ulp.support.web.filter.CustomRedirectFilter;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -82,8 +81,7 @@ public class CsrfTokenControllerAdvice {
     */
     @ModelAttribute
     public void addCsrfToken(HttpServletRequest request, HttpServletResponse response) {
-        CsrfToken csrfToken = (CsrfToken) request.getAttribute(PhoneUtils.decryptString(
-            "\u001e\u000f\u0018\u0018\u001b\u001d\u0018\u001a\u0004\u0011\u0015\u0010\u001e\n\u0012\f\u001a\u001a\u0017\u001d\u000f\u0010\t\u001d\u001a\u001c\u0017\u0017\u0018\u0019\u0017"));
+        CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
         if (Objects.nonNull(csrfToken)) {
             this.requestHandler.handle(request, response, () -> csrfToken);
         }

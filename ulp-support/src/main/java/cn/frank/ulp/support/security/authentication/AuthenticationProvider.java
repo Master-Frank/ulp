@@ -21,6 +21,7 @@ import java.io.Serializable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -104,7 +105,9 @@ public class AuthenticationProvider implements Serializable {
     * @param type 认证提供者类型
     * @param name 认证提供者名称
     */
-    public AuthenticationProvider(String type, String name) {
+    @JsonCreator
+    public AuthenticationProvider(@JsonProperty("type") String type,
+                                  @JsonProperty("name") String name) {
         this.type = type;
         this.name = name;
     }

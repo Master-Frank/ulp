@@ -17,6 +17,7 @@
 package cn.frank.ulp.support.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
  * 自定义本地化配置类
  * 用于配置国际化相关的组件
  */
+@Configuration
 public class CustomLocaleConfiguration implements WebMvcConfigurer {
 
     /**

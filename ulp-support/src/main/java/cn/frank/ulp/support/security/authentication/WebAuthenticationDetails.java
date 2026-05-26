@@ -18,6 +18,7 @@ package cn.frank.ulp.support.security.authentication;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -118,10 +119,13 @@ public class WebAuthenticationDetails extends
     * @param authenticationProvider 认证提供者
     * @param authenticationTime 认证时间
     */
-    public WebAuthenticationDetails(String remoteAddress, String sessionId, UserAgent userAgent,
-                                    GeoLocation geoLocation,
-                                    AuthenticationProvider authenticationProvider,
-                                    LocalDateTime authenticationTime) {
+    @JsonCreator
+    public WebAuthenticationDetails(@JsonProperty("remoteAddress") String remoteAddress,
+                                    @JsonProperty("sessionId") String sessionId,
+                                    @JsonProperty("userAgent") UserAgent userAgent,
+                                    @JsonProperty("geoLocation") GeoLocation geoLocation,
+                                    @JsonProperty("authenticationProvider") AuthenticationProvider authenticationProvider,
+                                    @JsonProperty("authenticationTime") LocalDateTime authenticationTime) {
         super(remoteAddress, sessionId);
         this.userAgent = userAgent;
         this.geoLocation = geoLocation;

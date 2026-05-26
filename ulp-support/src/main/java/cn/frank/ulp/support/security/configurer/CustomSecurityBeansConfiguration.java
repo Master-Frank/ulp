@@ -19,6 +19,7 @@ package cn.frank.ulp.support.security.configurer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextHolderStrategy;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,6 +30,7 @@ import cn.frank.ulp.support.security.crypto.password.PasswordEncoderFactories;
  * 自定义安全Bean配置类
  * 用于配置安全相关的Bean
  */
+@Configuration
 public class CustomSecurityBeansConfiguration {
 
     /**

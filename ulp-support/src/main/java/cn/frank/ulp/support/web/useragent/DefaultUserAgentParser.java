@@ -20,8 +20,6 @@ import com.blueconic.browscap.BrowsCapField;
 import com.blueconic.browscap.Capabilities;
 import com.blueconic.browscap.UserAgentService;
 
-import cn.frank.ulp.support.context.ApplicationContextService;
-
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
@@ -42,8 +40,7 @@ public class DefaultUserAgentParser implements UserAgentParser {
     */
     @Override
     public UserAgent getUserAgent(HttpServletRequest request) {
-        Capabilities capabilities = this.userAgentParser
-            .parse(request.getHeader(ApplicationContextService.decryptString("\f=<<t\u000f>+7:")));
+        Capabilities capabilities = this.userAgentParser.parse(request.getHeader("User-Agent"));
         String browser = capabilities.getBrowser();
         String browserType = capabilities.getBrowserType();
         String browserMajorVersion = capabilities.getBrowserMajorVersion();

@@ -16,6 +16,7 @@
  */
 package cn.frank.ulp.support.util;
 
+import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -98,7 +99,7 @@ public class RsaUtils {
         try {
             Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.DECRYPT_MODE, publicKey);
-            return new String(cipher.doFinal(data));
+            return new String(cipher.doFinal(data), StandardCharsets.UTF_8);
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("无此解密算法", e);
         } catch (java.security.InvalidKeyException e) {
@@ -119,7 +120,7 @@ public class RsaUtils {
         try {
             Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
-            return new String(cipher.doFinal(data));
+            return new String(cipher.doFinal(data), StandardCharsets.UTF_8);
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("无此解密算法", e);
         } catch (java.security.InvalidKeyException e) {

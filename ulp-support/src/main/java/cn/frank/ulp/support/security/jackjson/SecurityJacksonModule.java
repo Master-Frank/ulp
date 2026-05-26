@@ -18,6 +18,7 @@ package cn.frank.ulp.support.security.jackjson;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.databind.module.SimpleDeserializers;
 
 import cn.frank.ulp.support.security.authentication.AuthenticationProvider;
 import cn.frank.ulp.support.security.authentication.WebAuthenticationDetails;
@@ -67,7 +68,7 @@ public class SecurityJacksonModule extends Module {
         // 配置各类安全相关类的Mixin注解
         context.setMixInAnnotations(Long.class, Object.class);
         context.setMixInAnnotations(SavedRedirect.class, Object.class);
-        context.setMixInAnnotations(UserDetails.class, Object.class);
+        context.setMixInAnnotations(UserDetails.class, UserDetailsMixin.class);
         context.setMixInAnnotations(UserType.class, Object.class);
         context.setMixInAnnotations(DataOrigin.class, Object.class);
         context.setMixInAnnotations(Group.class, Object.class);
@@ -78,5 +79,9 @@ public class SecurityJacksonModule extends Module {
         context.setMixInAnnotations(AuthenticationProvider.class, Object.class);
         context.setMixInAnnotations(GrantedAuthority.class, GrantedAuthorityMixin.class);
         context.setMixInAnnotations(NeedChangePasswordAuthenticationToken.class, Object.class);
+
+        SimpleDeserializers deserializers = new SimpleDeserializers();
+        deserializers.addDeserializer(UserDetails.class, new UserDetailsDeserializer());
+        context.addDeserializers(deserializers);
     }
 }

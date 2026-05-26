@@ -23,8 +23,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.frank.ulp.support.util.PhoneUtils;
-
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
@@ -48,7 +46,6 @@ public class CsrfTokenController {
     @GetMapping({ "/api/v1/csrf" })
     @ResponseBody
     public CsrfToken csrfToken(HttpServletRequest request) {
-        return (CsrfToken) request.getAttribute(PhoneUtils.decryptString(
-            "\u001e\u000f\u0018\u0018\u001b\u001d\u0018\u001a\u0004\u0011\u0015\u0010\u001e\n\u0012\f\u001a\u001a\u0017\u001d\u000f\u0010\t\u001d\u001a\u001c\u0017\u0017\u0018\u0019\u0017"));
+        return (CsrfToken) request.getAttribute(CsrfToken.class.getName());
     }
 }

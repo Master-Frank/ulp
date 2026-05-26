@@ -19,6 +19,8 @@ package cn.frank.ulp.support.trace;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import ch.qos.logback.classic.helpers.MDCInsertingServletFilter;
+
 /**
  * 跟踪配置类
  * 用于配置跟踪相关的Bean
@@ -26,13 +28,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class TraceConfiguration {
 
-    /**
-    * 跟踪工具Bean
-    *
-    * @return 跟踪工具
-    */
     @Bean
     public TraceUtils traceUtils() {
         return new TraceUtils();
+    }
+
+    @Bean
+    public TraceFilter traceFilter() {
+        return new TraceFilter();
+    }
+
+    @Bean
+    public MDCInsertingServletFilter mdcInsertingServletFilter() {
+        return new MDCInsertingServletFilter();
     }
 }

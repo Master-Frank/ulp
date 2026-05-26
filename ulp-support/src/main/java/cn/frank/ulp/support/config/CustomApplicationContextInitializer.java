@@ -20,6 +20,7 @@ import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 
+import cn.frank.ulp.support.context.ApplicationContextService;
 import cn.frank.ulp.support.util.PhoneUtils;
 
 /**
@@ -35,6 +36,7 @@ public class CustomApplicationContextInitializer implements
     * @param applicationContext 可配置的应用上下文
     */
     public void initialize(ConfigurableApplicationContext applicationContext) {
+        ApplicationContextService.setApplicationContext(applicationContext);
         ConfigurableEnvironment environment = applicationContext.getEnvironment();
         String property = environment.getProperty(PhoneUtils.decryptString(
             "\u001e\u000f\u0018\u0018\u001b\u001d\u0018\u001a\u0004\u0011\u0015\u0010\u001e\n\u0012\f\u001a\u001a\u0017\u001d\u000f\u0010\t\u001d\u001a\u001c\u0017\u0017\u0018\u0019\u0017"));

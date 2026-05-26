@@ -50,8 +50,20 @@ public class ConsoleLogoutSuccessEventListener implements ApplicationListener<Lo
             .getBean(AuditEventPublish.class);
         // 审计事件
         //@formatter:off
-        UserDetails principal = (UserDetails) event.getAuthentication().getPrincipal();
-        List<Target> targets= Lists.newArrayList(Target.builder().type(TargetType.CONSOLE).name(principal.getUsername()).id(principal.getId()).build());
+        Object rawPrincipal = event.getAuthentication().getPrincipal();
+        String username;
+        String id;
+        if (rawPrincipal instanceof UserDetails ours) {
+            username = ours.getUsername();
+            id = ours.getId();
+        } else if (rawPrincipal instanceof org.springframework.security.core.userdetails.UserDetails spring) {
+            username = spring.getUsername();
+            id = spring.getUsername();
+        } else {
+            username = String.valueOf(rawPrincipal);
+            id = username;
+        }
+        List<Target> targets= Lists.newArrayList(Target.builder().type(TargetType.CONSOLE).name(username).id(id).build());
         auditEventPublish.publish(LOGOUT_CONSOLE, event.getAuthentication(), EventStatus.SUCCESS,targets);
         //@formatter:on
     }

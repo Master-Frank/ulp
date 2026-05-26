@@ -76,6 +76,7 @@ import static cn.frank.ulp.core.security.PublicSecretEndpoint.PUBLIC_SECRET_PATH
 import static cn.frank.ulp.core.setting.SecuritySettingConstants.*;
 import static cn.frank.ulp.support.constant.UlpConstants.*;
 import static cn.frank.ulp.support.security.constant.SecurityConstants.LOGOUT_PATH;
+import static cn.frank.ulp.support.security.constant.SecurityConstants.RESET_PASSWORD_PATH;
 
 /**
  * ConsoleSecurityConfiguration
@@ -148,6 +149,7 @@ public class ConsoleSecurityConfiguration implements BeanClassLoaderAware {
             registry.requestMatchers(new AntPathRequestMatcher(EVENT_RECEIVE_PATH+"/{code}")).permitAll();
             registry.requestMatchers(new AntPathRequestMatcher(CURRENT_STATUS, HttpMethod.GET.name())).permitAll();
             registry.requestMatchers(new AntPathRequestMatcher(PUBLIC_SECRET_PATH, HttpMethod.GET.name())).permitAll();
+            registry.requestMatchers(new AntPathRequestMatcher(RESET_PASSWORD_PATH, HttpMethod.POST.name())).permitAll();
             registry.anyRequest().authenticated();
         };
         //@formatter:on

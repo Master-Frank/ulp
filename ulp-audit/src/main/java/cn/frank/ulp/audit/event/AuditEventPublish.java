@@ -92,14 +92,21 @@ public class AuditEventPublish {
     public void publish(EventType eventType, Authentication authentication, EventStatus eventStatus,
                         List<Target> targets) {
         //@formatter:off
-        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        Object rawPrincipal = authentication.getPrincipal();
         WebAuthenticationDetails details = (WebAuthenticationDetails) authentication.getDetails();
         //封装操作事件
         Event event = Event.builder()
                 .type(eventType)
                 .time(LocalDateTime.now())
                 .status(eventStatus).build();
-        String username = principal.getUsername();
+        String username;
+        if (rawPrincipal instanceof UserDetails ours) {
+            username = ours.getUsername();
+        } else if (rawPrincipal instanceof org.springframework.security.core.userdetails.UserDetails spring) {
+            username = spring.getUsername();
+        } else {
+            username = String.valueOf(rawPrincipal);
+        }
         Map<String,String> content= Maps.newConcurrentMap();
         content.put("auth_type",details.getAuthenticationProvider().getType());
         content.put("desc",username+"："+event.getType().getDesc());
@@ -243,12 +250,15 @@ public class AuditEventPublish {
         //@formatter:off
         Object principal = authentication.getPrincipal();
         if (principal instanceof UserDetails) {
-            return ((UserDetails) principal).getId();
+            String id = ((UserDetails) principal).getId();
+            if (StringUtils.isNotBlank(id)) {
+                return id;
+            }
         }
         if (principal instanceof String) {
             return (String) principal;
         }
-        return null;
+        return authentication.getName();
         //@formatter:on
     }
 
@@ -262,9 +272,12 @@ public class AuditEventPublish {
         //@formatter:off
         Object principal = authentication.getPrincipal();
         if (principal instanceof UserDetails) {
-            return  ((UserDetails) principal).getUserType();
+            UserType type = ((UserDetails) principal).getUserType();
+            if (type != null) {
+                return type;
+            }
         }
-        return null;
+        return UserType.ADMIN;
         //@formatter:on
     }
 

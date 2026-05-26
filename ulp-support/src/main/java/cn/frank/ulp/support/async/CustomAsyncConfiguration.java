@@ -23,6 +23,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;
 import org.springframework.boot.task.ThreadPoolTaskExecutorBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -36,6 +38,7 @@ import cn.frank.ulp.support.util.DesensitizationUtils;
  * Custom asynchronous configuration class
  * Used to configure beans related to asynchronous execution
  */
+@Configuration
 @EnableAsync(proxyTargetClass = true)
 public class CustomAsyncConfiguration implements AsyncConfigurer {
 
@@ -74,6 +77,13 @@ public class CustomAsyncConfiguration implements AsyncConfigurer {
         var10000.initialize();
         return TtlExecutors.getTtlExecutor(new ExceptionHandlingAsyncTaskExecutor(
             new DelegatingSecurityContextAsyncTaskExecutor(threadPoolTaskExecutor)));
+    }
+
+    @Bean(name = { "applicationTaskExecutor", "taskExecutor" })
+    public ThreadPoolTaskExecutor applicationTaskExecutor() {
+        ThreadPoolTaskExecutor executor = this.threadPoolTaskExecutorBuilder.build();
+        executor.initialize();
+        return executor;
     }
 
     /**

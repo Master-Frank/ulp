@@ -19,7 +19,9 @@ package cn.frank.ulp.support.security.jackjson;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -29,6 +31,9 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import cn.frank.ulp.support.security.userdetails.Application;
+import cn.frank.ulp.support.security.userdetails.Group;
+import cn.frank.ulp.support.security.userdetails.Organization;
 import cn.frank.ulp.support.security.userdetails.UserDetails;
 import cn.frank.ulp.support.security.userdetails.UserType;
 
@@ -60,15 +65,16 @@ public class UserDetailsDeserializer extends JsonDeserializer<UserDetails> {
         boolean accountNonLocked = booleanOr(node, "accountNonLocked", true);
 
         List<GrantedAuthority> authorities = new ArrayList<>();
-        JsonNode authoritiesNode = node.get("authorities");
+        JsonNode authoritiesNode = unwrapTyped(node.get("authorities"));
         if (authoritiesNode != null && authoritiesNode.isArray()) {
             Iterator<JsonNode> it = authoritiesNode.elements();
             while (it.hasNext()) {
                 JsonNode authNode = it.next();
-                GrantedAuthority authority = mapper.treeToValue(authNode,
-                    cn.frank.ulp.support.security.core.GrantedAuthority.class);
-                if (authority != null) {
-                    authorities.add(authority);
+                String authType = textOrNull(authNode, "type");
+                String authValue = textOrNull(authNode, "authority");
+                if (authValue != null) {
+                    authorities.add(new cn.frank.ulp.support.security.core.GrantedAuthority(
+                        authType != null ? authType : "ROLE", authValue));
                 }
             }
         }
@@ -89,7 +95,50 @@ public class UserDetailsDeserializer extends JsonDeserializer<UserDetails> {
         applyOptionalBoolean(node, "emailVerified", userDetails::setEmailVerified);
         applyOptionalBoolean(node, "needChangePassword", userDetails::setNeedChangePassword);
 
+        Set<Group> groups = readSet(node, "groups", mapper, Group.class);
+        if (groups != null) {
+            userDetails.setGroups(groups);
+        }
+        Set<Organization> organizations = readSet(node, "organizations", mapper,
+            Organization.class);
+        if (organizations != null) {
+            userDetails.setOrganizations(organizations);
+        }
+        Set<Application> applications = readSet(node, "applications", mapper, Application.class);
+        if (applications != null) {
+            userDetails.setApplications(applications);
+        }
+
         return userDetails;
+    }
+
+    private static <T> Set<T> readSet(JsonNode node, String field, ObjectMapper mapper,
+                                      Class<T> elementType) throws IOException {
+        JsonNode unwrapped = unwrapTyped(node.get(field));
+        if (unwrapped == null || !unwrapped.isArray()) {
+            return null;
+        }
+        Set<T> result = new LinkedHashSet<>();
+        for (JsonNode el : unwrapped) {
+            T value = mapper.treeToValue(el, elementType);
+            if (value != null) {
+                result.add(value);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Spring SecurityJackson2Modules 强制 default typing 后，集合会被包成
+     * ["java.util.Collections$UnmodifiableSet", [actual...]] 这种 2-element 数组。
+     * 这里把外层 type 信息剥掉，返回真正的元素数组。
+     */
+    private static JsonNode unwrapTyped(JsonNode node) {
+        if (node != null && node.isArray() && node.size() == 2 && node.get(0).isTextual()
+            && node.get(1).isArray()) {
+            return node.get(1);
+        }
+        return node;
     }
 
     private static String textOrNull(JsonNode node, String field) {

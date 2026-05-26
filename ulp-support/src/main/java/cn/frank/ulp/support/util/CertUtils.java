@@ -91,33 +91,8 @@ public class CertUtils {
         return getDer(parts[1]);
     }
 
-    public static String isRoot(X509Certificate cert) {
-        return String.valueOf(cert.getSubjectX500Principal().equals(cert.getIssuerX500Principal()))
-            .toUpperCase();
-    }
-
     public static String getNotAfter(X509Certificate cert) {
         return cert.getNotAfter().toString();
-    }
-
-    public static String getIssuerDn(X509Certificate cert) {
-        String dn = cert.getIssuerX500Principal().toString();
-        int idx = "CN=".length();
-        int comma = dn.indexOf(',');
-        if (comma < 0) {
-            comma = dn.length();
-        }
-        return dn.substring(idx, comma);
-    }
-
-    public static String getSubjectDn(X509Certificate cert) {
-        String dn = cert.getSubjectX500Principal().toString();
-        int idx = "CN=".length();
-        int comma = dn.indexOf(',');
-        if (comma < 0) {
-            comma = dn.length();
-        }
-        return dn.substring(idx, comma);
     }
 
     public static PrivateKey readPrivateKey(String pem, String password) throws IOException {

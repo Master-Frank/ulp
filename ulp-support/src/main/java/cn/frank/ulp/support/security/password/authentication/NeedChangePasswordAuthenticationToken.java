@@ -21,12 +21,15 @@ import java.util.Collections;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.Authentication;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * 需要更改密码认证令牌类
  * 用于表示需要更改密码的认证令牌
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class NeedChangePasswordAuthenticationToken extends AbstractAuthenticationToken {
     /**
     * 是否验证旧密码
@@ -85,12 +88,16 @@ public class NeedChangePasswordAuthenticationToken extends AbstractAuthenticatio
     * @param first 认证信息
     * @param verifyOldPassword 是否验证旧密码
     */
-    public NeedChangePasswordAuthenticationToken(Authentication first, Boolean verifyOldPassword) {
+    @JsonCreator
+    public NeedChangePasswordAuthenticationToken(@JsonProperty("first") Authentication first,
+                                                 @JsonProperty("verifyOldPassword") Boolean verifyOldPassword) {
         super(Collections.emptyList());
         this.first = first;
         this.verifyOldPassword = verifyOldPassword;
         this.setAuthenticated(false);
-        this.setDetails(first.getDetails());
+        if (first != null) {
+            this.setDetails(first.getDetails());
+        }
     }
 
     /**

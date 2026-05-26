@@ -122,6 +122,12 @@ public final class UserAgent implements Serializable {
     }
 
     /**
+    * 默认构造函数
+    */
+    public UserAgent() {
+    }
+
+    /**
     * 获取设备类型
     *
     * @return 设备类型

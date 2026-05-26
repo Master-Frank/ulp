@@ -23,12 +23,14 @@ import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.View;
 
 /**
  * 自定义错误配置类
  * 用于配置错误处理相关的Bean
  */
+@Configuration
 @AutoConfigureBefore({ ErrorMvcAutoConfiguration.class })
 public class CustomErrorConfiguration {
 
