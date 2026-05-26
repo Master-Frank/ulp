@@ -37,7 +37,7 @@ import cn.frank.ulp.support.security.password.weak.PasswordWeakLib;
  * @author Frank Zhang
  */
 @Configuration
-public class EiamPasswordConfiguration {
+public class PasswordConfiguration {
 
     /**
      * 密码策略管理器

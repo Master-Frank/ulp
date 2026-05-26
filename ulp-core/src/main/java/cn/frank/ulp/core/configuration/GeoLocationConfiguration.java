@@ -50,8 +50,8 @@ import static cn.frank.ulp.common.geo.maxmind.MaxmindGeoLocationParserImpl.MAXMI
  * @author Frank Zhang
  */
 @Configuration
-public class EiamGeoLocationConfiguration {
-    private final Logger logger = LoggerFactory.getLogger(EiamGeoLocationConfiguration.class);
+public class GeoLocationConfiguration {
+    private final Logger logger = LoggerFactory.getLogger(GeoLocationConfiguration.class);
 
     @RefreshScope
     @Bean(value = GEO_LOCATION)

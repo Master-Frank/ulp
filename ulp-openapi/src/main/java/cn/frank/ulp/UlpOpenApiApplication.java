@@ -1,5 +1,5 @@
 /*
- * ulp-core - United Login Platform
+ * ulp-openapi - United Login Platform
  * Copyright (c) 2022-Present Frank Zhang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,27 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.frank.ulp.core.configuration;
+package cn.frank.ulp;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import cn.frank.ulp.core.security.access.SecurityAccessExpression;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 
 /**
+ * 应用程序启动入口
  *
  * @author Frank Zhang
  */
-@Configuration
-public class EiamSecurityConfiguration {
-
-    /**
-     * 安全访问表达式
-     *
-     * @return {@link SecurityAccessExpression}
-     */
-    @Bean(name = "sae")
-    public SecurityAccessExpression securityAccessExpression() {
-        return new SecurityAccessExpression();
+@ServletComponentScan
+@SpringBootApplication
+public class UlpOpenApiApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(UlpOpenApiApplication.class, args);
     }
 }

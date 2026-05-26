@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
-import cn.frank.ulp.EiamConsoleApplication;
+import cn.frank.ulp.UlpConsoleApplication;
 import cn.frank.ulp.support.util.VersionUtils;
 
 import io.swagger.v3.oas.models.Components;
@@ -57,7 +57,7 @@ public class ConsoleApiConfiguration {
             //内容
             .contact(contact)
             //版本
-            .version(VersionUtils.getVersion(EiamConsoleApplication.class));
+            .version(VersionUtils.getVersion(UlpConsoleApplication.class));
     }
 
     /**

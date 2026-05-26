@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
-import cn.frank.ulp.EiamPortalApplication;
+import cn.frank.ulp.UlpPortalApplication;
 import cn.frank.ulp.support.util.VersionUtils;
 
 import io.swagger.v3.oas.models.Components;
@@ -57,7 +57,7 @@ public class PortalApiConfiguration {
             //内容
             .contact(contact)
             //版本
-            .version(VersionUtils.getVersion(EiamPortalApplication.class));
+            .version(VersionUtils.getVersion(UlpPortalApplication.class));
     }
 
     /**

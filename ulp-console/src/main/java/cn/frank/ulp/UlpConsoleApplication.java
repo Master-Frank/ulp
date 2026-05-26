@@ -1,5 +1,5 @@
 /*
- * ulp-openapi - United Login Platform
+ * ulp-console - United Login Platform
  * Copyright (c) 2022-Present Frank Zhang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,8 +27,8 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
  */
 @ServletComponentScan
 @SpringBootApplication
-public class EiamOpenApiApplication {
+public class UlpConsoleApplication {
     public static void main(String[] args) {
-        SpringApplication.run(EiamOpenApiApplication.class, args);
+        SpringApplication.run(UlpConsoleApplication.class, args);
     }
 }

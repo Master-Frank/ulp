@@ -28,10 +28,10 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 
 @ServletComponentScan
 @SpringBootApplication
-public class EiamPortalApplication {
+public class UlpPortalApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(EiamPortalApplication.class, args);
+        SpringApplication.run(UlpPortalApplication.class, args);
     }
 
 }

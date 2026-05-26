@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
-import cn.frank.ulp.EiamOpenApiApplication;
+import cn.frank.ulp.UlpOpenApiApplication;
 import cn.frank.ulp.support.util.VersionUtils;
 
 import io.swagger.v3.oas.models.OpenAPI;
@@ -69,7 +69,7 @@ public class OpenApiConfiguration {
             //内容
             .contact(contact)
             //版本
-            .version(VersionUtils.getVersion(EiamOpenApiApplication.class));
+            .version(VersionUtils.getVersion(UlpOpenApiApplication.class));
     }
 
     @Bean

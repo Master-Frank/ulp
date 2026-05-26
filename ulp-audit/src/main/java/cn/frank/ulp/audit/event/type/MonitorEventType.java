@@ -32,7 +32,7 @@ public class MonitorEventType {
     /**
      * 下线会话
      */
-    public static Type DOWN_LINE_SESSION = new Type("eiam:event:monitor:down_line_session", "下线会话",
+    public static Type DOWN_LINE_SESSION = new Type("ulp:event:monitor:down_line_session", "下线会话",
         SESSION_RESOURCE, List.of(UserType.ADMIN));
 
 }

@@ -28,7 +28,7 @@ public class ServletInitializer extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(EiamPortalApplication.class);
+        return application.sources(UlpPortalApplication.class);
     }
 
 }

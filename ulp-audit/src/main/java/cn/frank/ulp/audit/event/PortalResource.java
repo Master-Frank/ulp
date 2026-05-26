@@ -47,17 +47,17 @@ public class PortalResource extends Resource {
      * 组织与用户
      */
     public static PortalResource MY_ACCOUNT_RESOURCE = new PortalResource(
-        "eiam:event:resource:my_account", "我的账户");
+        "ulp:event:resource:my_account", "我的账户");
 
     /**
      * 用户组管理
      */
     public static PortalResource MY_APP_RESOURCE     = new PortalResource(
-        "eiam:event:resource:my_app", "我的应用");
+        "ulp:event:resource:my_app", "我的应用");
 
     /**
      * 会话管理
      */
     public static PortalResource SESSION_RESOURCE    = new PortalResource(
-        "eiam:event:resource:session", "会话管理");
+        "ulp:event:resource:session", "会话管理");
 }

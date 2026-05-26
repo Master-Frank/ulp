@@ -44,7 +44,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Configuration
-public class EiamStorageConfiguration {
+public class StorageConfiguration {
 
     /**
      * 存储配置
@@ -73,7 +73,7 @@ public class EiamStorageConfiguration {
 
     private final SettingRepository repository;
 
-    public EiamStorageConfiguration(SettingRepository settingRepository) {
+    public StorageConfiguration(SettingRepository settingRepository) {
         this.repository = settingRepository;
     }
 

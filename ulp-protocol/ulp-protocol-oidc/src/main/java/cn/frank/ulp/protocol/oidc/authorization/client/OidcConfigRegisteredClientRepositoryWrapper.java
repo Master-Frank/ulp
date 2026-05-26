@@ -64,7 +64,7 @@ public class OidcConfigRegisteredClientRepositoryWrapper implements RegisteredCl
         if (Objects.isNull(config)) {
             return registeredClientRepository.findById(id);
         }
-        return getEiamRegisteredClient(config);
+        return getRegisteredClient(config);
     }
 
     @Override
@@ -78,10 +78,10 @@ public class OidcConfigRegisteredClientRepositoryWrapper implements RegisteredCl
         if (Objects.isNull(config)) {
             return registeredClientRepository.findByClientId(clientId);
         }
-        return getEiamRegisteredClient(config);
+        return getRegisteredClient(config);
     }
 
-    private RegisteredClient getEiamRegisteredClient(OidcProtocolConfig config) {
+    private RegisteredClient getRegisteredClient(OidcProtocolConfig config) {
         return RegisteredClient
             //ID
             .withId(config.getAppId())

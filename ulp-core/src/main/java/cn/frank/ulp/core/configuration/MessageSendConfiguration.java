@@ -44,7 +44,7 @@ import static cn.frank.ulp.core.context.ContextService.getSmsProviderConfig;
  * @author Frank Zhang
  */
 @Configuration
-public class EiamMessageSendConfiguration {
+public class MessageSendConfiguration {
 
     /**
      * 短信发送

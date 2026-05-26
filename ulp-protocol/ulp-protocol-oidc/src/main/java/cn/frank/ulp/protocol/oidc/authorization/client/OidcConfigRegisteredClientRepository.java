@@ -65,12 +65,12 @@ public class OidcConfigRegisteredClientRepository implements RegisteredClientRep
      */
     @Override
     public RegisteredClient findById(String id) {
-        // 封装 EiamRegisteredClient
+        // 封装 RegisteredClient
         AppOidcConfigPO config = appOidcConfigRepository.getByAppId(id);
         if (Objects.isNull(config)) {
             return null;
         }
-        return getEiamRegisteredClient(config);
+        return getRegisteredClient(config);
     }
 
     /**
@@ -82,12 +82,12 @@ public class OidcConfigRegisteredClientRepository implements RegisteredClientRep
      */
     @Override
     public RegisteredClient findByClientId(String clientId) {
-        // 封装 EiamRegisteredClient
+        // 封装 RegisteredClient
         AppOidcConfigPO config = appOidcConfigRepository.getByClientId(clientId);
         if (Objects.isNull(config)) {
             return null;
         }
-        return getEiamRegisteredClient(config);
+        return getRegisteredClient(config);
     }
 
     /**
@@ -96,7 +96,7 @@ public class OidcConfigRegisteredClientRepository implements RegisteredClientRep
      * @param config {@link AppOidcConfigEntity}
      * @return {@link RegisteredClient}
      */
-    private RegisteredClient getEiamRegisteredClient(AppOidcConfigPO config) {
+    private RegisteredClient getRegisteredClient(AppOidcConfigPO config) {
         return RegisteredClient
             //ID
             .withId(String.valueOf(config.getAppId()))

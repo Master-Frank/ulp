@@ -44,8 +44,7 @@ import static cn.frank.ulp.support.security.constant.SecurityConstants.RESET_PAS
 import static cn.frank.ulp.support.security.constant.SecurityConstants.UNKNOWN_AUTHENTICATION_TYPE;
 
 /**
- * 重置密码端点
- * 替代原 eiam-support jar 中的 Y configurer + i filter（POST /api/v1/reset_password）
+ * 重置密码端点（POST /api/v1/reset_password）
  *
  * @author Frank Zhang
  */

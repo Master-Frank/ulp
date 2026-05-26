@@ -28,7 +28,7 @@ import static cn.frank.ulp.support.constant.UlpConstants.CONTEXT_ENDPOINT_GROUP_
  * @author Frank Zhang
  */
 @Configuration
-public class EiamApiConfiguration {
+public class CoreApiConfiguration {
 
     /**
      * 系统上下文

@@ -33,93 +33,93 @@ public class PortalEventType {
     /**
      * 单点登录
      */
-    public static Type APP_SSO                 = new Type("eiam:event:app:sso", "单点登录",
+    public static Type APP_SSO                 = new Type("ulp:event:app:sso", "单点登录",
         MY_APP_RESOURCE, List.of(UserType.USER));
     /**
      * 退出应用
      */
-    public static Type APP_SLO                 = new Type("eiam:event:app:login", "单点登出",
+    public static Type APP_SLO                 = new Type("ulp:event:app:login", "单点登出",
         MY_APP_RESOURCE, List.of(UserType.USER));
 
     /**
      * 绑定账号
      */
-    public static Type BIND_IDP_USER           = new Type("eiam:event:account:bind_idp_user",
+    public static Type BIND_IDP_USER           = new Type("ulp:event:account:bind_idp_user",
         "绑定 IDP", MY_ACCOUNT_RESOURCE, List.of(UserType.USER));
     /**
      * 解绑账号
      */
-    public static Type UNBIND_IDP_USER         = new Type("eiam:event:account:unbind_idp_user",
+    public static Type UNBIND_IDP_USER         = new Type("ulp:event:account:unbind_idp_user",
         "解绑 IDP", MY_ACCOUNT_RESOURCE, List.of(UserType.USER));
 
     /**
      * 修改账户信息
      */
-    public static Type MODIFY_ACCOUNT_INFO     = new Type("eiam:event:account:update_account_info",
+    public static Type MODIFY_ACCOUNT_INFO     = new Type("ulp:event:account:update_account_info",
         "修改账户", MY_ACCOUNT_RESOURCE, List.of(UserType.USER));
 
     /**
      * 修改邮箱
      */
-    public static Type MODIFY_USER_EMAIL       = new Type("eiam:event:account:update_email", "修改邮箱",
+    public static Type MODIFY_USER_EMAIL       = new Type("ulp:event:account:update_email", "修改邮箱",
         MY_ACCOUNT_RESOURCE, List.of(UserType.USER));
     /**
      * 修改手机号
      */
-    public static Type MODIFY_USER_PHONE       = new Type("eiam:event:account:update_phone",
-        "修改手机号", MY_ACCOUNT_RESOURCE, List.of(UserType.USER));
+    public static Type MODIFY_USER_PHONE       = new Type("ulp:event:account:update_phone", "修改手机号",
+        MY_ACCOUNT_RESOURCE, List.of(UserType.USER));
     /**
      * 修改密码
      */
-    public static Type MODIFY_USER_PASSWORD    = new Type("eiam:event:account:update_password",
+    public static Type MODIFY_USER_PASSWORD    = new Type("ulp:event:account:update_password",
         "修改密码", MY_ACCOUNT_RESOURCE, List.of(UserType.USER));
 
     /**
      * 绑定MFA
      */
-    public static Type BIND_MFA                = new Type("eiam:event:account:bind_maf", "绑定 MFA",
+    public static Type BIND_MFA                = new Type("ulp:event:account:bind_maf", "绑定 MFA",
         MY_ACCOUNT_RESOURCE, List.of(UserType.USER));
 
     /**
      * 准备修改密码
      */
     public static Type PREPARE_MODIFY_PASSWORD = new Type(
-        "eiam:event:account:prepare_modify_password", "准备修改密码", MY_ACCOUNT_RESOURCE,
+        "ulp:event:account:prepare_modify_password", "准备修改密码", MY_ACCOUNT_RESOURCE,
         List.of(UserType.USER));
 
     /**
      * 准备修改手机
      */
-    public static Type PREPARE_MODIFY_PHONE    = new Type("eiam:event:account:prepare_modify_phone",
+    public static Type PREPARE_MODIFY_PHONE    = new Type("ulp:event:account:prepare_modify_phone",
         "准备修改手机", MY_ACCOUNT_RESOURCE, List.of(UserType.USER));
 
     /**
      * 准备修改邮箱
      */
-    public static Type PREPARE_MODIFY_EMAIL    = new Type("eiam:event:account:prepare_modify_email",
+    public static Type PREPARE_MODIFY_EMAIL    = new Type("ulp:event:account:prepare_modify_email",
         "准备修改邮箱", MY_ACCOUNT_RESOURCE, List.of(UserType.USER));
 
     /**
      * 准备绑定MFA
      */
-    public static Type PREPARE_BIND_MFA        = new Type("eiam:event:account:prepare_bind_mfa",
+    public static Type PREPARE_BIND_MFA        = new Type("ulp:event:account:prepare_bind_mfa",
         "准备绑定MFA", MY_ACCOUNT_RESOURCE, List.of(UserType.USER));
 
     /**
      * 解绑mfa
      */
-    public static Type UNBIND_MFA              = new Type("eiam:event:account:unbind_maf", "解绑 MFA",
+    public static Type UNBIND_MFA              = new Type("ulp:event:account:unbind_maf", "解绑 MFA",
         MY_ACCOUNT_RESOURCE, List.of(UserType.USER));
 
     /**
      * 登录门户
      */
-    public static Type LOGIN_PORTAL            = new Type("eiam:event:login:portal", "登录门户",
+    public static Type LOGIN_PORTAL            = new Type("ulp:event:login:portal", "登录门户",
         ConsoleResource.AUTHENTICATION_RESOURCE, List.of(UserType.USER));
 
     /**
      * 退出门户
      */
-    public static Type LOGOUT_PORTAL           = new Type("eiam:event:logout:portal", "退出门户",
+    public static Type LOGOUT_PORTAL           = new Type("ulp:event:logout:portal", "退出门户",
         ConsoleResource.AUTHENTICATION_RESOURCE, List.of(UserType.USER));
 }
