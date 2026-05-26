@@ -36,7 +36,7 @@ const PageContainer: React.FC<IProps> = (props) => {
           <Image src={'/wecomqrcode.jpg'} width={180} preview={false} />
           <div>
             <span style={{ color: '#1890FF', textAlign: 'center', display: 'block' }}>
-              如果使用中遇到问题，联系Charles
+              如果使用中遇到问题，联系Frank
             </span>
           </div>
         </div>

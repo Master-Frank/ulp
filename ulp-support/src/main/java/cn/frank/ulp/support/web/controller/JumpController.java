@@ -74,8 +74,9 @@ public class JumpController {
     * @return 重定向视图
     */
     @GetMapping({ "/api/v1/jump" })
-    public RedirectView jump(HttpServletRequest request, @RequestParam("code") String code) {
-        String redirectUrl = (String) request.getSession().getAttribute(code);
+    public RedirectView jump(HttpServletRequest request,
+                             @RequestParam(value = "code", required = false) String code) {
+        String redirectUrl = code == null ? null : (String) request.getSession().getAttribute(code);
         if (Objects.isNull(redirectUrl)) {
             redirectUrl = "/";
         } else {

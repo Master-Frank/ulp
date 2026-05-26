@@ -21,10 +21,12 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
+@ConditionalOnProperty(prefix = "ulp.demo", name = "enabled", havingValue = "true")
 public class DemoEnvironmentAspect {
 
     private static final Logger log = LoggerFactory.getLogger(DemoEnvironmentAspect.class);

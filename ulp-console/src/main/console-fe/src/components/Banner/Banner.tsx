@@ -21,7 +21,7 @@ import Marquee from 'react-fast-marquee';
 const message = () => {
   return (
     <>
-      <span>如果使用中遇到问题，请联系Charles，你的支持将是我们前行的动力。
+      <span>如果使用中遇到问题，请联系Frank，你的支持将是我们前行的动力。
       </span>
     </>
   );

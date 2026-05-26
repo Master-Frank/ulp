@@ -139,3 +139,9 @@ springdoc:
   cache:
     disabled: true
   writer-with-default-pretty-printer: true
+# ulp
+ulp:
+  demo:
+    # 公开 demo 站点保护开关：true 时所有 @Preview 写操作返回 403。
+    # 自部署 / 本地开发保持 false；仅公开体验站点设 true。
+    enabled: false
