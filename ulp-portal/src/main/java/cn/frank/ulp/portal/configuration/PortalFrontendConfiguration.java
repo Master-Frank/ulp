@@ -42,6 +42,10 @@ public class PortalFrontendConfiguration implements WebMvcConfigurer {
                 @Override
                 protected Resource getResource(@NotNull String resourcePath,
                                                @NotNull Resource location) throws IOException {
+                    // API 路径不做 SPA fallback，避免后端缺失端点被 index.html 静默吞掉
+                    if (resourcePath.startsWith("api/")) {
+                        return null;
+                    }
                     Resource resource = super.getResource(resourcePath, location);
                     if (resource == null) {
                         resource = super.getResource("index.html", location);

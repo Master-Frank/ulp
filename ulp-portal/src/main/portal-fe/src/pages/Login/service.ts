@@ -67,21 +67,6 @@ export async function sendLoginCaptchaOpt(
 }
 
 /**
- * 获取钉钉授权URL
- *
- * @param id
- * @param redirect_uri
- */
-export async function getDingtalkAuthorizeUrl(
-  id: string,
-  redirect_uri: string | string[] | null,
-): Promise<API.ApiResult<string>> {
-  return request(`/api/v1/authorization/dingtalk_qr/${id}`, {
-    params: { redirect_uri: redirect_uri },
-  });
-}
-
-/**
  *  Idp绑定用户
  */
 export async function idpBindUser(params: Record<string, any>): Promise<API.ApiResult<boolean>> {

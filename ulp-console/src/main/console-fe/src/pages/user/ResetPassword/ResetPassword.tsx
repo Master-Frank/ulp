@@ -146,26 +146,13 @@ export default () => {
                           }
                           if (success) {
                             setSubmitLoading(true);
-                            staticFunction?.message
-                              .open({
-                                type: 'success',
-                                content: intl.formatMessage({
-                                  id: 'pages.setting.reset_password_modal.confirm_password.success',
-                                }),
-                                duration: 1,
-                              })
-                              .then(() => {
-                                return staticFunction?.message.loading(
-                                  intl.formatMessage({
-                                    id: 'pages.setting.reset_password_modal.confirm_password.jumping',
-                                  }),
-                                  1,
-                                );
-                              })
-                              .then(() => {
-                                goto();
-                                setSubmitLoading(false);
-                              });
+                            staticFunction?.message.success({
+                              content: intl.formatMessage({
+                                id: 'pages.setting.reset_password_modal.confirm_password.success',
+                              }),
+                              duration: 0.6,
+                            });
+                            goto();
                           }
                         }
                       }}
