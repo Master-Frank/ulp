@@ -24,7 +24,7 @@
           http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/pro/liquibase-pro-4.3.xsd">
     <!--init-->
     <property name="ulp_table_prefix" value="ulp_"/>
-    <changeSet author="Frank" id="1.1.0">
+    <changeSet author="Frank" id="1.0.0">
         <!--创建表-->
         <createTable remarks="管理员表" tableName="${ulp_table_prefix}administrator">
             <column name="id_" remarks="主键ID" type="VARCHAR(64)">
