@@ -1,0 +1,156 @@
+/*
+ * ulp-console - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { FieldNames, ServerExceptionStatus } from '../constant';
+import { changePassword } from '../service';
+import { ModalForm, ProFormInstance, ProFormText } from '@ant-design/pro-components';
+import { App, Spin } from 'antd';
+import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useIntl } from '@umijs/max';
+
+/**
+ * 修改密码
+ * @param props
+ * @constructor
+ */
+const ModifyPassword = (props: {
+  visible: boolean;
+  prefixCls: string;
+  setRefresh: (visible: boolean) => void;
+  setVisible: (visible: boolean) => void;
+}) => {
+  const intl = useIntl();
+  const useApp = App.useApp();
+  const { visible, setVisible, setRefresh } = props;
+  const [loading, setLoading] = useState<boolean>(false);
+  const formRef = useRef<ProFormInstance>();
+
+  useEffect(() => {
+    setLoading(true);
+    setLoading(false);
+  }, [visible]);
+
+  return (
+    <ModalForm
+      title={intl.formatMessage({ id: 'page.user.profile.modify_password.form' })}
+      initialValues={{ channel: 'sms' }}
+      width={'560px'}
+      formRef={formRef}
+      labelAlign={'right'}
+      preserve={false}
+      layout={'horizontal'}
+      labelCol={{
+        span: 5,
+      }}
+      wrapperCol={{
+        span: 19,
+      }}
+      autoFocusFirstInput
+      open={visible}
+      modalProps={{
+        destroyOnClose: true,
+        maskClosable: false,
+        onCancel: async () => {
+          setVisible(false);
+        },
+      }}
+      onFinish={async (formData: Record<string, any>) => {
+        const { success, result, status, message } = await changePassword({
+          oldPassword: formData[FieldNames.OLD_PASSWORD] as string,
+          newPassword: formData[FieldNames.NEW_PASSWORD] as string,
+        });
+        if (!success && status === ServerExceptionStatus.PASSWORD_VALIDATED_FAIL_ERROR) {
+          formRef.current?.setFields([{ name: FieldNames.OLD_PASSWORD, errors: [`${message}`] }]);
+          return Promise.reject();
+        }
+        if (success && result) {
+          setVisible(false);
+          useApp.message.success(
+            intl.formatMessage({ id: 'page.user.profile.modify_password.success' }),
+          );
+          setRefresh(true);
+          return Promise.resolve();
+        }
+        return Promise.reject();
+      }}
+    >
+      <Spin spinning={loading}>
+        <ProFormText.Password
+          placeholder={intl.formatMessage({
+            id: 'page.user.profile.modify_password.form.old_password.placeholder',
+          })}
+          label={intl.formatMessage({ id: 'page.user.profile.modify_password.form.old_password' })}
+          name={FieldNames.OLD_PASSWORD}
+          fieldProps={{ autoComplete: 'off' }}
+          rules={[
+            {
+              required: true,
+              message: intl.formatMessage({
+                id: 'page.user.profile.modify_password.form.old_password.rule.0',
+              }),
+            },
+          ]}
+        />
+        <ProFormText.Password
+          placeholder={intl.formatMessage({
+            id: 'page.user.profile.modify_password.form.new_password.placeholder',
+          })}
+          label={intl.formatMessage({ id: 'page.user.profile.modify_password.form.new_password' })}
+          name={FieldNames.NEW_PASSWORD}
+          fieldProps={{ autoComplete: 'off' }}
+          rules={[
+            {
+              required: true,
+              message: intl.formatMessage({
+                id: 'page.user.profile.modify_password.form.new_password.rule.0',
+              }),
+            },
+          ]}
+        />
+        <ProFormText.Password
+          label={intl.formatMessage({
+            id: 'pages.setting.administrator.reset_password_modal.from.confirm_password',
+          })}
+          placeholder={intl.formatMessage({
+            id: 'pages.setting.administrator.reset_password_modal.from.confirm_password.placeholder',
+          })}
+          name={'confirmPassword'}
+          fieldProps={{ autoComplete: 'off' }}
+          rules={[
+            {
+              required: true,
+              message: intl.formatMessage({
+                id: 'pages.setting.administrator.reset_password_modal.from.confirm_password.rule.0.message',
+              }),
+            },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue(FieldNames.NEW_PASSWORD) === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(
+                  new Error(intl.formatMessage({ id: 'app.password.not_match' })),
+                );
+              },
+            }),
+          ]}
+        />
+      </Spin>
+    </ModalForm>
+  );
+};
+export default ModifyPassword;

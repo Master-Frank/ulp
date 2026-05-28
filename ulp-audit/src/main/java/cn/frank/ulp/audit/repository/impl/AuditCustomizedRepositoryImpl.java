@@ -1,0 +1,156 @@
+/*
+ * ulp-audit - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.audit.repository.impl;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+import cn.frank.ulp.audit.event.type.EventType;
+import cn.frank.ulp.audit.repository.AuditCustomizedRepository;
+import cn.frank.ulp.audit.repository.impl.mapper.AuditStatisticsResultMapper;
+import cn.frank.ulp.audit.repository.impl.mapper.AuthnQuantityResultMapper;
+import cn.frank.ulp.audit.repository.result.AuditStatisticsResult;
+import cn.frank.ulp.audit.repository.result.AuthnQuantityResult;
+
+import lombok.RequiredArgsConstructor;
+
+/**
+ *
+ * @author Frank Zhang
+ */
+@Repository
+@RequiredArgsConstructor
+public class AuditCustomizedRepositoryImpl implements AuditCustomizedRepository {
+
+    /**
+     * NamedParameterJdbcTemplate
+     */
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Override
+    public List<AuditStatisticsResult> authnHotProvider(List<EventType> types,
+                                                        LocalDateTime startTime,
+                                                        LocalDateTime endTime) {
+        String sql = """
+                        SELECT
+                            actor_auth_type AS key_,
+                            COUNT(*) AS count_
+                        FROM
+                            ulp_audit
+                        WHERE
+                            event_type IN (:types)
+                            AND event_time BETWEEN :startTime
+                            AND :endTime
+                        GROUP BY
+                            actor_auth_type
+                        ORDER BY count_
+                """;
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("types",
+            types.stream().map(EventType::getCode).collect(Collectors.toList()));
+        params.addValue("startTime", startTime);
+        params.addValue("endTime", endTime);
+        return namedParameterJdbcTemplate.query(sql, params, new AuditStatisticsResultMapper());
+    }
+
+    @Override
+    public List<AuthnQuantityResult> authnQuantity(List<EventType> types, LocalDateTime startTime,
+                                                   LocalDateTime endTime, String dateFormat) {
+        String sql = """
+                        SELECT
+                            DATE_FORMAT( event_time, :dateFormat ) AS name_,
+                            COUNT(*) AS count_,
+                            event_status AS status_
+                         FROM
+                            ulp_audit
+                         WHERE
+                            event_type IN (:types)
+                            AND event_time BETWEEN :startTime
+                            AND :endTime
+                         GROUP BY
+                            DATE_FORMAT( event_time, :dateFormat ),
+                            event_status
+                        ORDER BY name_
+                """;
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("types",
+            types.stream().map(EventType::getCode).collect(Collectors.toList()));
+        params.addValue("startTime", startTime);
+        params.addValue("endTime", endTime);
+        params.addValue("dateFormat", dateFormat);
+        return namedParameterJdbcTemplate.query(sql, params, new AuthnQuantityResultMapper());
+    }
+
+    @Override
+    public List<AuditStatisticsResult> appVisitRank(EventType type, LocalDateTime startTime,
+                                                    LocalDateTime endTime) {
+        String sql = """
+                        SELECT
+                            JSON_EXTRACT( target_, '$[0].id' ) AS key_,
+                            COUNT(*) AS count_
+                         FROM
+                            ulp_audit
+                         WHERE
+                            event_type = :type
+                            AND event_time BETWEEN :startTime
+                            AND :endTime
+                         GROUP BY
+                            JSON_EXTRACT(
+                                target_,
+                            '$[0].id'
+                            )
+                        ORDER BY count_
+                """;
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("type", type.getCode());
+        params.addValue("startTime", startTime);
+        params.addValue("endTime", endTime);
+        return namedParameterJdbcTemplate.query(sql, params, new AuditStatisticsResultMapper());
+    }
+
+    @Override
+    public List<AuditStatisticsResult> authnZone(List<EventType> types, LocalDateTime startTime,
+                                                 LocalDateTime endTime) {
+        String sql = """
+                        SELECT
+                            JSON_EXTRACT( geo_location, '$.provinceCode' ) AS key_,
+                            COUNT(*) AS count_
+                         FROM
+                            ulp_audit
+                         WHERE
+                            event_type IN (:types)
+                            AND event_time BETWEEN :startTime
+                            AND :endTime
+                         GROUP BY
+                         	JSON_EXTRACT(
+                         	geo_location,
+                         	'$.provinceCode'
+                         	)
+                """;
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("types",
+            types.stream().map(EventType::getCode).collect(Collectors.toList()));
+        params.addValue("startTime", startTime);
+        params.addValue("endTime", endTime);
+        return namedParameterJdbcTemplate.query(sql, params, new AuditStatisticsResultMapper());
+    }
+}

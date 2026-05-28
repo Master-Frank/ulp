@@ -1,0 +1,122 @@
+/*
+ * ulp-console - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.console.converter.app;
+
+import java.util.List;
+
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+import com.google.common.collect.Lists;
+
+import cn.frank.ulp.common.entity.app.AppAccountEntity;
+import cn.frank.ulp.common.entity.app.AppGroupEntity;
+import cn.frank.ulp.common.entity.app.po.AppGroupPO;
+import cn.frank.ulp.common.entity.app.query.AppGroupQueryParam;
+import cn.frank.ulp.console.pojo.query.app.AppGroupListQuery;
+import cn.frank.ulp.console.pojo.result.app.AppGroupGetResult;
+import cn.frank.ulp.console.pojo.result.app.AppGroupListResult;
+import cn.frank.ulp.console.pojo.save.app.AppAccountCreateParam;
+import cn.frank.ulp.console.pojo.save.app.AppGroupCreateParam;
+import cn.frank.ulp.console.pojo.update.app.AppGroupUpdateParam;
+import cn.frank.ulp.support.repository.page.domain.Page;
+
+/**
+ * 分组映射
+ *
+ * @author Frank Zhang
+ */
+@Mapper(componentModel = "spring")
+public interface AppGroupConverter {
+
+    /**
+     * 实体转换为分组列表结果
+     *
+     * @param appGroupPoPage {@link List}
+     * @return {@link List}
+     */
+    default Page<AppGroupListResult> entityConvertToAppGroupListResult(org.springframework.data.domain.Page<AppGroupPO> appGroupPoPage) {
+        Page<AppGroupListResult> page = new Page<>();
+        List<AppGroupListResult> list = Lists.newArrayList();
+        for (AppGroupPO po : appGroupPoPage.getContent()) {
+            AppGroupListResult result = entityConvertToAppGroupListResult(po);
+            list.add(result);
+        }
+        page.setList(list);
+        //@formatter:off
+        page.setPagination(Page.Pagination.builder()
+                .total(appGroupPoPage.getTotalElements())
+                .totalPages(appGroupPoPage.getTotalPages())
+                .current(appGroupPoPage.getPageable().getPageNumber() + 1)
+                .build());
+        //@formatter:on
+        return page;
+    }
+
+    /**
+     * 实体转分组管理列表
+     *
+     * @param appGroupPo {@link AppGroupPO}
+     * @return {@link AppGroupListResult}
+     */
+    AppGroupListResult entityConvertToAppGroupListResult(AppGroupPO appGroupPo);
+
+    /**
+     * 实体转分组返回
+     *
+     * @param entity {@link AppGroupEntity}
+     * @return {@link AppGroupGetResult}
+     */
+    AppGroupGetResult entityConvertToAppGroupResult(AppGroupEntity entity);
+
+    /**
+     * 将分组修改对象转换为entity
+     *
+     * @param param {@link AppGroupUpdateParam}
+     * @return {@link AppGroupEntity}
+     */
+    @Mapping(target = "type", ignore = true)
+
+    @Mapping(target = "updateTime", ignore = true)
+    @Mapping(target = "updateBy", ignore = true)
+    @Mapping(target = "createTime", ignore = true)
+    @Mapping(target = "createBy", ignore = true)
+    AppGroupEntity appGroupUpdateParamConverterToEntity(AppGroupUpdateParam param);
+
+    /**
+     * 分组新增参数转换分组实体
+     *
+     * @param param {@link AppAccountCreateParam}
+     * @return {@link AppAccountEntity}
+     */
+    @Mapping(target = "type", ignore = true)
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "updateTime", ignore = true)
+    @Mapping(target = "updateBy", ignore = true)
+    @Mapping(target = "createTime", ignore = true)
+    @Mapping(target = "createBy", ignore = true)
+    AppGroupEntity appGroupCreateParamConvertToEntity(AppGroupCreateParam param);
+
+    /**
+     * 转查询参数
+     *
+     * @param query {@link AppGroupListQuery}
+     * @return {@link AppGroupQueryParam}
+     */
+    AppGroupQueryParam appGroupQueryToQueryParam(AppGroupListQuery query);
+}

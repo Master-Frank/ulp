@@ -1,0 +1,164 @@
+/*
+ * ulp-console - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { getSecurityDefensePolicyConfig, saveSecurityDefensePolicyConfig } from '../../service';
+
+import {
+  FooterToolbar,
+  ProCard,
+  ProForm,
+  ProFormDigit,
+  ProFormTextArea,
+} from '@ant-design/pro-components';
+import { App, Form, Spin } from 'antd';
+import React, { useState } from 'react';
+import { useIntl } from '@umijs/max';
+import { FORM_LAYOUT } from '../../constant';
+import { useAsyncEffect } from 'ahooks';
+
+export default () => {
+  const intl = useIntl();
+  const [form] = Form.useForm();
+  const { message } = App.useApp();
+  /** 加载中 */
+  const [spinning, setSpinning] = useState<boolean>(true);
+  /** 提交loading */
+  const [submitLoading, setSubmitLoading] = useState<boolean>(false);
+
+  /** useEffect */
+  useAsyncEffect(async () => {
+    setSpinning(true);
+    const { success, result } = await getSecurityDefensePolicyConfig().finally(() => {
+      setSpinning(false);
+    });
+    if (success) {
+      form.setFieldsValue({
+        ...result,
+      });
+    }
+  }, []);
+
+  return (
+    <ProCard>
+      <ProForm
+        form={form}
+        scrollToFirstError
+        layout={'horizontal'}
+        requiredMark={false}
+        labelAlign={'left'}
+        {...FORM_LAYOUT}
+        onFinish={async (values) => {
+          let data = values;
+          // 保存
+          setSpinning(true);
+          setSubmitLoading(true);
+          const { success } = await saveSecurityDefensePolicyConfig(data).finally(() => {
+            setSpinning(false);
+            setSubmitLoading(false);
+          });
+          if (success) {
+            message.success(intl.formatMessage({ id: 'app.operation_success' }));
+          }
+        }}
+        submitter={{
+          render: (p, dom) => {
+            return <FooterToolbar>{dom.map((item) => item)}</FooterToolbar>;
+          },
+          submitButtonProps: {
+            loading: submitLoading,
+          },
+          resetButtonProps: {
+            style: {
+              // 隐藏重置按钮
+              display: 'none',
+            },
+          },
+        }}
+      >
+        <Spin spinning={spinning}>
+          <ProFormDigit
+            width={100}
+            label={intl.formatMessage({
+              id: 'pages.setting.security.basic.login_failure_duration',
+            })}
+            name="loginFailureDuration"
+            addonWarpStyle={{
+              flexWrap: 'nowrap',
+            }}
+            addonAfter={intl.formatMessage({
+              id: 'pages.setting.security.basic.login_failure_duration.addon_after',
+            })}
+          />
+          <ProFormDigit
+            width={100}
+            label={intl.formatMessage({
+              id: 'pages.setting.security.basic.login_failure.count',
+            })}
+            name="loginFailureCount"
+            extra={intl.formatMessage({
+              id: 'pages.setting.security.basic.login_failure_count.extra',
+            })}
+            addonWarpStyle={{
+              flexWrap: 'nowrap',
+            }}
+            addonAfter={intl.formatMessage({
+              id: 'pages.setting.security.basic.login_failure_count.addon_after',
+            })}
+          />
+          <ProFormDigit
+            label={intl.formatMessage({
+              id: 'pages.setting.security.basic.auto_unlock_time',
+            })}
+            width={100}
+            name="autoUnlockTime"
+            extra={intl.formatMessage({
+              id: 'pages.setting.security.basic.auto_unlock_time.extra',
+            })}
+            addonWarpStyle={{
+              flexWrap: 'nowrap',
+            }}
+            addonAfter={intl.formatMessage({
+              id: 'pages.setting.security.basic.auto_unlock_time.addon_after',
+            })}
+            min={0}
+          />
+          <ProFormTextArea
+            label={intl.formatMessage({
+              id: 'pages.setting.security.defense_policy.form.content_security_policy',
+            })}
+            extra={intl.formatMessage({
+              id: 'pages.setting.security.defense_policy.form.content_security_policy.extra',
+            })}
+            fieldProps={{ rows: 5 }}
+            rules={[
+              {
+                required: true,
+                message: intl.formatMessage({
+                  id: 'pages.setting.security.defense_policy.form.content_security_policy.required',
+                }),
+              },
+            ]}
+            placeholder={intl.formatMessage({
+              id: 'pages.setting.security.defense_policy.form.content_security_policy.placeholder',
+            })}
+            name={'contentSecurityPolicy'}
+            tooltip={'Content-Security-Policy'}
+          />
+        </Spin>
+      </ProForm>
+    </ProCard>
+  );
+};

@@ -33,4 +33,9 @@ build/
 .vscode/
 .DS_Store
 */.DS_Store
-/eiam-support/
+
+### Local backups (rebrand work) ###
+.backup/
+
+### Claude Code local settings ###
+.claude/settings.local.json

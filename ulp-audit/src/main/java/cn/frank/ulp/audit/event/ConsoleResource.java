@@ -1,0 +1,129 @@
+/*
+ * ulp-audit - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.audit.event;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+/**
+ * 审计资源
+ *
+ * @author Frank Zhang
+ */
+@EqualsAndHashCode(callSuper = true)
+@Data
+@AllArgsConstructor
+public class ConsoleResource extends Resource {
+    /**
+     * 资源编码
+     */
+    private String code;
+    /**
+     * 资源名称
+     */
+    private String name;
+
+    @Override
+    public String toString() {
+        return String.format("[%s](%s)", name, code);
+    }
+
+    /**
+     * 组织与用户
+     */
+    public static ConsoleResource ORG_ACCOUNT_RESOURCE     = new ConsoleResource(
+        "ulp:event:resource:org_account", "组织与用户");
+
+    /**
+     * 用户组管理
+     */
+    public static ConsoleResource USER_GROUP_RESOURCE      = new ConsoleResource(
+        "ulp:event:resource:user_group", "用户组管理");
+
+    /**
+     * 身份源管理
+     */
+    public static ConsoleResource IDENTITY_SOURCE_RESOURCE = new ConsoleResource(
+        "ulp:event:resource:identity_source", "身份源管理");
+
+    /**
+     * 认证
+     */
+    public static ConsoleResource AUTHENTICATION_RESOURCE  = new ConsoleResource(
+        "ulp:event:resource:authentication", "认证管理");
+
+    /**
+     * 身份提供商
+     */
+    public static ConsoleResource IDP_RESOURCE             = new ConsoleResource(
+        "ulp:event:resource:idp", "身份提供商");
+
+    /**
+     * 应用
+     */
+    public static ConsoleResource APP_RESOURCE             = new ConsoleResource(
+        "ulp:event:resource:application", "应用管理");
+
+    /**
+     * 通用安全
+     */
+    public static ConsoleResource SECURITY_RESOURCE        = new ConsoleResource(
+        "ulp:event:resource:security", "通用安全");
+
+    /**
+     * 密码策略
+     */
+    public static ConsoleResource PASSWORD_POLICY_RESOURCE = new ConsoleResource(
+        "ulp:event:resource:password_policy", "密码策略");
+
+    /**
+     * 系统管理员
+     */
+    public static ConsoleResource ADMINISTRATOR_RESOURCE   = new ConsoleResource(
+        "ulp:event:resource:administrator", "系统管理员");
+
+    /**
+     * 消息设置
+     */
+    public static ConsoleResource MESSAGE_RESOURCE         = new ConsoleResource(
+        "ulp:event:resource:message", "消息设置");
+
+    /**
+     * IP地理库
+     */
+    public static ConsoleResource GEO_LOCATION_RESOURCE    = new ConsoleResource(
+        "ulp:event:resource:geo_location", "IP地理库");
+
+    /**
+     * 存储配置
+     */
+    public static ConsoleResource STORAGE_RESOURCE         = new ConsoleResource(
+        "ulp:event:resource:storage", "存储配置");
+
+    /**
+     * 会话管理
+     */
+    public static ConsoleResource SESSION_RESOURCE         = new ConsoleResource(
+        "ulp:event:resource:session", "会话管理");
+
+    /**
+     * 应用分组
+     */
+    public static ConsoleResource APP_GROUP_RESOURCE       = new ConsoleResource(
+        "ulp:event:resource:app_group", "应用分组管理");
+}

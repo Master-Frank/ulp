@@ -1,0 +1,82 @@
+/*
+ * ulp-portal - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.portal.configuration;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+
+import cn.frank.ulp.UlpPortalApplication;
+import cn.frank.ulp.support.util.VersionUtils;
+
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.Paths;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+
+/**
+ * ApiConfiguration
+ *
+ * @author Frank Zhang
+ */
+@Configuration
+public class PortalApiConfiguration {
+
+    /**
+     * API INFO
+     *
+     * @return {@link Info}
+     */
+    private Info info() {
+        Contact contact = new Contact();
+        contact.setEmail("");
+        contact.setName("ULP");
+        contact.setUrl("");
+        return new Info()
+            //title
+            .title(environment.getProperty("spring.application.name"))
+            //描述
+            .description("ULP 门户端 REST API 文档")
+            //服务条款网址
+            .termsOfService("")
+            //内容
+            .contact(contact)
+            //版本
+            .version(VersionUtils.getVersion(UlpPortalApplication.class));
+    }
+
+    /**
+     * 定义openapi
+     *
+     * @return {@link OpenAPI}
+     */
+    @Bean
+    public OpenAPI openApi() {
+        OpenAPI openApi = new OpenAPI();
+        openApi.setComponents(new Components());
+        openApi.setPaths(new Paths());
+        openApi.setInfo(info());
+        return openApi;
+    }
+
+    private final Environment environment;
+
+    public PortalApiConfiguration(Environment environment) {
+        this.environment = environment;
+    }
+}

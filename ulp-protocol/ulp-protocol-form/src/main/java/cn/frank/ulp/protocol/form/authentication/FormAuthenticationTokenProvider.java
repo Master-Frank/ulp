@@ -1,0 +1,156 @@
+/*
+ * ulp-protocol-form - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.protocol.form.authentication;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+
+import cn.frank.ulp.application.form.model.FormProtocolConfig;
+import cn.frank.ulp.common.enums.app.FormEncryptType;
+import cn.frank.ulp.common.exception.app.AppAccountNotExistException;
+import cn.frank.ulp.common.jackjson.encrypt.EncryptContextHelp;
+import cn.frank.ulp.protocol.code.LoginAccount;
+import cn.frank.ulp.protocol.form.FormAuthorizationService;
+import cn.frank.ulp.protocol.form.client.FormRegisteredClient;
+import cn.frank.ulp.protocol.form.exception.FormAuthenticationException;
+import cn.frank.ulp.protocol.form.exception.FormError;
+import cn.frank.ulp.support.security.userdetails.UserDetails;
+import cn.frank.ulp.support.util.AesUtils;
+import static cn.frank.ulp.protocol.form.constant.FormProtocolConstants.FORM_ERROR_URI;
+import static cn.frank.ulp.protocol.form.exception.FormErrorCodes.APP_ACCOUNT_NOT_EXIST;
+import static cn.frank.ulp.protocol.form.exception.FormErrorCodes.SERVER_ERROR;
+import static cn.frank.ulp.support.security.util.SecurityUtils.isPrincipalAuthenticated;
+
+/**
+ *
+ * @author Frank Zhang
+ */
+public final class FormAuthenticationTokenProvider implements AuthenticationProvider {
+    private final Log logger = LogFactory.getLog(FormAuthenticationTokenProvider.class);
+
+    /**
+     * Performs authentication with the same contract as
+     * {@link AuthenticationManager#authenticate(Authentication)}
+     * .
+     *
+     * @param authentication the authentication request object.
+     * @return a fully authenticated object including credentials. May return
+     * <code>null</code> if the <code>AuthenticationProvider</code> is unable to support
+     * authentication of the passed <code>Authentication</code> object. In such a case,
+     * the next <code>AuthenticationProvider</code> that supports the presented
+     * <code>Authentication</code> class will be tried.
+     * @throws AuthenticationException if authentication fails.
+     */
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        try {
+            FormRequestAuthenticationToken requestAuthenticationToken = (FormRequestAuthenticationToken) authentication;
+            Authentication principal = (Authentication) requestAuthenticationToken.getPrincipal();
+            if (!isPrincipalAuthenticated(principal)) {
+                if (this.logger.isTraceEnabled()) {
+                    this.logger.trace(
+                        "Did not authenticate form request since principal not authenticated");
+                }
+                return authentication;
+            }
+            FormProtocolConfig config = requestAuthenticationToken.getConfig();
+            UserDetails user = ((UserDetails) principal.getPrincipal());
+            //@formatter:off
+            FormRegisteredClient registeredClient = FormRegisteredClient.builder()
+                    .id(config.getAppId())
+                    .code(config.getAppCode())
+                    .clientId(config.getClientId())
+                    .clientName(config.getAppName())
+                    .build();
+            LoginAccount account = authorizationService.getDefaultLoginAccount(registeredClient, user);
+            //@formatter:on
+            //密码加密
+            String password = getEncryptionField(EncryptContextHelp.decrypt(account.getPassword()),
+                config.getPasswordEncryptType(), config.getPasswordEncryptKey());
+            // 用户加密
+            String username = getEncryptionField(account.getUsername(),
+                config.getUsernameEncryptType(), config.getUsernameEncryptKey());
+            return new FormAuthenticationToken(principal, username, password, config);
+        } catch (AppAccountNotExistException exception) {
+            FormError error = new FormError(APP_ACCOUNT_NOT_EXIST, "App account not exist",
+                FORM_ERROR_URI);
+            throw new FormAuthenticationException(error);
+        } catch (Exception exception) {
+            FormError error = new FormError(SERVER_ERROR, exception.getMessage(), FORM_ERROR_URI);
+            throw new FormAuthenticationException(error);
+        }
+    }
+
+    /**
+     * Returns <code>true</code> if this <Code>AuthenticationProvider</code> supports the
+     * indicated <Code>Authentication</code> object.
+     * <p>
+     * Returning <code>true</code> does not guarantee an
+     * <code>AuthenticationProvider</code> will be able to authenticate the presented
+     * instance of the <code>Authentication</code> class. It simply indicates it can
+     * support closer evaluation of it. An <code>AuthenticationProvider</code> can still
+     * return <code>null</code> from the {@link #authenticate(Authentication)} method to
+     * indicate another <code>AuthenticationProvider</code> should be tried.
+     * </p>
+     * <p>
+     * Selection of an <code>AuthenticationProvider</code> capable of performing
+     * authentication is conducted at runtime the <code>ProviderManager</code>.
+     * </p>
+     *
+     * @param authentication {@link FormAuthenticationToken}
+     * @return <code>true</code> if the implementation can more closely evaluate the
+     * <code>Authentication</code> class presented
+     */
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return authentication.isAssignableFrom(FormRequestAuthenticationToken.class);
+    }
+
+    private String getEncryptionField(String fieldValue, FormEncryptType encryptionType,
+                                      String encryptionKey) {
+        if (encryptionType == null) {
+            return fieldValue;
+        }
+        switch (encryptionType) {
+            case BASE64 -> {
+                return Base64.getEncoder()
+                    .encodeToString(fieldValue.getBytes(StandardCharsets.UTF_8));
+            }
+            case AES -> {
+                return new AesUtils(encryptionKey).encrypt(fieldValue);
+            }
+            case MD5 -> {
+                return DigestUtils.md5Hex(fieldValue);
+            }
+        }
+        return fieldValue;
+    }
+
+    private final FormAuthorizationService authorizationService;
+
+    public FormAuthenticationTokenProvider(FormAuthorizationService authorizationService) {
+        this.authorizationService = authorizationService;
+    }
+}

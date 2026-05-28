@@ -1,0 +1,105 @@
+/*
+ * ulp-console - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.console.service.authn;
+
+import java.util.List;
+
+import cn.frank.ulp.common.entity.authn.IdentityProviderEntity;
+import cn.frank.ulp.console.pojo.query.authn.IdentityProviderListQuery;
+import cn.frank.ulp.console.pojo.result.authn.IdentityProviderCreateResult;
+import cn.frank.ulp.console.pojo.result.authn.IdentityProviderListResult;
+import cn.frank.ulp.console.pojo.result.authn.IdentityProviderResult;
+import cn.frank.ulp.console.pojo.save.authn.IdentityProviderCreateParam;
+import cn.frank.ulp.console.pojo.update.authn.IdpUpdateParam;
+import cn.frank.ulp.support.repository.page.domain.Page;
+import cn.frank.ulp.support.repository.page.domain.PageModel;
+
+/**
+ * <p>
+ * 身份认证源配置 服务类
+ * </p>
+ *
+ * @author Frank Zhang
+ */
+public interface IdentityProviderService {
+    /**
+     * 平台是否启用
+     *
+     * @param id {@link String}
+     * @return {@link Boolean}
+     */
+    Boolean identityProviderIsEnable(String id);
+
+    /**
+     * 通过平台类型获取
+     *
+     * @param provider {@link String}
+     * @return {@link IdentityProviderEntity}
+     */
+    List<IdentityProviderEntity> getByIdentityProvider(String provider);
+
+    /**
+     * 认证源列表
+     *
+     * @param pageModel {@link PageModel }
+     * @param query     {@link IdentityProviderListQuery }
+     * @return {@link List}
+     */
+    Page<IdentityProviderListResult> getIdentityProviderList(PageModel pageModel,
+                                                             IdentityProviderListQuery query);
+
+    /**
+     * 认证源详情
+     *
+     * @param id {@link String}
+     * @return {@link IdentityProviderResult}
+     */
+    IdentityProviderResult getIdentityProvider(String id);
+
+    /**
+     * 保存认证源
+     *
+     * @param param {@link IdentityProviderCreateParam}
+     * @return {@link IdentityProviderCreateResult}
+     */
+    IdentityProviderCreateResult createIdp(IdentityProviderCreateParam param);
+
+    /**
+     * 更改认证源状态
+     *
+     * @param id      {@link String}
+     * @param enabled {@link Boolean}
+     * @return {@link Boolean}
+     */
+    Boolean updateIdentityProviderStatus(String id, Boolean enabled);
+
+    /**
+     * 更新身份源
+     *
+     * @param param {@link IdpUpdateParam}
+     * @return {@link Boolean}
+     */
+    Boolean updateIdentityProvider(IdpUpdateParam param);
+
+    /**
+     * 删除认证源
+     *
+     * @param id {@link  String}
+     * @return {@link Boolean}
+     */
+    Boolean deleteIdentityProvider(String id);
+}

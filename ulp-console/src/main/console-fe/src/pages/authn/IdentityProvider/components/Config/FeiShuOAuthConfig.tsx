@@ -1,0 +1,60 @@
+/*
+ * ulp-console - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { ProFormText } from '@ant-design/pro-components';
+import CallbackUrl from './CallbackUrl';
+import { useIntl } from '@umijs/max';
+
+/**
+ * 飞书扫码登录
+ *
+ * @constructor
+ */
+const FeiShuScanCode = (props: { isCreate: boolean }) => {
+  const { isCreate } = props;
+  const intl = useIntl();
+
+  return (
+    <>
+      <ProFormText
+        name={['config', 'appId']}
+        label="AppId"
+        rules={[{ required: true }]}
+        extra={intl.formatMessage({
+          id: 'pages.authn.identity_provider.config.feishu_scan_code.app_id.extra',
+        })}
+        fieldProps={{ autoComplete: 'off' }}
+        placeholder={intl.formatMessage({
+          id: 'pages.authn.identity_provider.config.ding_talk_oauth.app_id.placeholder',
+        })}
+      />
+      <ProFormText.Password
+        rules={[{ required: true }]}
+        name={['config', 'appSecret']}
+        label="AppSecret"
+        extra={intl.formatMessage({
+          id: 'pages.authn.identity_provider.config.feishu_scan_code.app_id.extra',
+        })}
+        placeholder={intl.formatMessage({
+          id: 'pages.authn.identity_provider.config.ding_talk_oauth.app_secret.placeholder',
+        })}
+        fieldProps={{ autoComplete: 'off' }}
+      />
+      {!isCreate && <CallbackUrl />}
+    </>
+  );
+};
+export default FeiShuScanCode;

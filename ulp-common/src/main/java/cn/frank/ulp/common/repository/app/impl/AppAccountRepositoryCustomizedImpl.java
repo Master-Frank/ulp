@@ -1,0 +1,129 @@
+/*
+ * ulp-common - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.common.repository.app.impl;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
+
+import cn.frank.ulp.common.entity.app.po.AppAccountPO;
+import cn.frank.ulp.common.entity.app.query.AppAccountQueryParam;
+import cn.frank.ulp.common.repository.app.AppAccountRepositoryCustomized;
+
+import lombok.AllArgsConstructor;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+
+/**
+ * AppAccount Repository Customized
+ *
+ * @author Frank Zhang
+ */
+@Repository
+@AllArgsConstructor
+public class AppAccountRepositoryCustomizedImpl implements AppAccountRepositoryCustomized {
+
+    /**
+     * 获取应用账户列表
+     *
+     * @param pageable {@link  Pageable}
+     * @param query    {@link  AppAccountQueryParam}
+     * @return {@link Page}
+     */
+    @Override
+    public Page<AppAccountPO> getAppAccountList(AppAccountQueryParam query, Pageable pageable) {
+        Map<String, Object> args = new HashMap<>();
+        //@formatter:off
+        String hql = """
+                SELECT
+                	NEW cn.frank.ulp.common.entity.app.po.AppAccountPO(a.id,
+                	a.appId,
+                	a.userId,
+                	a.account,
+                	a.createTime,
+                	a.defaulted,
+                	u.username,
+                	p.name,
+                	p.type,
+                	p.template,
+                	p.protocol)
+                FROM
+                	AppAccountEntity a
+                	LEFT JOIN UserEntity u ON a.userId = u.id
+                	LEFT JOIN AppEntity p ON a.appId = p.id
+                	WHERE 1=1
+                """;
+        //@formatter:on
+        String whereSql = "";
+        //用户名
+        if (StringUtils.isNoneBlank(query.getUsername())) {
+            whereSql += " AND u.username LIKE :username";
+            args.put("username", "%" + query.getUsername() + "%");
+        }
+        //用户ID
+        if (StringUtils.isNoneBlank(query.getUserId())) {
+            whereSql += " AND u.id = :userId";
+            args.put("userId", query.getUserId());
+        }
+        //账户名称
+        if (StringUtils.isNoneBlank(query.getAccount())) {
+            whereSql += " AND a.account LIKE :account";
+            args.put("account", "%" + query.getAccount() + "%");
+        }
+
+        //应用id
+        if (StringUtils.isNoneBlank(query.getAppId())) {
+            whereSql += " AND a.appId = :appId";
+            args.put("appId", query.getAppId());
+        }
+
+        //应用名称
+        if (StringUtils.isNotBlank(query.getAppName())) {
+            whereSql += " AND p.name LIKE :appName";
+            args.put("appName", "%" + query.getAppName() + "%");
+        }
+        //按照创建时间倒序
+        TypedQuery<AppAccountPO> listQuery = entityManager.createQuery(hql + whereSql,
+            AppAccountPO.class);
+        args.forEach(listQuery::setParameter);
+        listQuery.setFirstResult((int) pageable.getOffset());
+        listQuery.setMaxResults(pageable.getPageSize());
+        String countSql = """
+                SELECT
+                	COUNT(DISTINCT a.id)
+                FROM
+                	AppAccountEntity a
+                	LEFT JOIN UserEntity u ON a.userId = u.id
+                	LEFT JOIN AppEntity p ON a.appId = p.id
+                	WHERE 1=1
+                """;
+        TypedQuery<Long> countQuery = entityManager.createQuery(countSql + whereSql, Long.class);
+        args.forEach(countQuery::setParameter);
+        return new PageImpl<>(listQuery.getResultList(), pageable, countQuery.getSingleResult());
+    }
+
+    /**
+     * EntityManager
+     */
+    private final EntityManager entityManager;
+}

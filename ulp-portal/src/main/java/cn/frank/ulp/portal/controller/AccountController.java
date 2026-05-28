@@ -1,0 +1,194 @@
+/*
+ * ulp-portal - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.portal.controller;
+
+import java.util.List;
+
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import cn.frank.ulp.audit.annotation.Audit;
+import cn.frank.ulp.audit.event.type.EventType;
+import cn.frank.ulp.portal.pojo.request.*;
+import cn.frank.ulp.portal.pojo.result.BoundIdpListResult;
+import cn.frank.ulp.portal.service.AccountService;
+import cn.frank.ulp.support.result.ApiRestResult;
+import cn.frank.ulp.support.web.decrypt.DecryptRequestBody;
+
+import lombok.AllArgsConstructor;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import static cn.frank.ulp.portal.constant.PortalConstants.*;
+
+/**
+ * 账户管理
+ *
+ * @author Frank Zhang
+ */
+@RestController
+@AllArgsConstructor
+@RequestMapping(value = ACCOUNT_PATH)
+public class AccountController {
+
+    /**
+     * 修改账户信息
+     *
+     * @return {@link  ApiRestResult}
+     */
+    @Audit(type = EventType.MODIFY_ACCOUNT_INFO_PORTAL)
+    @Operation(summary = "修改账户信息")
+    @PutMapping("/change_info")
+    public ApiRestResult<Boolean> changeInfo(@DecryptRequestBody @RequestBody @Validated UpdateUserInfoRequest param) {
+        Boolean result = accountService.changeInfo(param);
+        return ApiRestResult.ok(result);
+    }
+
+    /**
+     * 准备修改密码
+     *
+     * @return {@link  ApiRestResult}
+     */
+    @Audit(type = EventType.PREPARE_MODIFY_PASSWORD)
+    @Operation(summary = "准备修改账户密码")
+    @PostMapping("/prepare_change_password")
+    public ApiRestResult<Boolean> prepareChangePassword(@DecryptRequestBody @RequestBody @Validated PrepareChangePasswordRequest param) {
+        return ApiRestResult.ok(accountService.prepareChangePassword(param));
+    }
+
+    /**
+     * 修改密码
+     *
+     * @return {@link  ApiRestResult}
+     */
+    @Audit(type = EventType.MODIFY_USER_PASSWORD_PORTAL)
+    @Operation(summary = "修改账户密码")
+    @PutMapping("/change_password")
+    public ApiRestResult<Boolean> changePassword(@DecryptRequestBody @RequestBody @Validated ChangePasswordRequest param) {
+        return ApiRestResult.ok(accountService.changePassword(param));
+    }
+
+    /**
+     * 准备修改手机
+     *
+     * @return {@link  ApiRestResult}
+     */
+    @Audit(type = EventType.PREPARE_MODIFY_PHONE)
+    @Operation(summary = "准备修改手机")
+    @PostMapping("/prepare_change_phone")
+    public ApiRestResult<Boolean> prepareChangePhone(@DecryptRequestBody @RequestBody @Validated PrepareChangePhoneRequest param) {
+        return ApiRestResult.ok(accountService.prepareChangePhone(param));
+    }
+
+    /**
+     * 修改手机
+     *
+     * @return {@link  ApiRestResult}
+     */
+    @Audit(type = EventType.MODIFY_USER_PHONE_PORTAL)
+    @Operation(summary = "修改手机")
+    @PutMapping("/change_phone")
+    public ApiRestResult<Boolean> changePhone(@RequestBody @Validated ChangePhoneRequest param) {
+        return ApiRestResult.ok(accountService.changePhone(param));
+    }
+
+    /**
+     * 准备修改邮箱
+     *
+     * @return {@link  ApiRestResult}
+     */
+    @Audit(type = EventType.PREPARE_MODIFY_EMAIL)
+    @Operation(summary = "准备修改邮箱")
+    @PostMapping("/prepare_change_email")
+    public ApiRestResult<Boolean> prepareChangeEmail(@DecryptRequestBody @RequestBody @Validated PrepareChangeEmailRequest param) {
+        return ApiRestResult.ok(accountService.prepareChangeEmail(param));
+    }
+
+    /**
+     * 修改邮箱
+     *
+     * @return {@link  ApiRestResult}
+     */
+    @Audit(type = EventType.MODIFY_USER_EMAIL_PORTAL)
+    @Operation(summary = "修改邮箱")
+    @PutMapping("/change_email")
+    public ApiRestResult<Boolean> changeEmail(@RequestBody @Validated ChangeEmailRequest param) {
+        return ApiRestResult.ok(accountService.changeEmail(param));
+    }
+
+    /**
+     * 忘记密码发送验证码
+     *
+     * @return {@link  ApiRestResult}
+     */
+    @Operation(summary = "忘记密码发送验证码")
+    @GetMapping(FORGET_PASSWORD_CODE)
+    public ApiRestResult<Boolean> forgetPasswordCode(@Parameter(description = "验证码接收者（邮箱/手机号）") @RequestParam String recipient) {
+        return ApiRestResult.ok(accountService.forgetPasswordCode(recipient));
+    }
+
+    /**
+     * 忘记密码预认证
+     *
+     * @return {@link  ApiRestResult}
+     */
+    @Operation(summary = "忘记密码预认证")
+    @PostMapping(PREPARE_FORGET_PASSWORD)
+    public ApiRestResult<Boolean> prepareForgetPassword(@DecryptRequestBody @RequestBody @Validated PrepareForgetPasswordRequest param) {
+        return ApiRestResult
+            .ok(accountService.prepareForgetPassword(param.getRecipient(), param.getCode()));
+    }
+
+    /**
+     * 忘记密码
+     *
+     * @return {@link  ApiRestResult}
+     */
+    @Operation(summary = "忘记密码")
+    @PutMapping(FORGET_PASSWORD)
+    public ApiRestResult<Boolean> forgetPassword(@DecryptRequestBody @RequestBody @Validated ForgetPasswordRequest forgetPasswordRequest) {
+        return ApiRestResult.ok(accountService.forgetPassword(forgetPasswordRequest));
+    }
+
+    /**
+     * 查询账号绑定
+     *
+     * @return {@link  ApiRestResult}
+     */
+    @Operation(summary = "查询已绑定IDP")
+    @GetMapping("/bound_idp")
+    public ApiRestResult<List<BoundIdpListResult>> getBoundIdpList() {
+        return ApiRestResult.ok(accountService.getBoundIdpList());
+    }
+
+    /**
+     * 解除账号绑定
+     *
+     * @return {@link  ApiRestResult}
+     */
+    @Audit(type = EventType.UNBIND_IDP_USER)
+    @Operation(summary = "IDP账号解绑")
+    @DeleteMapping("/unbind_idp/{id}")
+    public ApiRestResult<Boolean> unbindIdp(@Parameter(description = "IDP ID") @PathVariable("id") String id) {
+        return ApiRestResult.ok(accountService.unbindIdp(id));
+    }
+
+    /**
+     * 账户服务
+     */
+    private final AccountService accountService;
+}

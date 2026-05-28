@@ -1,0 +1,5 @@
+org.springframework.boot.env.EnvironmentPostProcessor=\
+cn.frank.ulp.support.config.CustomEnvironmentPostProcessor
+
+org.springframework.context.ApplicationContextInitializer=\
+cn.frank.ulp.support.config.CustomApplicationContextInitializer

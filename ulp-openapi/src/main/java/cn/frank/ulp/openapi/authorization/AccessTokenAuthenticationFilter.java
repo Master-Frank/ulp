@@ -1,0 +1,78 @@
+/*
+ * ulp-openapi - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.openapi.authorization;
+
+import java.io.IOException;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+/**
+ * Token认证过滤器
+ *
+ * @author Frank Zhang
+ */
+public class AccessTokenAuthenticationFilter extends OncePerRequestFilter {
+    private final Logger                logger = LoggerFactory
+        .getLogger(AccessTokenAuthenticationFilter.class);
+    private final AuthenticationManager authenticationManager;
+
+    public AccessTokenAuthenticationFilter(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+    }
+
+    @Override
+    protected void doFilterInternal(@NonNull HttpServletRequest request,
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull FilterChain filterChain) throws ServletException,
+                                                                      IOException {
+        String token = resolveFromAuthorizationHeader(request);
+        if (!StringUtils.isBlank(token)) {
+            try {
+                Authentication authentication = authenticationManager
+                    .authenticate(new AccessTokenAuthenticationToken(token));
+                SecurityContext context = SecurityContextHolder.createEmptyContext();
+                context.setAuthentication(authentication);
+                SecurityContextHolder.setContext(context);
+            } catch (InvalidBearerTokenException ignored) {
+            }
+        }
+        filterChain.doFilter(request, response);
+    }
+
+    /**
+     *ACCESS_TOKEN_HEADER
+     */
+    public static final String ACCESS_TOKEN_HEADER = "x-ulp-access-token";
+
+    private String resolveFromAuthorizationHeader(HttpServletRequest request) {
+        return request.getHeader(ACCESS_TOKEN_HEADER);
+    }
+
+}

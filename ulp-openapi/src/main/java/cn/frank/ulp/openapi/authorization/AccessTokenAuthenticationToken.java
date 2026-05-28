@@ -1,0 +1,89 @@
+/*
+ * ulp-openapi - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.openapi.authorization;
+
+import java.io.Serial;
+import java.util.Collections;
+
+import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.util.Assert;
+
+/**
+ *
+ * @author Frank Zhang
+ */
+public class AccessTokenAuthenticationToken extends AbstractAuthenticationToken {
+
+    @Serial
+    private static final long serialVersionUID = -1075066894919649480L;
+
+    private final String      clientId;
+    private final String      token;
+
+    /**
+     * Create a {@code BearerTokenAuthenticationToken} using the provided parameter(s)
+     *
+     * @param token    - the bearer token
+     */
+    public AccessTokenAuthenticationToken(String token) {
+        super(Collections.emptyList());
+        Assert.hasText(token, "token cannot be empty");
+        this.token = token;
+        this.clientId = "";
+    }
+
+    /**
+     * Create a {@code BearerTokenAuthenticationToken} using the provided parameter(s)
+     *
+     * @param clientId clientId
+     * @param token    - the bearer token
+     */
+    public AccessTokenAuthenticationToken(String clientId, String token, boolean authenticated) {
+        super(Collections.emptyList());
+        Assert.hasText(clientId, "clientId cannot be empty");
+        Assert.hasText(token, "token cannot be empty");
+        this.token = token;
+        this.clientId = clientId;
+        setAuthenticated(authenticated);
+    }
+
+    /**
+     * Get the
+     * <a href="https://tools.ietf.org/html/rfc6750#section-1.2" target="_blank">Bearer
+     * Token</a>
+     * @return the token that proves the caller's authority to perform the
+     * {@link jakarta.servlet.http.HttpServletRequest}
+     */
+    public String getToken() {
+        return this.token;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    @Override
+    public Object getCredentials() {
+        return this.getToken();
+    }
+
+    @Override
+    public Object getPrincipal() {
+        return this.getClientId();
+    }
+
+}

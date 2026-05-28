@@ -1,0 +1,230 @@
+/*
+ * ulp-portal - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { FieldNames } from '@/constants';
+import { changePassword, prepareChangePassword } from '@/pages/Account/service';
+import { aesEcbEncrypt } from '@/utils/aes';
+import { onGetEncryptSecret } from '@/utils/utils';
+import {
+  ModalForm,
+  ProFormCaptcha,
+  ProFormDependency,
+  ProFormInstance,
+  ProFormRadio,
+  ProFormText,
+} from '@ant-design/pro-components';
+import { App, Spin } from 'antd';
+import { useEffect, useRef, useState } from 'react';
+import { FormLayout } from './constant';
+import { FormattedMessage, useIntl, useModel } from '@@/exports';
+
+/**
+ * 修改密码
+ * @param props
+ * @constructor
+ */
+const ModifyPassword = (props: {
+  visible: boolean;
+  prefixCls: string;
+  setRefresh: (visible: boolean) => void;
+  setVisible: (visible: boolean) => void;
+}) => {
+  const { initialState } = useModel('@@initialState');
+  const intl = useIntl();
+  const { message } = App.useApp();
+  const { visible, setVisible, setRefresh } = props;
+  const [loading, setLoading] = useState<boolean>(false);
+  const formRef = useRef<ProFormInstance>();
+  useEffect(() => {
+    setLoading(true);
+    setLoading(false);
+  }, [visible]);
+
+  return (
+    <ModalForm
+      title={intl.formatMessage({ id: 'page.account.modify_password.form' })}
+      initialValues={{ channel: 'sms' }}
+      width={'560px'}
+      formRef={formRef}
+      labelAlign={'right'}
+      preserve={false}
+      layout={'horizontal'}
+      {...FormLayout}
+      autoFocusFirstInput
+      open={visible}
+      modalProps={{
+        destroyOnClose: true,
+        maskClosable: false,
+        onCancel: async () => {
+          setVisible(false);
+        },
+      }}
+      onFinish={async (formData: Record<string, any>) => {
+        const publicSecret = await onGetEncryptSecret();
+        if (publicSecret) {
+          //加密传输
+          const { success, result } = await changePassword(
+            aesEcbEncrypt(
+              JSON.stringify({
+                ...formData,
+                newPassword: formData[FieldNames.NEW_PASSWORD] as string,
+                verifyCode: formData[FieldNames.VERIFY_CODE] as string,
+                channel: formData[FieldNames.CHANNEL] as string,
+              }),
+              publicSecret,
+            ),
+          );
+          if (success && result) {
+            setVisible(false);
+            message.success(intl.formatMessage({ id: 'page.account.modify_password.success' }));
+            setRefresh(true);
+            return Promise.resolve();
+          }
+        }
+        return Promise.reject();
+      }}
+    >
+      <Spin spinning={loading}>
+        <ProFormText.Password
+          placeholder={intl.formatMessage({
+            id: 'page.account.modify_password.form.new_password.placeholder',
+          })}
+          label={intl.formatMessage({ id: 'page.account.modify_password.form.new_password' })}
+          name={FieldNames.NEW_PASSWORD}
+          fieldProps={{ autoComplete: 'off' }}
+          rules={[
+            {
+              required: true,
+              message: intl.formatMessage({
+                id: 'page.account.modify_password.form.new_password.rule.0',
+              }),
+            },
+          ]}
+        />
+        <ProFormRadio.Group
+          name={FieldNames.CHANNEL}
+          label={intl.formatMessage({
+            id: 'page.account.modify_password.form.verify-code-type.label',
+          })}
+          options={[
+            {
+              label: intl.formatMessage({
+                id: 'page.account.modify_password.form.phone.label',
+              }),
+              value: 'sms',
+            },
+            {
+              label: intl.formatMessage({
+                id: 'page.account.modify_password.form.mail.label',
+              }),
+              value: 'mail',
+            },
+          ]}
+          rules={[
+            {
+              required: true,
+              message: intl.formatMessage({
+                id: 'page.account.modify_password.form.verify-code-type.rule.0',
+              }),
+            },
+          ]}
+        />
+        <ProFormDependency name={[FieldNames.CHANNEL]}>
+          {({ channel }) => {
+            if (channel === 'sms') {
+              return (
+                <ProFormText
+                  key={'sms'}
+                  label={intl.formatMessage({
+                    id: 'page.account.modify_password.form.phone',
+                  })}
+                  name={'show'}
+                  initialValue={initialState?.currentUser?.phone}
+                  readonly
+                />
+              );
+            }
+            return (
+              <ProFormText
+                key={'mail'}
+                label={intl.formatMessage({
+                  id: 'page.account.modify_password.form.mail',
+                })}
+                name={'show'}
+                initialValue={initialState?.currentUser?.email}
+                readonly
+              />
+            );
+          }}
+        </ProFormDependency>
+        <ProFormCaptcha
+          label={intl.formatMessage({ id: 'page.account.modify_password.form.verify-code' })}
+          fieldProps={{
+            maxLength: 6,
+          }}
+          captchaProps={{}}
+          phoneName={'show'}
+          placeholder={intl.formatMessage({
+            id: 'pages.login.captcha.placeholder',
+          })}
+          captchaTextRender={(timing, count) => {
+            if (timing) {
+              return `${count} ${intl.formatMessage({
+                id: 'pages.login.phone.captcha-second-text',
+              })}`;
+            }
+            return intl.formatMessage({
+              id: 'pages.login.phone.get-opt-code',
+            });
+          }}
+          name={FieldNames.VERIFY_CODE}
+          rules={[
+            {
+              required: true,
+              message: <FormattedMessage id="pages.login.captcha.required" />,
+            },
+          ]}
+          onGetCaptcha={async () => {
+            const validate = await formRef.current?.validateFields([FieldNames.CHANNEL]);
+            if (!validate) {
+              return;
+            }
+            let channel = formRef.current?.getFieldValue(FieldNames.CHANNEL);
+            const publicSecret = await onGetEncryptSecret();
+            if (publicSecret) {
+              const { success } = await prepareChangePassword(
+                aesEcbEncrypt(
+                  JSON.stringify({
+                    channel: channel as string,
+                  }),
+                  publicSecret,
+                ),
+              );
+              if (success) {
+                message.success(
+                  intl.formatMessage({
+                    id: 'pages.login.phone.get-opt-code.success',
+                  }),
+                );
+              }
+            }
+          }}
+        />
+      </Spin>
+    </ModalForm>
+  );
+};
+export default ModifyPassword;

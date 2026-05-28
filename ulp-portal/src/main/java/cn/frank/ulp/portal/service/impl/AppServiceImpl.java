@@ -1,0 +1,187 @@
+/*
+ * ulp-portal - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.portal.service.impl;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
+
+import org.jetbrains.annotations.NotNull;
+import org.springframework.stereotype.Service;
+
+import com.google.common.collect.Lists;
+
+import cn.frank.ulp.common.entity.account.UserGroupMemberEntity;
+import cn.frank.ulp.common.entity.account.po.OrganizationMemberPO;
+import cn.frank.ulp.common.entity.app.AppEntity;
+import cn.frank.ulp.common.entity.app.po.AppGroupPO;
+import cn.frank.ulp.common.entity.app.query.AppGroupQueryParam;
+import cn.frank.ulp.common.repository.account.OrganizationMemberRepository;
+import cn.frank.ulp.common.repository.account.UserGroupMemberRepository;
+import cn.frank.ulp.common.repository.app.AppGroupRepository;
+import cn.frank.ulp.common.repository.app.AppRepository;
+import cn.frank.ulp.portal.converter.AppConverter;
+import cn.frank.ulp.portal.converter.AppGroupConverter;
+import cn.frank.ulp.portal.pojo.query.GetAppGroupListQuery;
+import cn.frank.ulp.portal.pojo.query.GetAppListQuery;
+import cn.frank.ulp.portal.pojo.result.AppGroupListResult;
+import cn.frank.ulp.portal.pojo.result.GetAppListResult;
+import cn.frank.ulp.portal.service.AppService;
+import cn.frank.ulp.support.repository.page.domain.Page;
+import cn.frank.ulp.support.repository.page.domain.PageModel;
+import cn.frank.ulp.support.security.userdetails.Application;
+import cn.frank.ulp.support.security.userdetails.UserDetails;
+import cn.frank.ulp.support.security.util.SecurityUtils;
+
+/**
+ * AppService
+ *
+ * @author Frank Zhang
+ */
+@Service
+public class AppServiceImpl implements AppService {
+
+    /**
+     * 获取应用列表
+     *
+     * @param appQuery {@link GetAppListQuery}
+     * @return {@link Page}
+     */
+    @Override
+    public Page<GetAppListResult> getAppList(GetAppListQuery appQuery, PageModel pageModel) {
+        UserDetails userDetails = SecurityUtils.getCurrentUser();
+        Stream<Application> stream = userDetails.getApplications().stream();
+        //应用名
+        if (org.apache.commons.lang3.StringUtils.isNoneBlank(appQuery.getName())) {
+            stream = stream
+                .filter(t -> t.getName().toUpperCase().contains(appQuery.getName().toUpperCase()));
+        }
+        //分组ID
+        if (Objects.nonNull(appQuery.getGroupId())) {
+            stream = stream.filter(t -> Objects.nonNull(t.getGroups()))
+                .filter(t -> t.getGroups().stream().anyMatch(
+                    applicationGroup -> applicationGroup.getId().equals(appQuery.getGroupId())));
+        }
+        List<Application> applications = stream.toList();
+        List<AppEntity> appList = appRepository
+            .findByIdIn(applications.stream().map(Application::getId).toList());
+        //查询映射
+        return appConverter.entityConvertToAppListResult(appList, pageModel);
+    }
+
+    /**
+     * 查询应用分组
+     *
+     * @param query {@link GetAppGroupListQuery}
+     * @return {@link AppGroupListResult}
+     */
+    @Override
+    public List<AppGroupListResult> getAppGroupList(GetAppGroupListQuery query) {
+        //查询映射
+        //@formatter:off
+        AppGroupQueryParam param = appGroupConverter.appGroupQueryToQueryParam(query);
+        //@formatter:on
+        String userId = SecurityUtils.getCurrentUserId();
+        List<AppGroupPO> list = appGroupRepository.getAppGroupList(getSubjectIds(userId), param);
+        return appGroupConverter.entityConvertToAppGroupListResult(list);
+    }
+
+    /**
+     * 获取应用数量
+     *
+     * @param groupId {@link String}
+     * @return {@link Integer}
+     */
+    @Override
+    public Long getAppCount(String groupId) {
+        UserDetails userDetails = SecurityUtils.getCurrentUser();
+        Stream<Application> stream = userDetails.getApplications().stream();
+        return stream.filter(t -> Objects.nonNull(t.getGroups())).filter(t -> t.getGroups().stream()
+            .anyMatch(applicationGroup -> applicationGroup.getId().equals(groupId))).count();
+    }
+
+    /**
+     * 获取应用数量
+     *
+     * @return {@link Long}
+     */
+    @Override
+    public Long getAppCount() {
+        UserDetails userDetails = SecurityUtils.getCurrentUser();
+        Stream<Application> stream = userDetails.getApplications().stream();
+        return stream.count();
+    }
+
+    @NotNull
+    private List<String> getSubjectIds(String userId) {
+        List<String> paramList = Lists.newArrayList();
+        //当前用户加入的用户组Id
+        List<String> groupIdList = userGroupMemberRepository.findByUserId(userId).stream()
+            .map(UserGroupMemberEntity::getGroupId).toList();
+        //当前用户加入的组织id
+        List<String> orgId = organizationMemberRepository.findAllPoByUserId(userId).stream()
+            .map(OrganizationMemberPO::getOrgId).toList();
+        paramList.addAll(groupIdList);
+        paramList.addAll(orgId);
+        paramList.add(userId);
+        return paramList;
+    }
+
+    /**
+     * AppRepository
+     */
+    private final AppRepository                appRepository;
+
+    /**
+     * AppConverter
+     */
+    private final AppConverter                 appConverter;
+
+    /**
+     * AppGroupRepository
+     */
+    private final AppGroupRepository           appGroupRepository;
+
+    /**
+     * AppGroupConverter
+     */
+    private final AppGroupConverter            appGroupConverter;
+
+    /**
+     * UserGroupMemberRepository
+     */
+    private final UserGroupMemberRepository    userGroupMemberRepository;
+
+    /**
+     * OrganizationMemberRepository
+     */
+    private final OrganizationMemberRepository organizationMemberRepository;
+
+    public AppServiceImpl(AppRepository appRepository, AppConverter appConverter,
+                          AppGroupRepository appGroupRepository,
+                          AppGroupConverter appGroupConverter,
+                          UserGroupMemberRepository userGroupMemberRepository,
+                          OrganizationMemberRepository organizationMemberRepository) {
+        this.appRepository = appRepository;
+        this.appConverter = appConverter;
+        this.appGroupRepository = appGroupRepository;
+        this.appGroupConverter = appGroupConverter;
+        this.userGroupMemberRepository = userGroupMemberRepository;
+        this.organizationMemberRepository = organizationMemberRepository;
+    }
+
+}

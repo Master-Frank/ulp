@@ -1,0 +1,160 @@
+/*
+ * ulp-audit - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.audit.enums;
+
+import com.fasterxml.jackson.annotation.JsonValue;
+
+import cn.frank.ulp.audit.event.type.EventType;
+import cn.frank.ulp.support.exception.BadParamsException;
+import cn.frank.ulp.support.web.converter.EnumConvert;
+
+import lombok.Getter;
+
+/**
+ * 目标类型
+ *
+ * @author Frank Zhang
+ */
+@Getter
+public enum TargetType {
+
+                        /**
+                         * 用户
+                         */
+                        USER("user", "用户"),
+
+                        /**
+                         * 用户详情
+                         */
+                        USER_DETAIL("user_detail", "用户详情"),
+
+                        /**
+                         * 用户组
+                         */
+                        USER_GROUP("user_group", "用户组"),
+
+                        /**
+                         * 用户组成员
+                         */
+                        USER_GROUP_MEMBER("user_group_member", "用户组成员"),
+
+                        /**
+                         * 身份源
+                         */
+                        IDENTITY_SOURCE("identity_source", "身份源"),
+
+                        /**
+                         * 组织机构
+                         */
+                        ORGANIZATION("organization", "组织机构"),
+                        /**
+                         * 应用
+                         */
+                        APPLICATION("application", "应用"),
+
+                        /**
+                         * 应用账户
+                         */
+                        APPLICATION_ACCOUNT("application_account", "应用账户"),
+
+                        /**
+                         * 会话管理
+                         */
+                        SESSION("session", "会话管理"),
+
+                        /**
+                         * 应用权限
+                         */
+                        APP_PERMISSION_RESOURCE("app_permission_resource", "应用权限"),
+
+                        /**
+                         * 应用权限策略
+                         */
+                        APP_PERMISSION_POLICY("app_permission_policy", "应用权限策略"),
+
+                        /**
+                         * 应用权限策略
+                         */
+                        APP_PERMISSION_ROLE("app_permission_role", "应用权限角色"),
+
+                        /**
+                         * 应用分组
+                         */
+                        APP_GROUP("app_group", "应用分组"),
+                        /**
+                         * 系统角色
+                         */
+                        ROLE("role", "系统角色"),
+                        /**
+                         * 管理员
+                         */
+                        ADMINISTRATOR("administrator", "管理员"),
+                        /**
+                         * 密码策略
+                         */
+                        PASSWORD_POLICY("password_policy", "密码策略"),
+                        /**
+                         * 邮件模版
+                         */
+                        MAIL_TEMPLATE("mail_template", "邮件模版"),
+
+                        /**
+                         * 身份认证提供商
+                         */
+                        IDENTITY_PROVIDER("identity_provider", "身份认证提供商"),
+
+                        /**
+                         * 控制台
+                         */
+                        CONSOLE("console", "控制台"),
+
+                        /**
+                         * 门户端
+                         */
+                        PORTAL("portal", "门户端"),
+                        /**
+                         * 用户绑定三方用户
+                         */
+                        USER_IDP("user_idp", "用户绑定三方用户");
+
+    @JsonValue
+    private final String code;
+    private final String desc;
+
+    TargetType(String code, String desc) {
+        this.code = code;
+        this.desc = desc;
+    }
+
+    /**
+     * 获取类型
+     *
+     * @param code {@link String}
+     * @return {@link EventType}
+     */
+    @EnumConvert
+    public static TargetType getType(String code) {
+        TargetType[] values = values();
+        for (TargetType status : values) {
+            if (String.valueOf(status.getCode()).equals(code)) {
+                return status;
+            }
+        }
+        throw new BadParamsException("无效的目标类型");
+    }
+
+}

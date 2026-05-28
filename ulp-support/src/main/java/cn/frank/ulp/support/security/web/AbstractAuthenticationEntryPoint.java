@@ -1,0 +1,90 @@
+/*
+ * ulp-support - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.support.security.web;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
+
+import cn.frank.ulp.support.util.HttpRequestUtils;
+import cn.frank.ulp.support.util.IpUtils;
+import cn.frank.ulp.support.web.logger.Log;
+import cn.frank.ulp.support.web.useragent.UserAgentParser;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+/**
+ * 抽象认证入口点类
+ * 实现AuthenticationEntryPoint接口，处理未认证用户的访问请求
+ */
+public abstract class AbstractAuthenticationEntryPoint implements AuthenticationEntryPoint {
+    /**
+    * 用户代理解析器
+    */
+    private final UserAgentParser userAgentParser;
+
+    /**
+    * 日志记录器
+    */
+    private final Logger          logger;
+
+    /**
+    * 构造函数
+    *
+    * @param userAgentParser 用户代理解析器
+    */
+    public AbstractAuthenticationEntryPoint(UserAgentParser userAgentParser) {
+        this.logger = LoggerFactory.getLogger(this.getClass());
+        this.userAgentParser = userAgentParser;
+    }
+
+    /**
+    * 处理未认证用户的访问请求
+    *
+    * @param request HTTP请求
+    * @param response HTTP响应
+    * @param authException 认证异常
+    * @throws IOException IO异常
+    * @throws ServletException Servlet异常
+    */
+    @Override
+    public void commence(HttpServletRequest request, HttpServletResponse response,
+                         AuthenticationException authException) throws IOException,
+                                                                ServletException {
+        response.setStatus(401);
+        String requestBody = IOUtils.toString(request.getInputStream(), StandardCharsets.UTF_8)
+            .replaceAll("\\s+", "");
+
+        Log log = new Log();
+        log.setRequestUrl(request.getRequestURL().toString());
+        log.setHttpType(request.getMethod());
+        log.setBody(requestBody);
+        log.setHeaders(HttpRequestUtils.getRequestHeaders(request));
+        log.setIp(IpUtils.getIpAddr(request));
+        log.setSuccess(Boolean.FALSE);
+        log.setResult(authException.getMessage());
+        log.setUserAgent(this.userAgentParser.getUserAgent(request));
+        this.logger.error(log.toString());
+    }
+}

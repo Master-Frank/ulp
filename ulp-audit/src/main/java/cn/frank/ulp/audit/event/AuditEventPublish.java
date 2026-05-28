@@ -1,0 +1,419 @@
+/*
+ * ulp-audit - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.audit.event;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
+
+import com.alibaba.fastjson2.JSONObject;
+import com.google.common.collect.Maps;
+
+import cn.frank.ulp.audit.entity.*;
+import cn.frank.ulp.audit.entity.Actor;
+import cn.frank.ulp.audit.entity.Event;
+import cn.frank.ulp.audit.entity.GeoPoint;
+import cn.frank.ulp.audit.entity.Target;
+import cn.frank.ulp.audit.enums.EventStatus;
+import cn.frank.ulp.audit.event.type.EventType;
+import cn.frank.ulp.support.context.ServletContextService;
+import cn.frank.ulp.support.geo.GeoLocation;
+import cn.frank.ulp.support.geo.GeoLocationParser;
+import cn.frank.ulp.support.security.authentication.WebAuthenticationDetails;
+import cn.frank.ulp.support.security.userdetails.UserDetails;
+import cn.frank.ulp.support.security.userdetails.UserType;
+import cn.frank.ulp.support.trace.TraceUtils;
+import cn.frank.ulp.support.util.IpUtils;
+import cn.frank.ulp.support.web.useragent.UserAgent;
+import cn.frank.ulp.support.web.useragent.UserAgentParser;
+
+import jakarta.servlet.http.HttpServletRequest;
+import static cn.frank.ulp.support.util.StringUtils.replaceBlank;
+
+/**
+ * 发布审计事件
+ *
+ * @author Frank Zhang
+ */
+@Component
+public class AuditEventPublish {
+
+    /**
+     * 发布 审计事件
+     *
+     * @param eventType {@link EventType}
+     */
+    public void publish(EventType eventType, String content, EventStatus eventStatus) {
+        //@formatter:off
+        //封装操作事件
+        Event event = Event.builder()
+                .type(eventType)
+                .time(LocalDateTime.now())
+                .content(content)
+                .status(eventStatus).build();
+        //封装地理位置
+        cn.frank.ulp.audit.entity.GeoLocation geoLocationModal = getGeoLocation();
+        //封装用户代理
+        cn.frank.ulp.audit.entity.UserAgent userAgent = getUserAgent();
+        //封装操作人
+        Actor actor = getActor();
+        //Publish AuditEvent
+        applicationEventPublisher.publishEvent(new AuditEvent(TraceUtils.get(), ServletContextService.getSession().getId(), actor, event, userAgent, geoLocationModal, null));
+        //@formatter:on
+    }
+
+    /**
+     * 发布 审计事件
+     *
+     * @param eventType {@link EventType}
+     */
+    public void publish(EventType eventType, Authentication authentication, EventStatus eventStatus,
+                        List<Target> targets) {
+        //@formatter:off
+        Object rawPrincipal = authentication.getPrincipal();
+        WebAuthenticationDetails details = (WebAuthenticationDetails) authentication.getDetails();
+        //封装操作事件
+        Event event = Event.builder()
+                .type(eventType)
+                .time(LocalDateTime.now())
+                .status(eventStatus).build();
+        String username;
+        if (rawPrincipal instanceof UserDetails ours) {
+            username = ours.getUsername();
+        } else if (rawPrincipal instanceof org.springframework.security.core.userdetails.UserDetails spring) {
+            username = spring.getUsername();
+        } else {
+            username = String.valueOf(rawPrincipal);
+        }
+        Map<String,String> content= Maps.newConcurrentMap();
+        content.put("auth_type",details.getAuthenticationProvider().getType());
+        content.put("desc",username+"："+event.getType().getDesc());
+        event.setContent(JSONObject.toJSONString(content));
+        //封装地理位置
+        cn.frank.ulp.audit.entity.GeoLocation geoLocationModal = getGeoLocation(authentication);
+        //封装用户代理
+        cn.frank.ulp.audit.entity.UserAgent userAgent = getUserAgent(authentication);
+        //封装操作人
+        Actor actor = getActor(authentication);
+        //Publish AuditEvent
+        applicationEventPublisher.publishEvent(new AuditEvent(TraceUtils.get(), ServletContextService.getSession().getId(), actor, event, userAgent, geoLocationModal, targets));
+        //@formatter:on
+    }
+
+    /**
+     * 发布 审计事件
+     *
+     * @param eventType {@link EventType}
+     */
+    public void publish(EventType eventType, String content, Actor actor, EventStatus eventStatus) {
+        //@formatter:off
+        //封装操作事件
+        Event event = Event.builder()
+                .type(eventType)
+                .time(LocalDateTime.now())
+                .content(content)
+                .status(eventStatus).build();
+        //封装地理位置
+        cn.frank.ulp.audit.entity.GeoLocation geoLocationModal = getGeoLocation();
+        //封装用户代理
+        cn.frank.ulp.audit.entity.UserAgent userAgent = getUserAgent();
+        //Publish AuditEvent
+        applicationEventPublisher.publishEvent(new AuditEvent(TraceUtils.get(), ServletContextService.getSession().getId(), actor, event, userAgent, geoLocationModal, null));
+        //@formatter:on
+    }
+
+    /**
+     * 发布 审计事件
+     *
+     * @param eventType {@link EventType}
+     */
+    public void publish(EventType eventType, Map<String, Object> parameters, String content,
+                        List<Target> target, String result, EventStatus eventStatus, Actor actor) {
+        //@formatter:off
+        //封装操作事件
+        Event event = Event.builder()
+                .type(eventType)
+                .time(LocalDateTime.now())
+                .status(eventStatus).build();
+        if (!Objects.isNull(parameters)){
+            try {
+                event.setParam(replaceBlank(JSONObject.toJSONString(parameters)));
+            } catch (Exception e) {
+                event.setParam(parameters.toString());
+            }
+        }
+        //描述
+        if (StringUtils.isNotBlank(content)){
+            event.setContent(content);
+        }
+        //事件结果
+        if (StringUtils.isNotBlank(result)){
+            event.setResult(result);
+        }
+        //封装地理位置
+        cn.frank.ulp.audit.entity.GeoLocation geoLocationModal = getGeoLocation();
+        //封装用户代理
+        cn.frank.ulp.audit.entity.UserAgent userAgent = getUserAgent();
+        //封装操作人
+        if (Objects.isNull(actor)) {
+            actor = getActor();
+        }
+        //Publish AuditEvent
+        applicationEventPublisher.publishEvent(new AuditEvent(TraceUtils.get(), ServletContextService.getSession().getId(), actor, event, userAgent, geoLocationModal, target));
+        //@formatter:on
+    }
+
+    /**
+     * 发布 审计事件
+     *
+     * @param eventType {@link EventType}
+     */
+    public void publish(EventType eventType, List<Target> target, String result,
+                        EventStatus eventStatus) {
+        //@formatter:off
+        //封装操作事件
+        Event event = Event.builder()
+                .type(eventType)
+                .time(LocalDateTime.now())
+                .status(eventStatus).build();
+        //事件结果
+        event.setResult(result);
+        //封装地理位置
+        cn.frank.ulp.audit.entity.GeoLocation geoLocationModal = getGeoLocation();
+        //封装用户代理
+        cn.frank.ulp.audit.entity.UserAgent userAgent = getUserAgent();
+        //封装操作人
+        Actor actor = getActor();
+        //Publish AuditEvent
+        applicationEventPublisher.publishEvent(new AuditEvent(TraceUtils.get(), ServletContextService.getSession().getId(), actor, event, userAgent, geoLocationModal, target));
+        //@formatter:on
+    }
+
+    /**
+     * 封装操作者
+     * @return {@link Actor}
+     */
+    public static Actor getActor() {
+        //@formatter:off
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        WebAuthenticationDetails details = (WebAuthenticationDetails) authentication.getDetails();
+        Actor actor = Actor.builder()
+                .id(getActorId(authentication))
+                .type(getActorType(authentication))
+                .build();
+        actor.setAuthType(details.getAuthenticationProvider().getType());
+        return actor;
+        //@formatter:on
+    }
+
+    /**
+     * 封装操作者
+     * @param authentication {@link Authentication}
+     * @return {@link Actor}
+     */
+    private Actor getActor(Authentication authentication) {
+        //@formatter:off
+        Actor actor = Actor.builder()
+                .id(getActorId(authentication))
+                .type(getActorType(authentication))
+                .build();
+        WebAuthenticationDetails details = (WebAuthenticationDetails) authentication.getDetails();
+        actor.setAuthType(details.getAuthenticationProvider().getType());
+        return actor;
+        //@formatter:on
+    }
+
+    private static String getActorId(Authentication authentication) {
+        //@formatter:off
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof UserDetails) {
+            String id = ((UserDetails) principal).getId();
+            if (StringUtils.isNotBlank(id)) {
+                return id;
+            }
+        }
+        if (principal instanceof String) {
+            return (String) principal;
+        }
+        return authentication.getName();
+        //@formatter:on
+    }
+
+    /**
+     * 获取行动者类型
+     *
+     * @param authentication {@link Authentication}
+     * @return {@link UserType}
+     */
+    private static UserType getActorType(Authentication authentication) {
+        //@formatter:off
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof UserDetails) {
+            UserType type = ((UserDetails) principal).getUserType();
+            if (type != null) {
+                return type;
+            }
+        }
+        return UserType.ADMIN;
+        //@formatter:on
+    }
+
+    /**
+     * 获取用户代理
+     *
+     * @return {@link cn.frank.ulp.audit.entity.UserAgent}
+     */
+    private cn.frank.ulp.audit.entity.UserAgent getUserAgent() {
+        //@formatter:off
+        HttpServletRequest request = ServletContextService.getRequest();
+        UserAgent ua = userAgentParser.getUserAgent(request);
+        return cn.frank.ulp.audit.entity.UserAgent.builder()
+                .browser(ua.getBrowser())
+                .browserType(ua.getBrowserType())
+                .browserMajorVersion(ua.getBrowserMajorVersion())
+                .platform(ua.getPlatform())
+                .platformVersion(ua.getPlatformVersion())
+                .deviceType(ua.getDeviceType())
+                .build();
+        //@formatter:on
+    }
+
+    /**
+     * 获取地理位置
+     *
+     * @return {@link cn.frank.ulp.audit.entity.GeoLocation}
+     */
+    private cn.frank.ulp.audit.entity.GeoLocation getGeoLocation() {
+        //@formatter:off
+        HttpServletRequest request = ServletContextService.getRequest();
+        String ip = IpUtils.getIpAddr(request);
+        GeoLocation geoLocation = geoLocationParser.getGeoLocation(ip);
+        if (Objects.isNull(geoLocation)){
+            return null;
+        }
+        if (IpUtils.isInternalIp(ip)){
+            return cn.frank.ulp.audit.entity.GeoLocation.builder()
+                    .ip(geoLocation.getIp())
+                    .provider(geoLocation.getProvider())
+                    .build();
+        }
+        GeoPoint geoPoint = null;
+        if (!Objects.isNull(geoLocation.getLatitude()) && !Objects.isNull(geoLocation.getLongitude())) {
+            geoPoint = new GeoPoint(geoLocation.getLatitude(), geoLocation.getLongitude());
+        }
+        return  cn.frank.ulp.audit.entity.GeoLocation.builder()
+                .ip(ip)
+                .continentCode(geoLocation.getContinentCode())
+                .continentName(geoLocation.getContinentName())
+                .countryCode(geoLocation.getCountryCode())
+                .countryName(geoLocation.getCountryName())
+                .provinceCode(geoLocation.getProvinceCode())
+                .provinceName(geoLocation.getProvinceName())
+                .cityCode(geoLocation.getCityCode())
+                .cityName(geoLocation.getCityName())
+                .point(geoPoint)
+                .provider(geoLocation.getProvider())
+                .build();
+        //@formatter:on
+    }
+
+    /**
+     * 获取用户代理
+     *
+     * @return {@link cn.frank.ulp.audit.entity.UserAgent}
+     */
+    private cn.frank.ulp.audit.entity.UserAgent getUserAgent(Authentication authentication) {
+        //@formatter:off
+        WebAuthenticationDetails details = (WebAuthenticationDetails) authentication.getDetails();
+        UserAgent userAgent = details.getUserAgent();
+        if (Objects.isNull(userAgent)){
+            return getUserAgent();
+        }
+        return cn.frank.ulp.audit.entity.UserAgent.builder()
+                .browser(userAgent.getBrowser())
+                .browserType(userAgent.getBrowserType())
+                .browserMajorVersion(userAgent.getBrowserMajorVersion())
+                .platform(userAgent.getPlatform())
+                .platformVersion(userAgent.getPlatformVersion())
+                .deviceType(userAgent.getDeviceType())
+                .build();
+        //@formatter:on
+    }
+
+    /**
+     * 获取地理位置
+     *
+     * @return {@link cn.frank.ulp.audit.entity.GeoLocation}
+     */
+    private cn.frank.ulp.audit.entity.GeoLocation getGeoLocation(Authentication authentication) {
+        //@formatter:off
+        WebAuthenticationDetails details = (WebAuthenticationDetails) authentication.getDetails();
+        GeoLocation geoLocation = details.getGeoLocation();
+        if (Objects.isNull(geoLocation)){
+            return getGeoLocation();
+        }
+        GeoPoint geoPoint = null;
+        if (!Objects.isNull(geoLocation.getLatitude()) && !Objects.isNull(geoLocation.getLongitude())) {
+            geoPoint = new GeoPoint(geoLocation.getLatitude(), geoLocation.getLongitude());
+        }
+        return  cn.frank.ulp.audit.entity.GeoLocation.builder()
+                .ip(geoLocation.getIp())
+                .continentCode(geoLocation.getContinentCode())
+                .continentName(geoLocation.getContinentName())
+                .countryCode(geoLocation.getCountryCode())
+                .countryName(geoLocation.getCountryName())
+                .provinceCode(geoLocation.getProvinceCode())
+                .provinceName(geoLocation.getProvinceName())
+                .cityCode(geoLocation.getCityCode())
+                .cityName(geoLocation.getCityName())
+                .point(geoPoint)
+                .provider(geoLocation.getProvider())
+                .build();
+        //@formatter:on
+    }
+
+    /**
+     * ApplicationEventPublisher
+     */
+    private final ApplicationEventPublisher applicationEventPublisher;
+
+    /**
+     * 地理位置
+     */
+    private final GeoLocationParser         geoLocationParser;
+
+    /**
+     * UserAgentParser
+     */
+    private final UserAgentParser           userAgentParser;
+
+    public AuditEventPublish(ApplicationEventPublisher applicationEventPublisher,
+                             GeoLocationParser geoLocationParser, UserAgentParser userAgentParser) {
+        this.applicationEventPublisher = applicationEventPublisher;
+        this.geoLocationParser = geoLocationParser;
+        this.userAgentParser = userAgentParser;
+    }
+}

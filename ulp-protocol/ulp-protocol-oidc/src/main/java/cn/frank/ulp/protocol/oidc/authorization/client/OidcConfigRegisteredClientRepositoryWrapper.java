@@ -1,0 +1,147 @@
+/*
+ * ulp-protocol-oidc - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.protocol.oidc.authorization.client;
+
+import java.util.Objects;
+
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
+import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
+import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
+import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
+import org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat;
+import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
+import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
+
+import cn.frank.ulp.application.context.ApplicationContext;
+import cn.frank.ulp.application.context.ApplicationContextHolder;
+import cn.frank.ulp.application.oidc.model.OidcProtocolConfig;
+
+/**
+ * OidcConfigRegisteredClientRepositoryWrapper
+ *
+ * @author Frank Zhang
+ */
+public class OidcConfigRegisteredClientRepositoryWrapper implements RegisteredClientRepository {
+
+    private final RegisteredClientRepository registeredClientRepository;
+
+    public OidcConfigRegisteredClientRepositoryWrapper(RegisteredClientRepository registeredClientRepository) {
+        Assert.notNull(registeredClientRepository, "registeredClientRepository cannot be null");
+        this.registeredClientRepository = registeredClientRepository;
+    }
+
+    @Override
+    public void save(RegisteredClient registeredClient) {
+        registeredClientRepository.save(registeredClient);
+    }
+
+    @Override
+    public RegisteredClient findById(String id) {
+        ApplicationContext context = ApplicationContextHolder.getApplicationContext();
+        String appId = context.getAppId();
+        if (!String.valueOf(appId).equals(id)) {
+            return null;
+        }
+        OidcProtocolConfig config = (OidcProtocolConfig) context.getConfig()
+            .get(OidcProtocolConfig.class.getName());
+        if (Objects.isNull(config)) {
+            return registeredClientRepository.findById(id);
+        }
+        return getRegisteredClient(config);
+    }
+
+    @Override
+    public RegisteredClient findByClientId(String clientId) {
+        ApplicationContext context = ApplicationContextHolder.getApplicationContext();
+        if (!String.valueOf(context.getClientId()).equals(clientId)) {
+            return null;
+        }
+        OidcProtocolConfig config = (OidcProtocolConfig) context.getConfig()
+            .get(OidcProtocolConfig.class.getName());
+        if (Objects.isNull(config)) {
+            return registeredClientRepository.findByClientId(clientId);
+        }
+        return getRegisteredClient(config);
+    }
+
+    private RegisteredClient getRegisteredClient(OidcProtocolConfig config) {
+        return RegisteredClient
+            //ID
+            .withId(config.getAppId())
+            //Client Id
+            .clientId(config.getClientId())
+            //设置发布客户端标识符的时间
+            .clientIdIssuedAt(null)
+            //Client Secret
+            .clientSecret(config.getClientSecret())
+            //客户密钥到期时间
+            .clientSecretExpiresAt(null)
+            //客户端认证方式
+            .clientAuthenticationMethods(clientAuthenticationMethods -> {
+                for (String key : config.getClientAuthMethods()) {
+                    clientAuthenticationMethods.add(new ClientAuthenticationMethod(key));
+                }
+            })
+            //授权授予类型
+            .authorizationGrantTypes(authorizationGrantTypes -> {
+                for (String key : config.getAuthGrantTypes()) {
+                    authorizationGrantTypes.add(new AuthorizationGrantType(key));
+                }
+            })
+            //重定向URI
+            .redirectUris(strings -> {
+                if (!CollectionUtils.isEmpty(config.getRedirectUris())) {
+                    strings.addAll(config.getRedirectUris());
+                }
+            })
+            // 退出登录重定向URI
+            .postLogoutRedirectUris(strings -> {
+                if (!CollectionUtils.isEmpty(config.getPostLogoutRedirectUris())) {
+                    strings.addAll(config.getPostLogoutRedirectUris());
+                }
+            })
+            //范围
+            .scopes(strings -> strings.addAll(config.getGrantScopes()))
+            //客户端设置
+            .clientSettings(ClientSettings.builder()
+                //是否需要同意
+                .requireAuthorizationConsent(config.getRequireAuthConsent())
+                //PKCE
+                .requireProofKey(config.getRequireProofKey())
+                //令牌端点认证签名算法
+                .tokenEndpointAuthenticationSigningAlgorithm(
+                    SignatureAlgorithm.from(config.getTokenEndpointAuthSigningAlgorithm()))
+                .build())
+            //Token设置
+            .tokenSettings(TokenSettings.builder()
+                //刷新令牌生存时间
+                .refreshTokenTimeToLive(config.getRefreshTokenTimeToLive())
+                //访问令牌生存时间
+                .accessTokenTimeToLive(config.getAccessTokenTimeToLive())
+                //ID 令牌签名算法
+                .idTokenSignatureAlgorithm(
+                    SignatureAlgorithm.from(config.getIdTokenSignatureAlgorithm()))
+                //设置访问令牌的令牌格式
+                .accessTokenFormat(new OAuth2TokenFormat(config.getAccessTokenFormat()))
+                //重用刷新令牌
+                .reuseRefreshTokens(config.getReuseRefreshToken()).build())
+            .build();
+    }
+}

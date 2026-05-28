@@ -1,0 +1,160 @@
+/*
+ * ulp-portal - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.portal.converter;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.collections4.MapUtils;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+import com.alibaba.fastjson2.JSONObject;
+
+import cn.frank.ulp.authentication.common.IdentityProviderType;
+import cn.frank.ulp.authentication.common.authentication.IdentityProviderUserDetails;
+import cn.frank.ulp.common.entity.account.ThirdPartyUserEntity;
+import cn.frank.ulp.common.entity.account.UserDetailEntity;
+import cn.frank.ulp.common.entity.account.UserEntity;
+import cn.frank.ulp.common.entity.account.po.UserIdpBindPO;
+import cn.frank.ulp.common.entity.authn.IdentityProviderEntity;
+import cn.frank.ulp.portal.pojo.request.UpdateUserInfoRequest;
+import cn.frank.ulp.portal.pojo.result.BoundIdpListResult;
+import cn.frank.ulp.support.security.util.SecurityUtils;
+
+/**
+ * AccountConverter
+ *
+ * @author Frank Zhang
+ */
+@Mapper(componentModel = "spring")
+public interface AccountConverter {
+
+    /**
+     * 用户更新参数转换为用户实体类
+     *
+     * @param param {@link UpdateUserInfoRequest} 更新参数
+     * @return {@link UserEntity} 用户实体
+     */
+    @Mapping(target = "needChangePassword", ignore = true)
+    @Mapping(target = "lockExpiredTime", ignore = true)
+    @Mapping(target = "passwordPlainText", ignore = true)
+    @Mapping(target = "identitySourceId", ignore = true)
+    @Mapping(target = "phoneVerified", ignore = true)
+    @Mapping(target = "phoneAreaCode", ignore = true)
+    @Mapping(target = "username", ignore = true)
+    @Mapping(target = "updateTime", ignore = true)
+    @Mapping(target = "updateBy", ignore = true)
+    @Mapping(target = "status", ignore = true)
+    @Mapping(target = "remark", ignore = true)
+    @Mapping(target = "phone", ignore = true)
+    @Mapping(target = "password", ignore = true)
+    @Mapping(target = "lastUpdatePasswordTime", ignore = true)
+    @Mapping(target = "lastAuthTime", ignore = true)
+    @Mapping(target = "lastAuthIp", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "externalId", ignore = true)
+    @Mapping(target = "expireDate", ignore = true)
+    @Mapping(target = "expand", ignore = true)
+    @Mapping(target = "emailVerified", ignore = true)
+    @Mapping(target = "email", ignore = true)
+    @Mapping(target = "dataOrigin", ignore = true)
+    @Mapping(target = "createTime", ignore = true)
+    @Mapping(target = "createBy", ignore = true)
+    @Mapping(target = "authTotal", ignore = true)
+    UserEntity userUpdateParamConvertToUserEntity(UpdateUserInfoRequest param);
+
+    /**
+     * 用户详情修改入参转换用户详情实体
+     *
+     * @param param {@link UpdateUserInfoRequest}
+     * @return {@link UserDetailEntity}
+     */
+
+    @Mapping(target = "website", ignore = true)
+    @Mapping(target = "idType", ignore = true)
+    @Mapping(target = "userId", ignore = true)
+    @Mapping(target = "remark", ignore = true)
+    @Mapping(target = "idCard", ignore = true)
+    @Mapping(target = "address", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "updateTime", ignore = true)
+    @Mapping(target = "updateBy", ignore = true)
+    @Mapping(target = "createTime", ignore = true)
+    @Mapping(target = "createBy", ignore = true)
+    UserDetailEntity userUpdateParamConvertToUserDetailsEntity(UpdateUserInfoRequest param);
+
+    /**
+     * 账号绑定entity转result
+     *
+     * @param identityProviderList {@link List<IdentityProviderEntity>}
+     * @param userIdpBindList {@link Iterable<UserIdpBindPO>}
+     * @return {@link List<BoundIdpListResult>}
+     */
+    default List<BoundIdpListResult> entityConverterToBoundIdpListResult(List<IdentityProviderEntity> identityProviderList,
+                                                                         Iterable<UserIdpBindPO> userIdpBindList) {
+        List<BoundIdpListResult> boundIdpListResultList = new ArrayList<>();
+        for (IdentityProviderEntity provider : identityProviderList) {
+            BoundIdpListResult result = new BoundIdpListResult();
+            result.setIdpId(provider.getId());
+            result.setCode(provider.getCode());
+            result.setName(provider.getName());
+            result.setType(provider.getType());
+            result.setCategory(provider.getCategory());
+            result.setAuthorizationUri(
+                IdentityProviderType.getIdentityProviderType(provider.getType())
+                    .getAuthorizationPathPrefix() + "/" + provider.getCode());
+            result.setBound(false);
+            for (UserIdpBindPO userIdpBindPo : userIdpBindList) {
+                if (userIdpBindPo.getIdpId().equals(String.valueOf(provider.getId()))) {
+                    result.setBound(true);
+                    result.setId(userIdpBindPo.getId());
+                }
+            }
+            boundIdpListResultList.add(result);
+        }
+        return boundIdpListResultList;
+    }
+
+    /**
+     * 三方用户参数入参转entity
+     *
+     * @param details {@link IdentityProviderUserDetails}
+     * @return {@link ThirdPartyUserEntity}
+     */
+    default ThirdPartyUserEntity thirdPartyUserConverterToEntity(IdentityProviderUserDetails details) {
+        ThirdPartyUserEntity entity = new ThirdPartyUserEntity();
+        entity.setEmail(details.getEmail());
+        entity.setStateCode(details.getStateCode());
+        entity.setMobile(details.getMobile());
+        entity.setNickName(details.getNickName());
+        entity.setUnionId(details.getUnionId());
+        entity.setOpenId(details.getOpenId());
+        entity.setAvatarUrl(details.getAvatarUrl());
+        entity.setIdpId(details.getProviderId());
+        entity.setIdpType(details.getProviderType().value());
+        entity.setCreateBy(SecurityUtils.getCurrentUserId());
+        entity.setCreateTime(LocalDateTime.now());
+        entity.setUpdateBy(SecurityUtils.getCurrentUserId());
+        entity.setUpdateTime(LocalDateTime.now());
+        if (MapUtils.isNotEmpty(details.getAdditionalInfo())) {
+            entity.setAdditionInfo(JSONObject.toJSONString(details.getAdditionalInfo()));
+        }
+        return entity;
+    }
+}

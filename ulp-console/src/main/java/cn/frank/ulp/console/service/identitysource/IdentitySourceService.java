@@ -1,0 +1,122 @@
+/*
+ * ulp-console - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.console.service.identitysource;
+
+import java.util.List;
+
+import cn.frank.ulp.common.entity.identitysource.IdentitySourceEntity;
+import cn.frank.ulp.console.pojo.other.IdentitySourceConfigValidatorParam;
+import cn.frank.ulp.console.pojo.query.identity.IdentitySourceListQuery;
+import cn.frank.ulp.console.pojo.result.identitysource.IdentitySourceListResult;
+import cn.frank.ulp.console.pojo.save.identitysource.IdentitySourceConfigSaveParam;
+import cn.frank.ulp.console.pojo.save.identitysource.IdentitySourceCreateParam;
+import cn.frank.ulp.console.pojo.save.identitysource.IdentitySourceCreateResult;
+import cn.frank.ulp.console.pojo.update.identity.IdentitySourceUpdateParam;
+import cn.frank.ulp.support.repository.page.domain.Page;
+import cn.frank.ulp.support.repository.page.domain.PageModel;
+
+/**
+ * <p>
+ * 身份源配置 服务类
+ * </p>
+ *
+ * @author Frank Zhang
+ */
+public interface IdentitySourceService {
+
+    /**
+     * 身份源列表
+     *
+     * @param query     {@link  IdentitySourceListQuery}
+     * @param pageModel {@link  PageModel}
+     * @return {@link List}
+     */
+    Page<IdentitySourceListResult> getIdentitySourceList(IdentitySourceListQuery query,
+                                                         PageModel pageModel);
+
+    /**
+     * 身份源详情
+     *
+     * @param id {@link String}
+     * @return {@link IdentitySourceEntity}
+     */
+    IdentitySourceEntity getIdentitySource(String id);
+
+    /**
+     * 创建身份源
+     *
+     * @param param {@link IdentitySourceCreateParam}
+     * @return {@link IdentitySourceCreateResult}
+     */
+    IdentitySourceCreateResult createIdentitySource(IdentitySourceCreateParam param);
+
+    /**
+     * 修改身份源
+     *
+     * @param param {@link IdentitySourceUpdateParam}
+     * @return {@link Boolean}
+     */
+    Boolean updateIdentitySource(IdentitySourceUpdateParam param);
+
+    /**
+     * 禁用身份源
+     *
+     * @param id {@link String}
+     * @return {@link Boolean}
+     */
+    Boolean disableIdentitySource(String id);
+
+    /**
+     * 启用身份源
+     *
+     * @param id {@link String}
+     * @return {@link Boolean}
+     */
+    Boolean enableIdentitySource(String id);
+
+    /**
+     * 删除身份源
+     *
+     * @param id {@link  String}
+     * @return {@link  Boolean}
+     */
+    Boolean deleteIdentitySource(String id);
+
+    /**
+     * 保存身份源配置
+     *
+     * @param param {@link  IdentitySourceConfigSaveParam}
+     * @return {@link  Boolean}
+     */
+    Boolean saveIdentitySourceConfig(IdentitySourceConfigSaveParam param);
+
+    /**
+     * 更新身份源策略
+     *
+     * @param id             {@link Long} 主键
+     * @param strategyConfig {@link String} 策略
+     */
+    void updateStrategyConfig(String id, String strategyConfig);
+
+    /**
+     * 身份源配置验证
+     *
+     * @param param {@link  IdentitySourceConfigValidatorParam}
+     * @return {@link  Boolean}
+     */
+    Boolean identitySourceConfigValidator(IdentitySourceConfigValidatorParam param);
+}

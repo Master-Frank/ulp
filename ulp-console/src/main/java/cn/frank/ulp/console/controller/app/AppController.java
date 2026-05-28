@@ -1,0 +1,204 @@
+/*
+ * ulp-console - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.console.controller.app;
+
+import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import cn.frank.ulp.audit.annotation.Audit;
+import cn.frank.ulp.audit.event.type.EventType;
+import cn.frank.ulp.console.pojo.query.app.AppQuery;
+import cn.frank.ulp.console.pojo.result.app.AppCreateResult;
+import cn.frank.ulp.console.pojo.result.app.AppGetResult;
+import cn.frank.ulp.console.pojo.result.app.AppListResult;
+import cn.frank.ulp.console.pojo.save.app.AppCreateParam;
+import cn.frank.ulp.console.pojo.update.app.AppSaveConfigParam;
+import cn.frank.ulp.console.pojo.update.app.AppUpdateParam;
+import cn.frank.ulp.console.service.app.AppService;
+import cn.frank.ulp.support.demo.Preview;
+import cn.frank.ulp.support.lock.Lock;
+import cn.frank.ulp.support.repository.page.domain.Page;
+import cn.frank.ulp.support.repository.page.domain.PageModel;
+import cn.frank.ulp.support.result.ApiRestResult;
+
+import lombok.AllArgsConstructor;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import static cn.frank.ulp.common.constant.AppConstants.APP_PATH;
+
+/**
+ * 应用管理
+ *
+ * @author Frank Zhang
+ */
+@Validated
+@Tag(name = "应用管理")
+@RestController
+@AllArgsConstructor
+@RequestMapping(value = APP_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
+public class AppController {
+
+    /**
+     * 获取应用列表
+     *
+     * @param page {@link PageModel}
+     * @return {@link AppQuery}
+     */
+    @Operation(summary = "获取应用列表")
+    @GetMapping(value = "/list")
+    @PreAuthorize(value = "authenticated and @sae.hasAuthority(T(cn.frank.ulp.support.security.userdetails.UserType).ADMIN)")
+    public ApiRestResult<Page<AppListResult>> getAppList(PageModel page, AppQuery query) {
+        Page<AppListResult> list = appService.getAppList(page, query);
+        return ApiRestResult.<Page<AppListResult>> builder().result(list).build();
+    }
+
+    /**
+     * 创建应用
+     *
+     * @param param {@link AppCreateParam}
+     * @return {@link Boolean}
+     */
+    @Lock
+    @Preview
+    @Operation(summary = "创建应用")
+    @Audit(type = EventType.ADD_APP)
+    @PostMapping(value = "/create")
+    @PreAuthorize(value = "authenticated and @sae.hasAuthority(T(cn.frank.ulp.support.security.userdetails.UserType).ADMIN)")
+    public ApiRestResult<AppCreateResult> createApp(@RequestBody @Validated AppCreateParam param) {
+        return ApiRestResult.<AppCreateResult> builder().result(appService.createApp(param))
+            .build();
+    }
+
+    /**
+     * 修改应用
+     *
+     * @param param {@link AppUpdateParam}
+     * @return {@link Boolean}
+     */
+    @Lock
+    @Preview
+    @Operation(summary = "修改应用")
+    @Audit(type = EventType.UPDATE_APP)
+    @PutMapping(value = "/update")
+    @PreAuthorize(value = "authenticated and @sae.hasAuthority(T(cn.frank.ulp.support.security.userdetails.UserType).ADMIN)")
+    public ApiRestResult<Boolean> updateApp(@RequestBody @Validated AppUpdateParam param) {
+        return ApiRestResult.<Boolean> builder().result(appService.updateApp(param)).build();
+    }
+
+    /**
+     * 更新应用配置
+     *
+     * @param param {@link AppSaveConfigParam}
+     * @return {@link Boolean}
+     */
+    @Lock
+    @Preview
+    @Operation(summary = "保存应用配置")
+    @Audit(type = EventType.UPDATE_APP)
+    @PutMapping(value = "/save/config")
+    @PreAuthorize(value = "authenticated and @sae.hasAuthority(T(cn.frank.ulp.support.security.userdetails.UserType).ADMIN)")
+    public ApiRestResult<Boolean> saveAppConfig(@RequestBody @Valid AppSaveConfigParam param) {
+        return ApiRestResult.<Boolean> builder().result(appService.saveAppConfig(param)).build();
+    }
+
+    /**
+     * 获取应用配置
+     *
+     * @param appId {@link String}
+     * @return {@link Object}
+     */
+    @Operation(summary = "获取应用配置")
+    @GetMapping(value = "/get/config/{appId}")
+    @PreAuthorize(value = "authenticated and @sae.hasAuthority(T(cn.frank.ulp.support.security.userdetails.UserType).ADMIN)")
+    public ApiRestResult<Object> getAppConfig(@PathVariable String appId) {
+        Object config = appService.getAppConfig(appId);
+        return ApiRestResult.builder().result(config).build();
+    }
+
+    /**
+     * 删除应用
+     *
+     * @param id {@link Long}
+     * @return {@link Boolean}
+     */
+    @Lock
+    @Preview
+    @Operation(summary = "删除应用")
+    @Audit(type = EventType.DELETE_APP)
+    @DeleteMapping(value = "/delete/{id}")
+    @PreAuthorize(value = "authenticated and @sae.hasAuthority(T(cn.frank.ulp.support.security.userdetails.UserType).ADMIN)")
+    public ApiRestResult<Boolean> deleteApp(@PathVariable(value = "id") String id) {
+        return ApiRestResult.<Boolean> builder().result(appService.deleteApp(id)).build();
+    }
+
+    /**
+     * 获取应用信息
+     *
+     * @param id {@link String}
+     * @return {@link Boolean}
+     */
+    @Operation(summary = "获取应用信息")
+    @GetMapping(value = "/get/{id}")
+    @PreAuthorize(value = "authenticated and @sae.hasAuthority(T(cn.frank.ulp.support.security.userdetails.UserType).ADMIN)")
+    public ApiRestResult<AppGetResult> getApp(@PathVariable(value = "id") String id) {
+        AppGetResult result = appService.getApp(id);
+        return ApiRestResult.<AppGetResult> builder().result(result).build();
+    }
+
+    /**
+     * 启用应用
+     *
+     * @param id {@link String}
+     * @return {@link Boolean}
+     */
+    @Lock
+    @Preview
+    @Operation(summary = "启用应用")
+    @Audit(type = EventType.ENABLE_APP)
+    @PutMapping(value = "/enable/{id}")
+    @PreAuthorize(value = "authenticated and @sae.hasAuthority(T(cn.frank.ulp.support.security.userdetails.UserType).ADMIN)")
+    public ApiRestResult<Boolean> enableIdentitySource(@PathVariable(value = "id") String id) {
+        boolean result = appService.enableApp(id);
+        return ApiRestResult.<Boolean> builder().result(result).build();
+    }
+
+    /**
+     * 禁用应用
+     *
+     * @param id {@link String}
+     * @return {@link Boolean}
+     */
+    @Lock
+    @Preview
+    @Operation(summary = "禁用应用")
+    @Audit(type = EventType.DISABLE_APP)
+    @PutMapping(value = "/disable/{id}")
+    @PreAuthorize(value = "authenticated and @sae.hasAuthority(T(cn.frank.ulp.support.security.userdetails.UserType).ADMIN)")
+    public ApiRestResult<Boolean> disableIdentitySource(@PathVariable(value = "id") String id) {
+        boolean result = appService.disableApp(id);
+        return ApiRestResult.<Boolean> builder().result(result).build();
+    }
+
+    /**
+     * ApplicationService
+     */
+    private final AppService appService;
+}

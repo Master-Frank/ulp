@@ -1,0 +1,188 @@
+/*
+ * ulp-protocol-jwt - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.protocol.jwt.authentication;
+
+import java.time.Duration;
+import java.util.Objects;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+
+import cn.frank.ulp.application.jwt.model.JwtProtocolConfig;
+import cn.frank.ulp.common.exception.app.AppAccountNotExistException;
+import cn.frank.ulp.core.context.ContextService;
+import cn.frank.ulp.protocol.code.LoginAccount;
+import cn.frank.ulp.protocol.jwt.JwtAuthentication;
+import cn.frank.ulp.protocol.jwt.JwtAuthorizationService;
+import cn.frank.ulp.protocol.jwt.client.JwtRegisteredClient;
+import cn.frank.ulp.protocol.jwt.exception.JwtAuthenticationException;
+import cn.frank.ulp.protocol.jwt.exception.JwtError;
+import cn.frank.ulp.protocol.jwt.exception.JwtErrorCodes;
+import cn.frank.ulp.protocol.jwt.token.IdToken;
+import cn.frank.ulp.protocol.jwt.token.IdTokenContext;
+import cn.frank.ulp.protocol.jwt.token.IdTokenGenerator;
+import cn.frank.ulp.protocol.jwt.token.JwtIdTokenGenerator;
+import cn.frank.ulp.support.security.authentication.WebAuthenticationDetails;
+import cn.frank.ulp.support.security.userdetails.UserDetails;
+import static cn.frank.ulp.common.constant.ProtocolConstants.APP_CODE_VARIABLE;
+import static cn.frank.ulp.common.constant.ProtocolConstants.JwtEndpointConstants.JWT_SSO_PATH;
+import static cn.frank.ulp.protocol.jwt.constant.JwtProtocolConstants.JWT_ERROR_URI;
+import static cn.frank.ulp.support.security.util.SecurityUtils.isPrincipalAuthenticated;
+
+/**
+ *
+ * @author Frank Zhang
+ */
+public final class JwtLoginAuthenticationTokenProvider implements AuthenticationProvider {
+
+    private final Log logger = LogFactory.getLog(JwtLoginAuthenticationTokenProvider.class);
+
+    /**
+     * Performs authentication with the same contract as
+     * {@link AuthenticationManager#authenticate(Authentication)}
+     * .
+     *
+     * @param authentication the authentication request object.
+     * @return a fully authenticated object including credentials. May return
+     * <code>null</code> if the <code>AuthenticationProvider</code> is unable to support
+     * authentication of the passed <code>Authentication</code> object. In such a case,
+     * the next <code>AuthenticationProvider</code> that supports the presented
+     * <code>Authentication</code> class will be tried.
+     * @throws AuthenticationException if authentication fails.
+     */
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        //@formatter:off
+        try {
+            JwtLoginAuthenticationToken requestAuthenticationToken = (JwtLoginAuthenticationToken) authentication;
+            Authentication principal = (Authentication) requestAuthenticationToken.getPrincipal();
+            if (!isPrincipalAuthenticated(principal)) {
+                this.logger.info("Did not authenticate jwt request since principal not authenticated");
+                return authentication;
+            }
+            JwtProtocolConfig config = requestAuthenticationToken.getConfig();
+            String issuer = ContextService.getPortalPublicBaseUrl() + JWT_SSO_PATH.replace(APP_CODE_VARIABLE, config.getAppCode());
+            String subject = getSubject(config,(UserDetails) principal.getPrincipal());
+            WebAuthenticationDetails details = (WebAuthenticationDetails) requestAuthenticationToken.getDetails();
+            IdTokenContext tokenContext = IdTokenContext.builder()
+                    .issuer(issuer)
+                    .subject(subject)
+                    .audience(config.getAppCode())
+                    .sessionId(details.getSessionId())
+                    .idTokenTimeToLive(Duration.ofSeconds(Long.parseLong(config.getIdTokenTimeToLive())))
+                    .privateKey(config.getJwtPrivateKey())
+                    .build();
+
+            IdToken idToken = tokenGenerator.generate(tokenContext);
+            JwtAuthentication jwtAuthentication= JwtAuthentication.builder()
+                    .token(idToken.getTokenValue())
+                    .issuer(issuer)
+                    .subject(subject)
+                    .audience(config.getAppCode())
+                    .principal(principal)
+                    .issuedAt(idToken.getIssuedAt())
+                    .expiresAt(idToken.getExpiresAt())
+                    .build();
+            //save
+            authorizationService.save(jwtAuthentication);
+            this.logger.info("Saved authorization with id token");
+            JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(principal, requestAuthenticationToken.getConfig(), idToken);
+            jwtAuthenticationToken.setTargetUrl(requestAuthenticationToken.getTargetUrl());
+            return jwtAuthenticationToken;
+
+        } catch (Exception e) {
+            if (e instanceof JwtAuthenticationException){
+                throw e;
+            }
+            //应用账户不存在
+            if (e instanceof AppAccountNotExistException){
+                JwtError error = new JwtError(JwtErrorCodes.APP_ACCOUNT_NOT_EXIST,"App account not exist",JWT_ERROR_URI);
+                throw new JwtAuthenticationException(error);
+            }
+            //其他异常
+            throw new JwtAuthenticationException(new JwtError(JwtErrorCodes.SERVER_ERROR,e.getMessage(),JWT_ERROR_URI));
+        }
+        //@formatter:on
+    }
+
+    private String getSubject(JwtProtocolConfig config, UserDetails user) {
+        switch (config.getIdTokenSubjectType()) {
+            case USER_ID -> {
+                return user.getUsername();
+            }
+            case APP_USER -> {
+                //@formatter:off
+                JwtRegisteredClient registeredClient = JwtRegisteredClient.builder()
+                        .id(config.getAppId())
+                        .code(config.getAppCode())
+                        .clientId(config.getClientId())
+                        .clientName(config.getAppName())
+                        .build();
+                LoginAccount account = authorizationService.getDefaultLoginAccount(registeredClient, user);
+                //@formatter:on
+                if (Objects.isNull(account)) {
+                    throw new AppAccountNotExistException();
+                }
+                return account.getUsername();
+            }
+            default -> {
+                JwtError error = new JwtError(JwtErrorCodes.CONFIG_ERROR, null, JWT_ERROR_URI);
+                throw new JwtAuthenticationException(error);
+            }
+        }
+    }
+
+    /**
+     * Returns <code>true</code> if this <Code>AuthenticationProvider</code> supports the
+     * indicated <Code>Authentication</code> object.
+     * <p>
+     * Returning <code>true</code> does not guarantee an
+     * <code>AuthenticationProvider</code> will be able to authenticate the presented
+     * instance of the <code>Authentication</code> class. It simply indicates it can
+     * support closer evaluation of it. An <code>AuthenticationProvider</code> can still
+     * return <code>null</code> from the {@link #authenticate(Authentication)} method to
+     * indicate another <code>AuthenticationProvider</code> should be tried.
+     * </p>
+     * <p>
+     * Selection of an <code>AuthenticationProvider</code> capable of performing
+     * authentication is conducted at runtime the <code>ProviderManager</code>.
+     * </p>
+     *
+     * @param authentication {@link JwtLoginAuthenticationToken}
+     * @return <code>true</code> if the implementation can more closely evaluate the
+     * <code>Authentication</code> class presented
+     */
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return authentication.isAssignableFrom(JwtLoginAuthenticationToken.class);
+    }
+
+    /**
+     * ID_TOKEN 生成器
+     */
+    private final IdTokenGenerator        tokenGenerator = new JwtIdTokenGenerator();
+
+    private final JwtAuthorizationService authorizationService;
+
+    public JwtLoginAuthenticationTokenProvider(JwtAuthorizationService authorizationService) {
+        this.authorizationService = authorizationService;
+    }
+}

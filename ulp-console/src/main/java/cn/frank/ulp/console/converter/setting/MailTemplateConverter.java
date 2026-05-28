@@ -1,0 +1,117 @@
+/*
+ * ulp-console - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.console.converter.setting;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+import cn.frank.ulp.common.entity.setting.MailTemplateEntity;
+import cn.frank.ulp.common.enums.MailType;
+import cn.frank.ulp.console.pojo.result.setting.EmailTemplateListResult;
+import cn.frank.ulp.console.pojo.result.setting.EmailTemplateResult;
+import cn.frank.ulp.console.pojo.save.setting.EmailCustomTemplateSaveParam;
+import static org.springframework.web.util.HtmlUtils.htmlUnescape;
+
+import static cn.frank.ulp.core.message.mail.MailUtils.readEmailContent;
+
+/**
+ * 消息服务数据映射
+ *
+ * @author Frank Zhang
+ */
+@Mapper(componentModel = "spring")
+public interface MailTemplateConverter {
+    /**
+     * 实体转为电子邮件模板配置返回
+     *
+     * @param template {@link MailTemplateEntity}
+     * @return {@link EmailTemplateResult}
+     */
+    @Mapping(target = "custom", expression = "java(java.lang.Boolean.TRUE)")
+    @Mapping(target = "desc", expression = "java(template.getType().getDesc())")
+    @Mapping(target = "name", expression = "java(template.getType().getName())")
+    @Mapping(target = "content", expression = "java(org.springframework.web.util.HtmlUtils.htmlUnescape(template.getContent()))")
+    EmailTemplateResult entityConvertToEmailTemplateDetailResult(MailTemplateEntity template);
+
+    /**
+     * 电子邮件模板配置更新参数转换为 entity
+     *
+     * @param param {@link EmailCustomTemplateSaveParam}
+     * @return {@link MailTemplateEntity}
+     */
+
+    @Mapping(target = "updateTime", ignore = true)
+    @Mapping(target = "updateBy", ignore = true)
+    @Mapping(target = "type", ignore = true)
+    @Mapping(target = "remark", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createTime", ignore = true)
+    @Mapping(target = "createBy", ignore = true)
+    @Mapping(target = "content", expression = "java(org.springframework.web.util.HtmlUtils.htmlEscape(param.getContent()))")
+    MailTemplateEntity emailTemplateConfigSaveParamConvertToEntity(EmailCustomTemplateSaveParam param);
+
+    /**
+     * 枚举列表转邮件模板类型列表
+     *
+     * @param values   {@link List>}
+     * @param entities {@link List>}
+     * @return {@link List>}
+     */
+    default List<EmailTemplateListResult> mailTemplateTypeConvertToEmailTemplateListResult(List<MailType> values,
+                                                                                           List<MailTemplateEntity> entities) {
+        List<EmailTemplateListResult> results = new ArrayList<>();
+        //处理枚举
+        for (MailType value : values) {
+            EmailTemplateListResult cipher = new EmailTemplateListResult();
+            cipher.setCode(value.getCode());
+            cipher.setName(value.getName());
+            cipher.setDescription(value.getDesc());
+            cipher.setContent(value.getContent());
+            cipher.setContent(htmlUnescape(readEmailContent(value.getContent())));
+            results.add(cipher);
+        }
+        // 数据库有，为自定义
+        for (EmailTemplateListResult result : results) {
+            for (MailTemplateEntity entity : entities) {
+                if (result.getCode().equals(entity.getType().getCode())) {
+                    result.setCustom(true);
+                    result.setContent(htmlUnescape(entity.getContent()));
+                }
+            }
+        }
+        return results;
+    }
+
+    /**
+     * 邮件类型枚举转为邮件模板详情返回
+     *
+     * @param templateType {@link MailType}
+     * @return {@link EmailTemplateResult}
+     */
+    default EmailTemplateResult mailTemplateTypeConvertToEmailTemplateDetailResult(MailType templateType) {
+        EmailTemplateResult result = new EmailTemplateResult();
+        result.setContent(htmlUnescape(readEmailContent(templateType.getContent())));
+        result.setDesc(templateType.getDesc());
+        result.setSender(templateType.getSender());
+        result.setSubject(templateType.getSubject());
+        result.setCustom(false);
+        return result;
+    }
+}

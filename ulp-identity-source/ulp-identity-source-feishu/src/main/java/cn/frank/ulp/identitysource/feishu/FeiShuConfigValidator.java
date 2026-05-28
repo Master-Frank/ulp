@@ -1,0 +1,89 @@
+/*
+ * ulp-identity-source-feishu - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.identitysource.feishu;
+
+import org.springframework.http.*;
+import org.springframework.web.client.RestOperations;
+import org.springframework.web.client.RestTemplate;
+
+import com.alibaba.fastjson2.JSON;
+
+import cn.frank.ulp.identitysource.core.IdentitySourceConfigValidator;
+import cn.frank.ulp.identitysource.core.exception.ApiCallException;
+import cn.frank.ulp.identitysource.core.exception.InvalidClientConfigException;
+import cn.frank.ulp.identitysource.feishu.domain.request.GetAccessTokenRequest;
+import cn.frank.ulp.identitysource.feishu.domain.response.GetAccessTokenResponse;
+import cn.frank.ulp.support.validation.ValidationUtils;
+
+import lombok.extern.slf4j.Slf4j;
+
+import jakarta.validation.ConstraintViolationException;
+import static cn.frank.ulp.identitysource.feishu.FeiShuConstant.APP_ACCESS_TOKEN_URL;
+
+/**
+ * 飞书身份源客户端配置验证器
+ *
+ * @author Frank Zhang
+ */
+@Slf4j
+public class FeiShuConfigValidator implements
+
+                                   IdentitySourceConfigValidator<FeiShuConfig> {
+    protected RestOperations restOperations;
+
+    public FeiShuConfigValidator() {
+        this.restOperations = new RestTemplate();
+    }
+
+    @Override
+    public Boolean validate(FeiShuConfig config) throws InvalidClientConfigException {
+        try {
+            ValidationUtils.ValidationResult<FeiShuConfig> validationResult = ValidationUtils
+                .validateEntity(config);
+            if (validationResult.isHasErrors()) {
+                log.error("校验飞书配置失败：{}", validationResult.getMessage());
+                throw new ConstraintViolationException(validationResult.getConstraintViolations());
+            }
+
+            GetAccessTokenRequest request = new GetAccessTokenRequest(config.getAppId(),
+                config.getAppSecret());
+            GetAccessTokenResponse response = postToken(request);
+            if (response.getCode() != 0) {
+                throw new ApiCallException(response.getMsg());
+            }
+            return true;
+        } catch (Exception exception) {
+            log.error("飞书身份源参数验证发生错误 [MESSAGE: {}]", exception.getMessage());
+            throw new ApiCallException(exception.getMessage());
+        }
+    }
+
+    /**
+     * 获取token
+     * @param json {@link Object}
+     * @return {@link GetAccessTokenResponse}
+     */
+    private GetAccessTokenResponse postToken(Object json) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Object> requestEntity = new HttpEntity<>(JSON.toJSONString(json), headers);
+        ResponseEntity<GetAccessTokenResponse> response = restOperations.exchange(
+            APP_ACCESS_TOKEN_URL, HttpMethod.POST, requestEntity, GetAccessTokenResponse.class);
+        return response.getBody();
+    }
+
+}

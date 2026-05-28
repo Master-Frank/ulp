@@ -1,0 +1,62 @@
+/*
+ * ulp-identity-source-feishu - United Login Platform
+ * Copyright (c) 2022-Present Frank Zhang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.frank.ulp.identitysource.feishu.util;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+
+/**
+ * 数据解密
+ *
+ * @author Frank Zhang
+ */
+@SuppressWarnings("AlibabaUndefineMagicConstant")
+public class FeiShuEventDecryptUtils {
+    private static byte[] init(String key) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        return digest.digest(key.getBytes(StandardCharsets.UTF_8));
+    }
+
+    public static String decrypt(String key, String base64) throws Exception {
+        byte[] decode = Base64.getDecoder().decode(base64);
+        Cipher cipher = Cipher.getInstance("AES/CBC/NOPADDING");
+        byte[] iv = new byte[16];
+        System.arraycopy(decode, 0, iv, 0, 16);
+        byte[] data = new byte[decode.length - 16];
+        System.arraycopy(decode, 16, data, 0, data.length);
+        cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(init(key), "AES"),
+            new IvParameterSpec(iv));
+        byte[] r = cipher.doFinal(data);
+        if (r.length > 0) {
+            int p = r.length - 1;
+            for (; p >= 0 && r[p] <= 16; p--) {
+            }
+            if (p != r.length - 1) {
+                byte[] rr = new byte[p + 1];
+                System.arraycopy(r, 0, rr, 0, p + 1);
+                r = rr;
+            }
+        }
+        return new String(r, StandardCharsets.UTF_8);
+    }
+}
