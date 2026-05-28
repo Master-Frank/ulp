@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="images/logo.svg" alt="logo" height="100" width="426"/>
+<img src="images/logo-wide.svg" alt="logo" height="100" width="426"/>
 
 ## IAM / IDaaS 身份管理平台
 
