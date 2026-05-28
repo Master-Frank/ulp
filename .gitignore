@@ -36,3 +36,6 @@ build/
 
 ### Local backups (rebrand work) ###
 .backup/
+
+### Claude Code local settings ###
+.claude/settings.local.json
