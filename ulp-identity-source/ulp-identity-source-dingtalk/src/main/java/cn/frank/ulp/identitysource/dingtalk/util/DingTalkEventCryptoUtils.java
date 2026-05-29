@@ -34,8 +34,6 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
 
-import com.alibaba.fastjson2.JSON;
-
 /**
  * 钉钉开放平台加解密方法
  * 在ORACLE官方网站下载JCE无限制权限策略文件
@@ -230,13 +228,11 @@ public class DingTalkEventCryptoUtils {
         try {
             String[] array = new String[] { token, timestamp, nonce, encrypt };
             Arrays.sort(array);
-            System.out.println(JSON.toJSONString(array));
             StringBuffer sb = new StringBuffer();
             for (int i = 0; i < 4; i++) {
                 sb.append(array[i]);
             }
             String str = sb.toString();
-            System.out.println(str);
             MessageDigest md = MessageDigest.getInstance("SHA-1");
             md.update(str.getBytes());
             byte[] digest = md.digest();
