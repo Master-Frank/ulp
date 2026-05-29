@@ -145,3 +145,10 @@ ulp:
     # 公开 demo 站点保护开关：true 时所有 @Preview 写操作返回 403。
     # 自部署 / 本地开发保持 false；仅公开体验站点设 true。
     enabled: false
+  security:
+    cors:
+      # 跨域白名单。空（默认）= 关闭 CORS，适用于前后端同源部署（SPA 与 API 在同一 host）。
+      # 仅在前端独立部署到不同 origin 时配置；不允许通配符（与 credentials 组合会让任意网站
+      # 读取已认证响应）。示例：
+      # allowed-origins: ["https://portal.example.com"]
+      allowed-origins: []

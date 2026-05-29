@@ -16,12 +16,14 @@
  */
 package cn.frank.ulp.console.configuration;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.BeanClassLoaderAware;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
@@ -67,7 +69,6 @@ import cn.frank.ulp.support.web.useragent.UserAgentParser;
 import lombok.RequiredArgsConstructor;
 import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.web.header.writers.XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK;
-import static org.springframework.web.cors.CorsConfiguration.ALL;
 
 import static cn.frank.ulp.common.constant.ConfigBeanNameConstants.DEFAULT_SECURITY_FILTER_CHAIN;
 import static cn.frank.ulp.common.constant.SessionConstants.CURRENT_STATUS;
@@ -228,24 +229,47 @@ public class ConsoleSecurityConfiguration implements BeanClassLoaderAware {
     }
 
     /**
-     * Cors 过滤器
+     * CORS filter.
+     * <p>
+     * Reads cross-origin allow-list from {@code ulp.security.cors.allowed-origins}.
+     * If the list is empty (the default for same-origin deployments where the
+     * bundled SPA is served from the same host as the API), CORS is disabled —
+     * same-origin requests bypass CORS checks entirely.
+     * <p>
+     * When non-empty, only the explicitly listed origins are allowed; wildcards
+     * are rejected. Credentials are permitted because the SPA relies on cookies
+     * for the session and CSRF token. Wildcard origins together with credentials
+     * would let any website on the internet read authenticated responses, so
+     * that combination is forbidden here.
      *
-     * @return {@link HeadersConfigurer}
+     * @return CORS configurer customizer
      */
     public Customizer<CorsConfigurer<HttpSecurity>> withCorsConfigurerDefaults() {
-        CorsConfiguration configuration = new CorsConfiguration()
-            .setAllowedOriginPatterns(Lists.newArrayList(ALL)).applyPermitDefaultValues();
+        List<String> origins = sanitizedAllowedOrigins();
+        if (origins.isEmpty()) {
+            return CorsConfigurer::disable;
+        }
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(origins);
         configuration.setAllowCredentials(true);
-        configuration.addAllowedOrigin(ALL);
-        configuration.addAllowedHeader(ALL);
-        configuration.addAllowedMethod(HttpMethod.PUT);
-        configuration.addAllowedMethod(HttpMethod.GET);
-        configuration.addAllowedMethod(HttpMethod.POST);
-        configuration.addAllowedMethod(HttpMethod.DELETE);
-        configuration.addAllowedMethod(HttpMethod.OPTIONS);
+        configuration.setAllowedHeaders(Lists.newArrayList("Content-Type", "Accept", "Origin",
+            DEFAULT_CSRF_HEADER_NAME, "X-Requested-With"));
+        configuration
+            .setAllowedMethods(Lists.newArrayList(HttpMethod.GET.name(), HttpMethod.POST.name(),
+                HttpMethod.PUT.name(), HttpMethod.DELETE.name(), HttpMethod.OPTIONS.name()));
+        configuration.setMaxAge(3600L);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return configurer -> configurer.configurationSource(source);
+    }
+
+    private List<String> sanitizedAllowedOrigins() {
+        if (corsAllowedOrigins == null || corsAllowedOrigins.length == 0) {
+            return List.of();
+        }
+        return Arrays.stream(corsAllowedOrigins)
+            .filter(s -> s != null && !s.isBlank() && !"*".equals(s.trim())).map(String::trim)
+            .toList();
     }
 
     /**
@@ -397,5 +421,12 @@ public class ConsoleSecurityConfiguration implements BeanClassLoaderAware {
      * UserAgentParser
      */
     private final UserAgentParser         userAgentParser;
+
+    /**
+     * CORS allow-list. Empty (default) disables CORS — appropriate for
+     * same-origin deployments where the SPA is bundled with the API.
+     */
+    @Value("${ulp.security.cors.allowed-origins:}")
+    private String[]                      corsAllowedOrigins;
 
 }
