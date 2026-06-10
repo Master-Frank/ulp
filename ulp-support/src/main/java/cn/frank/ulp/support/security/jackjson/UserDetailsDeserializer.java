@@ -17,6 +17,8 @@
 package cn.frank.ulp.support.security.jackjson;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -32,6 +34,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.support.security.userdetails.Application;
+import cn.frank.ulp.support.security.userdetails.DataOrigin;
 import cn.frank.ulp.support.security.userdetails.Group;
 import cn.frank.ulp.support.security.userdetails.Organization;
 import cn.frank.ulp.support.security.userdetails.UserDetails;
@@ -109,7 +112,65 @@ public class UserDetailsDeserializer extends JsonDeserializer<UserDetails> {
             userDetails.setApplications(applications);
         }
 
+        LocalDateTime lastUpdatePwd = readLocalDateTime(node.get("lastUpdatePasswordTime"));
+        if (lastUpdatePwd != null) {
+            userDetails.setLastUpdatePasswordTime(lastUpdatePwd);
+        }
+        LocalDateTime updateTime = readLocalDateTime(node.get("updateTime"));
+        if (updateTime != null) {
+            userDetails.setUpdateTime(updateTime);
+        }
+        LocalDate expireDate = readLocalDate(node.get("expireDate"));
+        if (expireDate != null) {
+            userDetails.setExpireDate(expireDate);
+        }
+        JsonNode dataOriginNode = node.get("dataOrigin");
+        if (dataOriginNode != null && !dataOriginNode.isNull() && dataOriginNode.isObject()) {
+            userDetails.setDataOrigin(mapper.treeToValue(dataOriginNode, DataOrigin.class));
+        }
+
         return userDetails;
+    }
+
+    /**
+     * LocalDateTime 在不带 JavaTimeModule 的 mapper 下默认序列化为
+     * [year, month, day, hour, minute, second, nano] 数字数组（尾部 0 可能被省略）。
+     * 也兼容已经被字符串化（ISO-8601）的情况。
+     */
+    private static LocalDateTime readLocalDateTime(JsonNode node) {
+        if (node == null || node.isNull()) {
+            return null;
+        }
+        if (node.isArray() && node.size() >= 3) {
+            int year = node.get(0).asInt();
+            int month = node.get(1).asInt();
+            int day = node.get(2).asInt();
+            int hour = node.size() > 3 ? node.get(3).asInt() : 0;
+            int minute = node.size() > 4 ? node.get(4).asInt() : 0;
+            int second = node.size() > 5 ? node.get(5).asInt() : 0;
+            int nano = node.size() > 6 ? node.get(6).asInt() : 0;
+            return LocalDateTime.of(year, month, day, hour, minute, second, nano);
+        }
+        if (node.isTextual()) {
+            return LocalDateTime.parse(node.asText());
+        }
+        return null;
+    }
+
+    /**
+     * LocalDate 默认序列化为 [year, month, day] 数字数组，兼容 ISO-8601 字符串。
+     */
+    private static LocalDate readLocalDate(JsonNode node) {
+        if (node == null || node.isNull()) {
+            return null;
+        }
+        if (node.isArray() && node.size() >= 3) {
+            return LocalDate.of(node.get(0).asInt(), node.get(1).asInt(), node.get(2).asInt());
+        }
+        if (node.isTextual()) {
+            return LocalDate.parse(node.asText());
+        }
+        return null;
     }
 
     private static <T> Set<T> readSet(JsonNode node, String field, ObjectMapper mapper,

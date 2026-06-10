@@ -99,12 +99,10 @@ class OidcAuthorizationCodeFlowIT extends AbstractIntegrationTest {
             .perform(get(String.format(AUTH_ENDPOINT_TPL, APP_CODE))
                 .with(authentication(mockAuthentication())).queryParam("response_type", "code")
                 .queryParam("client_id", CLIENT_ID).queryParam("redirect_uri", REDIRECT_URI)
-                // 只用 openid：profile scope 会触发 OAuth2TokenCustomizer.PROFILE 分支读取
-                // user.getUpdateTime()，但 UserDetailsDeserializer 不还原 LocalDateTime 字段
-                // （Redis 反序列化后 updateTime=null）。生产里靠 OAuth2TokenCustomizer 第 60 行
-                // 的 userRepository.findById + BeanUtils.merge 从 DB 补回；集成测试不喂 DB user 行，
-                // 所以会 NPE。已记在跟踪任务里待修反序列化器，本测试聚焦 authorize→token 主链路。
-                .queryParam("scope", "openid").queryParam("state", "state-happy"))
+                // openid + profile：profile 会触发 OAuth2TokenCustomizer 读 user.getUpdateTime()
+                // 写 id_token 的 updated_at claim；本次随 UserDetailsDeserializer 修复 LocalDateTime
+                // round-trip 一并覆盖（之前 Redis 反序列化丢字段 → NPE 的回归断言）。
+                .queryParam("scope", "openid profile").queryParam("state", "state-happy"))
             .andExpect(status().is3xxRedirection()).andExpect(header().exists("Location"))
             .andReturn().getResponse().getHeader("Location");
 
