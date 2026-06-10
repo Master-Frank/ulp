@@ -1,25 +1,25 @@
 ## 1. 构建系统
 
-- [ ] 1.1 在根 `pom.xml` 的 `<dependencyManagement>` 中 import `testcontainers-bom`
-- [ ] 1.2 在 `<dependencyManagement>` 中加入 `testcontainers`、`mysql`（testcontainers）、`junit-jupiter`（testcontainers）的托管依赖，scope 为 `test`
-- [ ] 1.3 在根 `<build><pluginManagement>` 中加入 `maven-failsafe-plugin`，绑定 `integration-test` 和 `verify` 阶段，默认 include `**/*IT.java`
-- [ ] 1.4 确认 Surefire 配置仍只匹配 `**/*Test.java`，与 Failsafe 没有重叠
-- [ ] 1.5 `mvnw.cmd verify -pl ulp-support` 跑通现有 5 个单元测试，且零 IT 测试，整体 pass
+- [x] 1.1 在根 `pom.xml` 的 `<dependencyManagement>` 中 import `testcontainers-bom`
+- [x] 1.2 在 `<dependencyManagement>` 中加入 `testcontainers`、`mysql`（testcontainers）、`junit-jupiter`（testcontainers）的托管依赖，scope 为 `test`
+- [x] 1.3 在根 `<build><pluginManagement>` 中加入 `maven-failsafe-plugin`，绑定 `integration-test` 和 `verify` 阶段，默认 include `**/*IT.java`
+- [x] 1.4 确认 Surefire 配置仍只匹配 `**/*Test.java`，与 Failsafe 没有重叠
+- [x] 1.5 `mvnw.cmd verify -pl ulp-support` 跑通现有 5 个单元测试，且零 IT 测试，整体 pass
 
 ## 2. ulp-support 中的共享测试基础设施
 
-- [ ] 2.1 在 `ulp-support/pom.xml` 中加入 `maven-jar-plugin` 的 `test-jar` execution
-- [ ] 2.2 新建 `ulp-support/src/test/java/.../testsupport/SharedContainers.java`，提供工厂方法返回配置好的 `MySQLContainer` 和 `GenericContainer`（Redis 7-alpine，端口 6379）
-- [ ] 2.3 新建 `ulp-support/src/test/java/.../testsupport/AbstractIntegrationTest.java`，按 design D8 装配 `@SpringBootTest(MOCK)` + `@AutoConfigureMockMvc` + `@Transactional` + `@Testcontainers` + `@DynamicPropertySource`
-- [ ] 2.4 新建 `ulp-support/src/test/java/.../testsupport/RedisIntegrationTest.java`，作为 Redis 相关测试的子基类，加入 `@AfterEach flushDb()`
-- [ ] 2.5 编译 `ulp-support` 测试代码，确认 `target/` 下产出了 test-jar
+- [x] 2.1 在 `ulp-support/pom.xml` 中加入 `maven-jar-plugin` 的 `test-jar` execution
+- [x] 2.2 新建 `ulp-support/src/test/java/.../testsupport/SharedContainers.java`，提供工厂方法返回配置好的 `MySQLContainer` 和 `GenericContainer`（Redis 7-alpine，端口 6379）
+- [x] 2.3 新建 `ulp-support/src/test/java/.../testsupport/AbstractIntegrationTest.java`，按 design D8 装配 `@SpringBootTest(MOCK)` + `@AutoConfigureMockMvc` + `@Transactional` + `@Testcontainers` + `@DynamicPropertySource`
+- [x] 2.4 新建 `ulp-support/src/test/java/.../testsupport/RedisIntegrationTest.java`，作为 Redis 相关测试的子基类，加入 `@AfterEach flushDb()`
+- [x] 2.5 编译 `ulp-support` 测试代码，确认 `target/` 下产出了 test-jar
 
 ## 3. 把 ulp-console 接成第一个消费方
 
-- [ ] 3.1 在 `ulp-console/pom.xml` 加入 `<dependency><groupId>...</groupId><artifactId>ulp-support</artifactId><type>test-jar</type><scope>test</scope></dependency>`
-- [ ] 3.2 写一个一行的烟雾测试（`SmokeIT extends AbstractIntegrationTest`），断言 `mockMvc` 非空
-- [ ] 3.3 `mvnw.cmd verify -pl ulp-console` 启动容器、跑 Liquibase、执行 `SmokeIT`，pass
-- [ ] 3.4 验证通过后删掉 `SmokeIT`（它只是脚手架检查，不是永久测试）
+- [x] 3.1 在 `ulp-console/pom.xml` 加入 `<dependency><groupId>...</groupId><artifactId>ulp-support</artifactId><type>test-jar</type><scope>test</scope></dependency>`
+- [x] 3.2 写一个一行的烟雾测试（`SmokeIT extends AbstractIntegrationTest`），断言 `mockMvc` 非空
+- [x] 3.3 `mvnw.cmd verify -pl ulp-console` 启动容器、跑 Liquibase、执行 `SmokeIT`，pass
+- [x] 3.4 验证通过后删掉 `SmokeIT`（它只是脚手架检查，不是永久测试）
 
 ## 4. OIDC 集成测试
 

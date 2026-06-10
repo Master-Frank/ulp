@@ -67,6 +67,35 @@
             <artifactId>ulp-synchronizer</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!-- 集成测试：从 ulp-support 消费共享测试基础设施（AbstractIntegrationTest、SharedContainers 等） -->
+        <dependency>
+            <groupId>cn.frank.ulp</groupId>
+            <artifactId>ulp-support</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <!-- test-jar 不会传递 test-scope 依赖，必须在消费方再次声明 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <!-- build -->
     <build>
