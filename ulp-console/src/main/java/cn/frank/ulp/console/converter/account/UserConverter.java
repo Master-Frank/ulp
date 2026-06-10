@@ -25,7 +25,6 @@ import java.util.Objects;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import cn.frank.ulp.audit.entity.AuditEntity;
@@ -76,32 +75,30 @@ public interface UserConverter {
      */
     default Page<UserListResult> userPoConvertToUserListResult(org.springframework.data.domain.Page<UserPO> page) {
         Page<UserListResult> result = new Page<>();
-        if (!CollectionUtils.isEmpty(page.getContent())) {
-            List<UserListResult> list = new ArrayList<>();
-            for (UserPO user : page.getContent()) {
-                UserListResult userListResult = userPoConvertToUserListResult(user);
-                if (org.apache.commons.lang3.StringUtils.isEmpty(userListResult.getAvatar())) {
-                    userListResult.setAvatar(bufferedImageToBase64(generateAvatarImg(Objects
-                        .toString(userListResult.getFullName(), userListResult.getUsername()))));
-                } else {
-                    userListResult.setAvatar(userListResult.getAvatar());
-                }
-                if (StringUtils.hasText(user.getPhone())) {
-                    userListResult.setPhone((StringUtils.hasText(user.getPhoneAreaCode())
-                        ? "+" + user.getPhoneAreaCode()
-                        : "") + user.getPhone());
-                }
-                list.add(userListResult);
+        List<UserListResult> list = new ArrayList<>();
+        for (UserPO user : page.getContent()) {
+            UserListResult userListResult = userPoConvertToUserListResult(user);
+            if (org.apache.commons.lang3.StringUtils.isEmpty(userListResult.getAvatar())) {
+                userListResult.setAvatar(bufferedImageToBase64(generateAvatarImg(
+                    Objects.toString(userListResult.getFullName(), userListResult.getUsername()))));
+            } else {
+                userListResult.setAvatar(userListResult.getAvatar());
             }
-            //@formatter:off
-            result.setPagination(Page.Pagination.builder()
-                    .total(page.getTotalElements())
-                    .totalPages(page.getTotalPages())
-                    .current(page.getPageable().getPageNumber() + 1)
-                    .build());
-            //@formatter:on
-            result.setList(list);
+            if (StringUtils.hasText(user.getPhone())) {
+                userListResult.setPhone(
+                    (StringUtils.hasText(user.getPhoneAreaCode()) ? "+" + user.getPhoneAreaCode()
+                        : "") + user.getPhone());
+            }
+            list.add(userListResult);
         }
+        //@formatter:off
+        result.setPagination(Page.Pagination.builder()
+                .total(page.getTotalElements())
+                .totalPages(page.getTotalPages())
+                .current(page.getPageable().getPageNumber() + 1)
+                .build());
+        //@formatter:on
+        result.setList(list);
         return result;
     }
 

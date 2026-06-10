@@ -69,14 +69,15 @@ class UserControllerIT extends AbstractIntegrationTest {
 
     @Test
     void listEmptyOrPaged() throws Exception {
-        // UserConverter.userPoConvertToUserListResult 在 page.getContent() 为空时返回 new Page<>()
-        // （list/pagination 都不 set），Jackson 序列化为 {}。与 App/Organization converter 不一致，
-        // 是历史 bug，本次 IT 基线只验证 list 端点能正常返回 200 + success=true，不强约束空集形状。
+        // 历史回归断言：UserConverter.userPoConvertToUserListResult 之前在 page.getContent() 为空时
+        // 走 if 守卫返回 new Page<>()（list/pagination 都不 set），Jackson 序列化为 {}，与 App
+        // converter 不一致。修复后空集也应返回 result.list=[] + result.pagination 完整字段。
         mockMvc
             .perform(get(BASE + "/list").param("current", "1").param("pageSize", "10")
                 .with(authentication(mockAdminAuthentication())))
             .andExpect(status().isOk()).andExpect(jsonPath("$.success").value(true))
-            .andExpect(jsonPath("$.result").exists());
+            .andExpect(jsonPath("$.result.list").isArray())
+            .andExpect(jsonPath("$.result.pagination").exists());
     }
 
     @Test
