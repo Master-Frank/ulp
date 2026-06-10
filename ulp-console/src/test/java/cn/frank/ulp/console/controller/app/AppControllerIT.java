@@ -20,8 +20,6 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -41,7 +39,6 @@ import cn.frank.ulp.support.security.userdetails.Application;
 import cn.frank.ulp.support.security.userdetails.UserDetails;
 import cn.frank.ulp.support.security.userdetails.UserType;
 import cn.frank.ulp.support.testsupport.AbstractIntegrationTest;
-import cn.frank.ulp.support.trace.TraceUtils;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -69,16 +66,6 @@ class AppControllerIT extends AbstractIntegrationTest {
 
     @Autowired
     private ObjectMapper        objectMapper;
-
-    @BeforeEach
-    void primeTraceId() {
-        TraceUtils.put("test-trace-" + System.nanoTime());
-    }
-
-    @AfterEach
-    void clearTraceId() {
-        TraceUtils.remove();
-    }
 
     @Test
     void listEmptyOrPaged() throws Exception {

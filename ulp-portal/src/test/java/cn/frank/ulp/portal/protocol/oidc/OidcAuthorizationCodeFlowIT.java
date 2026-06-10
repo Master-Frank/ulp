@@ -22,8 +22,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,7 +36,6 @@ import cn.frank.ulp.support.security.userdetails.Application;
 import cn.frank.ulp.support.security.userdetails.UserDetails;
 import cn.frank.ulp.support.security.userdetails.UserType;
 import cn.frank.ulp.support.testsupport.AbstractIntegrationTest;
-import cn.frank.ulp.support.trace.TraceUtils;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -74,24 +71,6 @@ class OidcAuthorizationCodeFlowIT extends AbstractIntegrationTest {
 
     private static final String AUTH_ENDPOINT_TPL  = "/api/v1/authorize/%s/oauth2/auth";
     private static final String TOKEN_ENDPOINT_TPL = "/api/v1/authorize/%s/oauth2/token";
-
-    /**
-     * 模拟 {@link cn.frank.ulp.support.trace.TraceFilter} 行为：在 MDC 中放一个 TRACE_ID。
-     *
-     * <p>背景：审计链路（OAuth2AuthenticationSuccessEventListener → AuditEventPublish.publish →
-     * new AuditEvent(TraceUtils.get(), ...)）会读 MDC 的 TRACE_ID；EventObject 拒绝 null source，
-     * 测试上下文里 TraceFilter 未生效（filter 顺序或注册时机的问题，留 todo 单独排查），
-     * 这里直接在 @BeforeEach 里手动塞一个 traceId 让审计链路跑通。</p>
-     */
-    @BeforeEach
-    void primeTraceId() {
-        TraceUtils.put("test-trace-" + System.nanoTime());
-    }
-
-    @AfterEach
-    void clearTraceId() {
-        TraceUtils.remove();
-    }
 
     @Test
     void happyPath() throws Exception {
