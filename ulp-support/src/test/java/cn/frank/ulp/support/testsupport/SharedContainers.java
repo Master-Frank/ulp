@@ -29,7 +29,6 @@ public final class SharedContainers {
     private static final DockerImageName MYSQL_IMAGE = DockerImageName.parse("mysql:8.0.36");
     private static final DockerImageName REDIS_IMAGE = DockerImageName.parse("redis:7-alpine");
 
-
     private SharedContainers() {
     }
 

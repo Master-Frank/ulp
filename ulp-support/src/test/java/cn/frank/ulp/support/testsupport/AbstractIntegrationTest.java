@@ -25,32 +25,37 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 /**
  * 所有集成测试的共享基类：
  * <ul>
  *   <li>{@code @SpringBootTest(MOCK)} + {@code @AutoConfigureMockMvc} —— MockMvc 驱动 controller 层断言</li>
  *   <li>{@code @Transactional} —— 每个测试方法运行在事务里，结束时回滚，避免测试间 SQL 状态泄漏</li>
- *   <li>{@code @Testcontainers} —— 启用 Testcontainers JUnit Jupiter 集成</li>
- *   <li>{@code @Container static} —— 每个 JVM 启动一次 MySQL + Redis 容器</li>
+ *   <li>singleton container 模式 —— MySQL + Redis 容器在 JVM 启动时一次性启动，由 Ryuk reaper 在 JVM 退出时清理</li>
  *   <li>{@code @DynamicPropertySource} —— 把容器 endpoint 注入 Spring 配置</li>
  * </ul>
+ * <p>不用 {@code @Testcontainers} + {@code @Container} —— 那套语义会在每个 test class 结束时 stop 容器、
+ * 下一个 class 开始时 start 新容器（新端口），但 Spring TestContext 缓存的 ApplicationContext
+ * 仍指向旧端口，造成第二个测试类起 "Connection refused"。改用 static initializer + 手动 start，
+ * 保证容器在整个 JVM 生命周期内只启动一次、端口稳定。</p>
  * <p>跨次运行的容器复用通过开发者本机 {@code ~/.testcontainers.properties} 显式开启
  * （{@code testcontainers.reuse.enable=true}）；默认每次 JVM 启停销毁。</p>
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 @Transactional
-@Testcontainers
 public abstract class AbstractIntegrationTest {
 
-    @Container
-    protected static final MySQLContainer<?>   MYSQL = SharedContainers.mysql();
+    protected static final MySQLContainer<?>   MYSQL;
 
-    @Container
-    protected static final GenericContainer<?> REDIS = SharedContainers.redis();
+    protected static final GenericContainer<?> REDIS;
+
+    static {
+        MYSQL = SharedContainers.mysql();
+        REDIS = SharedContainers.redis();
+        MYSQL.start();
+        REDIS.start();
+    }
 
     @DynamicPropertySource
     static void wireContainerProperties(DynamicPropertyRegistry registry) {

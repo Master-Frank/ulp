@@ -1,0 +1,7 @@
+# 集成测试专用配置：补齐生产 yml 没有显式声明、IT 才用得到的字段。
+# 容器 endpoint 由 AbstractIntegrationTest 的 @DynamicPropertySource 注入，这里不再重复。
+ulp:
+  server:
+    portal-public-base-url: http://localhost
+    console-public-base-url: http://localhost
+    open-api-public-base-url: http://localhost
