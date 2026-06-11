@@ -439,12 +439,8 @@
                 <version>${jsonwebtoken.version}</version>
                 <scope>runtime</scope>
             </dependency>
-            <!-- jackson-dataformat-xml -->
-            <dependency>
-                <groupId>com.fasterxml.jackson.dataformat</groupId>
-                <artifactId>jackson-dataformat-xml</artifactId>
-                <version>${jackson-bom.version}</version>
-            </dependency>
+            <!-- jackson-dataformat-xml: version managed by Boot 4 BOM (jackson 2.x line, alongside tools.jackson 3.x).
+                 Phase 3 will migrate import sites to tools.jackson.dataformat when needed. -->
             <dependency>
                 <groupId>com.fasterxml.woodstox</groupId>
                 <artifactId>woodstox-core</artifactId>
