@@ -24,8 +24,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.data.redis.serializer.GenericJacksonJsonRedisSerializer;
-import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.http.HttpMethod;
 import org.springframework.lang.NonNull;
 import org.springframework.security.config.Customizer;
@@ -43,14 +41,11 @@ import org.springframework.security.web.servlet.util.matcher.PathPatternRequestM
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import cn.frank.ulp.audit.event.AuditEventPublish;
 import cn.frank.ulp.authentication.alipay.configurer.AlipayAuthenticationConfigurer;
 import cn.frank.ulp.authentication.common.IdentityProviderAuthenticationService;
 import cn.frank.ulp.authentication.common.client.RegisteredIdentityProviderClientRepository;
 import cn.frank.ulp.authentication.common.configurer.IdentityProviderBindAuthenticationConfigurer;
-import cn.frank.ulp.authentication.common.jackjson.AuthenticationJacksonModule;
 import cn.frank.ulp.authentication.dingtalk.configurer.DingTalkAuthenticationConfigurer;
 import cn.frank.ulp.authentication.feishu.configurer.FeiShuAuthenticationConfigurer;
 import cn.frank.ulp.authentication.gitee.configurer.GiteeAuthenticationConfigurer;
@@ -72,12 +67,9 @@ import cn.frank.ulp.core.security.task.UserExpireLockTask;
 import cn.frank.ulp.core.security.task.UserUnlockTask;
 import cn.frank.ulp.portal.authentication.*;
 import cn.frank.ulp.support.geo.GeoLocationParser;
-import cn.frank.ulp.support.jackjson.SupportJackson2Module;
 import cn.frank.ulp.support.security.authentication.WebAuthenticationDetailsSource;
 import cn.frank.ulp.support.security.configurer.FormLoginConfigurer;
 import cn.frank.ulp.support.web.useragent.UserAgentParser;
-
-import tools.jackson.databind.ObjectMapper;
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -378,16 +370,6 @@ public class PortalSecurityConfiguration extends AbstractSecurityConfiguration
     public PasswordExpireTask passwordExpireLockTask(SettingRepository settingRepository,
                                                      UserRepository userRepository) {
         return new PasswordExpireLockTask(settingRepository, userRepository);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public RedisSerializer<Object> springSessionDefaultRedisSerializer() {
-        ObjectMapper mapper = SupportJackson2Module.objectMapperBuilder(this.loader)
-            .addModule(new AuthenticationJacksonModule())
-            .changeDefaultPropertyInclusion(v -> v.withValueInclusion(JsonInclude.Include.NON_NULL))
-            .build();
-        return new GenericJacksonJsonRedisSerializer(mapper);
     }
 
     /**
