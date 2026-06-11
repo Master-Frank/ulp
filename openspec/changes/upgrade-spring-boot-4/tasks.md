@@ -63,13 +63,14 @@
 - [x] 5.6 ~~移除 `spring-boot-properties-migrator` 依赖~~（无需，从未加）
 - [x] 5.7 commit: `refactor(config): wire @EnableRedisIndexedHttpSession to replace dropped SB4 session autoconfig`
 
-## 6. Hibernate 7.1（阶段 commit 9）
+## 6. Hibernate 7.2（阶段 commit 9）
 
-- [ ] 6.1 改 pom：如有显式声明 `hibernate-jpamodelgen`，改为 `hibernate-processor`
-- [ ] 6.2 全仓 grep `org.hibernate.dialect.MySQLDialect` / `MySQL8Dialect`，看是否需要改用 `org.hibernate.community.dialect.*`
-- [ ] 6.3 检查所有 `@Entity` 类的 `@Type` / `@TypeDef` 注解（如有），Hibernate 7 deprecated 部分自定义类型 API
-- [ ] 6.4 `mvnw.cmd compile -Dlicense.skip=true` 通过
-- [ ] 6.5 commit: `refactor(deps): migrate hibernate 6.4 → 7.1`
+- [x] 6.1 pom 全仓无 `hibernate-jpamodelgen` 显式声明（仅 `hibernate-validator` / `hibernate-core` 由 SB4 BOM 接管），无需改 `hibernate-processor`
+- [x] 6.2 全仓 grep `org.hibernate.dialect.MySQLDialect` / `MySQL8Dialect`：无命中，Hibernate 6 起 dialect 已从 JDBC URL 自动推断
+- [x] 6.3 检查 `@Entity` 类无 `@Type` / `@TypeDef` 注解；项目使用 `@JdbcTypeCode(SqlTypes.JSON)` + `@SoftDelete` + `Hibernate.isInitialized()`，全部为 Hibernate 6 起稳定 API
+- [x] 6.4 顺手清理：移除根 pom 的 `jackson-datatype-hibernate6`（拉 Jackson 2.21.4 legacy，自 Phase 3 起从未被任何 Java 文件 import，与 Jackson 3 (`tools.jackson`) 架构不兼容）
+- [x] 6.5 `mvnw.cmd compile -Dlicense.skip=true -T 1C`（JDK 21）40/40 模块 BUILD SUCCESS
+- [x] 6.6 commit: `refactor(deps): verify hibernate 7.2 compatibility + drop unused jackson-datatype-hibernate6`
 
 ## 7. Liquibase 5 + 三方依赖核对（阶段 commit 10）
 
