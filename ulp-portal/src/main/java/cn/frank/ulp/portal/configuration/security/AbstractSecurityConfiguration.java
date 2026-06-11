@@ -16,11 +16,13 @@
  */
 package cn.frank.ulp.portal.configuration.security;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -50,7 +52,6 @@ import cn.frank.ulp.support.redis.KeyStringRedisSerializer;
 import cn.frank.ulp.support.security.csrf.SpaCsrfTokenRequestHandler;
 import cn.frank.ulp.support.web.useragent.UserAgentParser;
 import static org.springframework.security.web.header.writers.XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK;
-import static org.springframework.web.cors.CorsConfiguration.ALL;
 
 import static cn.frank.ulp.core.setting.SecuritySettingConstants.*;
 import static cn.frank.ulp.support.constant.UlpConstants.DEFAULT_CSRF_COOKIE_NAME;
@@ -65,25 +66,44 @@ import static cn.frank.ulp.support.security.constant.SecurityConstants.LOGOUT_PA
 public class AbstractSecurityConfiguration {
 
     /**
-     * Cors 过滤器
+     * CORS filter.
+     * <p>
+     * Reads cross-origin allow-list from {@code ulp.security.cors.allowed-origins}.
+     * Empty list (the default for same-origin deployments where the bundled SPA
+     * is served from the same host as the API) disables CORS entirely.
+     * <p>
+     * Wildcards are rejected because credentials are required for the session
+     * and CSRF cookies — combining {@code *} with credentials would let any
+     * website read authenticated responses.
      *
-     * @return {@link HeadersConfigurer}
+     * @return CORS configurer customizer
      */
     public Customizer<CorsConfigurer<HttpSecurity>> withCorsConfigurerDefaults() {
+        List<String> origins = sanitizedAllowedOrigins();
+        if (origins.isEmpty()) {
+            return CorsConfigurer::disable;
+        }
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Lists.newArrayList(ALL));
-        configuration.applyPermitDefaultValues();
+        configuration.setAllowedOrigins(origins);
         configuration.setAllowCredentials(true);
-        configuration.addAllowedOrigin(ALL);
-        configuration.addAllowedHeader(ALL);
-        configuration.addAllowedMethod(HttpMethod.PUT);
-        configuration.addAllowedMethod(HttpMethod.GET);
-        configuration.addAllowedMethod(HttpMethod.POST);
-        configuration.addAllowedMethod(HttpMethod.DELETE);
-        configuration.addAllowedMethod(HttpMethod.OPTIONS);
+        configuration.setAllowedHeaders(Lists.newArrayList("Content-Type", "Accept", "Origin",
+            DEFAULT_CSRF_HEADER_NAME, "X-Requested-With"));
+        configuration
+            .setAllowedMethods(Lists.newArrayList(HttpMethod.GET.name(), HttpMethod.POST.name(),
+                HttpMethod.PUT.name(), HttpMethod.DELETE.name(), HttpMethod.OPTIONS.name()));
+        configuration.setMaxAge(3600L);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return configurer -> configurer.configurationSource(source);
+    }
+
+    private List<String> sanitizedAllowedOrigins() {
+        if (corsAllowedOrigins == null || corsAllowedOrigins.length == 0) {
+            return List.of();
+        }
+        return Arrays.stream(corsAllowedOrigins)
+            .filter(s -> s != null && !s.isBlank() && !"*".equals(s.trim())).map(String::trim)
+            .toList();
     }
 
     /**
@@ -229,6 +249,13 @@ public class AbstractSecurityConfiguration {
 
     private final UserAgentParser   userAgentParser;
     private final SettingRepository settingRepository;
+
+    /**
+     * CORS allow-list. Empty (default) disables CORS — appropriate for
+     * same-origin deployments where the SPA is bundled with the API.
+     */
+    @Value("${ulp.security.cors.allowed-origins:}")
+    private String[]                corsAllowedOrigins;
 
     public AbstractSecurityConfiguration(UserAgentParser userAgentParser,
                                          SettingRepository settingRepository) {
