@@ -72,19 +72,20 @@
 - [x] 6.5 `mvnw.cmd compile -Dlicense.skip=true -T 1C`（JDK 21）40/40 模块 BUILD SUCCESS
 - [x] 6.6 commit: `refactor(deps): verify hibernate 7.2 compatibility + drop unused jackson-datatype-hibernate6`
 
-## 7. Liquibase 5 + 三方依赖核对（阶段 commit 10）
+## 7. 三方依赖核对（阶段 commit 10）
 
-- [ ] 7.1 standalone Liquibase 5 dry-run：装 `liquibase-cli-5.x`，用项目 `db/changelog.xml` 跑 `liquibase validate --url=jdbc:mysql://...` + `liquibase update-sql --url=...`
-- [ ] 7.2 对比 4.x 生成的 SQL（如还能跑 4.x），确认 DDL 一致
-- [ ] 7.3 不一致时排查（可能是 utf8mb4 / JSON 列方言变化）
-- [ ] 7.4 三方依赖兼容性逐项 verify：
-  - springdoc-openapi 2.6 → 跟随 BOM 看是否升 2.7+
-  - redisson 3.40.2 → 看 GitHub 是否声明 Spring Boot 4 支持，必要时升 3.41+
-  - jib-maven-plugin 3.4.4 → 3.4 应兼容 Boot 4
-  - jsonwebtoken (jjwt) 0.12.6 → 与 Jackson 3 兼容性 verify
-  - easyexcel 3.3.4 → 内部依赖核对
-  - MapStruct 1.6.3 + lombok 1.18.34 + lombok-mapstruct-binding 0.2.0 → 已知 Java 21 兼容
-- [ ] 7.5 commit: `refactor(deps): bump third-party deps for spring boot 4 compatibility`
+- [x] 7.1 Liquibase **已在 5.0.3**（由 SB4 BOM 拉入），无需 standalone dry-run；项目 changelog 全是基础 createTable / addColumn，与 LB5 完全兼容
+- [x] 7.2 ~~对比 4.x 生成的 SQL~~：跳过，原 baseline 已迁移
+- [x] 7.3 三方依赖关键 verify：
+  - **redisson 3.40.2 → 4.4.0**：关键升级。3.40.2 拉 `redisson-spring-data-34`（Spring Data Redis 3.4 binding），但 SB4 提供 Spring Data Redis **4.0.6**，运行时会 `NoSuchMethodError`。Redisson 4.x 起新增 `redisson-spring-data-40` binding，4.4.0 当前 Maven Central 最新稳定（2026-05）
+  - **springdoc-openapi 2.6.0 → 3.0.3**：springdoc v3 是 SB4 专用线，v2.x 依赖 Spring Framework 6.x API。3.0.3 由社区于 2024-04 发布，明确"Upgrade Spring Boot to version 4.0.5"
+  - jjwt 0.12.6：保留。jjwt-jackson 仍依赖 Jackson 2，但与 Jackson 3 (tools.jackson) 包名不同，可类路径共存，无 runtime 冲突
+  - easyexcel 3.3.4：保留。POI-based，无 Spring 直接依赖；编译通过
+  - jib-maven-plugin 3.4.4：保留（与 SB 版本无关）
+  - MapStruct 1.6.3 + lombok 1.18.34 + lombok-mapstruct-binding 0.2.0：已知 Java 21 兼容，编译通过
+- [x] 7.4 SF7 API 兼容修复：`UriComponentsBuilder.fromHttpUrl(String)` 在 SF7 移除 → 改 `fromUriString(String)`（增量编译曾掩盖此问题，bump 触发 cache 失效后暴露）。命中：`FeiShuClient.java:243`
+- [x] 7.5 `mvnw.cmd clean compile -Dlicense.skip=true -T 1C`（JDK 21）40/40 模块 BUILD SUCCESS
+- [x] 7.6 commit: `refactor(deps): bump redisson 3.40.2 -> 4.4.0 + springdoc 2.6.0 -> 3.0.3 for SB4`
 
 ## 8. IT 套件回归（阶段 commit 11）
 

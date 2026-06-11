@@ -240,7 +240,7 @@ public class FeiShuClient extends AbstractFeiShuClient implements IdentitySource
         headers.add("Authorization", "Bearer " + token);
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
         //  构建请求地址
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url);
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url);
         if (Objects.nonNull(json)) {
             JSONObject params = JSON.parseObject(JSON.toJSONString(json), JSONObject.class);
             params.forEach(builder::queryParam);
