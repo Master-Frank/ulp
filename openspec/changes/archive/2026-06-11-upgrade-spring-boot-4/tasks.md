@@ -1,28 +1,25 @@
 ## 0. 准备
 
-- [ ] 0.1 确认当前分支 `feature/spring-boot-upgrade` clean，IT 基线全绿（`mvnw.cmd clean verify -pl ulp-console,ulp-portal,ulp-support` 13 IT + 5 UT 全过）
-- [ ] 0.2 备份 `~/.m2/repository/org/springframework/` 整个目录，遇问题快速回退
-- [ ] 0.3 在 `ulp-support/src/test/java/.../testsupport/` 加一个临时 `BaselineVersionAssertionTest`：通过反射读 `spring.boot.version` + `java.specification.version`，断言当前是 3.2.12 + 17，作为"未升级"baseline；升级完后该测试改为断言 4.0.x + 21，并改名 `RuntimeBaselineAssertionTest`，永久保留
-- [ ] 0.4 准备 OpenRewrite 备选方案：本 plan 走 sed + IDE，但若 Jackson 改完 IT 全炸，回退用 `org.openrewrite.recipe:rewrite-spring:SpringBoot40Migration`
+- [x] 0.1 确认当前分支 `feature/spring-boot-upgrade` clean，IT 基线全绿（baseline commit `c38a108`）
+- [x] 0.2 备份 `~/.m2/repository/org/springframework/` 整个目录
+- [x] 0.3 在 `ulp-support/src/test/java/.../testsupport/` 加 `BaselineVersionAssertionTest`（升级完后已改名 `RuntimeBaselineAssertionTest`，断言 Boot 4.0.x + Java 21，见 Phase 10.2）
+- [x] 0.4 准备 OpenRewrite 备选方案（备而未用，Jackson 迁移走 sed + IDE 即成功）
 
 ## 1. POM parent + Java 21（阶段 commit 1）
 
-- [ ] 1.1 改 `<parent>` 为 `spring-boot-starter-parent:4.0.5`（或写本任务时最新 patch）
-- [ ] 1.2 改 `<java.version>` / `<maven.compiler.source>` / `<maven.compiler.target>` / `<java.source.version>` / `<java.target.version>` 全部 17 → 21
-- [ ] 1.3 改 `<spring-boot.version>` property 4.0.5
-- [ ] 1.4 评估并删除可被 Boot 4 BOM 接管的 override（先注释、不删，等阶段 11 确认无回归再彻底删）：
-  - `<maven-failsafe-plugin.version>` 3.5.2
-  - `<commons-lang3.version>` 3.17.0
-  - `<docker-java.version>` 3.5.1
-- [ ] 1.5 `mvnw.cmd dependency:tree -pl ulp-support` 看 Boot 4 实际提供的版本
-- [ ] 1.6 commit: `chore(deps): bump spring-boot 3.2.12 → 4.0.5 + java 17 → 21 (parent only)`
+- [x] 1.1 改 `<parent>` 为 `spring-boot-starter-parent:4.0.7`（实际选用 patch 4.0.7，非 4.0.5）
+- [x] 1.2 改 `<java.version>` / `<maven.compiler.source>` / `<maven.compiler.target>` / `<java.source.version>` / `<java.target.version>` 全部 17 → 21
+- [x] 1.3 改 `<spring-boot.version>` property 4.0.7
+- [x] 1.4 注释 Boot 4 BOM 可接管的 override（commons-lang3 / docker-java / maven-failsafe-plugin），Phase 10.1 彻底清理
+- [x] 1.5 `mvnw.cmd dependency:tree -pl ulp-support` 核对 Boot 4 实际提供版本
+- [x] 1.6 commit: `chore(deps): bump spring-boot 3.2.12 → 4.0.7 + java 17 → 21 (parent only)` (b1b73b0) + follow-up `chore(deps): let boot 4 BOM manage jackson-dataformat-xml` (4bcc0f6)
 
 ## 2. 第一次编译扫雷（阶段 commit 2）
 
-- [ ] 2.1 `mvnw.cmd clean compile -Dlicense.skip=true -DskipTests`，把所有报错收集到一个 list
-- [ ] 2.2 按错误大类分组：(a) Jackson 包名 (b) Spring Security DSL (c) Spring Session 属性键 (d) BootstrapRegistry 包路径 (e) Hibernate API 调整 (f) 其他
-- [ ] 2.3 不修代码，先写 commit message 草稿（让自己看清楚问题面）
-- [ ] 2.4 commit: `chore(deps): document compile errors after spring-boot 4 bump (WIP)`（content 是错误清单文件）
+- [x] 2.1 `mvnw.cmd clean compile -Dlicense.skip=true -DskipTests` 报错清单收集到 `phase-2-compile-errors.md`
+- [x] 2.2 按错误大类分组：Jackson / Spring Security DSL / Spring Session / BootstrapRegistry / Hibernate / 其他
+- [x] 2.3 先写错误清单文件，不动代码
+- [x] 2.4 commit: `chore(deps): document compile errors after spring-boot 4 bump (WIP)` (0dc341d)
 
 ## 3. Jackson 3 迁移（阶段 commit 3）
 
@@ -41,7 +38,7 @@
   - `OAuth2AuthorizationServerJackson2Module` → `OAuth2AuthorizationServerJacksonModule`（`org.springframework.security.oauth2.server.authorization.jackson`）
 - [x] 3.4 重点核对 4 个文件：UserDetailsDeserializer / RedisOAuth2AuthorizationService（SAS）/ Console+Portal SecurityConfig / 全部 Mixin（OAuth2 / Authentication / Form / Jwt / Geo / Web / Security）
 - [x] 3.5 编译错误集中到 Jackson 之外的阶段（Security 7 AntPathRequestMatcher / Hibernate 7 / SB4 ErrorAttributes / SB4 CacheProperties+RedisProperties / Hibernate Validator 8 EmailValidator），Jackson 报错清零
-- [ ] 3.6 `mvnw.cmd test -pl ulp-support` 等编译全绿后再跑（Phase 4-6 完成后回来跑）
+- [x] 3.6 ~~独立跑 `mvnw test -pl ulp-support`~~ 由 Phase 8.1 的全 reactor `clean verify` 涵盖（包含 ulp-support 13 IT + 5 UT 全过）
 - [x] 3.7 commit: `refactor(deps): migrate jackson 2.x → 3.x (com.fasterxml → tools.jackson)` (adad774)
 
 ## 4. Spring Security 7 DSL 改写（阶段 commit 4-7，按 SecurityConfig 拆 4 个 commit）
@@ -96,7 +93,7 @@
   - `PolymorphicTypeValidator denied resolution: OAuth2AuthorizationCode` → `SupportJackson2Module.objectMapperBuilder` PTV allowlist 仅覆盖 `cn.frank.ulp.` / `java.util.` / `java.lang.`，补 `java.time.` + `org.springframework.security.`
 - [x] 8.3 无 `--add-opens` 警告刷屏，failsafe argLine 无需调整
 - [x] 8.4 commit: `test(it): green IT suite under spring boot 4 + java 21` (39b2664, 17 files, +38/-46)
-- [ ] 8.5 ~~记录冷启动 / 热启动耗时对比 3.2 vs 4.0~~ 跳过：基线未捕获冷启动 timing，无对比意义
+- [x] 8.5 ~~记录冷启动 / 热启动耗时对比 3.2 vs 4.0~~ 跳过：基线未捕获冷启动 timing，无对比意义
 
 ## 9. 三个应用本地烟测（阶段 commit 12）
 
@@ -107,7 +104,7 @@
 - [x] 9.5 启动期暴露 2 个 SB4 死锁，归类 (a) Boot 4 配置/装配时序，已修：
   - **JPA bootstrap-mode**：`spring.data.jpa.repositories.bootstrap-mode=deferred` 触发 async EMF FutureTask；Hibernate 7 `MultiTenancy.getTenantIdentifierResolver` 回调 SpringBeanContainer.getBean 抢 BeanFactory ReentrantLock，主线程等 EMF future → 死锁。三应用统一改 `default`（同步装配）
   - **Session 与 Security 解耦**：SB4 `RedisIndexedHttpSessionConfiguration.setDefaultRedisSerializer` 参数解析提前触发 SecurityConfig 实例化；Portal 的 SecurityConfig ctor 注入 UserRepository → JPA fragments 在 EntityManager 就绪前被装配 → `UnsatisfiedDependencyException`。修复：把 `springSessionDefaultRedisSerializer` @Bean 从 `PortalSecurityConfiguration` 抽到轻量 `PortalSessionConfiguration`（无 JPA 依赖）。Console SecurityConfig 无 ctor 注入，不受影响
-- [ ] 9.6 commit: `test(smoke): verify console + portal + openapi running under spring boot 4`
+- [x] 9.6 commit: `test(smoke): verify console + portal + openapi running under spring boot 4` (d150d90, 含死锁修复前置 commits d5b8ab5 + e9ac742)
 
 ## 10. 清理 + Java 21 优化（阶段 commit 13）
 
@@ -118,7 +115,7 @@
   - 注：`failsafe.version` 保留（指向 `dev.failsafe:failsafe` 弹性库，与 maven-failsafe-plugin 同名不同物）
 - [x] 10.2 `BaselineVersionAssertionTest` → `RuntimeBaselineAssertionTest`：已在 ulp-support 测试树落地，断言 Boot 4.0.x + Java 21；早期 Phase 落实，本阶段无需新增 commit
 - [x] 10.3 **决策：本次不启用虚拟线程**。Tomcat + 虚拟线程（`spring.threads.virtual.enabled=true`）在 Boot 4 默认 false 是有原因的：JPA + Hibernate 7 配合 ThreadLocal 上下文（EntityManager 绑定线程、Hibernate Session、`@Transactional` propagation）需要逐一验证；本次仅做 Boot 升级，启用虚拟线程属于 perf 优化范畴，留给 #39（Actuator + 健康检查 + 性能基线）一起评估，避免本变更引入混合风险
-- [ ] 10.4 commit: `chore(deps): remove obsolete dependency overrides after spring boot 4 upgrade`
+- [x] 10.4 commit: `chore(deps): remove obsolete dependency overrides after spring boot 4 upgrade` (9e1b3c8)
 
 ## 11. 文档（阶段 commit 14）
 
