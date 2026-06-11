@@ -78,12 +78,6 @@
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
         <java-otp.version>0.4.0</java-otp.version>
         <failsafe.version>3.3.2</failsafe.version>
-        <!-- TODO Phase 11 (upgrade-spring-boot-4): three overrides parked pending Boot 4 BOM verification.
-             If full IT stays green without these under Boot 4, delete this block in Phase 10.1.
-             maven-failsafe-plugin.version (was 3.5.2): Boot 3.2.x defaulted to 3.1.2 with unstable env vars on forked JVM.
-             docker-java.version          (was 3.5.1): was needed for Docker Engine 29 API 1.41 negotiation under Boot 3.
-             commons-lang3.version        (was 3.17.0): testcontainers 1.21.x copyFileToContainer needed ArrayFill (3.14+).
-        -->
         <bouncycastle.version>1.70</bouncycastle.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <qiniu-java-sdk.version>7.17.0</qiniu-java-sdk.version>
@@ -445,34 +439,6 @@
                 <artifactId>ulp-support</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <!-- TODO Phase 11 (upgrade-spring-boot-4): commons-lang3 + docker-java overrides parked here pending Boot 4 BOM verification. Re-enable property block above and uncomment these entries if Boot 4 regresses. -->
-            <!--
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${commons-lang3.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.docker-java</groupId>
-                <artifactId>docker-java-api</artifactId>
-                <version>${docker-java.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.docker-java</groupId>
-                <artifactId>docker-java-core</artifactId>
-                <version>${docker-java.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.docker-java</groupId>
-                <artifactId>docker-java-transport</artifactId>
-                <version>${docker-java.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.docker-java</groupId>
-                <artifactId>docker-java-transport-zerodep</artifactId>
-                <version>${docker-java.version}</version>
-            </dependency>
-            -->
             <!-- testcontainers BOM：统一管理所有 testcontainers 模块版本（含 testcontainers / mysql / junit-jupiter） -->
             <!-- 消费模块直接在 dependencies 中以 <scope>test</scope> 声明，无需写版本 -->
             <dependency>
@@ -890,8 +856,7 @@
                     <artifactId>apt-maven-plugin</artifactId>
                     <version>${apt-maven-plugin.version}</version>
                 </plugin>
-                <!--maven-failsafe-plugin：在 verify 阶段执行 *IT.java 集成测试-->
-                <!-- TODO Phase 11 (upgrade-spring-boot-4): version pin removed; Boot 4 BOM should now manage maven-failsafe-plugin. If forked JVM env-var passing regresses, restore <version>${maven-failsafe-plugin.version}</version> and the property above. -->
+                <!--maven-failsafe-plugin：在 verify 阶段执行 *IT.java 集成测试，版本由 spring-boot-starter-parent BOM 管理-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>

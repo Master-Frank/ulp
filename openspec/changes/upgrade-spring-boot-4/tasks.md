@@ -111,9 +111,13 @@
 
 ## 10. 清理 + Java 21 优化（阶段 commit 13）
 
-- [ ] 10.1 删除阶段 1.4 注释掉的过期 override（commons-lang3 / docker-java / failsafe）
-- [ ] 10.2 `BaselineVersionAssertionTest` 重命名为 `RuntimeBaselineAssertionTest`，断言切换为 4.0.x + 21，永久保留
-- [ ] 10.3 评估是否把 Tomcat 改用虚拟线程（`spring.threads.virtual.enabled=true` Boot 4 默认 false，可开）—— 决策记录到 tasks.md 但本次不一定启用，留给 #39 一起评估
+- [x] 10.1 删除阶段 1.4 注释掉的过期 override：
+  - 根 pom `<properties>` 内 Phase 11 TODO 注释块（commons-lang3 / docker-java / maven-failsafe-plugin 版本说明）
+  - 根 pom `<dependencyManagement>` 内被注释的 commons-lang3 + docker-java-{api,core,transport,transport-zerodep} 五个 dep 块
+  - 根 pom `<pluginManagement>` 中 maven-failsafe-plugin 的 "version pin removed" TODO；换成一行说明 "版本由 spring-boot-starter-parent BOM 管理"
+  - 注：`failsafe.version` 保留（指向 `dev.failsafe:failsafe` 弹性库，与 maven-failsafe-plugin 同名不同物）
+- [x] 10.2 `BaselineVersionAssertionTest` → `RuntimeBaselineAssertionTest`：已在 ulp-support 测试树落地，断言 Boot 4.0.x + Java 21；早期 Phase 落实，本阶段无需新增 commit
+- [x] 10.3 **决策：本次不启用虚拟线程**。Tomcat + 虚拟线程（`spring.threads.virtual.enabled=true`）在 Boot 4 默认 false 是有原因的：JPA + Hibernate 7 配合 ThreadLocal 上下文（EntityManager 绑定线程、Hibernate Session、`@Transactional` propagation）需要逐一验证；本次仅做 Boot 升级，启用虚拟线程属于 perf 优化范畴，留给 #39（Actuator + 健康检查 + 性能基线）一起评估，避免本变更引入混合风险
 - [ ] 10.4 commit: `chore(deps): remove obsolete dependency overrides after spring boot 4 upgrade`
 
 ## 11. 文档（阶段 commit 14）
