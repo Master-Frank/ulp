@@ -26,7 +26,6 @@ import org.redisson.api.RAtomicLong;
 import org.redisson.api.RBucket;
 import org.redisson.api.RScoredSortedSet;
 import org.redisson.api.RedissonClient;
-import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.stereotype.Component;
 
 import cn.frank.ulp.common.enums.MailType;
@@ -35,6 +34,7 @@ import cn.frank.ulp.common.enums.SmsType;
 import cn.frank.ulp.common.exception.OtpSendException;
 import cn.frank.ulp.core.message.mail.MailMsgEventPublish;
 import cn.frank.ulp.core.message.sms.SmsMsgEventPublish;
+import cn.frank.ulp.support.cache.UlpCacheProperties;
 import cn.frank.ulp.support.exception.UlpException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -233,12 +233,13 @@ public class OtpContextHelp {
     private final SmsMsgEventPublish  smsMsgEventPublish;
 
     /**
-     * CacheProperties
+     * UlpCacheProperties
      */
-    private final CacheProperties     cacheProperties;
+    private final UlpCacheProperties  cacheProperties;
 
     public OtpContextHelp(RedissonClient redissonClient, MailMsgEventPublish mailMsgEventPublish,
-                          SmsMsgEventPublish smsMsgEventPublish, CacheProperties cacheProperties) {
+                          SmsMsgEventPublish smsMsgEventPublish,
+                          UlpCacheProperties cacheProperties) {
         this.redissonClient = redissonClient;
         this.mailMsgEventPublish = mailMsgEventPublish;
         this.smsMsgEventPublish = smsMsgEventPublish;

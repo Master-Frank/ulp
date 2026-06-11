@@ -19,6 +19,7 @@ package cn.frank.ulp.authentication.common.jackjson;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import tools.jackson.databind.annotation.JsonDeserialize;
 
 /**

@@ -21,11 +21,11 @@ import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.http.support.JacksonHandlerInstantiator;
 import org.springframework.util.Assert;
 
-import tools.jackson.databind.ObjectMapper;
-
 import cn.frank.ulp.application.ApplicationServiceLoader;
 import cn.frank.ulp.protocol.form.jackson.FormAuthorizationModule;
 import cn.frank.ulp.support.jackjson.SupportJackson2Module;
+
+import tools.jackson.databind.ObjectMapper;
 
 /**
  *

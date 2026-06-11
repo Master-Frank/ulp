@@ -17,10 +17,11 @@
 package cn.frank.ulp.support.security.configurer;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.HttpSecurityBuilder;
 import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import cn.frank.ulp.support.security.authentication.WebAuthenticationDetailsSource;
@@ -34,7 +35,7 @@ public class FormLoginConfigurer<H extends HttpSecurityBuilder<H>> extends
     }
 
     @Override
-    public void init(H builder) throws Exception {
+    public void init(H builder) {
         builder.addFilterBefore(this.getAuthenticationFilter(),
             UsernamePasswordAuthenticationFilter.class);
         this.authenticationDetailsSource(getAuthenticationDetailsSource(builder));
@@ -43,7 +44,7 @@ public class FormLoginConfigurer<H extends HttpSecurityBuilder<H>> extends
 
     @Override
     public RequestMatcher createLoginProcessingUrlMatcher(String loginProcessingUrl) {
-        return new AntPathRequestMatcher(loginProcessingUrl, "POST");
+        return PathPatternRequestMatcher.pathPattern(HttpMethod.POST, loginProcessingUrl);
     }
 
     public static <B extends HttpSecurityBuilder<B>> WebAuthenticationDetailsSource getAuthenticationDetailsSource(B builder) {

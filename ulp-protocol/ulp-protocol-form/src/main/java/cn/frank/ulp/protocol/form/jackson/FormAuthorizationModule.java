@@ -16,10 +16,10 @@
  */
 package cn.frank.ulp.protocol.form.jackson;
 
+import cn.frank.ulp.protocol.form.authentication.FormAuthenticationToken;
+
 import tools.jackson.core.Version;
 import tools.jackson.databind.module.SimpleModule;
-
-import cn.frank.ulp.protocol.form.authentication.FormAuthenticationToken;
 
 /**
  * FormAuthorizationModule

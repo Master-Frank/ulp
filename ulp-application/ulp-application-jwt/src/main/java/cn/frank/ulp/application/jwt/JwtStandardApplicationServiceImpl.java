@@ -23,8 +23,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
-import tools.jackson.databind.ObjectMapper;
-
 import cn.frank.ulp.application.exception.AppNotExistException;
 import cn.frank.ulp.application.jwt.converter.AppJwtConfigConverter;
 import cn.frank.ulp.application.jwt.pojo.AppJwtSaveConfigParam;
@@ -41,10 +39,12 @@ import cn.frank.ulp.support.validation.ValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import jakarta.validation.ConstraintViolationException;
-import static tools.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
-
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_BY;
 import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME;
+
+import static tools.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 
 /**
  * JWT 用户应用
@@ -65,10 +65,9 @@ public class JwtStandardApplicationServiceImpl extends AbstractJwtApplicationSer
     public void saveConfig(String appId, Map<String, Object> config) {
         AppJwtSaveConfigParam model;
         try {
-            ObjectMapper mapper = new ObjectMapper();
+            ObjectMapper mapper = JsonMapper.builder().configure(FAIL_ON_UNKNOWN_PROPERTIES, false)
+                .build();
             String value = mapper.writeValueAsString(config);
-            // 指定序列化输入的类型
-            mapper.configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
             model = mapper.readValue(value, AppJwtSaveConfigParam.class);
         } catch (Exception e) {
             throw new UlpException(e.getMessage());

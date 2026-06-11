@@ -25,7 +25,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.security.config.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -37,11 +37,11 @@ import org.springframework.security.oauth2.core.http.converter.OAuth2ErrorHttpMe
 import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationProvider;
 import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.oidc.web.OidcUserInfoEndpointFilter;
-import org.springframework.security.oauth2.server.authorization.web.authentication.DelegatingAuthenticationConverter;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.authentication.DelegatingAuthenticationConverter;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
@@ -97,11 +97,11 @@ public final class OidcUserInfoEndpointConfigurer extends AbstractConfigurer {
 
     @Override
     public void init(HttpSecurity httpSecurity) {
-        this.requestMatcher = new OrRequestMatcher(new AntPathRequestMatcher(
-            ProtocolConstants.OidcEndpointConstants.OIDC_USER_INFO_ENDPOINT, HttpMethod.GET.name()),
-            new AntPathRequestMatcher(
-                ProtocolConstants.OidcEndpointConstants.OIDC_USER_INFO_ENDPOINT,
-                HttpMethod.POST.name()));
+        this.requestMatcher = new OrRequestMatcher(
+            PathPatternRequestMatcher.pathPattern(HttpMethod.GET,
+                ProtocolConstants.OidcEndpointConstants.OIDC_USER_INFO_ENDPOINT),
+            PathPatternRequestMatcher.pathPattern(HttpMethod.POST,
+                ProtocolConstants.OidcEndpointConstants.OIDC_USER_INFO_ENDPOINT));
 
         //认证转换器
         List<AuthenticationProvider> authenticationProviders = createDefaultAuthenticationProviders(

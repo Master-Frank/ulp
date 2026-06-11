@@ -42,9 +42,10 @@ import org.springframework.security.oauth2.server.authorization.web.OAuth2TokenR
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.web.util.pattern.PathPattern;
 
 import cn.frank.ulp.protocol.code.util.SpringSecurityEndpointUtils;
 import cn.frank.ulp.protocol.oidc.endpoint.OAuth2AuthorizationEndpointFilter;
@@ -486,8 +487,8 @@ public class OidcOpenApiCustomizer implements GlobalOpenApiCustomizer, Applicati
             RequestMatcher endpointMatcher = (RequestMatcher) tokenEndpointMatcherField
                 .get(oAuth2EndpointFilter);
             String pattern = null;
-            if (endpointMatcher instanceof AntPathRequestMatcher antPathRequestMatcher) {
-                pattern = antPathRequestMatcher.getPattern();
+            if (endpointMatcher instanceof PathPatternRequestMatcher pathPatternRequestMatcher) {
+                pattern = extractPattern(pathPatternRequestMatcher);
             } else if (endpointMatcher instanceof OrRequestMatcher endpointMatchers) {
                 Field requestMatchersField = FieldUtils.getDeclaredField(OrRequestMatcher.class,
                     "requestMatchers", true);
@@ -500,12 +501,12 @@ public class OidcOpenApiCustomizer implements GlobalOpenApiCustomizer, Applicati
                         requestMatchers = (Iterable<RequestMatcher>) requestMatchersField
                             .get(orRequestMatcher);
                         for (RequestMatcher matcher : requestMatchers) {
-                            if (matcher instanceof AntPathRequestMatcher antPathRequestMatcher) {
-                                pattern = antPathRequestMatcher.getPattern();
+                            if (matcher instanceof PathPatternRequestMatcher pathPatternRequestMatcher) {
+                                pattern = extractPattern(pathPatternRequestMatcher);
                             }
                         }
-                    } else if (requestMatcher instanceof AntPathRequestMatcher antPathRequestMatcher) {
-                        pattern = antPathRequestMatcher.getPattern();
+                    } else if (requestMatcher instanceof PathPatternRequestMatcher pathPatternRequestMatcher) {
+                        pattern = extractPattern(pathPatternRequestMatcher);
                     }
                 }
             }
@@ -520,6 +521,23 @@ public class OidcOpenApiCustomizer implements GlobalOpenApiCustomizer, Applicati
 
         } catch (IllegalAccessException | ClassCastException exception) {
             LOGGER.trace(exception.getMessage());
+        }
+    }
+
+    /**
+     * 通过反射从 {@link PathPatternRequestMatcher} 中提取 pattern 字符串。
+     * SS7 删除了 AntPathRequestMatcher.getPattern()，PathPatternRequestMatcher 也未对外暴露 pattern，
+     * 这里读私有字段 `pattern`（{@link PathPattern}）然后取其 patternString。
+     */
+    private static String extractPattern(PathPatternRequestMatcher matcher) {
+        try {
+            Field patternField = FieldUtils.getDeclaredField(PathPatternRequestMatcher.class,
+                "pattern", true);
+            PathPattern pathPattern = (PathPattern) patternField.get(matcher);
+            return pathPattern == null ? null : pathPattern.getPatternString();
+        } catch (IllegalAccessException e) {
+            LOGGER.trace(e.getMessage());
+            return null;
         }
     }
 

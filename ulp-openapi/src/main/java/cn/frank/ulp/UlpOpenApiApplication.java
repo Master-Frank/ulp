@@ -18,7 +18,7 @@ package cn.frank.ulp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.boot.web.server.servlet.context.ServletComponentScan;
 
 /**
  * 应用程序启动入口

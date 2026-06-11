@@ -16,7 +16,7 @@
  */
 package cn.frank.ulp.support.util;
 
-import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
+import org.hibernate.validator.internal.constraintvalidators.bv.EmailValidator;
 
 import jakarta.validation.ConstraintValidatorContext;
 

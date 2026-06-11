@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.security.jackson2.SecurityJackson2Modules;
 
+import cn.frank.ulp.support.jackjson.SupportJackson2Module;
 import cn.frank.ulp.support.security.core.GrantedAuthority;
 import cn.frank.ulp.support.security.userdetails.Application;
 import cn.frank.ulp.support.security.userdetails.DataOrigin;
@@ -45,11 +45,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 class UserDetailsRoundTripTest {
 
     private ObjectMapper buildSessionMapper() {
-        ObjectMapper mapper = new ObjectMapper();
         // 与 ConsoleSecurityConfiguration.springSessionDefaultRedisSerializer 保持一致
-        mapper.registerModules(SecurityJackson2Modules.getModules(getClass().getClassLoader()));
-        mapper.registerModule(new SecurityJacksonModule());
-        return mapper;
+        // SupportJackson2Module.objectMapperBuilder 已内置 Security 7 + SecurityJacksonModule
+        return SupportJackson2Module.objectMapperBuilder(getClass().getClassLoader()).build();
     }
 
     private UserDetails buildFullUser() {

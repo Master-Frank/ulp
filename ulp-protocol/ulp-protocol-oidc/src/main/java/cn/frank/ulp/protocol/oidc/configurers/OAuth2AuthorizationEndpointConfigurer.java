@@ -22,7 +22,7 @@ import java.util.List;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.security.config.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.session.SessionRegistry;
@@ -34,7 +34,7 @@ import org.springframework.security.oauth2.server.authorization.authentication.O
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
@@ -93,8 +93,8 @@ public final class OAuth2AuthorizationEndpointConfigurer extends AbstractConfigu
         };
 
         this.requestMatcher = new OrRequestMatcher(
-            new AntPathRequestMatcher(AUTHORIZATION_ENDPOINT, HttpMethod.GET.name()),
-            new AntPathRequestMatcher(AUTHORIZATION_ENDPOINT, HttpMethod.POST.name()));
+            PathPatternRequestMatcher.pathPattern(HttpMethod.GET, AUTHORIZATION_ENDPOINT),
+            PathPatternRequestMatcher.pathPattern(HttpMethod.POST, AUTHORIZATION_ENDPOINT));
 
         List<AuthenticationProvider> authenticationProviders = createDefaultAuthenticationProviders(
             httpSecurity);

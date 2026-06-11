@@ -22,7 +22,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.openapi.constant.OpenApiStatus;
 import cn.frank.ulp.support.security.web.AbstractAuthenticationEntryPoint;
@@ -35,6 +34,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  *

@@ -31,8 +31,8 @@ import tools.jackson.core.JsonParser;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.DeserializationContext;
 import tools.jackson.databind.JavaType;
-import tools.jackson.databind.ValueDeserializer;
 import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ValueDeserializer;
 import tools.jackson.databind.node.MissingNode;
 import static org.springframework.security.oauth2.server.authorization.OAuth2Authorization.*;
 
@@ -100,8 +100,8 @@ public class OAuth2AuthorizationDeserializer extends ValueDeserializer<OAuth2Aut
     }
 
     @SuppressWarnings("unchecked")
-    private static <T> T treeAs(DeserializationContext ctxt, JsonNode node, JavaType type)
-                                                                                          throws JacksonException {
+    private static <T> T treeAs(DeserializationContext ctxt, JsonNode node,
+                                JavaType type) throws JacksonException {
         if (node == null || node.isMissingNode() || node.isNull()) {
             return null;
         }

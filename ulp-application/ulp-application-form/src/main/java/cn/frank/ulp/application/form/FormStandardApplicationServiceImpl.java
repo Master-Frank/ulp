@@ -22,8 +22,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
-import tools.jackson.databind.ObjectMapper;
-
 import cn.frank.ulp.application.exception.AppNotExistException;
 import cn.frank.ulp.application.form.converter.AppFormConfigConverter;
 import cn.frank.ulp.application.form.pojo.AppFormSaveConfigParam;
@@ -45,6 +43,8 @@ import cn.frank.ulp.support.validation.ValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import jakarta.validation.ConstraintViolationException;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 import static tools.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 
 /**
@@ -66,10 +66,9 @@ public class FormStandardApplicationServiceImpl extends AbstractFormApplicationS
     public void saveConfig(String appId, Map<String, Object> config) {
         AppFormSaveConfigParam model;
         try {
-            ObjectMapper mapper = new ObjectMapper();
+            ObjectMapper mapper = JsonMapper.builder().configure(FAIL_ON_UNKNOWN_PROPERTIES, false)
+                .build();
             String value = mapper.writeValueAsString(config);
-            // 指定序列化输入的类型
-            mapper.configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
             model = mapper.readValue(value, AppFormSaveConfigParam.class);
         } catch (Exception e) {
             throw new UlpException(e.getMessage());

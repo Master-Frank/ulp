@@ -29,8 +29,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.alibaba.fastjson2.JSON;
 import com.fasterxml.jackson.annotation.JsonAlias;
-import tools.jackson.databind.DeserializationFeature;
-import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.common.enums.identitysource.IdentitySourceProvider;
 import cn.frank.ulp.identitysource.core.AbstractDefaultIdentitySource;
@@ -48,6 +46,9 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import jakarta.servlet.http.HttpServletRequest;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 /**
  * 钉钉
@@ -105,8 +106,8 @@ public class DingTalkIdentitySource extends AbstractDefaultIdentitySource<DingTa
                 config.getToken(), config.getAesKey(), config.getAppKey());
             String decryptMsg = eventCryptoUtils.getDecryptMsg(msgSignature, timeStamp, nonce,
                 encrypt);
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            ObjectMapper objectMapper = JsonMapper.builder()
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
             DingTalkEventRequest callbackRequest = objectMapper.readValue(decryptMsg,
                 DingTalkEventRequest.class);
             // 4. 根据EventType分类处理

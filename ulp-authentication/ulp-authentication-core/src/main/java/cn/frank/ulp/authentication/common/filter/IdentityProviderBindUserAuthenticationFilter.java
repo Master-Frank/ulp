@@ -25,7 +25,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.Assert;
 
@@ -53,8 +53,8 @@ public class IdentityProviderBindUserAuthenticationFilter extends
                                                           AbstractAuthenticationProcessingFilter {
 
     public final static String         DEFAULT_FILTER_PROCESSES_URI = LOGIN_PATH + "/idp_bind_user";
-    public static final RequestMatcher REQUEST_MATCHER              = new AntPathRequestMatcher(
-        DEFAULT_FILTER_PROCESSES_URI, HttpMethod.POST.name());
+    public static final RequestMatcher REQUEST_MATCHER              = PathPatternRequestMatcher
+        .pathPattern(HttpMethod.POST, DEFAULT_FILTER_PROCESSES_URI);
 
     /**
      * -- SETTER --

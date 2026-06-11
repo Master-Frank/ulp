@@ -18,7 +18,6 @@ package cn.frank.ulp.portal.configuration.security;
 
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
@@ -40,6 +39,7 @@ import cn.frank.ulp.protocol.form.RedisFormAuthorizationService;
 import cn.frank.ulp.protocol.form.authentication.FormAuthenticationFailureEventListener;
 import cn.frank.ulp.protocol.form.authentication.FormAuthenticationSuccessEventListener;
 import cn.frank.ulp.protocol.form.configurers.FormAuthorizationServerConfigurer;
+import cn.frank.ulp.support.cache.UlpCacheProperties;
 import cn.frank.ulp.support.web.useragent.UserAgentParser;
 import static org.springframework.security.config.http.SessionCreationPolicy.NEVER;
 
@@ -109,7 +109,7 @@ public class FormProtocolSecurityConfiguration extends AbstractSecurityConfigura
 
     @Bean
     public FormAuthorizationService formAuthorizationService(RedisConnectionFactory redisConnectionFactory,
-                                                             CacheProperties cacheProperties,
+                                                             UlpCacheProperties cacheProperties,
                                                              AutowireCapableBeanFactory beanFactory,
                                                              ApplicationServiceLoader applicationServiceLoader) {
         RedisTemplate<String, String> redisTemplate = getStringRedisTemplate(redisConnectionFactory,

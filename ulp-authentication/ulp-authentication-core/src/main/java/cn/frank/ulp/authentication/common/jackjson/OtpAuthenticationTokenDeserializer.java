@@ -20,16 +20,16 @@ import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import cn.frank.ulp.authentication.common.authentication.OtpAuthentication;
+
 import tools.jackson.core.JacksonException;
 import tools.jackson.core.JsonParser;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.DeserializationContext;
 import tools.jackson.databind.JavaType;
-import tools.jackson.databind.ValueDeserializer;
 import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ValueDeserializer;
 import tools.jackson.databind.node.MissingNode;
-
-import cn.frank.ulp.authentication.common.authentication.OtpAuthentication;
 
 /**
  * AuthenticationTokenDeserializer

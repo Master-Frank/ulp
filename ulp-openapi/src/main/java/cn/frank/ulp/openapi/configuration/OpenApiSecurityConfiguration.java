@@ -26,7 +26,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 
 import cn.frank.ulp.openapi.authorization.AccessTokenAuthenticationEntryPoint;
 import cn.frank.ulp.openapi.authorization.AccessTokenAuthenticationFilter;
@@ -61,7 +61,8 @@ public class OpenApiSecurityConfiguration {
             new AccessTokenAuthenticationProvider(accessTokenStore));
         http.securityMatcher(OPEN_API_V1_PATH + "/**");
         http.authorizeHttpRequests(registry -> {
-            registry.requestMatchers(new AntPathRequestMatcher(AUTH_PATH + "/access_token"))
+            registry
+                .requestMatchers(PathPatternRequestMatcher.pathPattern(AUTH_PATH + "/access_token"))
                 .permitAll();
             registry.anyRequest().authenticated();
         });

@@ -26,8 +26,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.CollectionUtils;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import tools.jackson.core.JsonProcessingException;
-import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.common.entity.identitysource.IdentitySourceEntity;
 import cn.frank.ulp.common.enums.identitysource.IdentitySourceProvider;
@@ -50,6 +48,10 @@ import cn.frank.ulp.support.validation.ValidationUtils;
 
 import jakarta.persistence.criteria.Predicate;
 import jakarta.validation.ConstraintViolationException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.DefaultTyping;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import static cn.frank.ulp.common.constant.SynchronizerConstants.EVENT_RECEIVE_PATH;
 import static cn.frank.ulp.common.entity.identitysource.IdentitySourceEntity.NAME_FIELD_NAME;
 import static cn.frank.ulp.support.constant.UlpConstants.PATH_SEPARATOR;
@@ -206,13 +208,15 @@ public interface IdentitySourceConverter {
             }
             //封装数据
             IdentitySourceEntity source = saveConfigParamConverterToEntity(param);
-            String value = objectMapper
-                .activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(),
-                    ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
-                .writeValueAsString(clientConfig);
+            ObjectMapper typedMapper = objectMapper.rebuild()
+                .activateDefaultTyping(
+                    BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build(),
+                    DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
+                .build();
+            String value = typedMapper.writeValueAsString(clientConfig);
             source.setBasicConfig(value);
             return source;
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new RuntimeException(e);
         }
     }
@@ -253,14 +257,15 @@ public interface IdentitySourceConverter {
         identitySourceResult.setJobConfig(entity.getJobConfig());
         identitySourceResult.setStrategyConfig(entity.getStrategyConfig());
         try {
-            ObjectMapper objectMapper = EncryptionModule.deserializerDecrypt();
+            ObjectMapper objectMapper = EncryptionModule.deserializerDecrypt().rebuild()
+                .activateDefaultTyping(
+                    BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build(),
+                    DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
+                .build();
             Map<String, Object> value = new HashMap<>(16);
             value.put(CALLBACK_URL, ContextService.getConsolePublicBaseUrl() + EVENT_RECEIVE_PATH
                                     + PATH_SEPARATOR + entity.getCode());
             IdentitySourceConfig config;
-            // 指定序列化输入的类型
-            objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(),
-                ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
             if (!Objects.isNull(entity.getBasicConfig())) {
                 switch (entity.getProvider()) {
                     case DINGTALK -> config = objectMapper.readValue(entity.getBasicConfig(),
@@ -272,7 +277,7 @@ public interface IdentitySourceConverter {
                 value.putAll(BeanUtils.beanToMap(config));
             }
             identitySourceResult.setBasicConfig(value);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new UlpException(e.getMessage());
         }
         return identitySourceResult;

@@ -28,8 +28,6 @@ import org.springframework.data.jpa.domain.Specification;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import tools.jackson.core.JsonProcessingException;
-import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.authentication.alipay.AlipayIdentityProviderOAuth2Config;
 import cn.frank.ulp.authentication.common.IdentityProviderCategory;
@@ -55,6 +53,11 @@ import cn.frank.ulp.support.validation.ValidationUtils;
 
 import jakarta.persistence.criteria.Predicate;
 import jakarta.validation.ConstraintViolationException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.DefaultTyping;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import static cn.frank.ulp.authentication.common.IdentityProviderType.*;
 import static cn.frank.ulp.common.entity.authn.IdentityProviderEntity.CATEGORY_FIELD_NAME;
 import static cn.frank.ulp.common.entity.authn.IdentityProviderEntity.NAME_FIELD_NAME;
@@ -118,10 +121,11 @@ public interface IdentityProviderConverter {
         try {
             IdentityProviderConfig identityProviderConfig = getIdentityProviderConfig(
                 param.getType(), param.getConfig());
-            ObjectMapper objectMapper = new ObjectMapper();
-            // 指定序列化输入的类型
-            objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(),
-                ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+            ObjectMapper objectMapper = JsonMapper.builder()
+                .activateDefaultTyping(
+                    BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build(),
+                    DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
+                .build();
             //封装数据
             IdentityProviderEntity entity = new IdentityProviderEntity();
             entity.setName(param.getName());
@@ -134,7 +138,7 @@ public interface IdentityProviderConverter {
             //配置
             entity.setConfig(objectMapper.writeValueAsString(identityProviderConfig));
             return entity;
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new RuntimeException(e);
         }
     }
@@ -162,14 +166,15 @@ public interface IdentityProviderConverter {
                               + getIdentityProviderType(entity.getType()).getLoginPathPrefix() + "/"
                               + entity.getCode());
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            // 指定序列化输入的类型
-            objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(),
-                ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+            ObjectMapper objectMapper = JsonMapper.builder()
+                .activateDefaultTyping(
+                    BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build(),
+                    DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
+                .build();
             IdentityProviderConfig config = objectMapper.readValue(entity.getConfig(),
                 IdentityProviderConfig.class);
             result.setConfig(config);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new RuntimeException(e);
         }
         return result;
@@ -208,10 +213,11 @@ public interface IdentityProviderConverter {
         }
         IdentityProviderConfig identityProviderConfig = getIdentityProviderConfig(param.getType(),
             param.getConfig());
-        ObjectMapper objectMapper = new ObjectMapper();
-        // 指定序列化输入的类型
-        objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(),
-            ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+        ObjectMapper objectMapper = JsonMapper.builder()
+            .activateDefaultTyping(
+                BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build(),
+                DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
+            .build();
         try {
             //封装数据
             IdentityProviderEntity identityProviderEntity = new IdentityProviderEntity();
@@ -223,7 +229,7 @@ public interface IdentityProviderConverter {
             identityProviderEntity
                 .setConfig(objectMapper.writeValueAsString(identityProviderConfig));
             return identityProviderEntity;
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new RuntimeException(e);
         }
     }

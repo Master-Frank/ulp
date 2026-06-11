@@ -21,6 +21,7 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import tools.jackson.databind.annotation.JsonDeserialize;
 
 /**

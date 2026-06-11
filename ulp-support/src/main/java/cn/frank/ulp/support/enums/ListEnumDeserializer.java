@@ -53,7 +53,7 @@ public class ListEnumDeserializer extends StdDeserializer<List<? extends BaseEnu
 
     @Override
     public ValueDeserializer<?> createContextual(DeserializationContext context,
-                                                BeanProperty property) {
+                                                 BeanProperty property) {
         JavaType type = context.getContextualType();
         if (type != null) {
             JavaType contentType = type.getContentType();

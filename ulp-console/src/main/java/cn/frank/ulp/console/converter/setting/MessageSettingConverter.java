@@ -21,9 +21,6 @@ import java.util.Objects;
 import org.mapstruct.Mapper;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import tools.jackson.core.JacksonException;
-import tools.jackson.core.JsonProcessingException;
-import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.common.entity.setting.SettingEntity;
 import cn.frank.ulp.common.entity.setting.config.SmsConfig;
@@ -46,6 +43,10 @@ import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.validation.ValidationUtils;
 
 import jakarta.validation.ValidationException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.DefaultTyping;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import static cn.frank.ulp.core.context.ContextService.getSmsProviderConfig;
 import static cn.frank.ulp.core.setting.MessageSettingConstants.MESSAGE_PROVIDER_EMAIL;
 import static cn.frank.ulp.core.setting.MessageSettingConstants.MESSAGE_SMS_PROVIDER;
@@ -77,12 +78,14 @@ public interface MessageSettingConverter {
             throw new ValidationException(validationResult.getMessage());
         }
         try {
-            ObjectMapper objectMapper = EncryptionModule.deserializerEncrypt();
-            objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(),
-                    ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+            ObjectMapper objectMapper = EncryptionModule.deserializerEncrypt().rebuild()
+                .activateDefaultTyping(
+                    BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build(),
+                    DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
+                .build();
             String value = objectMapper.writeValueAsString(mailProviderConfig);
             entity.setValue(value);
-        }catch (JsonProcessingException e){
+        }catch (JacksonException e){
             throw new UlpException("配置转换异常",e.getMessage());
         }
         entity.setDesc(desc);
@@ -163,12 +166,16 @@ public interface MessageSettingConverter {
             SettingEntity entity = new SettingEntity();
             entity.setName(MESSAGE_SMS_PROVIDER);
             // 指定序列化输入的类型（这里不要移动到上面，只有序列化时才使用）
-            String value = objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(),
-                    ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY).writeValueAsString(smsConfig);
+            ObjectMapper typedMapper = objectMapper.rebuild()
+                .activateDefaultTyping(
+                    BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build(),
+                    DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
+                .build();
+            String value = typedMapper.writeValueAsString(smsConfig);
             entity.setValue(value);
             entity.setDesc(desc);
             return entity;
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new RuntimeException(e);
         }
     }
@@ -188,9 +195,11 @@ public interface MessageSettingConverter {
            }
            String config = entity.getValue();
            // 根据提供商序列化
-           ObjectMapper objectMapper = EncryptionModule.deserializerDecrypt();
-           // 指定序列化输入的类型
-           objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(), ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+           ObjectMapper objectMapper = EncryptionModule.deserializerDecrypt().rebuild()
+               .activateDefaultTyping(
+                   BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build(),
+                   DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
+               .build();
            // 根据提供商序列化
            MailProviderConfig setting = objectMapper.readValue(config, MailProviderConfig.class);
            return EmailProviderConfigResult.builder()

@@ -18,11 +18,11 @@ package cn.frank.ulp.authentication.common.authentication;
 
 import java.util.Map;
 
-import tools.jackson.databind.annotation.JsonPOJOBuilder;
-
 import cn.frank.ulp.authentication.common.IdentityProviderType;
 
 import lombok.Getter;
+
+import tools.jackson.databind.annotation.JsonPOJOBuilder;
 
 /**
  * IDP用户信息

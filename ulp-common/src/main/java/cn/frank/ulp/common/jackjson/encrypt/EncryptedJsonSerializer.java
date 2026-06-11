@@ -34,7 +34,7 @@ public class EncryptedJsonSerializer extends ValueSerializer<Object> {
      * 默认序列化工具对象
      */
     private final ValueSerializer<Object> serializer;
-    private final JsonEncryptType        serializerJsonEncryptType;
+    private final JsonEncryptType         serializerJsonEncryptType;
 
     public EncryptedJsonSerializer() {
         this.serializer = null;

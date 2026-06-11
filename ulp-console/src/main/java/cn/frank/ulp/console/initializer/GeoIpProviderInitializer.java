@@ -24,8 +24,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import tools.jackson.core.JsonProcessingException;
-import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.common.entity.setting.SettingEntity;
 import cn.frank.ulp.common.geo.GeoLocationProviderConfig;
@@ -33,6 +31,11 @@ import cn.frank.ulp.common.jackjson.encrypt.EncryptionModule;
 import cn.frank.ulp.common.repository.setting.SettingRepository;
 import cn.frank.ulp.support.config.AbstractSystemInitializer;
 import cn.frank.ulp.support.config.InitializationException;
+
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.DefaultTyping;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import static cn.frank.ulp.common.geo.ip2region.Ip2regionGeoLocationParserImpl.IP2REGION;
 import static cn.frank.ulp.core.setting.GeoIpProviderConstants.IPADDRESS_SETTING_NAME;
 
@@ -56,15 +59,17 @@ public class GeoIpProviderInitializer extends AbstractSystemInitializer {
                 logger.info("初始化系统默认IP地址提供商");
                 SettingEntity setting = new SettingEntity();
                 setting.setName(IPADDRESS_SETTING_NAME);
-                ObjectMapper objectMapper = EncryptionModule.deserializerDecrypt();
-                // 指定序列化输入的类型
-                objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(), ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+                ObjectMapper objectMapper = EncryptionModule.deserializerDecrypt().rebuild()
+                    .activateDefaultTyping(
+                        BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build(),
+                        DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
+                    .build();
                 setting.setValue(objectMapper.writeValueAsString(new GeoLocationProviderConfig(IP2REGION, null)));
                 setting.setDesc(IP2REGION.getName());
                 setting.setRemark("The system initializes the default configuration.");
                 settingRepository.save(setting);
             }
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new InitializationException(e);
         }
         //@formatter:on

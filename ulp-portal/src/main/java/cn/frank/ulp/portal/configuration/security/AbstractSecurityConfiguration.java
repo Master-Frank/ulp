@@ -23,14 +23,13 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.http.HttpMethod;
 import org.springframework.lang.Nullable;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.security.config.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.*;
 import org.springframework.security.web.access.ExceptionTranslationFilter;
@@ -48,6 +47,7 @@ import cn.frank.ulp.common.entity.setting.SettingEntity;
 import cn.frank.ulp.common.repository.setting.SettingRepository;
 import cn.frank.ulp.core.setting.SecuritySettingConstants;
 import cn.frank.ulp.portal.authentication.*;
+import cn.frank.ulp.support.cache.UlpCacheProperties;
 import cn.frank.ulp.support.redis.KeyStringRedisSerializer;
 import cn.frank.ulp.support.security.csrf.SpaCsrfTokenRequestHandler;
 import cn.frank.ulp.support.web.useragent.UserAgentParser;
@@ -226,7 +226,7 @@ public class AbstractSecurityConfiguration {
     }
 
     protected RedisTemplate<String, String> getStringRedisTemplate(@Nullable RedisConnectionFactory connectionFactory,
-                                                                   CacheProperties cacheProperties) {
+                                                                   UlpCacheProperties cacheProperties) {
         RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(connectionFactory);
         KeyStringRedisSerializer keyStringRedisSerializer = new KeyStringRedisSerializer(

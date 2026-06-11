@@ -30,14 +30,14 @@ import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.http.support.JacksonHandlerInstantiator;
 import org.springframework.util.Assert;
 
-import tools.jackson.core.type.TypeReference;
-import tools.jackson.databind.ObjectMapper;
-
 import cn.frank.ulp.application.ApplicationServiceLoader;
 import cn.frank.ulp.protocol.jwt.jackson.JwtAuthorizationModule;
 import cn.frank.ulp.support.jackjson.SupportJackson2Module;
 
 import lombok.Setter;
+
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
 import static cn.frank.ulp.protocol.jwt.constant.JwtProtocolConstants.JWT_PROTOCOL_CACHE_PREFIX;
 
 /**
@@ -164,7 +164,7 @@ public class RedisJwtAuthorizationService extends AbstractJwtAuthorizationServic
     private final RedisOperations<String, String> redisOperations;
 
     @Setter
-    private String                                prefix       = JWT_PROTOCOL_CACHE_PREFIX;
+    private String                                prefix = JWT_PROTOCOL_CACHE_PREFIX;
 
     private ObjectMapper                          objectMapper;
 
@@ -172,7 +172,7 @@ public class RedisJwtAuthorizationService extends AbstractJwtAuthorizationServic
         this.objectMapper = objectMapper;
     }
 
-    private static final MessageDigest            DIGEST;
+    private static final MessageDigest DIGEST;
 
     static {
         try {

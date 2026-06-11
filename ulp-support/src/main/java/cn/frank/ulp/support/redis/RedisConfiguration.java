@@ -21,9 +21,8 @@ import java.time.Duration;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
-import org.springframework.boot.autoconfigure.cache.CacheProperties;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.data.redis.autoconfigure.DataRedisProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,6 +44,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 
 import cn.frank.ulp.support.cache.CachePrefixGenerator;
+import cn.frank.ulp.support.cache.UlpCacheProperties;
 import cn.frank.ulp.support.util.PhoneUtils;
 
 import tools.jackson.databind.DefaultTyping;
@@ -59,7 +59,7 @@ import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
  */
 @Configuration
 @EnableCaching
-@EnableConfigurationProperties(CacheProperties.class)
+@EnableConfigurationProperties(UlpCacheProperties.class)
 public class RedisConfiguration {
 
     /**
@@ -69,7 +69,7 @@ public class RedisConfiguration {
     * @return Redis连接工厂
     */
     @Bean
-    public LettuceConnectionFactory redisConnectionFactory(RedisProperties redisProperties) {
+    public LettuceConnectionFactory redisConnectionFactory(DataRedisProperties redisProperties) {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
         configuration.setHostName(redisProperties.getHost());
         configuration.setPort(redisProperties.getPort());
@@ -99,7 +99,7 @@ public class RedisConfiguration {
     }
 
     @Bean
-    public CachePrefixGenerator cachePrefixGenerator(CacheProperties cacheProperties) {
+    public CachePrefixGenerator cachePrefixGenerator(UlpCacheProperties cacheProperties) {
         String prefix = cacheProperties.getRedis().getKeyPrefix();
         return new CachePrefixGenerator(prefix == null ? "ulp" : prefix);
     }
@@ -120,8 +120,7 @@ public class RedisConfiguration {
             .activateDefaultTyping(
                 BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build(),
                 DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
-            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-            .build();
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
             .entryTtl(Duration.ofHours(1))
             .serializeKeysWith(RedisSerializationContext.SerializationPair
@@ -139,7 +138,7 @@ public class RedisConfiguration {
     * @return Redisson客户端
     */
     @Bean(destroyMethod = "shutdown")
-    public RedissonClient redisson(RedisProperties redisProperties) {
+    public RedissonClient redisson(DataRedisProperties redisProperties) {
         Config config = new Config();
         String host = redisProperties.getHost();
         int port = redisProperties.getPort();

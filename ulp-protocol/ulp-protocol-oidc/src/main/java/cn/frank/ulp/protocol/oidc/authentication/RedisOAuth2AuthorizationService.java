@@ -36,11 +36,11 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
-import tools.jackson.core.type.TypeReference;
-import tools.jackson.databind.ObjectMapper;
-
 import cn.frank.ulp.protocol.oidc.jackson.OidcProtocolJackson2Module;
 import cn.frank.ulp.support.jackjson.SupportJackson2Module;
+
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
 import static cn.frank.ulp.protocol.oidc.constant.OidcProtocolConstants.ID_TOKEN;
 import static cn.frank.ulp.protocol.oidc.constant.OidcProtocolConstants.OIDC_PROTOCOL_CACHE_PREFIX;
 

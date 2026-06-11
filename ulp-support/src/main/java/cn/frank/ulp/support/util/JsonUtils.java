@@ -44,8 +44,7 @@ public class JsonUtils {
     private static final JsonMapper MAPPER = JsonMapper.builder()
         .changeDefaultPropertyInclusion(v -> v.withValueInclusion(JsonInclude.Include.NON_NULL))
         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        .configure(DateTimeFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-        .build();
+        .configure(DateTimeFeature.WRITE_DATES_AS_TIMESTAMPS, false).build();
 
     public JsonUtils() {
     }
@@ -190,8 +189,7 @@ public class JsonUtils {
                         public Object findFilterId(MapperConfig<?> config, Annotated a) {
                             return "__excludeFilter__";
                         }
-                    })
-                    .build();
+                    }).build();
                 SimpleFilterProvider provider = new SimpleFilterProvider().addFilter(
                     "__excludeFilter__", SimpleBeanPropertyFilter.serializeAllExcept(properties));
                 return mapper.writer(provider).writeValueAsString(value);

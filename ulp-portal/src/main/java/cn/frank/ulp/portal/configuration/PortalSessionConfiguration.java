@@ -16,7 +16,7 @@
  */
 package cn.frank.ulp.portal.configuration;
 
-import org.springframework.boot.autoconfigure.session.RedisSessionProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.session.SessionRegistry;
@@ -34,8 +34,7 @@ public class PortalSessionConfiguration {
 
     @Bean
     public SessionRegistry sessionRegistry(FindByIndexNameSessionRepository<? extends Session> sessionRepository,
-                                           RedisSessionProperties redisSessionProperties) {
-        return new ClusterSessionRegistryImpl<>(sessionRepository,
-            redisSessionProperties.getNamespace());
+                                           @Value("${spring.session.redis.namespace:spring:session}") String redisSessionNamespace) {
+        return new ClusterSessionRegistryImpl<>(sessionRepository, redisSessionNamespace);
     }
 }

@@ -23,7 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -56,8 +56,8 @@ public class SendSmsOtpFilter extends OncePerRequestFilter {
      */
     public static final String         LOGIN_SMS_SEND       = LOGIN_PATH + "/sms/send";
 
-    public static final RequestMatcher SMS_SEND_OPT_MATCHER = new AntPathRequestMatcher(
-        LOGIN_SMS_SEND, HttpMethod.POST.name());
+    public static final RequestMatcher SMS_SEND_OPT_MATCHER = PathPatternRequestMatcher
+        .pathPattern(HttpMethod.POST, LOGIN_SMS_SEND);
 
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request,

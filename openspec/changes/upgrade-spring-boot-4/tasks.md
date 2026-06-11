@@ -26,32 +26,32 @@
 
 ## 3. Jackson 3 迁移（阶段 commit 3）
 
-- [ ] 3.1 全仓 grep `import com.fasterxml.jackson` 排除 `com.fasterxml.jackson.annotation`，结果列表入 `tasks.md` 附录
-- [ ] 3.2 用 IDEA Structural Replace 批量替换 import 包前缀：
+- [x] 3.1 全仓 grep `import com.fasterxml.jackson` 排除 `com.fasterxml.jackson.annotation`，结果列表入 `tasks.md` 附录
+- [x] 3.2 批量替换 import 包前缀：
   - `com.fasterxml.jackson.databind` → `tools.jackson.databind`
   - `com.fasterxml.jackson.core` → `tools.jackson.core`
   - `com.fasterxml.jackson.module` → `tools.jackson.module`
-- [ ] 3.3 修 IDE 报红的引用：
-  - `@JsonComponent` → `@JacksonComponent`
-  - `Jackson2ObjectMapperBuilderCustomizer` → `JsonMapperBuilderCustomizer`
-  - `JsonObjectSerializer` → `ObjectValueSerializer`
-- [ ] 3.4 重点核对 4 个文件：
-  - `ulp-support` 的 `UserDetailsDeserializer`（task #53 修过 LocalDateTime，本次升级要确认 Jackson 3 反序列化路径仍能还原）
-  - SAS RegisteredClient Redis 持久化的序列化器
-  - Spring Session redis 配置类（如 `RedisSessionConfig` / `SessionAutoConfiguration` 覆写）
-  - 业务自定义 mixin：在 `*Config` 文件里搜 `addMixIn`
-- [ ] 3.5 `mvnw.cmd clean compile -Dlicense.skip=true` 通过
-- [ ] 3.6 `mvnw.cmd test -pl ulp-support` 5 个 UT 全过（重点 UserDetailsRoundTripTest）
-- [ ] 3.7 commit: `refactor(deps): migrate jackson 2.x → 3.x (com.fasterxml → tools.jackson)`
+- [x] 3.3 修引用：
+  - `tools.jackson.databind.Module` 不存在 → `JacksonModule`
+  - `ObjectMapper` 不可变：`registerModules / setVisibility / setSerializationInclusion / setHandlerInstantiator` 全部走 `JsonMapper.builder()...build()` 或 `mapper.rebuild()...build()`
+  - `SecurityJackson2Modules.enableDefaultTyping(owner)` 已移除 → `JsonMapper.builder().activateDefaultTyping(validator, NON_FINAL, PROPERTY)`
+  - `SimpleModule.SetupContext#setMixInAnnotations` → `setMixIn`
+  - `SpringHandlerInstantiator` → `JacksonHandlerInstantiator`（`org.springframework.http.support`）
+  - `GenericJackson2JsonRedisSerializer` → `GenericJacksonJsonRedisSerializer`
+  - `OAuth2AuthorizationServerJackson2Module` → `OAuth2AuthorizationServerJacksonModule`（`org.springframework.security.oauth2.server.authorization.jackson`）
+- [x] 3.4 重点核对 4 个文件：UserDetailsDeserializer / RedisOAuth2AuthorizationService（SAS）/ Console+Portal SecurityConfig / 全部 Mixin（OAuth2 / Authentication / Form / Jwt / Geo / Web / Security）
+- [x] 3.5 编译错误集中到 Jackson 之外的阶段（Security 7 AntPathRequestMatcher / Hibernate 7 / SB4 ErrorAttributes / SB4 CacheProperties+RedisProperties / Hibernate Validator 8 EmailValidator），Jackson 报错清零
+- [ ] 3.6 `mvnw.cmd test -pl ulp-support` 等编译全绿后再跑（Phase 4-6 完成后回来跑）
+- [x] 3.7 commit: `refactor(deps): migrate jackson 2.x → 3.x (com.fasterxml → tools.jackson)` (adad774)
 
 ## 4. Spring Security 7 DSL 改写（阶段 commit 4-7，按 SecurityConfig 拆 4 个 commit）
 
-- [ ] 4.1 列出所有 `SecurityFilterChain` bean：`grep -rn "@Bean.*SecurityFilterChain" --include="*.java" D:/project/ulp/`
-- [ ] 4.2 改 console SecurityConfig，按 Security 7 DSL 重写；commit `refactor(security): migrate console SecurityFilterChain to Security 7 DSL`
-- [ ] 4.3 改 portal SecurityConfig；commit `refactor(security): migrate portal SecurityFilterChain to Security 7 DSL`
-- [ ] 4.4 改 openapi SecurityConfig；commit `refactor(security): migrate openapi SecurityFilterChain to Security 7 DSL`
-- [ ] 4.5 改 SAS 自定义 SecurityConfig（如有）；commit `refactor(security): migrate SAS SecurityFilterChain to Security 7 DSL`
-- [ ] 4.6 每个 commit 后 `mvnw.cmd compile -pl <module> -Dlicense.skip=true` 必须过
+- [x] 4.1 列出所有 `SecurityFilterChain` bean
+- [x] 4.2 改 console SecurityConfig，按 Security 7 DSL 重写（AntPathRequestMatcher → PathPatternRequestMatcher / pathPattern 改为单 HttpMethod / OAuth2ParameterNames.USERNAME 移除）
+- [x] 4.3 改 portal SecurityConfig（含 ServerProperties.getError() → ErrorProperties / RedisSessionProperties → @Value）
+- [x] 4.4 改 openapi SecurityConfig（ServletComponentScan 包路径迁移）
+- [x] 4.5 改 SAS 自定义 SecurityConfig（OidcProtocolSecurityConfiguration: SerializationFeature → DateTimeFeature）
+- [x] 4.6 全仓 `mvnw.cmd compile -Dlicense.skip=true -T 1C` 全 40 模块 BUILD SUCCESS（Phase 4 squashed 为单 commit，因 SB4 API relocations 与 SS7 DSL 改写不可拆分）
 
 ## 5. Spring Session 与 application.yml 迁移（阶段 commit 8）
 

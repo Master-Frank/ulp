@@ -27,8 +27,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import tools.jackson.core.JsonProcessingException;
-import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.common.entity.setting.SettingEntity;
 import cn.frank.ulp.common.geo.GeoLocationProviderConfig;
@@ -43,6 +41,10 @@ import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.validation.ValidationUtils;
 
 import jakarta.validation.ValidationException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.DefaultTyping;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import static cn.frank.ulp.common.geo.maxmind.MaxmindGeoLocationParserImpl.MAXMIND;
 import static cn.frank.ulp.common.geo.maxmind.MaxmindGeoLocationParserImpl.SHA256_URL;
 import static cn.frank.ulp.core.setting.GeoIpProviderConstants.IPADDRESS_SETTING_NAME;
@@ -64,10 +66,11 @@ public interface GeoLocationSettingConverter {
      * @return {@link SettingEntity}
      */
     default SettingEntity geoLocationProviderConfigToEntity(GeoIpProviderSaveParam param) {
-        ObjectMapper objectMapper = EncryptionModule.serializerEncrypt();
-        // 指定序列化输入的类型
-        objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(),
-            ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+        ObjectMapper objectMapper = EncryptionModule.serializerEncrypt().rebuild()
+            .activateDefaultTyping(
+                BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build(),
+                DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
+            .build();
         try {
             SettingEntity entity = new SettingEntity();
             entity.setName(IPADDRESS_SETTING_NAME);
@@ -101,7 +104,7 @@ public interface GeoLocationSettingConverter {
            entity.setDesc(desc);
            //@formatter:no
            return entity;
-       }catch (JsonProcessingException e){
+       }catch (JacksonException e){
            throw  new RuntimeException(e);
        }
     }
@@ -119,10 +122,11 @@ public interface GeoLocationSettingConverter {
         }
         try {
             String value = entity.getValue();
-            ObjectMapper objectMapper = EncryptionModule.deserializerDecrypt();
-            // 指定序列化输入的类型
-            objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(),
-                    ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+            ObjectMapper objectMapper = EncryptionModule.deserializerDecrypt().rebuild()
+                .activateDefaultTyping(
+                    BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build(),
+                    DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
+                .build();
             // 根据提供商序列化
             GeoLocationProviderConfig setting = objectMapper.readValue(value, GeoLocationProviderConfig.class);
             if (MAXMIND.equals(setting.getProvider())) {
@@ -136,7 +140,7 @@ public interface GeoLocationSettingConverter {
             }
             //@formatter:on
             return null;
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new RuntimeException(e);
         }
     }

@@ -58,8 +58,7 @@ public class OAuth2AuthorizationModule extends SimpleModule {
      */
     public static void configurePolymorphicTypeValidator(BasicPolymorphicTypeValidator.Builder builder) {
         builder.allowIfSubType("org.springframework.security.oauth2.")
-            .allowIfSubType("org.springframework.security.")
-            .allowIfSubType("java.util.")
+            .allowIfSubType("org.springframework.security.").allowIfSubType("java.util.")
             .allowIfSubType("java.time.");
     }
 

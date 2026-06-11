@@ -20,9 +20,10 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.function.Supplier;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRequestHandler;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -44,8 +45,8 @@ public class CustomRedirectFilter extends GenericFilterBean implements CsrfToken
     /**
     * 重定向请求匹配器
     */
-    private static final RequestMatcher REDIRECT_URL_MATCHER = new AntPathRequestMatcher(
-        "/redirect", "GET");
+    private static final RequestMatcher REDIRECT_URL_MATCHER = PathPatternRequestMatcher
+        .pathPattern(HttpMethod.GET, "/redirect");
 
     /**
     * 过滤方法

@@ -18,7 +18,6 @@ package cn.frank.ulp.portal.configuration.security;
 
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
@@ -41,8 +40,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import tools.jackson.databind.ObjectMapper;
-import tools.jackson.databind.SerializationFeature;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
@@ -58,9 +55,13 @@ import cn.frank.ulp.protocol.oidc.configurers.ClientJwkSource;
 import cn.frank.ulp.protocol.oidc.configurers.OAuth2AuthorizationServerConfigurer;
 import cn.frank.ulp.protocol.oidc.jackson.OidcProtocolJackson2Module;
 import cn.frank.ulp.protocol.oidc.token.OpaqueTokenIntrospector;
+import cn.frank.ulp.support.cache.UlpCacheProperties;
 import cn.frank.ulp.support.jackjson.SupportJackson2Module;
 import cn.frank.ulp.support.redis.KeyStringRedisSerializer;
 import cn.frank.ulp.support.web.useragent.UserAgentParser;
+
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.cfg.DateTimeFeature;
 import static org.springframework.security.config.http.SessionCreationPolicy.NEVER;
 
 import static cn.frank.ulp.common.constant.ConfigBeanNameConstants.OIDC_PROTOCOL_SECURITY_FILTER_CHAIN;
@@ -138,13 +139,13 @@ public class OidcProtocolSecurityConfiguration extends AbstractSecurityConfigura
      * 认证服务
      *
      * @param redisConnectionFactory {@link RedisConnectionFactory}
-     * @param cacheProperties {@link CacheProperties}
+     * @param cacheProperties {@link UlpCacheProperties}
      * @param clientRepository {@link RedisConnectionFactory}
      * @return {@link AutowireCapableBeanFactory}
      */
     @Bean
     public OAuth2AuthorizationService authorizationService(RedisConnectionFactory redisConnectionFactory,
-                                                           CacheProperties cacheProperties,
+                                                           UlpCacheProperties cacheProperties,
                                                            RegisteredClientRepository clientRepository) {
         RedisTemplate<String, String> redisTemplate = getStringRedisTemplate(redisConnectionFactory,
             cacheProperties);
@@ -152,8 +153,7 @@ public class OidcProtocolSecurityConfiguration extends AbstractSecurityConfigura
         ObjectMapper objectMapper = SupportJackson2Module.objectMapperBuilder(classLoader)
             .addModules(OidcProtocolJackson2Module.getModules())
             .addModule(new AuthenticationJacksonModule())
-            .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-            .build();
+            .configure(DateTimeFeature.WRITE_DATES_AS_TIMESTAMPS, false).build();
         RedisOAuth2AuthorizationServiceWrapper service = new RedisOAuth2AuthorizationServiceWrapper(
             redisTemplate, clientRepository);
         service.setObjectMapper(objectMapper);
@@ -197,7 +197,7 @@ public class OidcProtocolSecurityConfiguration extends AbstractSecurityConfigura
      */
     @Bean
     public OAuth2AuthorizationConsentService authorizationConsentService(RedisConnectionFactory redisConnectionFactory,
-                                                                         CacheProperties cacheProperties) {
+                                                                         UlpCacheProperties cacheProperties) {
         RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         KeyStringRedisSerializer keyStringRedisSerializer = new KeyStringRedisSerializer(

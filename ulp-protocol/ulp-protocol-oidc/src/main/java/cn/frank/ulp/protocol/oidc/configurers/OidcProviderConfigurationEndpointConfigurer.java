@@ -17,10 +17,10 @@
 package cn.frank.ulp.protocol.oidc.configurers;
 
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.security.config.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import cn.frank.ulp.protocol.code.EndpointMatcher;
@@ -46,8 +46,8 @@ public final class OidcProviderConfigurationEndpointConfigurer extends AbstractC
 
     @Override
     public void init(HttpSecurity httpSecurity) {
-        this.requestMatcher = new AntPathRequestMatcher(WELL_KNOWN_OPENID_CONFIGURATION,
-            HttpMethod.GET.name());
+        this.requestMatcher = PathPatternRequestMatcher.pathPattern(HttpMethod.GET,
+            WELL_KNOWN_OPENID_CONFIGURATION);
     }
 
     @Override

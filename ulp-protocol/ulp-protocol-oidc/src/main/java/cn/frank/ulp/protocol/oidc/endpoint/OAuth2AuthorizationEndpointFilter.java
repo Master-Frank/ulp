@@ -57,6 +57,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.*;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -175,11 +176,11 @@ public final class OAuth2AuthorizationEndpointFilter extends OncePerRequestFilte
      */
     private static RequestMatcher createDefaultRequestMatcher(String authorizationEndpointUri) {
         //Get 请求
-        RequestMatcher authorizationRequestGetMatcher = new AntPathRequestMatcher(
-            authorizationEndpointUri, HttpMethod.GET.name());
+        RequestMatcher authorizationRequestGetMatcher = PathPatternRequestMatcher
+            .pathPattern(HttpMethod.GET, authorizationEndpointUri);
         //Post 请求
-        RequestMatcher authorizationRequestPostMatcher = new AntPathRequestMatcher(
-            authorizationEndpointUri, HttpMethod.POST.name());
+        RequestMatcher authorizationRequestPostMatcher = PathPatternRequestMatcher
+            .pathPattern(HttpMethod.POST, authorizationEndpointUri);
         //openid scope 匹配
         RequestMatcher openidScopeMatcher = request -> {
             String scope = request.getParameter(OAuth2ParameterNames.SCOPE);

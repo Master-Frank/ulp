@@ -16,10 +16,10 @@
  */
 package cn.frank.ulp.protocol.jwt.jackson;
 
+import cn.frank.ulp.protocol.jwt.authentication.JwtAuthenticationToken;
+
 import tools.jackson.core.Version;
 import tools.jackson.databind.module.SimpleModule;
-
-import cn.frank.ulp.protocol.jwt.authentication.JwtAuthenticationToken;
 
 /**
  * JwtAuthorizationModule

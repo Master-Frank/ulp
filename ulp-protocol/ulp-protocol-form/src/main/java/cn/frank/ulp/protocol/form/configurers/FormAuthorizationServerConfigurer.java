@@ -58,7 +58,7 @@ public final class FormAuthorizationServerConfigurer extends
     }
 
     @Override
-    public void init(HttpSecurity httpSecurity) throws Exception {
+    public void init(HttpSecurity httpSecurity) {
         this.configurers.values().forEach(configurer -> {
             configurer.init(httpSecurity);
             endpointMatchers.add(configurer.getEndpointMatcher());

@@ -35,7 +35,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import cn.frank.ulp.support.enums.SecretType;
 import cn.frank.ulp.support.exception.UnknownAuthenticationTypeException;
@@ -56,16 +57,16 @@ import tools.jackson.databind.ObjectMapper;
 
 public class CustomAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
-    private static final Logger                logger                           = LoggerFactory
+    private static final Logger         logger                           = LoggerFactory
         .getLogger(CustomAuthenticationFilter.class);
-    private static final AntPathRequestMatcher DEFAULT_ANT_PATH_REQUEST_MATCHER = new AntPathRequestMatcher(
-        "/login", "POST");
-    private static final ObjectMapper          OBJECT_MAPPER                    = new ObjectMapper();
+    private static final RequestMatcher DEFAULT_ANT_PATH_REQUEST_MATCHER = PathPatternRequestMatcher
+        .pathPattern(HttpMethod.POST, "/login");
+    private static final ObjectMapper   OBJECT_MAPPER                    = new ObjectMapper();
 
-    private final UserDetailsService           userDetailsService;
-    private final PasswordPolicyManager        passwordPolicyManager;
-    private final SessionRegistry              sessionRegistry;
-    private final Executor                     taskExecutor;
+    private final UserDetailsService    userDetailsService;
+    private final PasswordPolicyManager passwordPolicyManager;
+    private final SessionRegistry       sessionRegistry;
+    private final Executor              taskExecutor;
 
     public CustomAuthenticationFilter(UserDetailsService userDetailsService,
                                       PasswordPolicyManager passwordPolicyManager,

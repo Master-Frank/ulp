@@ -20,8 +20,6 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
-import tools.jackson.databind.annotation.JsonDeserialize;
-
 import cn.frank.ulp.common.enums.MessageNoticeChannel;
 import cn.frank.ulp.support.enums.ListEnumDeserializer;
 
@@ -29,6 +27,7 @@ import lombok.Data;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import tools.jackson.databind.annotation.JsonDeserialize;
 
 /**
  * 重置密码入参

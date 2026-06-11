@@ -29,7 +29,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import com.alibaba.fastjson2.JSON;
@@ -65,10 +65,10 @@ import static cn.frank.ulp.authentication.gitee.constant.GiteeAuthenticationCons
 public class GiteeLoginAuthenticationFilter extends
                                             AbstractIdentityProviderAuthenticationProcessingFilter {
 
-    public final static String                DEFAULT_FILTER_PROCESSES_URI = GITEE_OAUTH
+    public final static String         DEFAULT_FILTER_PROCESSES_URI = GITEE_OAUTH
         .getLoginPathPrefix() + "/" + "{" + PROVIDER_CODE + "}";
-    public static final AntPathRequestMatcher REQUEST_MATCHER              = new AntPathRequestMatcher(
-        DEFAULT_FILTER_PROCESSES_URI, HttpMethod.GET.name());
+    public static final RequestMatcher REQUEST_MATCHER              = PathPatternRequestMatcher
+        .pathPattern(HttpMethod.GET, DEFAULT_FILTER_PROCESSES_URI);
 
     /**
      * Creates a new instance

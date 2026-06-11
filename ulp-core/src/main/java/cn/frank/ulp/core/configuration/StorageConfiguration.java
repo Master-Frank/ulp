@@ -24,7 +24,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.common.entity.setting.SettingEntity;
 import cn.frank.ulp.common.jackjson.encrypt.EncryptionModule;
@@ -36,6 +35,10 @@ import cn.frank.ulp.common.storage.impl.NoneStorage;
 import cn.frank.ulp.core.setting.StorageProviderSettingConstants;
 
 import lombok.extern.slf4j.Slf4j;
+
+import tools.jackson.databind.DefaultTyping;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 
 /**
  * 存储配置
@@ -56,10 +59,11 @@ public class StorageConfiguration {
     public Storage storage() {
         SettingEntity setting = repository
             .findByName(StorageProviderSettingConstants.STORAGE_PROVIDER_KEY);
-        ObjectMapper objectMapper = EncryptionModule.deserializerDecrypt();
-        // 指定序列化输入的类型
-        objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(),
-            ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+        ObjectMapper objectMapper = EncryptionModule.deserializerDecrypt().rebuild()
+            .activateDefaultTyping(
+                BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build(),
+                DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
+            .build();
         try {
             if (!Objects.isNull(setting) && StringUtils.isNotEmpty(setting.getValue())) {
                 return StorageFactory

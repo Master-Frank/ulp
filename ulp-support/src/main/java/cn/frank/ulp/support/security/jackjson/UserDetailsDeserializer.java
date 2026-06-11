@@ -42,7 +42,8 @@ import tools.jackson.databind.ValueDeserializer;
 public class UserDetailsDeserializer extends ValueDeserializer<UserDetails> {
 
     @Override
-    public UserDetails deserialize(JsonParser jp, DeserializationContext ctxt) throws JacksonException {
+    public UserDetails deserialize(JsonParser jp,
+                                   DeserializationContext ctxt) throws JacksonException {
         JsonNode node = ctxt.readTree(jp);
 
         String id = textOrNull(node, "id");
@@ -100,8 +101,7 @@ public class UserDetailsDeserializer extends ValueDeserializer<UserDetails> {
         if (groups != null) {
             userDetails.setGroups(groups);
         }
-        Set<Organization> organizations = readSet(node, "organizations", ctxt,
-            Organization.class);
+        Set<Organization> organizations = readSet(node, "organizations", ctxt, Organization.class);
         if (organizations != null) {
             userDetails.setOrganizations(organizations);
         }

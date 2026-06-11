@@ -17,9 +17,11 @@
 package cn.frank.ulp.common.jackjson.encrypt;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+
 import tools.jackson.databind.DeserializationFeature;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.SerializationFeature;
+import tools.jackson.databind.json.JsonMapper;
 import tools.jackson.databind.module.SimpleModule;
 
 /**
@@ -42,8 +44,8 @@ public class EncryptionModule extends SimpleModule {
 
     @Override
     public void setupModule(SetupContext setupContext) {
-        setupContext.addBeanSerializerModifier(new EncryptedSerializerModifier(serializer));
-        setupContext.addBeanDeserializerModifier(new EncryptedDeserializerModifier(deserializer));
+        setupContext.addSerializerModifier(new EncryptedSerializerModifier(serializer));
+        setupContext.addDeserializerModifier(new EncryptedDeserializerModifier(deserializer));
     }
 
     public static ObjectMapper serializerEncrypt() {
@@ -64,11 +66,11 @@ public class EncryptionModule extends SimpleModule {
 
     public static ObjectMapper createMapper(JsonEncryptType serializer,
                                             JsonEncryptType deserializer) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        objectMapper.registerModule(new EncryptionModule(serializer, deserializer));
-        return objectMapper;
+        return JsonMapper.builder()
+            .changeDefaultPropertyInclusion(
+                incl -> incl.withValueInclusion(JsonInclude.Include.NON_NULL))
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
+            .addModule(new EncryptionModule(serializer, deserializer)).build();
     }
 }

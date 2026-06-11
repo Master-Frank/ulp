@@ -28,7 +28,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.common.entity.setting.SettingEntity;
 import cn.frank.ulp.common.geo.GeoLocationProviderConfig;
@@ -40,6 +39,10 @@ import cn.frank.ulp.common.jackjson.encrypt.EncryptionModule;
 import cn.frank.ulp.common.repository.setting.SettingRepository;
 import cn.frank.ulp.core.setting.GeoIpProviderConstants;
 import cn.frank.ulp.support.geo.GeoLocationParser;
+
+import tools.jackson.databind.DefaultTyping;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import static cn.frank.ulp.common.constant.ConfigBeanNameConstants.GEO_LOCATION;
 import static cn.frank.ulp.common.geo.ip2region.Ip2regionGeoLocationParserImpl.IP2REGION;
 import static cn.frank.ulp.common.geo.maxmind.MaxmindGeoLocationParserImpl.MAXMIND;
@@ -58,10 +61,11 @@ public class GeoLocationConfiguration {
     public GeoLocationParser geoLocation(SettingRepository settingRepository,
                                          RestTemplate restTemplate) {
         try {
-            ObjectMapper objectMapper = EncryptionModule.deserializerDecrypt();
-            // 指定序列化输入的类型
-            objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(),
-                ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+            ObjectMapper objectMapper = EncryptionModule.deserializerDecrypt().rebuild()
+                .activateDefaultTyping(
+                    BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build(),
+                    DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
+                .build();
             // 查询数据库是否开启地理位置服务
             SettingEntity setting = settingRepository
                 .findByName(GeoIpProviderConstants.IPADDRESS_SETTING_NAME);

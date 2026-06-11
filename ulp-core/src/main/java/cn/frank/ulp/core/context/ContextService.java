@@ -23,8 +23,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import tools.jackson.core.JsonProcessingException;
-import tools.jackson.databind.ObjectMapper;
 import com.shapesecurity.salvation2.Directives.SourceExpressionDirective;
 import com.shapesecurity.salvation2.FetchDirectiveKind;
 import com.shapesecurity.salvation2.Policy;
@@ -46,6 +44,12 @@ import cn.frank.ulp.support.autoconfiguration.SupportProperties;
 import cn.frank.ulp.support.context.ApplicationContextService;
 import cn.frank.ulp.support.exception.UlpException;
 import cn.frank.ulp.support.security.util.ContentSecurityPolicyUtils;
+
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.DefaultTyping;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import static cn.frank.ulp.common.constant.AuthnConstants.FE_LOGIN;
 import static cn.frank.ulp.common.constant.ConfigBeanNameConstants.DEFAULT_SECURITY_FILTER_CHAIN;
 import static cn.frank.ulp.core.setting.MessageSettingConstants.MESSAGE_SMS_PROVIDER;
@@ -69,10 +73,11 @@ public final class ContextService {
         SettingEntity setting = getSettingRepository().findByName(MESSAGE_SMS_PROVIDER);
         if (!Objects.isNull(setting) && StringUtils.isNotBlank(setting.getValue())) {
             try {
-                ObjectMapper objectMapper = new ObjectMapper();
-                // 指定序列化输入的类型
-                objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(),
-                    ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+                ObjectMapper objectMapper = JsonMapper.builder()
+                    .activateDefaultTyping(BasicPolymorphicTypeValidator.builder()
+                        .allowIfSubType(Object.class).build(), DefaultTyping.NON_FINAL,
+                        JsonTypeInfo.As.PROPERTY)
+                    .build();
                 SmsConfig config = objectMapper.readValue(setting.getValue(), SmsConfig.class);
                 SmsProvider provider = config.getProvider();
                 //阿里
@@ -97,7 +102,7 @@ public final class ContextService {
                     return config;
                 }
                 throw new UlpException("暂未支持此短信 [" + provider + "] 提供商配置获取");
-            } catch (JsonProcessingException e) {
+            } catch (JacksonException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -115,14 +120,15 @@ public final class ContextService {
                 .findByName(MessageSettingConstants.MESSAGE_PROVIDER_EMAIL);
             if (!Objects.isNull(setting) && StringUtils.isNotBlank(setting.getValue())) {
                 String value = setting.getValue();
-                ObjectMapper objectMapper = EncryptionModule.deserializerDecrypt();
-                // 指定序列化输入的类型
-                objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(),
-                    ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+                ObjectMapper objectMapper = EncryptionModule.deserializerDecrypt().rebuild()
+                    .activateDefaultTyping(BasicPolymorphicTypeValidator.builder()
+                        .allowIfSubType(Object.class).build(), DefaultTyping.NON_FINAL,
+                        JsonTypeInfo.As.PROPERTY)
+                    .build();
                 // 根据提供商序列化
                 return objectMapper.readValue(value, MailProviderConfig.class);
             }
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new RuntimeException(e);
 
         }

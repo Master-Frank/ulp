@@ -16,7 +16,7 @@
  */
 package cn.frank.ulp.support.validation;
 
-import org.springframework.boot.autoconfigure.validation.ValidationConfigurationCustomizer;
+import org.springframework.boot.validation.autoconfigure.ValidationConfigurationCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -27,6 +27,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.redis.serializer.GenericJacksonJsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.http.HttpMethod;
 import org.springframework.lang.NonNull;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -39,12 +40,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.audit.event.AuditEventPublish;
 import cn.frank.ulp.authentication.alipay.configurer.AlipayAuthenticationConfigurer;
@@ -77,6 +77,8 @@ import cn.frank.ulp.support.jackjson.SupportJackson2Module;
 import cn.frank.ulp.support.security.authentication.WebAuthenticationDetailsSource;
 import cn.frank.ulp.support.security.configurer.FormLoginConfigurer;
 import cn.frank.ulp.support.web.useragent.UserAgentParser;
+
+import tools.jackson.databind.ObjectMapper;
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -118,11 +120,11 @@ public class PortalSecurityConfiguration extends AbstractSecurityConfiguration
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers(
-            new AntPathRequestMatcher("/css/**", GET.name()),
-            new AntPathRequestMatcher("/js/**", GET.name()),
-            new AntPathRequestMatcher("/webjars/**", GET.name()),
-            new AntPathRequestMatcher("/images/**", GET.name()),
-            new AntPathRequestMatcher("/favicon.ico", GET.name()));
+            PathPatternRequestMatcher.pathPattern(HttpMethod.GET, "/css/**"),
+            PathPatternRequestMatcher.pathPattern(HttpMethod.GET, "/js/**"),
+            PathPatternRequestMatcher.pathPattern(HttpMethod.GET, "/webjars/**"),
+            PathPatternRequestMatcher.pathPattern(HttpMethod.GET, "/images/**"),
+            PathPatternRequestMatcher.pathPattern(HttpMethod.GET, "/favicon.ico"));
     }
 
     /**
@@ -298,12 +300,12 @@ public class PortalSecurityConfiguration extends AbstractSecurityConfiguration
     public Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> withHttpAuthorizeRequests() {
         //@formatter:off
         return registry -> {
-            registry.requestMatchers(new AntPathRequestMatcher(LOGIN_CONFIG, GET.name())).permitAll();
-            registry.requestMatchers(new AntPathRequestMatcher(PUBLIC_SECRET_PATH, GET.name())).permitAll();
-            registry.requestMatchers(new AntPathRequestMatcher(CURRENT_STATUS, GET.name())).permitAll();
-            registry.requestMatchers(new AntPathRequestMatcher(ACCOUNT_PATH + PREPARE_FORGET_PASSWORD, POST.name())).permitAll();
-            registry.requestMatchers(new AntPathRequestMatcher(ACCOUNT_PATH + FORGET_PASSWORD_CODE, GET.name())).permitAll();
-            registry.requestMatchers(new AntPathRequestMatcher(ACCOUNT_PATH + FORGET_PASSWORD, PUT.name())).permitAll();
+            registry.requestMatchers(PathPatternRequestMatcher.pathPattern(HttpMethod.GET, LOGIN_CONFIG)).permitAll();
+            registry.requestMatchers(PathPatternRequestMatcher.pathPattern(HttpMethod.GET, PUBLIC_SECRET_PATH)).permitAll();
+            registry.requestMatchers(PathPatternRequestMatcher.pathPattern(HttpMethod.GET, CURRENT_STATUS)).permitAll();
+            registry.requestMatchers(PathPatternRequestMatcher.pathPattern(HttpMethod.POST, ACCOUNT_PATH + PREPARE_FORGET_PASSWORD)).permitAll();
+            registry.requestMatchers(PathPatternRequestMatcher.pathPattern(HttpMethod.GET, ACCOUNT_PATH + FORGET_PASSWORD_CODE)).permitAll();
+            registry.requestMatchers(PathPatternRequestMatcher.pathPattern(HttpMethod.PUT, ACCOUNT_PATH + FORGET_PASSWORD)).permitAll();
             registry.anyRequest().authenticated();
         };
     }
