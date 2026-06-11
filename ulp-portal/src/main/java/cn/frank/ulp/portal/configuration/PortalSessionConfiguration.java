@@ -21,20 +21,35 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.session.FindByIndexNameSessionRepository;
+import org.springframework.session.FlushMode;
 import org.springframework.session.Session;
+import org.springframework.session.config.SessionRepositoryCustomizer;
+import org.springframework.session.data.redis.RedisIndexedSessionRepository;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisIndexedHttpSession;
 
 import cn.frank.ulp.core.security.session.ClusterSessionRegistryImpl;
 
 /**
+ * Spring Boot 4 dropped {@code spring-boot-session} autoconfiguration, so the
+ * indexed Redis session repository must be wired explicitly. The annotation
+ * resolves {@code redisNamespace} from the {@code spring.session.redis.namespace}
+ * property at bind time; the customizer preserves the immediate flush behaviour
+ * that {@code spring.session.redis.flush-mode=immediate} previously provided.
  *
  * @author Frank Zhang
  */
 @Configuration
+@EnableRedisIndexedHttpSession(redisNamespace = "${spring.session.redis.namespace:spring:session}")
 public class PortalSessionConfiguration {
 
     @Bean
     public SessionRegistry sessionRegistry(FindByIndexNameSessionRepository<? extends Session> sessionRepository,
                                            @Value("${spring.session.redis.namespace:spring:session}") String redisSessionNamespace) {
         return new ClusterSessionRegistryImpl<>(sessionRepository, redisSessionNamespace);
+    }
+
+    @Bean
+    public SessionRepositoryCustomizer<RedisIndexedSessionRepository> immediateFlushSessionRepositoryCustomizer() {
+        return repository -> repository.setFlushMode(FlushMode.IMMEDIATE);
     }
 }

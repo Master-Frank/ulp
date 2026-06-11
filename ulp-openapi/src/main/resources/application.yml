@@ -49,11 +49,9 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
-  session:
-    redis:
-      namespace: ${spring.cache.redis.key-prefix}:session
-      flush-mode: immediate
-      repository-type: indexed
+  # 注：spring.session.redis.* 配置块已删除 —— openapi 模块不消费 HttpSession，
+  # 旧配置在 Spring Boot 3 也只是被 RedisSessionProperties 绑定后弃用；
+  # Spring Boot 4 已移除 spring-boot-session 自动装配。
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/ulp?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
     username: root

@@ -51,9 +51,10 @@ spring:
       max-request-size: 50MB
   session:
     redis:
+      # 由 PortalSessionConfiguration 上的 @EnableRedisIndexedHttpSession 读取；
+      # flush-mode (immediate) 与 repository-type (indexed) 由该类用代码而非配置承载，
+      # 因为 Spring Boot 4 已移除 spring-boot-session 自动装配。
       namespace: ${spring.cache.redis.key-prefix}:session
-      flush-mode: immediate
-      repository-type: indexed
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/ulp?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
     username: root

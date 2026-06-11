@@ -55,13 +55,13 @@
 
 ## 5. Spring Session 与 application.yml 迁移（阶段 commit 8）
 
-- [ ] 5.1 临时在 ulp-console pom 加 `spring-boot-properties-migrator` 依赖
-- [ ] 5.2 `mvnw.cmd spring-boot:run -pl ulp-console -Dspring-boot.run.profiles=local`（如 ulp-console 没 main 类直接 java -jar 也行），观察启动日志的 deprecation/migration 警告
-- [ ] 5.3 收集所有迁移建议（重点 `spring.session.redis.*` → `spring.session.data.redis.*`）
-- [ ] 5.4 改 `ulp-console/src/main/resources/application.yml`
-- [ ] 5.5 重复 5.1-5.4 给 ulp-portal、ulp-openapi
-- [ ] 5.6 移除 `spring-boot-properties-migrator` 依赖
-- [ ] 5.7 commit: `refactor(config): migrate application.yml property keys to spring boot 4`
+- [x] 5.1 ~~临时在 ulp-console pom 加 `spring-boot-properties-migrator` 依赖~~（跳过：直接走 SB4 metadata 静态分析，properties-migrator 也搞不定本场景）
+- [x] 5.2 **关键发现**：SB4 完全移除了 `spring-boot-session` 自动装配；`spring.session.redis.*` 在 SB4 没有任何 ConfigurationProperties binder。原计划"`spring.session.redis.*` → `spring.session.data.redis.*`"是错的——真正变动是失去自动装配
+- [x] 5.3 改 `ConsoleSessionConfiguration` / `PortalSessionConfiguration`：手动加 `@EnableRedisIndexedHttpSession(redisNamespace=...)`，新增 `SessionRepositoryCustomizer<RedisIndexedSessionRepository>` bean 承载 `flush-mode=immediate`
+- [x] 5.4 改 `ulp-console/src/main/resources/application.yml`：保留 `spring.session.redis.namespace`（@Value 还在读），删 `flush-mode` 与 `repository-type`（已由 Java 接管）
+- [x] 5.5 同样改 ulp-portal yml；ulp-openapi 不使用 HttpSession，整块 `spring.session.redis.*` 删除
+- [x] 5.6 ~~移除 `spring-boot-properties-migrator` 依赖~~（无需，从未加）
+- [x] 5.7 commit: `refactor(config): wire @EnableRedisIndexedHttpSession to replace dropped SB4 session autoconfig`
 
 ## 6. Hibernate 7.1（阶段 commit 9）
 
