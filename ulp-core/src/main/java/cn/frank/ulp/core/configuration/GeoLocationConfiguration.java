@@ -22,7 +22,6 @@ import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
@@ -56,7 +55,6 @@ import static cn.frank.ulp.common.geo.maxmind.MaxmindGeoLocationParserImpl.MAXMI
 public class GeoLocationConfiguration {
     private final Logger logger = LoggerFactory.getLogger(GeoLocationConfiguration.class);
 
-    @RefreshScope
     @Bean(value = GEO_LOCATION)
     public GeoLocationParser geoLocation(SettingRepository settingRepository,
                                          RestTemplate restTemplate) {

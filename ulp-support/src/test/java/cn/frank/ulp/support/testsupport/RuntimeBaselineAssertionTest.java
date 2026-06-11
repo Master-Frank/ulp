@@ -24,22 +24,20 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Pinned baseline assertion for the runtime stack.
  *
- * Before the Spring Boot 4 upgrade this test pins Boot 3.2.12 + Java 17, so that any
- * accidental dependency bump shows up as a test failure rather than as a silent runtime
- * surprise. Once Phase 1 lands, expectations get rewritten to Boot 4.0.5 + Java 21 and
- * the class gets renamed to {@code RuntimeBaselineAssertionTest} (see openspec change
- * {@code upgrade-spring-boot-4} task 10.2).
+ * 锁死 Spring Boot 4.0.x + Java 21，任何非预期降级或升级都会让该测试失败。
+ * 旧 BaselineVersionAssertionTest（pin 在 3.2.12 + 17）由 openspec change
+ * {@code upgrade-spring-boot-4} task 10.2 重命名并切换断言为当前栈。
  */
-class BaselineVersionAssertionTest {
+class RuntimeBaselineAssertionTest {
 
-    private static final String EXPECTED_BOOT_VERSION = "3.2.12";
-    private static final String EXPECTED_JAVA_SPEC    = "17";
+    private static final String EXPECTED_BOOT_MAJOR_MINOR = "4.0";
+    private static final String EXPECTED_JAVA_SPEC        = "21";
 
     @Test
     void springBootVersionMatchesBaseline() {
         String actual = SpringBootVersion.getVersion();
-        assertEquals(EXPECTED_BOOT_VERSION, actual,
-            "Spring Boot version drifted from pinned baseline; if intentional, update this test.");
+        assertTrue(actual != null && actual.startsWith(EXPECTED_BOOT_MAJOR_MINOR),
+            "Spring Boot version drifted from pinned baseline (expected 4.0.x): " + actual);
     }
 
     @Test

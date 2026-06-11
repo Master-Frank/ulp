@@ -16,7 +16,6 @@
  */
 package cn.frank.ulp.core.configuration;
 
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -50,7 +49,6 @@ public class PasswordConfiguration {
      * @return {@link  DefaultPasswordPolicyManager}
      */
     @Bean(ConfigBeanNameConstants.DEFAULT_PASSWORD_POLICY_MANAGER)
-    @RefreshScope
     public PasswordPolicyManager passwordPolicyManager(UserRepository userRepository,
                                                        UserHistoryPasswordRepository userHistoryPasswordRepository,
                                                        SettingRepository settingRepository,

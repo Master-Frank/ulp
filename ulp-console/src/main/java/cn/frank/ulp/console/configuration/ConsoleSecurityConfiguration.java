@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.serializer.GenericJacksonJsonRedisSerializer;
@@ -108,7 +107,6 @@ public class ConsoleSecurityConfiguration implements BeanClassLoaderAware {
      * @return {@link  SecurityFilterChain}
      * @throws Exception Exception
      */
-    @RefreshScope
     @Bean(name = DEFAULT_SECURITY_FILTER_CHAIN)
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         // @formatter:off

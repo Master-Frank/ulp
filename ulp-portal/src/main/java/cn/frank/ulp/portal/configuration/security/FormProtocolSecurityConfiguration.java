@@ -18,7 +18,6 @@ package cn.frank.ulp.portal.configuration.security;
 
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -61,7 +60,6 @@ public class FormProtocolSecurityConfiguration extends AbstractSecurityConfigura
      * @throws Exception Exception
      */
     @Bean(value = FORM_PROTOCOL_SECURITY_FILTER_CHAIN)
-    @RefreshScope
     public SecurityFilterChain formProtocolSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
         //@formatter:off
         httpSecurity.getSharedObject(AuthenticationManagerBuilder.class).parentAuthenticationManager(null);

@@ -18,7 +18,6 @@ package cn.frank.ulp.portal.configuration.security;
 
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -82,7 +81,6 @@ public class OidcProtocolSecurityConfiguration extends AbstractSecurityConfigura
      * @throws Exception Exception
      */
     @Bean(value = OIDC_PROTOCOL_SECURITY_FILTER_CHAIN)
-    @RefreshScope
     public SecurityFilterChain oidcProtocolSecurityFilterChain(HttpSecurity httpSecurity,
                                                                AccessTokenAuthenticationManagerResolver authenticationManagerResolver) throws Exception {
         //@formatter:off

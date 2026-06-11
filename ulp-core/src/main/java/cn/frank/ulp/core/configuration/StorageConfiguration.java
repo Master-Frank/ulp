@@ -19,7 +19,6 @@ package cn.frank.ulp.core.configuration;
 import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -55,7 +54,6 @@ public class StorageConfiguration {
      * @return {@link Storage}
      */
     @Bean(name = StorageProviderSettingConstants.STORAGE_BEAN_NAME)
-    @RefreshScope
     public Storage storage() {
         SettingEntity setting = repository
             .findByName(StorageProviderSettingConstants.STORAGE_PROVIDER_KEY);

@@ -21,7 +21,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -134,7 +133,6 @@ public class PortalSecurityConfiguration extends AbstractSecurityConfiguration
      * @return {@link  SecurityFilterChain}
      * @throws Exception Exception
      */
-    @RefreshScope
     @Bean(name = IDP_SECURITY_FILTER_CHAIN)
     public SecurityFilterChain idpAuthenticationSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
         // @formatter:off
@@ -236,7 +234,6 @@ public class PortalSecurityConfiguration extends AbstractSecurityConfiguration
      * @return {@link  SecurityFilterChain}
      * @throws Exception Exception
      */
-    @RefreshScope
     @Bean(name = DEFAULT_SECURITY_FILTER_CHAIN)
     @DependsOn({ IDP_SECURITY_FILTER_CHAIN, OIDC_PROTOCOL_SECURITY_FILTER_CHAIN,
                  FORM_PROTOCOL_SECURITY_FILTER_CHAIN, JWT_PROTOCOL_SECURITY_FILTER_CHAIN })

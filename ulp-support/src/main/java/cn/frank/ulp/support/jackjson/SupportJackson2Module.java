@@ -101,6 +101,13 @@ public class SupportJackson2Module {
         modules.add(new GeoLocationJacksonModule());
         modules.add(new SecurityJacksonModule());
         modules.add(new WebJacksonModule());
+        // SecurityJacksonModules 只把 Spring Security 自带类加 PTV allowlist。
+        // 项目自定义类（UserType / DataOrigin / Group / Organization / Application / WebAuthenticationDetails 等）
+        // 走 default typing 时必须显式 allow，否则 Jackson 3 反序列化抛 InvalidTypeIdException。
+        // 另: spring-authorization-server 的 OAuth2AuthorizationCode / OAuth2AccessToken 子类、java.time.* 也需 PTV 放行。
+        validatorBuilder.allowIfSubTypeIsArray().allowIfSubType("cn.frank.ulp.")
+            .allowIfSubType("java.util.").allowIfSubType("java.lang.").allowIfSubType("java.time.")
+            .allowIfSubType("org.springframework.security.");
         return JsonMapper.builder().addModules(modules).activateDefaultTyping(
             validatorBuilder.build(), DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
     }

@@ -43,11 +43,11 @@ public class ListEnumDeserializer extends StdDeserializer<List<? extends BaseEnu
     private Class<? extends BaseEnum> clazz;
 
     public ListEnumDeserializer() {
-        super((Class<?>) null);
+        super(List.class);
     }
 
     public ListEnumDeserializer(Class<? extends BaseEnum> clazz) {
-        super((Class<?>) null);
+        super(List.class);
         this.clazz = clazz;
     }
 
