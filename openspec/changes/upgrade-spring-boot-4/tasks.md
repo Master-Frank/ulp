@@ -122,9 +122,9 @@
 
 ## 11. 文档（阶段 commit 14）
 
-- [ ] 11.1 README 加"运行时要求"章节：Java 21 LTS + Maven 3.9+ + Docker + MySQL 8 / Redis 7
-- [ ] 11.2 README 升级章节如适用：旧 fork 用户从 3.2.x 升 4.0.x 的最小指引
-- [ ] 11.3 在 openspec `archive/` 移动本变更（task 完成后由 `openspec archive` 命令处理；本仓库无 CLI 时手工 mv）
+- [x] 11.1 README 加"运行时要求"章节：badges 更新 (JDK 17 → 21、Maven 3.5 → 3.9、新增 Spring Boot 4.0 + Redis 7)；新增独立的"运行时要求"表格列出 JDK / Maven / MySQL / Redis / Docker 的最低版本与说明
+- [x] 11.2 README 升级章节落地："旧 fork 从 3.2.x 升 4.0.x" 的迁移要点（Jackson 包名迁移、`spring.session.redis.flush-mode` 配置键作废、bootstrap-mode deferred 死锁、SS7 DSL 强制 lambda）；链到 openspec/changes/upgrade-spring-boot-4/ 提供完整步骤
+- [ ] 11.3 ~~在 openspec `archive/` 移动本变更~~ 推迟到 Phase 12.x 与 spec promotion + 最终验证一起做（避免"编辑文件 → 移动文件 → commit"序列里 tasks.md 自身路径漂移）
 - [ ] 11.4 commit: `docs: update runtime requirements for spring boot 4`
 
 ## 12. 最终验证
