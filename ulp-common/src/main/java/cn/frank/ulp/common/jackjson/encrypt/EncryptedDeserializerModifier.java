@@ -16,15 +16,15 @@
  */
 package cn.frank.ulp.common.jackjson.encrypt;
 
-import com.fasterxml.jackson.databind.BeanDescription;
-import com.fasterxml.jackson.databind.DeserializationConfig;
-import com.fasterxml.jackson.databind.deser.BeanDeserializerBuilder;
-import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier;
+import tools.jackson.databind.BeanDescription;
+import tools.jackson.databind.DeserializationConfig;
+import tools.jackson.databind.deser.BeanDeserializerBuilder;
+import tools.jackson.databind.deser.ValueDeserializerModifier;
 
 /**
  * @author Frank Zhang
  */
-public class EncryptedDeserializerModifier extends BeanDeserializerModifier {
+public class EncryptedDeserializerModifier extends ValueDeserializerModifier {
 
     private final JsonEncryptType jsonEncryptType;
 
@@ -38,7 +38,7 @@ public class EncryptedDeserializerModifier extends BeanDeserializerModifier {
 
     @Override
     public BeanDeserializerBuilder updateBuilder(DeserializationConfig config,
-                                                 BeanDescription beanDesc,
+                                                 BeanDescription.Supplier beanDesc,
                                                  BeanDeserializerBuilder builder) {
         var properties = builder.getProperties();
         while (properties.hasNext()) {

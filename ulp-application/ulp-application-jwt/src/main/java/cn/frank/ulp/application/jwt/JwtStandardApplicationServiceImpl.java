@@ -23,7 +23,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.application.exception.AppNotExistException;
 import cn.frank.ulp.application.jwt.converter.AppJwtConfigConverter;
@@ -41,7 +41,7 @@ import cn.frank.ulp.support.validation.ValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import jakarta.validation.ConstraintViolationException;
-import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
+import static tools.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 
 import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_BY;
 import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME;

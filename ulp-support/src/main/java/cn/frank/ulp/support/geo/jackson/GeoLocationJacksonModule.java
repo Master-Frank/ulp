@@ -16,15 +16,15 @@
  */
 package cn.frank.ulp.support.geo.jackson;
 
-import com.fasterxml.jackson.core.Version;
-import com.fasterxml.jackson.databind.Module;
-
 import cn.frank.ulp.support.geo.GeoLocation;
 import cn.frank.ulp.support.geo.GeoLocationMixin;
 import cn.frank.ulp.support.geo.GeoLocationProvider;
 import cn.frank.ulp.support.geo.GeoLocationProviderMixin;
 
-public class GeoLocationJacksonModule extends Module {
+import tools.jackson.core.Version;
+import tools.jackson.databind.JacksonModule;
+
+public class GeoLocationJacksonModule extends JacksonModule {
 
     @Override
     public String getModuleName() {
@@ -33,8 +33,8 @@ public class GeoLocationJacksonModule extends Module {
 
     @Override
     public void setupModule(SetupContext context) {
-        context.setMixInAnnotations(GeoLocation.class, GeoLocationMixin.class);
-        context.setMixInAnnotations(GeoLocationProvider.class, GeoLocationProviderMixin.class);
+        context.setMixIn(GeoLocation.class, GeoLocationMixin.class);
+        context.setMixIn(GeoLocationProvider.class, GeoLocationProviderMixin.class);
     }
 
     @Override

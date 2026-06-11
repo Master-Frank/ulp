@@ -25,7 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.common.enums.MailType;
 import cn.frank.ulp.common.enums.MessageCategory;

@@ -29,7 +29,7 @@ import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import com.google.common.collect.Sets;
 
 import cn.frank.ulp.application.exception.AppNotExistException;
@@ -51,7 +51,7 @@ import cn.frank.ulp.support.validation.ValidationUtils;
 import jakarta.validation.ConstraintViolationException;
 import static org.springframework.security.oauth2.core.ClientAuthenticationMethod.NONE;
 
-import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
+import static tools.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 
 import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_BY;
 import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME;

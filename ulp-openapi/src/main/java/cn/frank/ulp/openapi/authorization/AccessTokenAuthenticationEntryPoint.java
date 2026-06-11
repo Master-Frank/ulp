@@ -22,7 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.openapi.constant.OpenApiStatus;
 import cn.frank.ulp.support.security.web.AbstractAuthenticationEntryPoint;

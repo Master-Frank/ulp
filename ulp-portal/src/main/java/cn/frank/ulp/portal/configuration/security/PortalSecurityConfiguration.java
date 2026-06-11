@@ -25,7 +25,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.GenericJacksonJsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.lang.NonNull;
 import org.springframework.security.config.Customizer;
@@ -44,7 +44,7 @@ import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.audit.event.AuditEventPublish;
 import cn.frank.ulp.authentication.alipay.configurer.AlipayAuthenticationConfigurer;
@@ -384,11 +384,11 @@ public class PortalSecurityConfiguration extends AbstractSecurityConfiguration
     @Bean
     @ConditionalOnMissingBean
     public RedisSerializer<Object> springSessionDefaultRedisSerializer() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModules(SupportJackson2Module.getModules(this.loader));
-        mapper.registerModules(new AuthenticationJacksonModule());
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        return new GenericJackson2JsonRedisSerializer(mapper);
+        ObjectMapper mapper = SupportJackson2Module.objectMapperBuilder(this.loader)
+            .addModule(new AuthenticationJacksonModule())
+            .changeDefaultPropertyInclusion(v -> v.withValueInclusion(JsonInclude.Include.NON_NULL))
+            .build();
+        return new GenericJacksonJsonRedisSerializer(mapper);
     }
 
     /**

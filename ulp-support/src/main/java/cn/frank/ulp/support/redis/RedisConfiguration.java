@@ -34,7 +34,7 @@ import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.GenericJacksonJsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.util.Assert;
@@ -43,13 +43,15 @@ import org.springframework.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import cn.frank.ulp.support.cache.CachePrefixGenerator;
 import cn.frank.ulp.support.util.PhoneUtils;
+
+import tools.jackson.databind.DefaultTyping;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 
 /**
  * Redis配置类
@@ -112,19 +114,20 @@ public class RedisConfiguration {
     @Bean
     public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory,
                                           CachePrefixGenerator cachePrefixGenerator) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        objectMapper.activateDefaultTyping(
-            BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build(),
-            ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
-        objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        ObjectMapper objectMapper = JsonMapper.builder()
+            .changeDefaultVisibility(
+                vc -> vc.withVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY))
+            .activateDefaultTyping(
+                BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build(),
+                DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            .build();
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
             .entryTtl(Duration.ofHours(1))
             .serializeKeysWith(RedisSerializationContext.SerializationPair
                 .fromSerializer(new StringRedisSerializer()))
             .serializeValuesWith(RedisSerializationContext.SerializationPair
-                .fromSerializer(new GenericJackson2JsonRedisSerializer(objectMapper)))
+                .fromSerializer(new GenericJacksonJsonRedisSerializer(objectMapper)))
             .computePrefixWith(cachePrefixGenerator).disableCachingNullValues();
         return RedisCacheManager.builder(connectionFactory).cacheDefaults(config).build();
     }

@@ -16,18 +16,18 @@
  */
 package cn.frank.ulp.authentication.common.jackjson;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.MissingNode;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonParser;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.JavaType;
+import tools.jackson.databind.ValueDeserializer;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.node.MissingNode;
 
 import cn.frank.ulp.authentication.common.authentication.OtpAuthentication;
 
@@ -37,7 +37,7 @@ import cn.frank.ulp.authentication.common.authentication.OtpAuthentication;
  * @author Frank Zhang
  */
 @SuppressWarnings("DuplicatedCode")
-class OtpAuthenticationTokenDeserializer extends JsonDeserializer<OtpAuthentication> {
+class OtpAuthenticationTokenDeserializer extends ValueDeserializer<OtpAuthentication> {
 
     private static final TypeReference<List<GrantedAuthority>> GRANTED_AUTHORITY_LIST = new TypeReference<>() {
                                                                                       };
@@ -47,18 +47,18 @@ class OtpAuthenticationTokenDeserializer extends JsonDeserializer<OtpAuthenticat
 
     @Override
     public OtpAuthentication deserialize(JsonParser jp,
-                                         DeserializationContext deserializationContext) throws IOException {
+                                         DeserializationContext ctxt) throws JacksonException {
 
-        ObjectMapper mapper = (ObjectMapper) jp.getCodec();
-        JsonNode jsonNode = mapper.readTree(jp);
+        JsonNode jsonNode = ctxt.readTree(jp);
         boolean authenticated = readJsonNode(jsonNode, "authenticated").asBoolean();
         String recipient = readJsonNode(jsonNode, "recipient").asText();
         String type = readJsonNode(jsonNode, "type").asText();
         JsonNode principalNode = readJsonNode(jsonNode, "principal");
-        Object principal = getPrincipal(mapper, principalNode);
+        Object principal = getPrincipal(ctxt, principalNode);
         //权限
-        List<GrantedAuthority> authorities = mapper.readValue(
-            readJsonNode(jsonNode, "authorities").traverse(mapper), GRANTED_AUTHORITY_LIST);
+        JavaType authoritiesType = ctxt.getTypeFactory().constructType(GRANTED_AUTHORITY_LIST);
+        List<GrantedAuthority> authorities = ctxt
+            .readTreeAsValue(readJsonNode(jsonNode, "authorities"), authoritiesType);
         OtpAuthentication authentication = (!authenticated)
             ? new OtpAuthentication(principal, recipient, type)
             : new OtpAuthentication(principal, recipient, type, authorities);
@@ -66,15 +66,17 @@ class OtpAuthenticationTokenDeserializer extends JsonDeserializer<OtpAuthenticat
         if (detailsNode.isNull() || detailsNode.isMissingNode()) {
             authentication.setDetails(null);
         } else {
-            Object details = mapper.readValue(detailsNode.toString(), OBJECT);
+            JavaType objectType = ctxt.getTypeFactory().constructType(OBJECT);
+            Object details = ctxt.readTreeAsValue(detailsNode, objectType);
             authentication.setDetails(details);
         }
         return authentication;
     }
 
-    private Object getPrincipal(ObjectMapper mapper, JsonNode principalNode) throws IOException {
+    private Object getPrincipal(DeserializationContext ctxt,
+                                JsonNode principalNode) throws JacksonException {
         if (principalNode.isObject()) {
-            return mapper.readValue(principalNode.traverse(mapper), Object.class);
+            return ctxt.readTreeAsValue(principalNode, Object.class);
         }
         return principalNode.asText();
     }

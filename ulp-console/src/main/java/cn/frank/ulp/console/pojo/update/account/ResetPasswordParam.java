@@ -20,7 +20,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonDeserialize;
 
 import cn.frank.ulp.common.enums.MessageNoticeChannel;
 import cn.frank.ulp.support.enums.ListEnumDeserializer;

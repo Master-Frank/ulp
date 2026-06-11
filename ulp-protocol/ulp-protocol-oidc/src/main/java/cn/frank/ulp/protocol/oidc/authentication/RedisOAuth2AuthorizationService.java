@@ -36,13 +36,11 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.protocol.oidc.jackson.OidcProtocolJackson2Module;
 import cn.frank.ulp.support.jackjson.SupportJackson2Module;
-
-import lombok.Setter;
 import static cn.frank.ulp.protocol.oidc.constant.OidcProtocolConstants.ID_TOKEN;
 import static cn.frank.ulp.protocol.oidc.constant.OidcProtocolConstants.OIDC_PROTOCOL_CACHE_PREFIX;
 
@@ -77,11 +75,14 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 
     private final RegisteredClientRepository      clientRepository;
 
-    @Setter
-    private ObjectMapper                          objectMapper             = new ObjectMapper();
+    private ObjectMapper                          objectMapper;
 
-    @Setter
+    @lombok.Setter
     private String                                prefix                   = OIDC_PROTOCOL_CACHE_PREFIX;
+
+    public void setObjectMapper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     static {
         try {
@@ -98,8 +99,8 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
         this.clientRepository = clientRepository;
 
         ClassLoader classLoader = this.getClass().getClassLoader();
-        objectMapper.registerModules(SupportJackson2Module.getModules(classLoader));
-        objectMapper.registerModules(OidcProtocolJackson2Module.getModules());
+        this.objectMapper = SupportJackson2Module.objectMapperBuilder(classLoader)
+            .addModules(OidcProtocolJackson2Module.getModules()).build();
     }
 
     @Override

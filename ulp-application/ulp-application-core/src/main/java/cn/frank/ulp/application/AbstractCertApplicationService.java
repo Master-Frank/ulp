@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.AlternativeJdkIdGenerator;
 import org.springframework.util.IdGenerator;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.common.entity.app.AppCertEntity;
 import cn.frank.ulp.common.enums.app.AppCertUsingType;

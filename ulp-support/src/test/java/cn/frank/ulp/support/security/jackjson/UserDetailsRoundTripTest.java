@@ -26,8 +26,6 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.jackson2.SecurityJackson2Modules;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import cn.frank.ulp.support.security.core.GrantedAuthority;
 import cn.frank.ulp.support.security.userdetails.Application;
 import cn.frank.ulp.support.security.userdetails.DataOrigin;
@@ -35,6 +33,8 @@ import cn.frank.ulp.support.security.userdetails.Group;
 import cn.frank.ulp.support.security.userdetails.Organization;
 import cn.frank.ulp.support.security.userdetails.UserDetails;
 import cn.frank.ulp.support.security.userdetails.UserType;
+
+import tools.jackson.databind.ObjectMapper;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**

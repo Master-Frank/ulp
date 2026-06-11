@@ -22,7 +22,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.application.exception.AppNotExistException;
 import cn.frank.ulp.application.form.converter.AppFormConfigConverter;
@@ -45,7 +45,7 @@ import cn.frank.ulp.support.validation.ValidationUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import jakarta.validation.ConstraintViolationException;
-import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
+import static tools.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 
 /**
  * Form 用户应用

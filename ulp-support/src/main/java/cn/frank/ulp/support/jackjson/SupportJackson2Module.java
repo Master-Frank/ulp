@@ -19,16 +19,21 @@ package cn.frank.ulp.support.jackjson;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.security.jackson2.SecurityJackson2Modules;
+import org.springframework.security.jackson.SecurityJacksonModules;
 
-import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import cn.frank.ulp.support.geo.jackson.GeoLocationJacksonModule;
 import cn.frank.ulp.support.security.jackjson.SecurityJacksonModule;
 import cn.frank.ulp.support.web.jackjson.WebJacksonModule;
 
+import tools.jackson.databind.DefaultTyping;
+import tools.jackson.databind.JacksonModule;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
+
 /**
- * 支持Jackson2的模块配置类
+ * 支持Jackson3的模块配置类
  * 提供对GeoLocation、Security和Web相关Jackson模块的支持
  */
 public class SupportJackson2Module {
@@ -68,16 +73,35 @@ public class SupportJackson2Module {
     }
 
     /**
-     * 获取模块列表
+     * 获取模块列表（仅包含 Security + 本项目自定义模块，不含默认类型校验器）。
+     * Spring Security 7 的 SecurityJacksonModule 需要在外层通过 activateDefaultTyping 启用，
+     * 调用方可使用 {@link #objectMapperBuilder(ClassLoader)} 直接拿到已配置好的 builder。
      *
      * @param classLoader 类加载器
      * @return 模块列表
      */
-    public static List<Module> getModules(ClassLoader classLoader) {
-        List<Module> modules = new ArrayList<>(SecurityJackson2Modules.getModules(classLoader));
+    public static List<JacksonModule> getModules(ClassLoader classLoader) {
+        List<JacksonModule> modules = new ArrayList<>(
+            SecurityJacksonModules.getModules(classLoader));
         modules.add(new GeoLocationJacksonModule());
         modules.add(new SecurityJacksonModule());
         modules.add(new WebJacksonModule());
         return modules;
+    }
+
+    /**
+     * 返回已经配置好默认类型校验、Security/Geo/Web 模块的 JsonMapper.Builder。
+     * 调用方按需 addModules 后 .build() 即可。
+     */
+    public static JsonMapper.Builder objectMapperBuilder(ClassLoader classLoader) {
+        BasicPolymorphicTypeValidator.Builder validatorBuilder = BasicPolymorphicTypeValidator
+            .builder();
+        List<JacksonModule> modules = new ArrayList<>(
+            SecurityJacksonModules.getModules(classLoader, validatorBuilder));
+        modules.add(new GeoLocationJacksonModule());
+        modules.add(new SecurityJacksonModule());
+        modules.add(new WebJacksonModule());
+        return JsonMapper.builder().addModules(modules).activateDefaultTyping(
+            validatorBuilder.build(), DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
     }
 }

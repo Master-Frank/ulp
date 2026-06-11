@@ -16,7 +16,6 @@
  */
 package org.springframework.security.oauth2.server.authorization;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -27,13 +26,14 @@ import org.springframework.security.oauth2.core.OAuth2RefreshToken;
 import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.MissingNode;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonParser;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.JavaType;
+import tools.jackson.databind.ValueDeserializer;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.node.MissingNode;
 import static org.springframework.security.oauth2.server.authorization.OAuth2Authorization.*;
 
 /**
@@ -42,7 +42,7 @@ import static org.springframework.security.oauth2.server.authorization.OAuth2Aut
  * @author Frank Zhang
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
-public class OAuth2AuthorizationDeserializer extends JsonDeserializer<OAuth2Authorization> {
+public class OAuth2AuthorizationDeserializer extends ValueDeserializer<OAuth2Authorization> {
 
     private static final TypeReference<Set<String>>                     SET_TYPE_REFERENCE        = new TypeReference<>() {
                                                                                                   };
@@ -58,18 +58,19 @@ public class OAuth2AuthorizationDeserializer extends JsonDeserializer<OAuth2Auth
 
     @Override
     public OAuth2Authorization deserialize(JsonParser jp,
-                                           DeserializationContext deserializationContext) throws IOException {
-        ObjectMapper mapper = (ObjectMapper) jp.getCodec();
-        JsonNode jsonNode = mapper.readTree(jp);
+                                           DeserializationContext ctxt) throws JacksonException {
+        JsonNode jsonNode = ctxt.readTree(jp);
 
-        Set<String> authorizedScopes = mapper.convertValue(jsonNode.get("authorizedScopes"),
-            SET_TYPE_REFERENCE);
-        Map<String, Object> attributes = mapper.convertValue(jsonNode.get("attributes"),
-            ATTRIBUTES_REFERENCE);
-        Map<String, Token<OAuth2Token>> tokens = mapper.convertValue(jsonNode.get("tokens"),
-            OAUTH2_TOKEN_REFERENCE);
-        AuthorizationGrantType grantType = mapper
-            .convertValue(jsonNode.get("authorizationGrantType"), GRANT_TYPE_TYPE_REFERENCE);
+        JavaType setType = ctxt.getTypeFactory().constructType(SET_TYPE_REFERENCE);
+        JavaType attrsType = ctxt.getTypeFactory().constructType(ATTRIBUTES_REFERENCE);
+        JavaType tokensType = ctxt.getTypeFactory().constructType(OAUTH2_TOKEN_REFERENCE);
+        JavaType grantTypeType = ctxt.getTypeFactory().constructType(GRANT_TYPE_TYPE_REFERENCE);
+
+        Set<String> authorizedScopes = treeAs(ctxt, jsonNode.get("authorizedScopes"), setType);
+        Map<String, Object> attributes = treeAs(ctxt, jsonNode.get("attributes"), attrsType);
+        Map<String, Token<OAuth2Token>> tokens = treeAs(ctxt, jsonNode.get("tokens"), tokensType);
+        AuthorizationGrantType grantType = treeAs(ctxt, jsonNode.get("authorizationGrantType"),
+            grantTypeType);
 
         String id = readJsonNode(jsonNode, "id").asText();
         String registeredClientId = readJsonNode(jsonNode, "registeredClientId").asText();
@@ -96,6 +97,15 @@ public class OAuth2AuthorizationDeserializer extends JsonDeserializer<OAuth2Auth
 
     private JsonNode readJsonNode(JsonNode jsonNode, String field) {
         return jsonNode.has(field) ? jsonNode.get(field) : MissingNode.getInstance();
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <T> T treeAs(DeserializationContext ctxt, JsonNode node, JavaType type)
+                                                                                          throws JacksonException {
+        if (node == null || node.isMissingNode() || node.isNull()) {
+            return null;
+        }
+        return (T) ctxt.readTreeAsValue(node, type);
     }
 
 }

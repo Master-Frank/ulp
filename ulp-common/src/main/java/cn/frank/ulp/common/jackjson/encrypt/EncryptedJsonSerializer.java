@@ -16,26 +16,24 @@
  */
 package cn.frank.ulp.common.jackjson.encrypt;
 
-import java.io.IOException;
 import java.io.StringWriter;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.ObjectCodec;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializerProvider;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ValueSerializer;
 
 /**
  * @author Frank Zhang
  */
-public class EncryptedJsonSerializer extends JsonSerializer<Object> {
+public class EncryptedJsonSerializer extends ValueSerializer<Object> {
 
     /**
      * 默认序列化工具对象
      */
-    private final JsonSerializer<Object> serializer;
+    private final ValueSerializer<Object> serializer;
     private final JsonEncryptType        serializerJsonEncryptType;
 
     public EncryptedJsonSerializer() {
@@ -43,7 +41,7 @@ public class EncryptedJsonSerializer extends JsonSerializer<Object> {
         this.serializerJsonEncryptType = null;
     }
 
-    public EncryptedJsonSerializer(JsonSerializer<Object> serializer,
+    public EncryptedJsonSerializer(ValueSerializer<Object> serializer,
                                    JsonEncryptType jsonEncryptType) {
         this.serializer = serializer;
         this.serializerJsonEncryptType = jsonEncryptType;
@@ -51,38 +49,32 @@ public class EncryptedJsonSerializer extends JsonSerializer<Object> {
 
     @Override
     public void serialize(Object obj, JsonGenerator jsonGenerator,
-                          SerializerProvider serializerProvider) throws IOException {
-        StringWriter stringWriter = new StringWriter();
-        ObjectCodec objectCodec = jsonGenerator.getCodec();
-        JsonGenerator nestedGenerator = null;
-
+                          SerializationContext ctxt) throws JacksonException {
         //空对象或空字符串不处理。
         if (obj == null || StringUtils.isEmpty(String.valueOf(obj))) {
             if (serializer == null) {
-                serializerProvider.defaultSerializeValue(obj, jsonGenerator);
+                ctxt.writeValue(jsonGenerator, obj);
             } else {
-                serializer.serialize(obj, jsonGenerator, serializerProvider);
+                serializer.serialize(obj, jsonGenerator, ctxt);
             }
             return;
         }
         /*
             生成一个新的JsonGenerator，用于将obj写入。
+            Jackson 3: 通过 jsonGenerator.objectWriteContext() 拿到 ObjectWriteContext，
+            再 createGenerator(Writer) 派生一个同配置的嵌套 generator。
          */
-        if (objectCodec instanceof ObjectMapper) {
-            nestedGenerator = objectCodec.getFactory().createGenerator(stringWriter);
-        }
-
-        if (nestedGenerator == null) {
-            throw new NullPointerException("nestedGenerator == null");
-        }
+        StringWriter stringWriter = new StringWriter();
+        JsonGenerator nestedGenerator = jsonGenerator.objectWriteContext()
+            .createGenerator(stringWriter);
 
         /*
             将数据写入到新生成的JsonGenerator中
          */
         if (serializer == null) {
-            serializerProvider.defaultSerializeValue(obj, nestedGenerator);
+            ctxt.writeValue(nestedGenerator, obj);
         } else {
-            serializer.serialize(obj, nestedGenerator, serializerProvider);
+            serializer.serialize(obj, nestedGenerator, ctxt);
         }
 
         nestedGenerator.close();

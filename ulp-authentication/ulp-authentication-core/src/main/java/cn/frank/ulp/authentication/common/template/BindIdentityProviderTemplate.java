@@ -25,7 +25,7 @@ import java.util.Map;
 import org.apache.http.entity.ContentType;
 import org.springframework.http.HttpStatus;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.support.exception.TemplateNotExistException;
 import cn.frank.ulp.support.result.ApiRestResult;

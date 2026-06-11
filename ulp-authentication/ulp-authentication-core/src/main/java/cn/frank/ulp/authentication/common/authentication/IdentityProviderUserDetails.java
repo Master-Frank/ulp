@@ -18,7 +18,7 @@ package cn.frank.ulp.authentication.common.authentication;
 
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import tools.jackson.databind.annotation.JsonPOJOBuilder;
 
 import cn.frank.ulp.authentication.common.IdentityProviderType;
 

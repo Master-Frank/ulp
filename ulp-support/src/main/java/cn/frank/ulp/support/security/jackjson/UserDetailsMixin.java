@@ -21,7 +21,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import tools.jackson.databind.annotation.JsonDeserialize;
 
 /**
  * Force Jackson to deserialize {@code cn.frank.ulp.support.security.userdetails.UserDetails}

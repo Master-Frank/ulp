@@ -14,19 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package cn.frank.ulp.protocol.oidc.jackson;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.security.oauth2.server.authorization.jackson2.OAuth2AuthorizationServerJackson2Module;
+import org.springframework.security.oauth2.server.authorization.jackson.OAuth2AuthorizationServerJacksonModule;
 
-import com.fasterxml.jackson.databind.Module;
+import tools.jackson.databind.JacksonModule;
 
 /**
  *
@@ -36,10 +31,10 @@ public class OidcProtocolJackson2Module {
     public OidcProtocolJackson2Module() {
     }
 
-    public static List<Module> getModules() {
-        List<Module> modules = new ArrayList<>();
+    public static List<JacksonModule> getModules() {
+        List<JacksonModule> modules = new ArrayList<>();
         modules.add(new OAuth2AuthorizationModule());
-        modules.add(new OAuth2AuthorizationServerJackson2Module());
+        modules.add(new OAuth2AuthorizationServerJacksonModule());
         return modules;
     }
 }

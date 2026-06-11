@@ -16,7 +16,6 @@
  */
 package cn.frank.ulp.support.security.jackjson;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,12 +26,6 @@ import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import cn.frank.ulp.support.security.userdetails.Application;
 import cn.frank.ulp.support.security.userdetails.DataOrigin;
 import cn.frank.ulp.support.security.userdetails.Group;
@@ -40,12 +33,17 @@ import cn.frank.ulp.support.security.userdetails.Organization;
 import cn.frank.ulp.support.security.userdetails.UserDetails;
 import cn.frank.ulp.support.security.userdetails.UserType;
 
-public class UserDetailsDeserializer extends JsonDeserializer<UserDetails> {
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonParser;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ValueDeserializer;
+
+public class UserDetailsDeserializer extends ValueDeserializer<UserDetails> {
 
     @Override
-    public UserDetails deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        ObjectMapper mapper = (ObjectMapper) jp.getCodec();
-        JsonNode node = mapper.readTree(jp);
+    public UserDetails deserialize(JsonParser jp, DeserializationContext ctxt) throws JacksonException {
+        JsonNode node = ctxt.readTree(jp);
 
         String id = textOrNull(node, "id");
         String username = textOrNull(node, "username");
@@ -55,7 +53,7 @@ public class UserDetailsDeserializer extends JsonDeserializer<UserDetails> {
         JsonNode userTypeNode = node.get("userType");
         if (userTypeNode != null && !userTypeNode.isNull()) {
             if (userTypeNode.isObject()) {
-                userType = mapper.treeToValue(userTypeNode, UserType.class);
+                userType = ctxt.readTreeAsValue(userTypeNode, UserType.class);
             } else {
                 String typeText = userTypeNode.asText();
                 userType = new UserType(typeText, typeText);
@@ -70,7 +68,7 @@ public class UserDetailsDeserializer extends JsonDeserializer<UserDetails> {
         List<GrantedAuthority> authorities = new ArrayList<>();
         JsonNode authoritiesNode = unwrapTyped(node.get("authorities"));
         if (authoritiesNode != null && authoritiesNode.isArray()) {
-            Iterator<JsonNode> it = authoritiesNode.elements();
+            Iterator<JsonNode> it = authoritiesNode.iterator();
             while (it.hasNext()) {
                 JsonNode authNode = it.next();
                 String authType = textOrNull(authNode, "type");
@@ -98,16 +96,16 @@ public class UserDetailsDeserializer extends JsonDeserializer<UserDetails> {
         applyOptionalBoolean(node, "emailVerified", userDetails::setEmailVerified);
         applyOptionalBoolean(node, "needChangePassword", userDetails::setNeedChangePassword);
 
-        Set<Group> groups = readSet(node, "groups", mapper, Group.class);
+        Set<Group> groups = readSet(node, "groups", ctxt, Group.class);
         if (groups != null) {
             userDetails.setGroups(groups);
         }
-        Set<Organization> organizations = readSet(node, "organizations", mapper,
+        Set<Organization> organizations = readSet(node, "organizations", ctxt,
             Organization.class);
         if (organizations != null) {
             userDetails.setOrganizations(organizations);
         }
-        Set<Application> applications = readSet(node, "applications", mapper, Application.class);
+        Set<Application> applications = readSet(node, "applications", ctxt, Application.class);
         if (applications != null) {
             userDetails.setApplications(applications);
         }
@@ -126,7 +124,7 @@ public class UserDetailsDeserializer extends JsonDeserializer<UserDetails> {
         }
         JsonNode dataOriginNode = node.get("dataOrigin");
         if (dataOriginNode != null && !dataOriginNode.isNull() && dataOriginNode.isObject()) {
-            userDetails.setDataOrigin(mapper.treeToValue(dataOriginNode, DataOrigin.class));
+            userDetails.setDataOrigin(ctxt.readTreeAsValue(dataOriginNode, DataOrigin.class));
         }
 
         return userDetails;
@@ -173,15 +171,15 @@ public class UserDetailsDeserializer extends JsonDeserializer<UserDetails> {
         return null;
     }
 
-    private static <T> Set<T> readSet(JsonNode node, String field, ObjectMapper mapper,
-                                      Class<T> elementType) throws IOException {
+    private static <T> Set<T> readSet(JsonNode node, String field, DeserializationContext ctxt,
+                                      Class<T> elementType) throws JacksonException {
         JsonNode unwrapped = unwrapTyped(node.get(field));
         if (unwrapped == null || !unwrapped.isArray()) {
             return null;
         }
         Set<T> result = new LinkedHashSet<>();
         for (JsonNode el : unwrapped) {
-            T value = mapper.treeToValue(el, elementType);
+            T value = ctxt.readTreeAsValue(el, elementType);
             if (value != null) {
                 result.add(value);
             }

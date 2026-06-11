@@ -21,9 +21,9 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JsonProcessingException;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.authentication.common.client.IdentityProviderConfig;
 import cn.frank.ulp.authentication.common.client.RegisteredIdentityProviderClient;

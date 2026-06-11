@@ -23,8 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JsonProcessingException;
+import tools.jackson.databind.ObjectMapper;
 import com.shapesecurity.salvation2.Directives.SourceExpressionDirective;
 import com.shapesecurity.salvation2.FetchDirectiveKind;
 import com.shapesecurity.salvation2.Policy;

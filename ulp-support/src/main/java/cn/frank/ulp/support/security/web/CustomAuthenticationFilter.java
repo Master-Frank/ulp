@@ -37,9 +37,6 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import cn.frank.ulp.support.enums.SecretType;
 import cn.frank.ulp.support.exception.UnknownAuthenticationTypeException;
 import cn.frank.ulp.support.result.ApiRestResult;
@@ -54,6 +51,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
 
 public class CustomAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 

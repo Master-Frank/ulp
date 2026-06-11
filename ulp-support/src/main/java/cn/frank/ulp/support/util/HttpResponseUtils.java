@@ -26,22 +26,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import jakarta.servlet.http.HttpServletResponse;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 /**
  * HTTP 响应辅助工具.
  */
 public class HttpResponseUtils {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper();
-
-    static {
-        MAPPER.registerModule(new JavaTimeModule());
-        MAPPER.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-    }
+    private static final ObjectMapper MAPPER = JsonMapper.builder()
+        .changeDefaultPropertyInclusion(v -> v.withValueInclusion(JsonInclude.Include.NON_NULL))
+        .build();
 
     public HttpResponseUtils() {
     }
@@ -79,7 +76,7 @@ public class HttpResponseUtils {
             } else {
                 writer.write("");
             }
-        } catch (IOException e) {
+        } catch (IOException | tools.jackson.core.JacksonException e) {
             throw new RuntimeException(e);
         }
     }

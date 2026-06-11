@@ -26,8 +26,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.CollectionUtils;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JsonProcessingException;
+import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.common.entity.identitysource.IdentitySourceEntity;
 import cn.frank.ulp.common.enums.identitysource.IdentitySourceProvider;

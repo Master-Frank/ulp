@@ -42,7 +42,7 @@ import org.springframework.util.StopWatch;
 
 import com.cronutils.model.CronType;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.common.entity.identitysource.IdentitySourceEntity;
 import cn.frank.ulp.common.enums.TriggerType;

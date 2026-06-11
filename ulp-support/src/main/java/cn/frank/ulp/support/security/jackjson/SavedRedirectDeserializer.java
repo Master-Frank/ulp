@@ -16,25 +16,25 @@
  */
 package cn.frank.ulp.support.security.jackjson;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonNode;
-
 import cn.frank.ulp.support.security.savedredirect.SavedRedirect;
 import cn.frank.ulp.support.security.savedredirect.SavedRedirect.Parameter;
 
-public class SavedRedirectDeserializer extends JsonDeserializer<SavedRedirect> {
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonParser;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ValueDeserializer;
+
+public class SavedRedirectDeserializer extends ValueDeserializer<SavedRedirect> {
 
     @Override
     public SavedRedirect deserialize(JsonParser jp,
-                                     DeserializationContext ctxt) throws IOException {
-        JsonNode node = jp.getCodec().readTree(jp);
+                                     DeserializationContext ctxt) throws JacksonException {
+        JsonNode node = ctxt.readTree(jp);
         SavedRedirect savedRedirect = new SavedRedirect();
         JsonNode actionNode = node.get("action");
         if (actionNode != null && !actionNode.isNull()) {
@@ -47,7 +47,7 @@ public class SavedRedirectDeserializer extends JsonDeserializer<SavedRedirect> {
         JsonNode parametersNode = node.get("parameters");
         if (parametersNode != null && parametersNode.isArray()) {
             List<Parameter> parameters = new ArrayList<>();
-            Iterator<JsonNode> it = parametersNode.elements();
+            Iterator<JsonNode> it = parametersNode.iterator();
             while (it.hasNext()) {
                 JsonNode paramNode = it.next();
                 Parameter parameter = new Parameter();

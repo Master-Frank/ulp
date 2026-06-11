@@ -16,8 +16,8 @@
  */
 package cn.frank.ulp.authentication.common.jackjson;
 
-import com.fasterxml.jackson.core.Version;
-import com.fasterxml.jackson.databind.Module;
+import tools.jackson.core.Version;
+import tools.jackson.databind.Module;
 
 import cn.frank.ulp.authentication.common.IdentityProviderType;
 import cn.frank.ulp.authentication.common.authentication.IdentityProviderAuthentication;

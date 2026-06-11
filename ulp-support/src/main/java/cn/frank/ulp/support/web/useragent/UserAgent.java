@@ -20,7 +20,8 @@ import java.io.Serializable;
 
 import com.alibaba.fastjson2.JSON;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
+import tools.jackson.databind.annotation.JsonPOJOBuilder;
 
 /**
  * 用户代理类

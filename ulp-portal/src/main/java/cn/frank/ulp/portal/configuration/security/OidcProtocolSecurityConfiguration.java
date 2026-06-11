@@ -41,8 +41,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.SerializationFeature;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
@@ -149,11 +149,11 @@ public class OidcProtocolSecurityConfiguration extends AbstractSecurityConfigura
         RedisTemplate<String, String> redisTemplate = getStringRedisTemplate(redisConnectionFactory,
             cacheProperties);
         ClassLoader classLoader = this.getClass().getClassLoader();
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModules(SupportJackson2Module.getModules(classLoader));
-        objectMapper.registerModules(OidcProtocolJackson2Module.getModules());
-        objectMapper.registerModules(new AuthenticationJacksonModule());
-        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        ObjectMapper objectMapper = SupportJackson2Module.objectMapperBuilder(classLoader)
+            .addModules(OidcProtocolJackson2Module.getModules())
+            .addModule(new AuthenticationJacksonModule())
+            .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+            .build();
         RedisOAuth2AuthorizationServiceWrapper service = new RedisOAuth2AuthorizationServiceWrapper(
             redisTemplate, clientRepository);
         service.setObjectMapper(objectMapper);

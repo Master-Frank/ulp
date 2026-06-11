@@ -43,10 +43,11 @@ public final class HttpMessageConverters {
     static {
         ClassLoader classLoader = HttpMessageConverters.class.getClassLoader();
         JACKSON2_JSON_PRESENT = ClassUtils
-            .isPresent("com.fasterxml.jackson.databind.ObjectMapper", classLoader)
-                                && ClassUtils.isPresent("com.fasterxml.jackson.core.JsonGenerator",
+            .isPresent("tools.jackson.databind.ObjectMapper", classLoader)
+                                && ClassUtils.isPresent("tools.jackson.core.JsonGenerator",
                                     classLoader);
 
+        // jackson-dataformat-xml is still on the jackson 2.x line under Boot 4 BOM (no tools.jackson.dataformat.xml yet).
         JACKSON2_XML_PRESENT = ClassUtils
             .isPresent("com.fasterxml.jackson.dataformat.xml.XmlMapper", classLoader);
 

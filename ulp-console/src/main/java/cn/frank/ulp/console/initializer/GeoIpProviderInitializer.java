@@ -24,8 +24,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JsonProcessingException;
+import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.common.entity.setting.SettingEntity;
 import cn.frank.ulp.common.geo.GeoLocationProviderConfig;

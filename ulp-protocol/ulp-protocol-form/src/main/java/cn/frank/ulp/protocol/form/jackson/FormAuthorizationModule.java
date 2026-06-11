@@ -16,15 +16,15 @@
  */
 package cn.frank.ulp.protocol.form.jackson;
 
-import org.springframework.security.jackson2.SecurityJackson2Modules;
-
-import com.fasterxml.jackson.core.Version;
-import com.fasterxml.jackson.databind.module.SimpleModule;
+import tools.jackson.core.Version;
+import tools.jackson.databind.module.SimpleModule;
 
 import cn.frank.ulp.protocol.form.authentication.FormAuthenticationToken;
 
 /**
  * FormAuthorizationModule
+ *
+ * Jackson 3 默认类型校验在 mapper builder 上配置，模块不再主动启用 default typing。
  *
  * @author Frank Zhang
  */
@@ -36,9 +36,7 @@ public class FormAuthorizationModule extends SimpleModule {
 
     @Override
     public void setupModule(SetupContext context) {
-        SecurityJackson2Modules.enableDefaultTyping(context.getOwner());
-        context.setMixInAnnotations(FormAuthenticationToken.class,
-            FormAuthenticationTokenMixin.class);
+        context.setMixIn(FormAuthenticationToken.class, FormAuthenticationTokenMixin.class);
     }
 
 }

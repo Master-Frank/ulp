@@ -29,8 +29,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.alibaba.fastjson2.JSON;
 import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.common.enums.identitysource.IdentitySourceProvider;
 import cn.frank.ulp.identitysource.core.AbstractDefaultIdentitySource;

@@ -28,8 +28,8 @@ import org.springframework.data.jpa.domain.Specification;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JsonProcessingException;
+import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.authentication.alipay.AlipayIdentityProviderOAuth2Config;
 import cn.frank.ulp.authentication.common.IdentityProviderCategory;

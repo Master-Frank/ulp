@@ -24,8 +24,8 @@ import org.mapstruct.Mapper;
 import org.springframework.beans.BeanUtils;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JsonProcessingException;
+import tools.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.common.entity.setting.SettingEntity;
 import cn.frank.ulp.common.jackjson.encrypt.EncryptionModule;
