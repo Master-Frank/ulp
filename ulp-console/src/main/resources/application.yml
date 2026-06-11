@@ -77,7 +77,9 @@ spring:
   data:
     jpa:
       repositories:
-        bootstrap-mode: deferred
+        # SB4 + Hibernate 7: deferred 触发 async EMF bootstrap，与 MultiTenancy.getTenantIdentifierResolver
+        # 回调 SpringBeanContainer.getBean 抢 BeanFactory 锁的主线程死锁。改 default 走同步装配。
+        bootstrap-mode: default
     #reids
     redis:
       host: 127.0.0.1
