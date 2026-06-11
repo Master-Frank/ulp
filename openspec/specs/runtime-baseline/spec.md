@@ -1,6 +1,13 @@
 # runtime-baseline Specification
 
-## ADDED Requirements
+## Purpose
+
+锁定项目的运行时栈基线（Spring Boot 主版本、JVM 版本、Jackson / Spring Security / Hibernate / Liquibase / Jakarta EE 主版本、Spring Boot 配置属性键命名）。
+任何降级或破坏性升级必须通过新提案修改本 spec 才允许，防止 silent regression。
+
+由 openspec change `upgrade-spring-boot-4`（2026-06-11）首次落地，promote 自该变更的 spec delta。
+
+## Requirements
 
 ### Requirement: Spring Boot 主版本基线
 项目所有模块 SHALL 通过 `spring-boot-starter-parent` 继承 Spring Boot 主版本 **4.x**。`<spring-boot.version>` property MUST 与 `<parent>` 中声明的版本一致。任何降级回 3.x 或 2.x MUST 通过新提案改 spec 才允许。
@@ -79,16 +86,18 @@ Web 层 SHALL 基于 Jakarta EE 11、Servlet API 6.1。所有 import MUST 使用
 - **THEN** 解析版本 ≥ 6.1
 
 ### Requirement: 运行时配置属性键基线
-所有 `application.yml` / `application.properties` 文件 SHALL 使用 Spring Boot 4 的新属性键。常见迁移：
-- `spring.session.redis.*` → `spring.session.data.redis.*`
-- `spring.data.mongodb.*` → `spring.mongodb.*`（本项目未用 Mongo，但规则成立）
+所有 `application.yml` / `application.properties` 文件 SHALL 使用 Spring Boot 4 BOM 当前承认的属性键，MUST NOT 残留 Boot 4 已废弃且不再绑定的旧 auto-config 键。
 
-MUST NOT 残留 Boot 3.x 的旧键。
+具体到 Session：Boot 4 移除了 `spring-boot-session` auto-configuration。下列 Boot 3 自动绑定的键在 Boot 4 不再被识别，应迁移到代码侧（`@EnableRedisIndexedHttpSession` 注解 + `SessionRepositoryCustomizer` bean）：
+- `spring.session.redis.flush-mode` → `SessionRepositoryCustomizer` 中 `setFlushMode(FlushMode.IMMEDIATE)`
+- `spring.session.redis.repository-type` → `@EnableRedisIndexedHttpSession` vs `@EnableRedisHttpSession` 注解选择
 
-#### Scenario: No deprecated session key remains
-- **WHEN** 全仓 `grep -rn "spring\.session\.redis\." --include="*.yml" --include="*.properties"`
+允许：把 `spring.session.redis.namespace` 当作**自定义占位符**保留（由我们自己的 `${...}` 表达式消费，不依赖 Boot 自动绑定），便于把 redis 命名空间集中在 yml 中管理。
+
+#### Scenario: No deprecated session auto-config keys remain
+- **WHEN** 全仓 `grep -rn "spring\.session\.redis\.flush-mode\|spring\.session\.redis\.repository-type" --include="*.yml" --include="*.properties"`
 - **THEN** 命中数 = 0
 
-## MODIFIED Requirements
-
-（runtime-baseline 是本次新建的 capability，无 MODIFIED）
+#### Scenario: Session flush mode wired in code
+- **WHEN** 评审 `*SessionConfiguration.java`（console / portal）
+- **THEN** 存在 `SessionRepositoryCustomizer<RedisIndexedSessionRepository>` bean 显式 `setFlushMode(FlushMode.IMMEDIATE)`

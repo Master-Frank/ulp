@@ -124,19 +124,15 @@
 
 - [x] 11.1 README 加"运行时要求"章节：badges 更新 (JDK 17 → 21、Maven 3.5 → 3.9、新增 Spring Boot 4.0 + Redis 7)；新增独立的"运行时要求"表格列出 JDK / Maven / MySQL / Redis / Docker 的最低版本与说明
 - [x] 11.2 README 升级章节落地："旧 fork 从 3.2.x 升 4.0.x" 的迁移要点（Jackson 包名迁移、`spring.session.redis.flush-mode` 配置键作废、bootstrap-mode deferred 死锁、SS7 DSL 强制 lambda）；链到 openspec/changes/upgrade-spring-boot-4/ 提供完整步骤
-- [ ] 11.3 ~~在 openspec `archive/` 移动本变更~~ 推迟到 Phase 12.x 与 spec promotion + 最终验证一起做（避免"编辑文件 → 移动文件 → commit"序列里 tasks.md 自身路径漂移）
-- [ ] 11.4 commit: `docs: update runtime requirements for spring boot 4`
+- [x] 11.3 ~~推迟~~ 已并入 Phase 12 commit，与 spec promotion 同步落地
+- [x] 11.4 commit: `docs: update runtime requirements for spring boot 4` (fd082fb)
 
 ## 12. 最终验证
 
-- [ ] 12.1 干净 checkout 上跑一遍 `mvnw.cmd clean verify`，全绿
-- [ ] 12.2 全仓 grep 残留：
-  ```
-  grep -rn "com\.fasterxml\.jackson\.databind\|com\.fasterxml\.jackson\.core\|com\.fasterxml\.jackson\.module" --include="*.java" D:/project/ulp/
-  ```
-  应只剩 import 注解的合法引用（`com.fasterxml.jackson.annotation` 包）
-- [ ] 12.3 `runtime-baseline` spec deltas 进 `openspec/specs/runtime-baseline/spec.md`（归档时 OpenSpec 自动 promote；手工则 cp）
-- [ ] 12.4 准备 PR 描述：列出 12 个阶段 commit、IT 套件耗时对比、known issues（如有）
+- [x] 12.1 干净 checkout 上跑一遍 `mvnw.cmd clean verify`，全绿 — 41/41 模块 BUILD SUCCESS，4:56 min（ulp-console 2:14、ulp-portal 1:05、ulp-openapi 4.3s）
+- [x] 12.2 全仓 grep 残留：唯一非合法命中是 `.backup/quarantine-broken/util/JsonUtils.java`（gitignored，从 git 视角不存在）；其余 hits 均为 `com.fasterxml.jackson.annotation` 合法包
+- [x] 12.3 promote spec：`openspec/specs/runtime-baseline/spec.md` 已就位（手工 cp + Purpose 章节），8 个 Requirement 全部从 delta 落库；同时修正 delta + 已 promote spec 中"session keys"要求，区分 Boot 自动绑定键（禁用）vs 自定义占位符（允许）
+- [x] 12.4 PR.md 已就位于本目录，17 commit 表 + IT 耗时 + known issues + test plan 全齐
 
 ---
 
