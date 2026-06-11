@@ -1,5 +1,5 @@
 /*
- * ulp-support - United Login Platform
+ * ulp-support - ULP support library
  * Copyright (c) 2022-Present Frank Zhang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");

@@ -1,5 +1,5 @@
 /*
- * ulp-support - United Login Platform
+ * ulp-support - ULP support library
  * Copyright (c) 2022-Present Frank Zhang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,6 +16,8 @@
  */
 package cn.frank.ulp.support.security.jackjson;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -28,6 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.support.security.core.GrantedAuthority;
 import cn.frank.ulp.support.security.userdetails.Application;
+import cn.frank.ulp.support.security.userdetails.DataOrigin;
 import cn.frank.ulp.support.security.userdetails.Group;
 import cn.frank.ulp.support.security.userdetails.Organization;
 import cn.frank.ulp.support.security.userdetails.UserDetails;
@@ -77,6 +80,11 @@ class UserDetailsRoundTripTest {
         Set<Application> apps = new LinkedHashSet<>();
         apps.add(new Application("app-1", "code-1", "App One", null));
         u.setApplications(apps);
+
+        u.setLastUpdatePasswordTime(LocalDateTime.of(2026, 1, 1, 0, 0));
+        u.setUpdateTime(LocalDateTime.of(2026, 6, 10, 12, 34, 56));
+        u.setExpireDate(LocalDate.of(2027, 12, 31));
+        u.setDataOrigin(DataOrigin.INPUT);
 
         return u;
     }
@@ -175,19 +183,26 @@ class UserDetailsRoundTripTest {
     }
 
     /**
-     * lastUpdatePasswordTime / dataOrigin 走 entity-only 路径（PasswordExpireTask 等
-     * 直接从 DB 取 UserEntity），不经过 session 反序列化，文档化 drop 行为。
+     * lastUpdatePasswordTime / updateTime / expireDate / dataOrigin 必须 round-trip。
+     * 历史上 deserializer 丢掉了这几个字段，导致 OIDC token customizer 在 profile scope
+     * 下读 user.getUpdateTime() 时 NPE（参见 OAuth2TokenCustomizer:88）。
+     * 这里覆盖修复后的预期行为：写出去什么样、读回来就什么样。
      */
     @Test
-    void roundTripDropsEntityOnlyFields() throws Exception {
+    void roundTripPreservesTimestampAndDataOrigin() throws Exception {
         ObjectMapper mapper = buildSessionMapper();
         UserDetails original = buildFullUser();
 
         String json = mapper.writeValueAsString(original);
         UserDetails restored = mapper.readValue(json, UserDetails.class);
 
-        assertThat(restored.getLastUpdatePasswordTime()).isNull();
-        assertThat(restored.getDataOrigin()).isNull();
+        assertThat(restored.getLastUpdatePasswordTime())
+            .isEqualTo(LocalDateTime.of(2026, 1, 1, 0, 0));
+        assertThat(restored.getUpdateTime()).isEqualTo(LocalDateTime.of(2026, 6, 10, 12, 34, 56));
+        assertThat(restored.getExpireDate()).isEqualTo(LocalDate.of(2027, 12, 31));
+        assertThat(restored.getDataOrigin()).isNotNull();
+        assertThat(restored.getDataOrigin().getType()).isEqualTo("INPUT");
+        assertThat(restored.getDataOrigin().getName()).isEqualTo("手动录入");
     }
 
     @Test

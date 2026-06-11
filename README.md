@@ -56,6 +56,63 @@ ULP（United Login Platform），是一个统一登录系统，支持 OIDC、OAu
 - **基础设施**：[Docker](https://www.docker.com/)
 
 
+## 运行集成测试
+
+集成测试用 [Testcontainers](https://www.testcontainers.org/) 启动真实的 MySQL 8 + Redis 7 实例，运行前需要本机有可用的 Docker Engine（Docker Desktop 或等价方案）。
+
+```bash
+# 跑所有单元测试（不启动任何容器，零外部依赖）
+./mvnw.cmd clean test
+
+# 跑所有单元测试 + 集成测试（启动 MySQL + Redis 容器，约 2 分钟一个模块）
+./mvnw.cmd clean verify -DskipTests=false
+```
+
+测试命名约定：
+
+- `*Test.java` —— Surefire 在 `test` 阶段执行，单元测试，不启容器
+- `*IT.java` —— Failsafe 在 `verify` 阶段执行，集成测试，每个 JVM 启动一次 MySQL + Redis 容器
+
+注：根 `pom.xml` 默认 `<skipTests>true</skipTests>`，CI 与本地都需在 CLI 显式传 `-DskipTests=false`。
+
+### 容器复用加速（可选）
+
+每次 `verify` 默认重新拉起一对新容器，约 30 秒冷启动开销。开发期可以打开 Testcontainers reuse 让容器在多次运行间保持存活：
+
+```bash
+# 在用户主目录写一次即可
+echo "testcontainers.reuse.enable=true" >> ~/.testcontainers.properties
+```
+
+开启后第一次 `verify` 仍要 30 秒冷启动，后续运行会复用已存在的容器，单模块 IT 套件耗时从 ~2 分钟降到 ~30 秒级。CI 上不建议启用（每次跑都是干净环境）。
+
+### 给新模块加集成测试
+
+`ulp-support` 把共享测试基础设施（`AbstractIntegrationTest`、`SharedContainers` 等）打成 `test-jar`，下游模块只需在 `pom.xml` 加：
+
+```xml
+<dependency>
+    <groupId>cn.frank.ulp</groupId>
+    <artifactId>ulp-support</artifactId>
+    <version>${project.version}</version>
+    <type>test-jar</type>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-test</artifactId>
+    <scope>test</scope>
+</dependency>
+<!-- 如需 Spring Security 的 mock —— 比如 SecurityMockMvcRequestPostProcessors -->
+<dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-test</artifactId>
+    <scope>test</scope>
+</dependency>
+```
+
+然后写一个 `XxxControllerIT extends AbstractIntegrationTest` 即可，容器与 Spring Boot 测试上下文都由基类托管。
+
 ## 参与贡献
 
 欢迎有兴趣的开发者参与到项目建设中，欢迎大家对项目提出宝贵意见建议和功能需求。
