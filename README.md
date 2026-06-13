@@ -69,6 +69,23 @@ ULP（United Login Platform），是一个统一登录系统，支持 OIDC、OAu
 
 > 旧 fork 从 Spring Boot 3.2.x 升 4.0.x，主要破坏性变更：Jackson 包名 `com.fasterxml.jackson.databind` → `tools.jackson.databind`、`spring.session.redis.flush-mode` 配置键作废（改在代码里设 `FlushMode.IMMEDIATE`）、`spring.data.jpa.repositories.bootstrap-mode=deferred` 与 Hibernate 7 异步装配死锁需改 `default`、Spring Security 7 移除大量旧 DSL（lambda 风格强制 + `requestMatchers(RegexRequestMatcher.regexMatcher(...))` 改 `PathPatternRequestMatcher`）。本仓库的 [openspec 变更记录](openspec/changes/upgrade-spring-boot-4/) 含完整迁移步骤可参考。
 
+## 健康检查 / 指标端点
+
+三个部署服务都接入了 Spring Boot Actuator，对外端点统一在 `/actuator/**`。
+
+| 服务 | 端口 | 健康（公开） | 探针（公开） | 指标（公开） | 信息（公开） | 敏感端点（鉴权） |
+|---|---|---|---|---|---|---|
+| ulp-console | 1898 | `/actuator/health` | `/actuator/health/liveness`<br/>`/actuator/health/readiness` | `/actuator/prometheus` | `/actuator/info` | `/actuator/env`、`/actuator/loggers`、`/actuator/metrics`、`/actuator/mappings` 需 ADMIN |
+| ulp-portal | 1989 | 同上 | 同上 | 同上 | 同上 | 同上敏感端点 `denyAll`（终端用户入口无诊断角色） |
+| ulp-openapi | 1988 | 同上 | 同上 | 同上 | 同上 | 同上敏感端点 `denyAll`（OAS 鉴权体系内不暴露 actuator） |
+
+- `/actuator/health` 含 `components.db` / `components.redis` / `liquibaseChangelogDrift` 三个聚合指标；外部依赖瞬断会反映在整体 status 上
+- `/actuator/health/liveness` 仅反映应用自身存活（与 DB/Redis 解耦），供 k8s liveness probe 与 Docker `HEALTHCHECK` 使用
+- `/actuator/info` 暴露 `build.*` / `git.*` / `runtime.*`（Spring Boot / Spring Framework / Java / Jackson 版本），用于线上排查"这个 commit 跑的是哪个 SB 版本"
+- `/actuator/prometheus` 已含 Micrometer JVM + HTTP server requests + DB 连接池等基本指标；网关层若用 nginx，建议加 rate limit 防爬
+
+容器编排已配置健康检查：三个 `Dockerfile` 都带 `HEALTHCHECK` 指令（30s 间隔，60s start-period，3 次失败标记 unhealthy），`deploy/docker/docker-compose.yml` 中 `nginx-web` 通过 `depends_on: service_healthy` 等三后端就绪后再启动。
+
 ## 运行集成测试
 
 集成测试用 [Testcontainers](https://www.testcontainers.org/) 启动真实的 MySQL 8 + Redis 7 实例，运行前需要本机有可用的 Docker Engine（Docker Desktop 或等价方案）。

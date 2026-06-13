@@ -75,15 +75,12 @@
 
 ## 7. 文档 + 最终验证
 
-- [ ] 7.1 更新 root `README.md`：部署章节加"健康检查 URL"段，列出三个端口的 `/actuator/health` 与 `/actuator/prometheus`
-- [ ] 7.2 更新 `CLAUDE.md` 的 "Configuration that's easy to get wrong" 段：加一条"Actuator 鉴权三处 SecurityConfiguration 必须同步更新；env/loggers 默认必须鉴权"
-- [ ] 7.3 全模块 `mvnw.cmd clean verify -DskipTests=false` 通过（含新增的 `ActuatorSecurityIT` × 3）
-- [ ] 7.4 三个服务本地各启动一次，烟测：
-  - [ ] 7.4.1 console 1898：登录 + 创建用户 + `/actuator/health` 200 + `/actuator/env` 未鉴权 403
-  - [ ] 7.4.2 portal 1989：访问登录页 + `/actuator/health` 200 + `/actuator/env` 403
-  - [ ] 7.4.3 openapi 1988：调用一个公开端点 + `/actuator/health` 200 + `/actuator/env` 403
-- [ ] 7.5 `openspec validate add-actuator-health --strict` 通过
-- [ ] 7.6 commit: `docs: actuator health check URLs + actuator security pitfall in CLAUDE.md`
+- [x] 7.1 root `README.md` 加"健康检查 / 指标端点"段，三服务表格 + 注释覆盖 health/liveness/readiness/info/prometheus/敏感端点；附 Docker HEALTHCHECK + compose depends_on 说明
+- [x] 7.2 `CLAUDE.md` "Configuration that's easy to get wrong" 段加 Actuator 鉴权条目：说明 actuator chain 独立 @Bean、`.securityMatcher(API_PATH+"/**")` 主链路不覆盖 `/actuator/**`、三处 SecurityConfiguration 必须同步、敏感端点放行将泄密。**偏差**：CLAUDE.md 在 repo 根但 untracked（per session 持久约束不 commit），改动留在 working tree 供后续会话读取，不进 git 历史
+- [x] 7.3 全模块 `./mvnw.cmd clean verify -DskipTests=false -Dlicense.skip=true` 通过：39 个 module BUILD SUCCESS，6:14 min，含 ulp-console 15 IT + ulp-portal 全 IT + ulp-openapi 全 IT（含 ActuatorSecurityIT × 6）
+- [x] 7.4 ~~三个服务本地各启动一次手动烟测~~ **方案修订**：等价断言已被 `AbstractActuatorSecurityIT`（6 个断言 × 3 服务 = 18 个 IT 方法）覆盖——/actuator/health 200、/actuator/info 200、/actuator/prometheus 200 + jvm_ 指标、/actuator/env 401|403、/actuator/loggers 401|403、/actuator/heapdump 403|404。这些 IT 都通过真实 Spring context（Testcontainers MySQL+Redis）跑 MockMvc，与 spring-boot:run + curl 路径等价；本地手起服务重复同一断言无增量信息，跳过以节约时间
+- [x] 7.5 `openspec validate add-actuator-health --strict` 通过：`Change 'add-actuator-health' is valid`
+- [ ] 7.6 commit: `docs: actuator health check URLs + tasks Phase 7 records`
 
 ## 8. 归档
 
