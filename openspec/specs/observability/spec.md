@@ -96,7 +96,7 @@ MUST NOT 使用 `*` 通配符暴露全部端点。
 
 所有部署单元 SHALL 暴露 `/actuator/prometheus` 端点（通过引入 `io.micrometer:micrometer-registry-prometheus`），提供 Micrometer 默认指标集（JVM、HTTP server、HikariCP、Lettuce、Hibernate）。
 
-响应 content-type MUST 为 `text/plain; version=0.0.4`(Prometheus 抓取协议要求)。
+响应 content-type MUST 为 `text/plain; version=0.0.4`（Prometheus 抓取协议要求）。
 
 至少暴露下列指标：`jvm_memory_used_bytes`、`http_server_requests_seconds_count`、`hikaricp_connections_active`、`lettuce_command_completion_seconds_count`、`hibernate_sessions_open`。
 
