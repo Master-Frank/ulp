@@ -25,6 +25,7 @@ import java.util.function.Consumer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.*;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -32,6 +33,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsPasswordService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -106,6 +108,22 @@ public final class OAuth2AuthorizationResourceOwnerPasswordAuthenticationProvide
         this.authorizationService = authorizationService;
         this.tokenGenerator = tokenGenerator;
         setPasswordEncoder(passwordEncoder);
+    }
+
+    /**
+     * 扩参构造：注入 {@link UserDetailsPasswordService} 以支持 ROPC 链路登录成功后自动 rehash
+     * 老 {@code {bcrypt}} 密文到新 {@code {argon2}} 默认 encoder。{@code null} 时表现等同基础构造，
+     * 保留给单元测试 / 没有 password 升级需求的部署场景做 delegate。
+     */
+    public OAuth2AuthorizationResourceOwnerPasswordAuthenticationProvider(UserDetailsService userDetailsService,
+                                                                          OAuth2AuthorizationService authorizationService,
+                                                                          OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
+                                                                          PasswordEncoder passwordEncoder,
+                                                                          @Nullable UserDetailsPasswordService userDetailsPasswordService) {
+        this(userDetailsService, authorizationService, tokenGenerator, passwordEncoder);
+        if (userDetailsPasswordService != null) {
+            setUserDetailsPasswordService(userDetailsPasswordService);
+        }
     }
 
     public void setSessionRegistry(SessionRegistry sessionRegistry) {

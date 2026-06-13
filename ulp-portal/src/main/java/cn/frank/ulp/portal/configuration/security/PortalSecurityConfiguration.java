@@ -28,6 +28,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -36,6 +37,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.annotation.web.configurers.RequestCacheConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsPasswordService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -479,6 +481,11 @@ public class PortalSecurityConfiguration extends AbstractSecurityConfiguration
     private final PasswordEncoder                            passwordEncoder;
 
     /**
+     * UserDetailsPasswordService —— 用于 bcrypt → argon2 自动 rehash 写回
+     */
+    private final UserDetailsPasswordService                 userDetailsPasswordService;
+
+    /**
      * AuditEventPublish
      */
     private final AuditEventPublish                          auditEventPublish;
@@ -498,6 +505,7 @@ public class PortalSecurityConfiguration extends AbstractSecurityConfiguration
                                        UserDetailsService userDetailsService,
                                        OtpContextHelp otpContextHelp,
                                        PasswordEncoder passwordEncoder,
+                                       UserDetailsPasswordService userDetailsPasswordService,
                                        AuditEventPublish auditEventPublish,
                                        SettingRepository settingRepository,
                                        RegisteredIdentityProviderClientRepository registeredIdentityProviderClientRepository,
@@ -507,9 +515,25 @@ public class PortalSecurityConfiguration extends AbstractSecurityConfiguration
         this.userDetailsService = userDetailsService;
         this.otpContextHelp = otpContextHelp;
         this.passwordEncoder = passwordEncoder;
+        this.userDetailsPasswordService = userDetailsPasswordService;
         this.auditEventPublish = auditEventPublish;
         this.registeredIdentityProviderClientRepository = registeredIdentityProviderClientRepository;
         this.identityProviderAuthenticationService = identityProviderAuthenticationService;
+    }
+
+    /**
+     * 显式装配 DaoAuthenticationProvider，并挂载 UserDetailsPasswordService —— 这是 bcrypt
+     * 密文登录成功后自动 rehash 到 Argon2id 的入口。Spring Security 7 的
+     * {@link org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsManagerConfigurer}
+     * 仅会自动创建 DAP 并 set UserDetailsService + PasswordEncoder，**不会** set
+     * UserDetailsPasswordService；因此必须显式声明本 Bean，否则 {@code upgradeEncoding=true} 也不会触发 rehash。
+     */
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
+        provider.setPasswordEncoder(passwordEncoder);
+        provider.setUserDetailsPasswordService(userDetailsPasswordService);
+        return provider;
     }
 
 }

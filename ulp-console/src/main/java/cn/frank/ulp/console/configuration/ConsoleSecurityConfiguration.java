@@ -33,6 +33,7 @@ import org.springframework.data.redis.serializer.GenericJacksonJsonRedisSerializ
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.http.HttpMethod;
 import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.ObjectPostProcessor;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -40,6 +41,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.*;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsPasswordService;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -372,6 +376,28 @@ public class ConsoleSecurityConfiguration implements BeanClassLoaderAware {
         configurer.failureHandler(new ConsoleAuthenticationFailureHandler());
         return configurer;
         // @formatter:on
+    }
+
+    /**
+     * 显式声明 {@link DaoAuthenticationProvider} 并注入 {@link UserDetailsPasswordService}，
+     * 以支撑 security-baseline spec 中"老 {bcrypt} 密文登录成功后自动 rehash 到 {argon2}"的要求。
+     *
+     * <p>Spring Security 7 的 {@code InitializeUserDetailsManagerConfigurer} 只会自动装配
+     * {@code UserDetailsService} + {@code PasswordEncoder} 给 auto-DAP，<b>不会</b>注入
+     * {@code UserDetailsPasswordService}。这意味着即使切到 Argon2id 作为默认 encoder，
+     * {@code DelegatingPasswordEncoder.upgradeEncoding(...)} 返回 true 时也只会是 silent no-op。
+     *
+     * <p>显式声明一个 {@code AuthenticationProvider} bean 会让 Spring Security 跳过 auto-DAP，
+     * 优先用本 bean 装配进 {@code AuthenticationManager}。
+     */
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider(UserDetailsService userDetailsService,
+                                                               PasswordEncoder passwordEncoder,
+                                                               UserDetailsPasswordService userDetailsPasswordService) {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
+        provider.setPasswordEncoder(passwordEncoder);
+        provider.setUserDetailsPasswordService(userDetailsPasswordService);
+        return provider;
     }
 
     /**

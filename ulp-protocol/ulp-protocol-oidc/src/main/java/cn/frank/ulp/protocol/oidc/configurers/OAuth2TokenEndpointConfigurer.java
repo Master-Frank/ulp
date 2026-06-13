@@ -30,6 +30,7 @@ import org.springframework.security.config.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.userdetails.UserDetailsPasswordService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -62,6 +63,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import static cn.frank.ulp.protocol.code.configurer.AuthenticationUtils.getAuthenticationDetailsSource;
 import static cn.frank.ulp.protocol.oidc.constant.OidcProtocolConstants.OIDC_ERROR_URI;
+import static cn.frank.ulp.support.security.util.HttpSecurityConfigUtils.getOptionalBean;
 import static cn.frank.ulp.support.security.util.HttpSecurityConfigUtils.getPasswordEncoder;
 import static cn.frank.ulp.support.security.util.HttpSecurityConfigUtils.getUserDetailsService;
 
@@ -137,10 +139,14 @@ public final class OAuth2TokenEndpointConfigurer extends AbstractConfigurer {
         SessionRegistry sessionRegistry = httpSecurity.getSharedObject(SessionRegistry.class);
         UserDetailsService userDetailsService = getUserDetailsService(httpSecurity);
         PasswordEncoder passwordEncoder = getPasswordEncoder(httpSecurity);
+        // ROPC 密码升级支持：bean 可缺省（OIDC 也可能不接 portal 的 password service），缺省时退化为基础构造行为
+        UserDetailsPasswordService userDetailsPasswordService = getOptionalBean(httpSecurity,
+            UserDetailsPasswordService.class);
 
         //密码模式认证提供商
         OAuth2AuthorizationResourceOwnerPasswordAuthenticationProvider auth2AuthorizationPasswordAuthenticationProvider = new OAuth2AuthorizationResourceOwnerPasswordAuthenticationProvider(
-            userDetailsService, authorizationService, tokenGenerator, passwordEncoder);
+            userDetailsService, authorizationService, tokenGenerator, passwordEncoder,
+            userDetailsPasswordService);
         if (sessionRegistry != null) {
             auth2AuthorizationPasswordAuthenticationProvider.setSessionRegistry(sessionRegistry);
         }
