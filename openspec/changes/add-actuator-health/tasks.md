@@ -51,7 +51,7 @@
   - [x] 4.5.5 未鉴权 GET `/actuator/loggers` → 401 或 403
   - [x] 4.5.6 未鉴权 GET `/actuator/heapdump` → **403 或 404**（**偏差**：security filter 在 dispatcher 前运行，`hasRole`/`denyAll` 未鉴权直接 403；未暴露端点理想 404，两种都满足"不可访问"目标）
 - [x] 4.6 三个部署单元各创建 `ActuatorSecurityIT extends AbstractActuatorSecurityIT`，`./mvnw.cmd -pl ulp-console,ulp-portal,ulp-openapi verify -Dit.test=ActuatorSecurityIT` 全绿（18/18 tests）
-- [ ] 4.7 commit: `feat(security): wire actuator endpoint authorization across 3 services`
+- [x] 4.7 commit: `feat(security): wire actuator endpoint authorization across 3 services` (65b8655)
 
 ## 5. Docker HEALTHCHECK 集成
 
