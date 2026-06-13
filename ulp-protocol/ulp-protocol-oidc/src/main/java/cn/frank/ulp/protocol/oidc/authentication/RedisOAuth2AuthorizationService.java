@@ -69,6 +69,16 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 
     private static final String                   CID_TO_AUTHORIZATIONS    = "cid_to_authorizations:";
 
+    /**
+     * ID Token TTL. Spring Authorization Server 7.0 的 TokenSettings 没有 idTokenTimeToLive 配置
+     * （只有 authCode / accessToken / refreshToken / deviceCode 四个 TTL + idTokenSignatureAlgorithm），
+     * 所以这里只能写死。30 min 选择 rationale: 比 access token 默认 (5 min) 长以容忍 client 时钟漂移，
+     * 比 refresh token 默认 (60 min) 短以减少身份凭证泄露窗口。
+     * 若上游加 setIdTokenTimeToLive() API，应改读 registeredClient.getTokenSettings()。
+     */
+    private static final Duration                 ID_TOKEN_TTL             = Duration.of(30,
+        ChronoUnit.MINUTES);
+
     private static final MessageDigest            DIGEST;
 
     private final RedisOperations<String, String> redisOperations;
@@ -112,9 +122,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
         Duration codeTtl = registeredClient.getTokenSettings().getAuthorizationCodeTimeToLive();
         Duration accessTokenTtl = registeredClient.getTokenSettings().getAccessTokenTimeToLive();
         Duration refreshTokenTtl = registeredClient.getTokenSettings().getRefreshTokenTimeToLive();
-        // idToken过期时间
-        // TODO 等 spring-authorization-server 授权服务器支持后更改
-        Duration idTokenTtl = Duration.of(30, ChronoUnit.MINUTES);
+        Duration idTokenTtl = ID_TOKEN_TTL;
         Duration max = authorization.getRefreshToken() == null ? accessTokenTtl
             : Collections.max(Arrays.asList(accessTokenTtl, refreshTokenTtl));
 

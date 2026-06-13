@@ -70,10 +70,6 @@ spring:
       maximum-pool-size: 15
       minimum-idle: 5
       pool-name: ulp
-  #elasticsearch
-  elasticsearch:
-    socket-timeout: 30000s
-    connection-timeout: 10000s
   data:
     jpa:
       repositories:
