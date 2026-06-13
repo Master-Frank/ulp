@@ -49,12 +49,12 @@
 
 ## 8. spec 锁定与文档
 
-- [ ] 8.1 `openspec validate migrate-password-hashing-argon2id --strict` 通过
-- [ ] 8.2 `CLAUDE.md` "Configuration that's easy to get wrong" 段加密码 encoder 装配条目：说明 console + portal 必须显式 `@Bean DaoAuthenticationProvider` + `setUserDetailsPasswordService`，否则 `upgradeEncoding=true` 也不触发 rehash；ROPC 走自定义 provider 构造器需同步传入
-- [ ] 8.3 commit: `feat(security): migrate password hashing to Argon2id with auto-upgrade on login`
+- [x] 8.1 `openspec validate migrate-password-hashing-argon2id --strict` 通过：`Change 'migrate-password-hashing-argon2id' is valid`
+- [x] 8.2 `CLAUDE.md` "Configuration that's easy to get wrong" 段新增 "Password encoder & auto-upgrade" 条目：说明 console + portal 必须显式 `@Bean DaoAuthenticationProvider` + `setUserDetailsPasswordService`；ROPC 走 `OAuth2AuthorizationResourceOwnerPasswordAuthenticationProvider` 的 accept-`@Nullable UserDetailsPasswordService` 构造器 + `HttpSecurityConfigUtils.getOptionalBean` 注入；ulp-openapi 无 form login / ROPC 故无 DAP；列了三 IT 契约位置（`AbstractPasswordUpgradeIT` + Console/Portal subclasses）。CLAUDE.md 是 gitignored，不入 commit
+- [x] 8.3 commit `e0166f0` 落定（在 main 分支本地）：`feat(security): migrate password hashing to Argon2id with auto-upgrade on login` — 15 files changed, 932 insertions(+), 2 deletions(-)。**未 push** —— 等 9.x archive + 用户授权后推 + PR
 
 ## 9. 归档
 
-- [ ] 9.1 `openspec archive migrate-password-hashing-argon2id`：promote `security-baseline` 为新 spec（`openspec/specs/security-baseline/spec.md`），git mv change 到 `openspec/changes/archive/YYYY-MM-DD-migrate-password-hashing-argon2id/`
-- [ ] 9.2 `openspec validate --specs --strict` 通过
+- [x] 9.1 `openspec archive migrate-password-hashing-argon2id --yes` 通过：`Specs updated successfully` （`security-baseline: create` + 4 added），change 物理移动到 `openspec/changes/archive/2026-06-13-migrate-password-hashing-argon2id/`，新 spec 落在 `openspec/specs/security-baseline/spec.md`
+- [x] 9.2 `openspec validate --specs --strict` 通过：4 passed / 0 failed（integration-testing / observability / runtime-baseline / security-baseline）
 - [ ] 9.3 开 PR 合 main（push 与开 PR 待用户授权后执行）
