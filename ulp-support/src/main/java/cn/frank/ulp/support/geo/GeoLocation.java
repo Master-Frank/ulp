@@ -19,7 +19,8 @@ package cn.frank.ulp.support.geo;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
+import tools.jackson.databind.annotation.JsonPOJOBuilder;
 
 /**
  * 地理位置信息类

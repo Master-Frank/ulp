@@ -25,15 +25,14 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.GenericJacksonJsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.http.HttpMethod;
 import org.springframework.lang.NonNull;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.security.config.ObjectPostProcessor;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -43,14 +42,13 @@ import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 
 import cn.frank.ulp.audit.event.AuditEventPublish;
@@ -67,6 +65,8 @@ import cn.frank.ulp.support.security.csrf.SpaCsrfTokenRequestHandler;
 import cn.frank.ulp.support.web.useragent.UserAgentParser;
 
 import lombok.RequiredArgsConstructor;
+
+import tools.jackson.databind.ObjectMapper;
 import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.web.header.writers.XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK;
 
@@ -107,7 +107,6 @@ public class ConsoleSecurityConfiguration implements BeanClassLoaderAware {
      * @return {@link  SecurityFilterChain}
      * @throws Exception Exception
      */
-    @RefreshScope
     @Bean(name = DEFAULT_SECURITY_FILTER_CHAIN)
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         // @formatter:off
@@ -125,7 +124,9 @@ public class ConsoleSecurityConfiguration implements BeanClassLoaderAware {
                 //记住我
                 .rememberMe(withRememberMeConfigurerDefaults(settingRepository))
                 //CSRF
-                .csrf(withCsrfConfigurerDefaults(new AntPathRequestMatcher(EVENT_RECEIVE_PATH+"/{code}")))
+                .csrf(withCsrfConfigurerDefaults(
+                    PathPatternRequestMatcher.pathPattern(HttpMethod.OPTIONS, EVENT_RECEIVE_PATH+"/{code}"),
+                    PathPatternRequestMatcher.pathPattern(HttpMethod.GET, EVENT_RECEIVE_PATH+"/{code}")))
                 //headers
                 .headers(withHeadersConfigurerDefaults(settingRepository))
                 //cors
@@ -147,10 +148,10 @@ public class ConsoleSecurityConfiguration implements BeanClassLoaderAware {
     public Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> authorizeHttpRequests() {
         //@formatter:off
         return registry -> {
-            registry.requestMatchers(new AntPathRequestMatcher(EVENT_RECEIVE_PATH+"/{code}")).permitAll();
-            registry.requestMatchers(new AntPathRequestMatcher(CURRENT_STATUS, HttpMethod.GET.name())).permitAll();
-            registry.requestMatchers(new AntPathRequestMatcher(PUBLIC_SECRET_PATH, HttpMethod.GET.name())).permitAll();
-            registry.requestMatchers(new AntPathRequestMatcher(RESET_PASSWORD_PATH, HttpMethod.POST.name())).permitAll();
+            registry.requestMatchers(PathPatternRequestMatcher.pathPattern(EVENT_RECEIVE_PATH+"/{code}")).permitAll();
+            registry.requestMatchers(PathPatternRequestMatcher.pathPattern(CURRENT_STATUS)).permitAll();
+            registry.requestMatchers(PathPatternRequestMatcher.pathPattern(HttpMethod.GET, PUBLIC_SECRET_PATH)).permitAll();
+            registry.requestMatchers(PathPatternRequestMatcher.pathPattern(HttpMethod.POST, RESET_PASSWORD_PATH)).permitAll();
             registry.anyRequest().authenticated();
         };
         //@formatter:on
@@ -254,9 +255,8 @@ public class ConsoleSecurityConfiguration implements BeanClassLoaderAware {
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Lists.newArrayList("Content-Type", "Accept", "Origin",
             DEFAULT_CSRF_HEADER_NAME, "X-Requested-With"));
-        configuration
-            .setAllowedMethods(Lists.newArrayList(HttpMethod.GET.name(), HttpMethod.POST.name(),
-                HttpMethod.PUT.name(), HttpMethod.DELETE.name(), HttpMethod.OPTIONS.name()));
+        configuration.setAllowedMethods(Lists.newArrayList(HttpMethod.GET.name(),
+            HttpMethod.POST.name(), HttpMethod.PUT.name(), HttpMethod.DELETE.name()));
         configuration.setMaxAge(3600L);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
@@ -376,11 +376,11 @@ public class ConsoleSecurityConfiguration implements BeanClassLoaderAware {
     @Bean
     @ConditionalOnMissingBean
     public RedisSerializer<Object> springSessionDefaultRedisSerializer() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModules(SupportJackson2Module.getModules(this.loader));
-        mapper.registerModules(new AuthenticationJacksonModule());
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        return new GenericJackson2JsonRedisSerializer(mapper);
+        ObjectMapper mapper = SupportJackson2Module.objectMapperBuilder(this.loader)
+            .addModule(new AuthenticationJacksonModule())
+            .changeDefaultPropertyInclusion(v -> v.withValueInclusion(JsonInclude.Include.NON_NULL))
+            .build();
+        return new GenericJacksonJsonRedisSerializer(mapper);
     }
 
     /**

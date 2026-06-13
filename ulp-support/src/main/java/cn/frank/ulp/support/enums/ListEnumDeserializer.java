@@ -16,7 +16,6 @@
  */
 package cn.frank.ulp.support.enums;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,14 +23,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.BeanProperty;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonParser;
+import tools.jackson.databind.BeanProperty;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.JavaType;
+import tools.jackson.databind.ValueDeserializer;
+import tools.jackson.databind.deser.std.StdDeserializer;
 
 /**
  * 列表枚举反序列化器
@@ -39,24 +37,23 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
  * @author Frank Zhang
  * Created by support on 2020/8/18 21:35
  */
-public class ListEnumDeserializer extends StdDeserializer<List<? extends BaseEnum>>
-                                  implements ContextualDeserializer {
+public class ListEnumDeserializer extends StdDeserializer<List<? extends BaseEnum>> {
     private static final Logger       log = LoggerFactory.getLogger(ListEnumDeserializer.class);
 
     private Class<? extends BaseEnum> clazz;
 
     public ListEnumDeserializer() {
-        super((Class<?>) null);
+        super(List.class);
     }
 
     public ListEnumDeserializer(Class<? extends BaseEnum> clazz) {
-        super((Class<?>) null);
+        super(List.class);
         this.clazz = clazz;
     }
 
     @Override
-    public JsonDeserializer<?> createContextual(DeserializationContext context,
-                                                BeanProperty property) throws JsonMappingException {
+    public ValueDeserializer<?> createContextual(DeserializationContext context,
+                                                 BeanProperty property) {
         JavaType type = context.getContextualType();
         if (type != null) {
             JavaType contentType = type.getContentType();
@@ -75,7 +72,7 @@ public class ListEnumDeserializer extends StdDeserializer<List<? extends BaseEnu
     @Override
     @SuppressWarnings("unused")
     public List<? extends BaseEnum> deserialize(JsonParser parser,
-                                                DeserializationContext context) throws IOException {
+                                                DeserializationContext context) throws JacksonException {
         List<BaseEnum> list = new ArrayList<>();
         String text = parser.getText();
         if (StringUtils.hasText(text)) {

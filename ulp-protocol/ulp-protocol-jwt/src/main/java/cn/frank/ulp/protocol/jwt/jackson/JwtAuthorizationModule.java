@@ -16,15 +16,15 @@
  */
 package cn.frank.ulp.protocol.jwt.jackson;
 
-import org.springframework.security.jackson2.SecurityJackson2Modules;
-
-import com.fasterxml.jackson.core.Version;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-
 import cn.frank.ulp.protocol.jwt.authentication.JwtAuthenticationToken;
+
+import tools.jackson.core.Version;
+import tools.jackson.databind.module.SimpleModule;
 
 /**
  * JwtAuthorizationModule
+ *
+ * Jackson 3 默认类型校验在 mapper builder 上配置，模块不再主动启用 default typing。
  *
  * @author Frank Zhang
  */
@@ -36,9 +36,7 @@ public class JwtAuthorizationModule extends SimpleModule {
 
     @Override
     public void setupModule(SetupContext context) {
-        SecurityJackson2Modules.enableDefaultTyping(context.getOwner());
-        context.setMixInAnnotations(JwtAuthenticationToken.class,
-            JwtAuthenticationTokenMixin.class);
+        context.setMixIn(JwtAuthenticationToken.class, JwtAuthenticationTokenMixin.class);
     }
 
 }

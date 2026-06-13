@@ -29,7 +29,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.Assert;
 
@@ -69,8 +69,8 @@ public class SmsOtpAuthenticationFilter extends AbstractAuthenticationProcessing
 
     public final static String         DEFAULT_FILTER_PROCESSES_URI = OTP_LOGIN + "/sms";
 
-    public static final RequestMatcher SMS_LOGIN_MATCHER            = new AntPathRequestMatcher(
-        DEFAULT_FILTER_PROCESSES_URI, HttpMethod.POST.name());
+    public static final RequestMatcher SMS_LOGIN_MATCHER            = PathPatternRequestMatcher
+        .pathPattern(HttpMethod.POST, DEFAULT_FILTER_PROCESSES_URI);
 
     /**
      * 是否值处理POST请求

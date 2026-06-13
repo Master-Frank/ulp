@@ -32,7 +32,7 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequ
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.Assert;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -60,9 +60,9 @@ public class WeChatWorkScanCodeAuthorizationRequestRedirectFilter extends OncePe
     private final Logger                                                     logger                         = LoggerFactory
         .getLogger(WeChatWorkScanCodeAuthorizationRequestRedirectFilter.class);
 
-    public static final AntPathRequestMatcher                                WECHAT_WORK_REQUEST_MATCHER    = new AntPathRequestMatcher(
-        WECHAT_WORK_OAUTH.getAuthorizationPathPrefix() + "/" + "{" + PROVIDER_CODE + "}",
-        HttpMethod.GET.name());
+    public static final RequestMatcher                                       WECHAT_WORK_REQUEST_MATCHER    = PathPatternRequestMatcher
+        .pathPattern(HttpMethod.GET,
+            WECHAT_WORK_OAUTH.getAuthorizationPathPrefix() + "/" + "{" + PROVIDER_CODE + "}");
 
     /**
      * 重定向策略

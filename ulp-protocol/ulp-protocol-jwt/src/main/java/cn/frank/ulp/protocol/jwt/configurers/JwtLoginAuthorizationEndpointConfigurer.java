@@ -18,10 +18,10 @@ package cn.frank.ulp.protocol.jwt.configurers;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.security.config.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
@@ -56,10 +56,10 @@ public class JwtLoginAuthorizationEndpointConfigurer extends AbstractConfigurer 
         JwtAuthorizationService authorizationService = JwtAuthenticationUtils
             .getAuthorizationService(httpSecurity);
         requestMatcher = new OrRequestMatcher(
-            new AntPathRequestMatcher(IDP_JWT_SSO_INITIATOR, HttpMethod.POST.name()),
-            new AntPathRequestMatcher(IDP_JWT_SSO_INITIATOR, HttpMethod.GET.name()),
-            new AntPathRequestMatcher(JWT_SSO_PATH, HttpMethod.GET.name()),
-            new AntPathRequestMatcher(JWT_SSO_PATH, HttpMethod.POST.name()));
+            PathPatternRequestMatcher.pathPattern(HttpMethod.POST, IDP_JWT_SSO_INITIATOR),
+            PathPatternRequestMatcher.pathPattern(HttpMethod.GET, IDP_JWT_SSO_INITIATOR),
+            PathPatternRequestMatcher.pathPattern(HttpMethod.GET, JWT_SSO_PATH),
+            PathPatternRequestMatcher.pathPattern(HttpMethod.POST, JWT_SSO_PATH));
         httpSecurity
             .authenticationProvider(new JwtLoginAuthenticationTokenProvider(authorizationService));
     }

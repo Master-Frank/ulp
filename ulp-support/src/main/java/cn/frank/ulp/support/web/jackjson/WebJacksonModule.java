@@ -16,42 +16,27 @@
  */
 package cn.frank.ulp.support.web.jackjson;
 
-import com.fasterxml.jackson.core.Version;
-import com.fasterxml.jackson.databind.Module;
-
 import cn.frank.ulp.support.web.useragent.UserAgent;
+
+import tools.jackson.core.Version;
+import tools.jackson.databind.JacksonModule;
 
 /**
  * Web Jackson模块类
  * 用于配置Web相关的Jackson序列化和反序列化
  */
-public class WebJacksonModule extends Module {
+public class WebJacksonModule extends JacksonModule {
 
-    /**
-    * 设置模块
-    *
-    * @param context 设置上下文
-    */
     @Override
     public void setupModule(SetupContext context) {
-        context.setMixInAnnotations(UserAgent.class, UserAgentMixin.class);
+        context.setMixIn(UserAgent.class, UserAgentMixin.class);
     }
 
-    /**
-    * 获取版本
-    *
-    * @return 版本
-    */
     @Override
     public Version version() {
         return new Version(1, 0, 0, null, null, null);
     }
 
-    /**
-    * 获取模块名
-    *
-    * @return 模块名
-    */
     @Override
     public String getModuleName() {
         return WebJacksonModule.class.getName();

@@ -21,12 +21,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.http.HttpMethod;
 import org.springframework.lang.NonNull;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -39,19 +37,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.audit.event.AuditEventPublish;
 import cn.frank.ulp.authentication.alipay.configurer.AlipayAuthenticationConfigurer;
 import cn.frank.ulp.authentication.common.IdentityProviderAuthenticationService;
 import cn.frank.ulp.authentication.common.client.RegisteredIdentityProviderClientRepository;
 import cn.frank.ulp.authentication.common.configurer.IdentityProviderBindAuthenticationConfigurer;
-import cn.frank.ulp.authentication.common.jackjson.AuthenticationJacksonModule;
 import cn.frank.ulp.authentication.dingtalk.configurer.DingTalkAuthenticationConfigurer;
 import cn.frank.ulp.authentication.feishu.configurer.FeiShuAuthenticationConfigurer;
 import cn.frank.ulp.authentication.gitee.configurer.GiteeAuthenticationConfigurer;
@@ -73,7 +67,6 @@ import cn.frank.ulp.core.security.task.UserExpireLockTask;
 import cn.frank.ulp.core.security.task.UserUnlockTask;
 import cn.frank.ulp.portal.authentication.*;
 import cn.frank.ulp.support.geo.GeoLocationParser;
-import cn.frank.ulp.support.jackjson.SupportJackson2Module;
 import cn.frank.ulp.support.security.authentication.WebAuthenticationDetailsSource;
 import cn.frank.ulp.support.security.configurer.FormLoginConfigurer;
 import cn.frank.ulp.support.web.useragent.UserAgentParser;
@@ -118,11 +111,11 @@ public class PortalSecurityConfiguration extends AbstractSecurityConfiguration
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers(
-            new AntPathRequestMatcher("/css/**", GET.name()),
-            new AntPathRequestMatcher("/js/**", GET.name()),
-            new AntPathRequestMatcher("/webjars/**", GET.name()),
-            new AntPathRequestMatcher("/images/**", GET.name()),
-            new AntPathRequestMatcher("/favicon.ico", GET.name()));
+            PathPatternRequestMatcher.pathPattern(HttpMethod.GET, "/css/**"),
+            PathPatternRequestMatcher.pathPattern(HttpMethod.GET, "/js/**"),
+            PathPatternRequestMatcher.pathPattern(HttpMethod.GET, "/webjars/**"),
+            PathPatternRequestMatcher.pathPattern(HttpMethod.GET, "/images/**"),
+            PathPatternRequestMatcher.pathPattern(HttpMethod.GET, "/favicon.ico"));
     }
 
     /**
@@ -132,7 +125,6 @@ public class PortalSecurityConfiguration extends AbstractSecurityConfiguration
      * @return {@link  SecurityFilterChain}
      * @throws Exception Exception
      */
-    @RefreshScope
     @Bean(name = IDP_SECURITY_FILTER_CHAIN)
     public SecurityFilterChain idpAuthenticationSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
         // @formatter:off
@@ -234,7 +226,6 @@ public class PortalSecurityConfiguration extends AbstractSecurityConfiguration
      * @return {@link  SecurityFilterChain}
      * @throws Exception Exception
      */
-    @RefreshScope
     @Bean(name = DEFAULT_SECURITY_FILTER_CHAIN)
     @DependsOn({ IDP_SECURITY_FILTER_CHAIN, OIDC_PROTOCOL_SECURITY_FILTER_CHAIN,
                  FORM_PROTOCOL_SECURITY_FILTER_CHAIN, JWT_PROTOCOL_SECURITY_FILTER_CHAIN })
@@ -298,12 +289,12 @@ public class PortalSecurityConfiguration extends AbstractSecurityConfiguration
     public Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> withHttpAuthorizeRequests() {
         //@formatter:off
         return registry -> {
-            registry.requestMatchers(new AntPathRequestMatcher(LOGIN_CONFIG, GET.name())).permitAll();
-            registry.requestMatchers(new AntPathRequestMatcher(PUBLIC_SECRET_PATH, GET.name())).permitAll();
-            registry.requestMatchers(new AntPathRequestMatcher(CURRENT_STATUS, GET.name())).permitAll();
-            registry.requestMatchers(new AntPathRequestMatcher(ACCOUNT_PATH + PREPARE_FORGET_PASSWORD, POST.name())).permitAll();
-            registry.requestMatchers(new AntPathRequestMatcher(ACCOUNT_PATH + FORGET_PASSWORD_CODE, GET.name())).permitAll();
-            registry.requestMatchers(new AntPathRequestMatcher(ACCOUNT_PATH + FORGET_PASSWORD, PUT.name())).permitAll();
+            registry.requestMatchers(PathPatternRequestMatcher.pathPattern(HttpMethod.GET, LOGIN_CONFIG)).permitAll();
+            registry.requestMatchers(PathPatternRequestMatcher.pathPattern(HttpMethod.GET, PUBLIC_SECRET_PATH)).permitAll();
+            registry.requestMatchers(PathPatternRequestMatcher.pathPattern(HttpMethod.GET, CURRENT_STATUS)).permitAll();
+            registry.requestMatchers(PathPatternRequestMatcher.pathPattern(HttpMethod.POST, ACCOUNT_PATH + PREPARE_FORGET_PASSWORD)).permitAll();
+            registry.requestMatchers(PathPatternRequestMatcher.pathPattern(HttpMethod.GET, ACCOUNT_PATH + FORGET_PASSWORD_CODE)).permitAll();
+            registry.requestMatchers(PathPatternRequestMatcher.pathPattern(HttpMethod.PUT, ACCOUNT_PATH + FORGET_PASSWORD)).permitAll();
             registry.anyRequest().authenticated();
         };
     }
@@ -379,16 +370,6 @@ public class PortalSecurityConfiguration extends AbstractSecurityConfiguration
     public PasswordExpireTask passwordExpireLockTask(SettingRepository settingRepository,
                                                      UserRepository userRepository) {
         return new PasswordExpireLockTask(settingRepository, userRepository);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public RedisSerializer<Object> springSessionDefaultRedisSerializer() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModules(SupportJackson2Module.getModules(this.loader));
-        mapper.registerModules(new AuthenticationJacksonModule());
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        return new GenericJackson2JsonRedisSerializer(mapper);
     }
 
     /**

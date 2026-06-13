@@ -16,21 +16,20 @@
  */
 package cn.frank.ulp.support.security.jackjson;
 
-import java.io.IOException;
-
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonNode;
-
 import cn.frank.ulp.support.security.core.GrantedAuthority;
 
-public class GrantedAuthorityDeserializer extends JsonDeserializer<GrantedAuthority> {
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonParser;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ValueDeserializer;
+
+public class GrantedAuthorityDeserializer extends ValueDeserializer<GrantedAuthority> {
 
     @Override
     public GrantedAuthority deserialize(JsonParser jp,
-                                        DeserializationContext ctxt) throws IOException {
-        JsonNode node = jp.getCodec().readTree(jp);
+                                        DeserializationContext ctxt) throws JacksonException {
+        JsonNode node = ctxt.readTree(jp);
         JsonNode typeNode = node.get("type");
         JsonNode authorityNode = node.get("authority");
         String type = typeNode == null || typeNode.isNull() ? "" : typeNode.asText();

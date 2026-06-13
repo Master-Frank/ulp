@@ -16,20 +16,20 @@
  */
 package cn.frank.ulp.authentication.common.jackjson;
 
-import com.fasterxml.jackson.core.Version;
-import com.fasterxml.jackson.databind.Module;
-
 import cn.frank.ulp.authentication.common.IdentityProviderType;
 import cn.frank.ulp.authentication.common.authentication.IdentityProviderAuthentication;
 import cn.frank.ulp.authentication.common.authentication.IdentityProviderNotBindAuthentication;
 import cn.frank.ulp.authentication.common.authentication.IdentityProviderUserDetails;
 import cn.frank.ulp.authentication.common.authentication.OtpAuthentication;
 
+import tools.jackson.core.Version;
+import tools.jackson.databind.JacksonModule;
+
 /**
  *
  * @author Frank Zhang
  */
-public class AuthenticationJacksonModule extends Module {
+public class AuthenticationJacksonModule extends JacksonModule {
 
     /**
      * Method that returns a display that can be used by Jackson
@@ -53,11 +53,11 @@ public class AuthenticationJacksonModule extends Module {
     @Override
     public void setupModule(SetupContext context) {
         //@formatter:off
-        context.setMixInAnnotations(IdentityProviderAuthentication.class, IdentityProviderAuthenticationTokenMixin.class);
-        context.setMixInAnnotations(IdentityProviderNotBindAuthentication.class, IdentityProviderNotBindAuthenticationTokenMixin.class);
-        context.setMixInAnnotations(OtpAuthentication.class, OtpAuthenticationTokenMixin.class);
-        context.setMixInAnnotations(IdentityProviderUserDetails.class, IdentityProviderUserDetailsMixin.class);
-        context.setMixInAnnotations(IdentityProviderType.class, IdentityProviderTypeMixin.class);
+        context.setMixIn(IdentityProviderAuthentication.class, IdentityProviderAuthenticationTokenMixin.class);
+        context.setMixIn(IdentityProviderNotBindAuthentication.class, IdentityProviderNotBindAuthenticationTokenMixin.class);
+        context.setMixIn(OtpAuthentication.class, OtpAuthenticationTokenMixin.class);
+        context.setMixIn(IdentityProviderUserDetails.class, IdentityProviderUserDetailsMixin.class);
+        context.setMixIn(IdentityProviderType.class, IdentityProviderTypeMixin.class);
         //@formatter:on
     }
 

@@ -16,7 +16,7 @@
  */
 package cn.frank.ulp.protocol.code.configurer;
 
-import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.security.config.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 import cn.frank.ulp.protocol.code.EndpointMatcher;

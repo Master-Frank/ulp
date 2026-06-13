@@ -32,7 +32,7 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequ
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.Assert;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -69,9 +69,9 @@ public class FeiShuAuthorizationRequestRedirectFilter extends OncePerRequestFilt
     /**
      * AntPathRequestMatcher
      */
-    public static final AntPathRequestMatcher                                FEI_SHU_SCAN_CODE_REQUEST_MATCHER = new AntPathRequestMatcher(
-        FEISHU_OAUTH.getAuthorizationPathPrefix() + "/" + "{" + PROVIDER_CODE + "}",
-        HttpMethod.GET.name());
+    public static final RequestMatcher                                       FEI_SHU_SCAN_CODE_REQUEST_MATCHER = PathPatternRequestMatcher
+        .pathPattern(HttpMethod.GET,
+            FEISHU_OAUTH.getAuthorizationPathPrefix() + "/" + "{" + PROVIDER_CODE + "}");
 
     /**
      * 认证请求存储库

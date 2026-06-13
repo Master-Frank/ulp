@@ -26,7 +26,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.security.config.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -34,12 +34,12 @@ import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.http.converter.OAuth2ErrorHttpMessageConverter;
 import org.springframework.security.oauth2.server.authorization.authentication.OAuth2TokenRevocationAuthenticationProvider;
 import org.springframework.security.oauth2.server.authorization.web.OAuth2TokenRevocationEndpointFilter;
-import org.springframework.security.oauth2.server.authorization.web.authentication.DelegatingAuthenticationConverter;
 import org.springframework.security.oauth2.server.authorization.web.authentication.OAuth2TokenRevocationAuthenticationConverter;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.authentication.DelegatingAuthenticationConverter;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import cn.frank.ulp.common.constant.ProtocolConstants;
@@ -67,9 +67,8 @@ public final class OAuth2TokenRevocationEndpointConfigurer extends AbstractConfi
 
     @Override
     public void init(HttpSecurity httpSecurity) {
-        this.requestMatcher = new AntPathRequestMatcher(
-            ProtocolConstants.OidcEndpointConstants.TOKEN_REVOCATION_ENDPOINT,
-            HttpMethod.POST.name());
+        this.requestMatcher = PathPatternRequestMatcher.pathPattern(HttpMethod.POST,
+            ProtocolConstants.OidcEndpointConstants.TOKEN_REVOCATION_ENDPOINT);
 
         List<AuthenticationProvider> authenticationProviders = createDefaultAuthenticationProviders(
             httpSecurity);

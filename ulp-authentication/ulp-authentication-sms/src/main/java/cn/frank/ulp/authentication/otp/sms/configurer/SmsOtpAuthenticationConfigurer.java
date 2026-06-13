@@ -21,7 +21,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.Assert;
 
@@ -46,7 +46,7 @@ public class SmsOtpAuthenticationConfigurer extends
     private String loginProcessingUrl = SmsOtpAuthenticationFilter.DEFAULT_FILTER_PROCESSES_URI;
 
     @Override
-    public void init(HttpSecurity http) throws Exception {
+    public void init(HttpSecurity http) {
         http.addFilterBefore(new SendSmsOtpFilter(userRepository, otpContextHelp),
             OAuth2LoginAuthenticationFilter.class);
 
@@ -89,7 +89,7 @@ public class SmsOtpAuthenticationConfigurer extends
      */
     @Override
     protected RequestMatcher createLoginProcessingUrlMatcher(String loginProcessingUrl) {
-        return new AntPathRequestMatcher(loginProcessingUrl, HttpMethod.POST.name());
+        return PathPatternRequestMatcher.pathPattern(HttpMethod.POST, loginProcessingUrl);
     }
 
     public static SmsOtpAuthenticationConfigurer smsOtp(UserRepository userRepository,

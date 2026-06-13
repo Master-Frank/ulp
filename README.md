@@ -4,9 +4,11 @@
 
 ## IAM / IDaaS 身份管理平台
 
-[![](https://img.shields.io/badge/JDK-17+-orange?style=flat-square)](https://www.oracle.com/au/java/technologies/javase/jdk17-archive-downloads.html)
+[![](https://img.shields.io/badge/JDK-21+-orange?style=flat-square)](https://adoptium.net/temurin/releases/?version=21)
+[![](https://img.shields.io/badge/Spring%20Boot-4.0-6db33f?style=flat-square)](https://spring.io/projects/spring-boot)
 [![](https://img.shields.io/badge/MySQL-8.0%2B-brightgreen?style=flat-square)](https://www.mysql.com/downloads/)
-[![](https://img.shields.io/badge/Maven-3.5.0+-brightgreen.svg?style=flat-square)](https://maven.apache.org)
+[![](https://img.shields.io/badge/Redis-7+-dc382d?style=flat-square)](https://redis.io/download/)
+[![](https://img.shields.io/badge/Maven-3.9+-brightgreen.svg?style=flat-square)](https://maven.apache.org)
 
 </div>
 
@@ -50,11 +52,22 @@ ULP（United Login Platform），是一个统一登录系统，支持 OIDC、OAu
 
 ## 技术架构
 
-- **后端**：[Spring Boot](https://spring.io/projects/spring-boot/) 、[Spring Security](https://spring.io/projects/spring-security/)
+- **后端**：[Spring Boot](https://spring.io/projects/spring-boot/) 4.0、[Spring Security](https://spring.io/projects/spring-security/) 7、[Spring Framework](https://spring.io/projects/spring-framework) 7、[Hibernate](https://hibernate.org/) 7、[Liquibase](https://www.liquibase.org/) 5
 - **前端**：[React.js](https://react.dev/) 、[Ant Design](https://ant.design)
 - **中间件**：[MySQL](https://www.mysql.com/) 、[Redis](https://redis.io/)
 - **基础设施**：[Docker](https://www.docker.com/)
 
+## 运行时要求
+
+| 组件 | 最低版本 | 说明 |
+|---|---|---|
+| **JDK** | 21 LTS | Spring Boot 4 / Hibernate 7 / Spring Framework 7 均要求 Java 21；推荐 Temurin。Java 17 已不支持 |
+| **Maven** | 3.9+ | 用仓库自带 `./mvnw.cmd` / `./mvnw` 可免装；本机若装 Maven 需 3.9 以上 |
+| **MySQL** | 8.0+ | 数据库 schema 由 Liquibase 5 自动迁移；建表前先建空库 `ulp`（utf8mb4） |
+| **Redis** | 7+ | 用于 Spring Session（indexed）、缓存、限流；客户端为 Lettuce |
+| **Docker** | 20.10+ | 仅集成测试需要（Testcontainers 拉起 MySQL/Redis）。运行生产服务本身不强依赖 Docker |
+
+> 旧 fork 从 Spring Boot 3.2.x 升 4.0.x，主要破坏性变更：Jackson 包名 `com.fasterxml.jackson.databind` → `tools.jackson.databind`、`spring.session.redis.flush-mode` 配置键作废（改在代码里设 `FlushMode.IMMEDIATE`）、`spring.data.jpa.repositories.bootstrap-mode=deferred` 与 Hibernate 7 异步装配死锁需改 `default`、Spring Security 7 移除大量旧 DSL（lambda 风格强制 + `requestMatchers(RegexRequestMatcher.regexMatcher(...))` 改 `PathPatternRequestMatcher`）。本仓库的 [openspec 变更记录](openspec/changes/upgrade-spring-boot-4/) 含完整迁移步骤可参考。
 
 ## 运行集成测试
 

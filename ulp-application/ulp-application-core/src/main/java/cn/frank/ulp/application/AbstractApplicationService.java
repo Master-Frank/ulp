@@ -23,8 +23,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.util.AlternativeJdkIdGenerator;
 import org.springframework.util.IdGenerator;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import cn.frank.ulp.common.entity.app.AppAccountEntity;
 import cn.frank.ulp.common.entity.app.AppEntity;
 import cn.frank.ulp.common.entity.app.AppGroupAssociationEntity;
@@ -35,6 +33,8 @@ import cn.frank.ulp.common.repository.app.AppGroupAssociationRepository;
 import cn.frank.ulp.common.repository.app.AppRepository;
 
 import lombok.extern.slf4j.Slf4j;
+
+import tools.jackson.databind.ObjectMapper;
 
 /**
  * AbstractApplicationService

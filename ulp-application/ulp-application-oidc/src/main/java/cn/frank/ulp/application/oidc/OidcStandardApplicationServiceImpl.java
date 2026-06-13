@@ -29,7 +29,6 @@ import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Sets;
 
 import cn.frank.ulp.application.exception.AppNotExistException;
@@ -49,12 +48,14 @@ import cn.frank.ulp.support.util.BeanUtils;
 import cn.frank.ulp.support.validation.ValidationUtils;
 
 import jakarta.validation.ConstraintViolationException;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 import static org.springframework.security.oauth2.core.ClientAuthenticationMethod.NONE;
-
-import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 
 import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_BY;
 import static cn.frank.ulp.support.repository.base.BaseEntity.LAST_MODIFIED_TIME;
+
+import static tools.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 
 /**
  * OIDC 用户应用
@@ -137,10 +138,9 @@ public class OidcStandardApplicationServiceImpl extends AbstractOidcApplicationS
     public void saveConfig(String appId, Map<String, Object> config) {
         AppOidcStandardSaveConfigParam model;
         try {
-            ObjectMapper mapper = new ObjectMapper();
+            ObjectMapper mapper = JsonMapper.builder().configure(FAIL_ON_UNKNOWN_PROPERTIES, false)
+                .build();
             String value = mapper.writeValueAsString(config);
-            // 指定序列化输入的类型
-            mapper.configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
             model = mapper.readValue(value, AppOidcStandardSaveConfigParam.class);
         } catch (Exception e) {
             throw new UlpException(e.getMessage());

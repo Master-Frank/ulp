@@ -16,7 +16,6 @@
  */
 package cn.frank.ulp.protocol.oidc.jackson;
 
-import org.springframework.security.jackson2.SecurityJackson2Modules;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
@@ -24,11 +23,14 @@ import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationCode;
 
-import com.fasterxml.jackson.core.Version;
-import com.fasterxml.jackson.databind.module.SimpleModule;
+import tools.jackson.core.Version;
+import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
+import tools.jackson.databind.module.SimpleModule;
 
 /**
  * OAuth2AuthorizationModule
+ *
+ * Jackson 3 默认类型校验在 mapper builder 上配置，模块不再主动启用 default typing。
  *
  * @author Frank Zhang
  */
@@ -41,18 +43,23 @@ public class OAuth2AuthorizationModule extends SimpleModule {
 
     @Override
     public void setupModule(SetupContext context) {
-        SecurityJackson2Modules.enableDefaultTyping(context.getOwner());
+        context.setMixIn(OAuth2Authorization.class, OAuth2AuthorizationMixin.class);
+        context.setMixIn(OAuth2AuthorizationCode.class, OAuth2AuthorizationCodeMixin.class);
+        context.setMixIn(OAuth2Authorization.Token.class, TokenMixin.class);
+        context.setMixIn(OAuth2AccessToken.class, OAuth2AccessTokenMixin.class);
+        context.setMixIn(OAuth2RefreshToken.class, OAuth2RefreshTokenMixin.class);
+        context.setMixIn(AuthorizationGrantType.class, AuthorizationGrantTypeMixin.class);
+        context.setMixIn(OAuth2AccessToken.TokenType.class, TokenTypeMixin.class);
+        context.setMixIn(OidcIdToken.class, OidcIdTokenMixin.class);
+    }
 
-        context.setMixInAnnotations(OAuth2Authorization.class, OAuth2AuthorizationMixin.class);
-        context.setMixInAnnotations(OAuth2AuthorizationCode.class,
-            OAuth2AuthorizationCodeMixin.class);
-        context.setMixInAnnotations(OAuth2Authorization.Token.class, TokenMixin.class);
-        context.setMixInAnnotations(OAuth2AccessToken.class, OAuth2AccessTokenMixin.class);
-        context.setMixInAnnotations(OAuth2RefreshToken.class, OAuth2RefreshTokenMixin.class);
-        context.setMixInAnnotations(AuthorizationGrantType.class,
-            AuthorizationGrantTypeMixin.class);
-        context.setMixInAnnotations(OAuth2AccessToken.TokenType.class, TokenTypeMixin.class);
-        context.setMixInAnnotations(OidcIdToken.class, OidcIdTokenMixin.class);
+    /**
+     * 给外部调用方追加 OAuth2 相关类的 PolymorphicTypeValidator 白名单。
+     */
+    public static void configurePolymorphicTypeValidator(BasicPolymorphicTypeValidator.Builder builder) {
+        builder.allowIfSubType("org.springframework.security.oauth2.")
+            .allowIfSubType("org.springframework.security.").allowIfSubType("java.util.")
+            .allowIfSubType("java.time.");
     }
 
 }

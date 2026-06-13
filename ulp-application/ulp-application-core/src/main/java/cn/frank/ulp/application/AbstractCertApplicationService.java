@@ -27,14 +27,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.AlternativeJdkIdGenerator;
 import org.springframework.util.IdGenerator;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import cn.frank.ulp.common.entity.app.AppCertEntity;
 import cn.frank.ulp.common.enums.app.AppCertUsingType;
 import cn.frank.ulp.common.exception.app.AppCreateCertException;
 import cn.frank.ulp.common.repository.app.*;
 import cn.frank.ulp.support.util.CertUtils;
 import cn.frank.ulp.support.util.RsaUtils;
+
+import tools.jackson.databind.ObjectMapper;
 import static cn.frank.ulp.support.util.CertUtils.encodePem;
 import static cn.frank.ulp.support.util.CertUtils.getX500Name;
 import static cn.frank.ulp.support.util.RsaUtils.getKeys;

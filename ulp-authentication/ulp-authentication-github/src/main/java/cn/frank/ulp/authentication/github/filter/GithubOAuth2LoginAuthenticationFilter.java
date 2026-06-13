@@ -24,13 +24,14 @@ import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.*;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.client.RestTemplate;
 
@@ -64,11 +65,11 @@ import static cn.frank.ulp.authentication.github.constant.GithubAuthenticationCo
 @SuppressWarnings({ "AlibabaClassNamingShouldBeCamel", "DuplicatedCode" })
 public class GithubOAuth2LoginAuthenticationFilter extends
                                                    AbstractIdentityProviderAuthenticationProcessingFilter {
-    final String                              ERROR_CODE                   = "error";
-    public final static String                DEFAULT_FILTER_PROCESSES_URI = GITHUB_OAUTH
+    final String                       ERROR_CODE                   = "error";
+    public final static String         DEFAULT_FILTER_PROCESSES_URI = GITHUB_OAUTH
         .getLoginPathPrefix() + "/" + "{" + PROVIDER_CODE + "}";
-    public static final AntPathRequestMatcher REQUEST_MATCHER              = new AntPathRequestMatcher(
-        DEFAULT_FILTER_PROCESSES_URI, HttpMethod.GET.name());
+    public static final RequestMatcher REQUEST_MATCHER              = PathPatternRequestMatcher
+        .pathPattern(HttpMethod.GET, DEFAULT_FILTER_PROCESSES_URI);
 
     /**
      * Creates a new instance

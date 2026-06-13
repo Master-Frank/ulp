@@ -26,7 +26,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.security.config.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,8 +43,9 @@ import org.springframework.security.oauth2.server.authorization.web.OAuth2Client
 import org.springframework.security.oauth2.server.authorization.web.authentication.*;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.DelegatingAuthenticationConverter;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
@@ -92,20 +93,17 @@ public final class OAuth2ClientAuthenticationConfigurer extends AbstractConfigur
     public void init(HttpSecurity httpSecurity) {
         this.requestMatcher = new OrRequestMatcher(
             //令牌端点
-            new AntPathRequestMatcher(ProtocolConstants.OidcEndpointConstants.TOKEN_ENDPOINT,
-                HttpMethod.POST.name()),
+            PathPatternRequestMatcher.pathPattern(HttpMethod.POST,
+                ProtocolConstants.OidcEndpointConstants.TOKEN_ENDPOINT),
             //令牌内省端点
-            new AntPathRequestMatcher(
-                ProtocolConstants.OidcEndpointConstants.TOKEN_INTROSPECTION_ENDPOINT,
-                HttpMethod.POST.name()),
+            PathPatternRequestMatcher.pathPattern(HttpMethod.POST,
+                ProtocolConstants.OidcEndpointConstants.TOKEN_INTROSPECTION_ENDPOINT),
             //令牌吊销端点
-            new AntPathRequestMatcher(
-                ProtocolConstants.OidcEndpointConstants.TOKEN_REVOCATION_ENDPOINT,
-                HttpMethod.POST.name()),
+            PathPatternRequestMatcher.pathPattern(HttpMethod.POST,
+                ProtocolConstants.OidcEndpointConstants.TOKEN_REVOCATION_ENDPOINT),
             //设备授权端点
-            new AntPathRequestMatcher(
-                ProtocolConstants.OidcEndpointConstants.DEVICE_AUTHORIZATION_ENDPOINT,
-                HttpMethod.POST.name()));
+            PathPatternRequestMatcher.pathPattern(HttpMethod.POST,
+                ProtocolConstants.OidcEndpointConstants.DEVICE_AUTHORIZATION_ENDPOINT));
 
         List<AuthenticationProvider> authenticationProviders = createDefaultAuthenticationProviders(
             httpSecurity);

@@ -36,7 +36,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.*;
-import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames;
@@ -78,7 +77,7 @@ public final class OAuth2AuthorizationResourceOwnerPasswordAuthenticationProvide
 
     private static final String                                                     ERROR_URI                         = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
     private static final OAuth2TokenType                                            AUTHORIZATION_PASSWORD_TOKEN_TYPE = new OAuth2TokenType(
-        OAuth2ParameterNames.PASSWORD);
+        "password");
     private static final OAuth2TokenType                                            ID_TOKEN_TOKEN_TYPE               = new OAuth2TokenType(
         OidcParameterNames.ID_TOKEN);
     private Consumer<OAuth2AuthorizationResourceOwnerPasswordAuthenticationContext> authenticationValidator           = new OAuth2AuthorizationResourceOwnerPasswordAuthenticationValidator();
@@ -100,13 +99,12 @@ public final class OAuth2AuthorizationResourceOwnerPasswordAuthenticationProvide
                                                                           OAuth2AuthorizationService authorizationService,
                                                                           OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
                                                                           PasswordEncoder passwordEncoder) {
+        super(userDetailsService);
         Assert.notNull(authorizationService, "authorizationService cannot be null");
         Assert.notNull(tokenGenerator, "tokenGenerator cannot be null");
-        Assert.notNull(userDetailsService, "userDetailsService cannot be null");
         Assert.notNull(passwordEncoder, "passwordEncoder cannot be null");
         this.authorizationService = authorizationService;
         this.tokenGenerator = tokenGenerator;
-        setUserDetailsService(userDetailsService);
         setPasswordEncoder(passwordEncoder);
     }
 

@@ -21,15 +21,19 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.authentication.common.client.IdentityProviderConfig;
 import cn.frank.ulp.authentication.common.client.RegisteredIdentityProviderClient;
 import cn.frank.ulp.authentication.common.client.RegisteredIdentityProviderClientRepository;
 import cn.frank.ulp.common.entity.authn.IdentityProviderEntity;
 import cn.frank.ulp.common.repository.authentication.IdentityProviderRepository;
+
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.DefaultTyping;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 
 /**
  * @author Frank Zhang
@@ -51,8 +55,11 @@ public class RegisteredIdentityProviderClientRepositoryImpl implements
         if (optional.isPresent()) {
             try {
                 // 指定序列化输入的类型
-                ObjectMapper objectMapper=new ObjectMapper();
-                objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(), ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+                ObjectMapper objectMapper = JsonMapper.builder()
+                    .activateDefaultTyping(
+                        BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build(),
+                        DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
+                    .build();
                 IdentityProviderEntity entity = optional.get();
                 T provider = objectMapper.readValue(entity.getConfig(), new TypeReference<>() {});
                 RegisteredIdentityProviderClient<T> client = RegisteredIdentityProviderClient.<T>builder()
@@ -62,7 +69,7 @@ public class RegisteredIdentityProviderClientRepositoryImpl implements
                         .config(provider)
                         .build();
                 return Optional.of(client);
-            } catch (JsonProcessingException e) {
+            } catch (JacksonException e) {
                 throw new RuntimeException(e);
             }
         }

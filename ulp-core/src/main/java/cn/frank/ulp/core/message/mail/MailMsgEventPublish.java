@@ -25,8 +25,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import cn.frank.ulp.common.enums.MailType;
 import cn.frank.ulp.common.enums.MessageCategory;
 import cn.frank.ulp.common.message.mail.MailProviderConfig;
@@ -36,6 +34,8 @@ import cn.frank.ulp.support.exception.UlpException;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+
+import tools.jackson.databind.ObjectMapper;
 import static cn.frank.ulp.core.context.ContextService.getCodeValidTime;
 import static cn.frank.ulp.core.context.ContextService.getMailProviderConfig;
 import static cn.frank.ulp.core.message.MsgVariable.*;

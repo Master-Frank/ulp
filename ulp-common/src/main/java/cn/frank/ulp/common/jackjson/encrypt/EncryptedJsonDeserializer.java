@@ -16,18 +16,17 @@
  */
 package cn.frank.ulp.common.jackjson.encrypt;
 
-import java.io.IOException;
-
 import org.apache.commons.lang3.StringUtils;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonParser;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.ValueDeserializer;
 
 /**
  * @author Frank Zhang
  */
-public class EncryptedJsonDeserializer extends JsonDeserializer<Object> {
+public class EncryptedJsonDeserializer extends ValueDeserializer<Object> {
 
     private final JsonEncryptType deserializerJsonEncryptType;
 
@@ -37,7 +36,7 @@ public class EncryptedJsonDeserializer extends JsonDeserializer<Object> {
 
     @Override
     public Object deserialize(final JsonParser parser,
-                              final DeserializationContext context) throws IOException {
+                              final DeserializationContext context) throws JacksonException {
         String value = parser.getValueAsString();
         if (StringUtils.isBlank(value)) {
             return null;

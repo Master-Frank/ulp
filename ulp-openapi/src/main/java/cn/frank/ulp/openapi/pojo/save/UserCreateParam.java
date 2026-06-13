@@ -21,8 +21,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
 import cn.frank.ulp.common.enums.MessageNoticeChannel;
 import cn.frank.ulp.support.enums.ListEnumDeserializer;
 
@@ -31,6 +29,7 @@ import lombok.Data;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import tools.jackson.databind.annotation.JsonDeserialize;
 
 /**
  * 用户创建请求入参

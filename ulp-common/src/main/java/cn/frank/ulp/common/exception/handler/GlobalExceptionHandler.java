@@ -18,8 +18,8 @@ package cn.frank.ulp.common.exception.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
+import org.springframework.boot.autoconfigure.web.WebProperties;
+import org.springframework.boot.webmvc.error.DefaultErrorAttributes;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
             HttpStatus.INTERNAL_SERVER_ERROR.value(), WebRequest.SCOPE_REQUEST);
         setExceptionAttribute(request, e);
         logger.error("Global exception catch", e);
-        return new ModelAndView(serverProperties.getError().getPath());
+        return new ModelAndView(webProperties.getError().getPath());
     }
 
     /**
@@ -68,7 +68,7 @@ public class GlobalExceptionHandler {
         request.setAttribute(WebUtils.ERROR_STATUS_CODE_ATTRIBUTE, e.getHttpStatus().value(),
             WebRequest.SCOPE_REQUEST);
         logger.error("Global exception catch", e);
-        return new ModelAndView(serverProperties.getError().getPath());
+        return new ModelAndView(webProperties.getError().getPath());
     }
 
     /**
@@ -82,7 +82,7 @@ public class GlobalExceptionHandler {
         request.setAttribute(WebUtils.ERROR_STATUS_CODE_ATTRIBUTE, HttpStatus.BAD_REQUEST.value(),
             WebRequest.SCOPE_REQUEST);
         logger.error("Global exception catch", e);
-        return new ModelAndView(serverProperties.getError().getPath());
+        return new ModelAndView(webProperties.getError().getPath());
     }
 
     /**
@@ -97,7 +97,7 @@ public class GlobalExceptionHandler {
         request.setAttribute(WebUtils.ERROR_STATUS_CODE_ATTRIBUTE, HttpStatus.BAD_REQUEST.value(),
             WebRequest.SCOPE_REQUEST);
         logger.error("Global exception catch", e);
-        return new ModelAndView(serverProperties.getError().getPath());
+        return new ModelAndView(webProperties.getError().getPath());
     }
 
     private void setExceptionAttribute(WebRequest request, Exception exception) {
@@ -110,7 +110,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * ServerProperties
+     * WebProperties
      */
-    private final ServerProperties serverProperties;
+    private final WebProperties webProperties;
 }

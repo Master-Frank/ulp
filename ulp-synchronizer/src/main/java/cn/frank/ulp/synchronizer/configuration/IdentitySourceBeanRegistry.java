@@ -32,7 +32,7 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
+import org.springframework.boot.webmvc.autoconfigure.WebMvcAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
@@ -42,7 +42,6 @@ import org.springframework.util.StopWatch;
 
 import com.cronutils.model.CronType;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.common.entity.identitysource.IdentitySourceEntity;
 import cn.frank.ulp.common.enums.TriggerType;
@@ -67,6 +66,10 @@ import cn.frank.ulp.support.trace.TraceUtils;
 import cn.frank.ulp.synchronizer.task.IdentitySourceSyncTask;
 
 import lombok.extern.slf4j.Slf4j;
+
+import tools.jackson.databind.DefaultTyping;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import static cn.frank.ulp.support.constant.UlpConstants.CACHE_LOCK_KEY_PREFIX;
 import static cn.frank.ulp.support.constant.UlpConstants.COLON;
 import static cn.frank.ulp.synchronizer.configuration.IdentitySourceBeanUtils.getSourceBeanName;
@@ -78,7 +81,7 @@ import static cn.frank.ulp.synchronizer.configuration.IdentitySourceBeanUtils.ge
  */
 @Slf4j
 @Configuration
-@AutoConfigureAfter({ WebMvcAutoConfiguration.EnableWebMvcConfiguration.class })
+@AutoConfigureAfter({ WebMvcAutoConfiguration.class })
 public class IdentitySourceBeanRegistry implements IdentitySourceEventListener {
     private final ApplicationContext applicationContext;
 
@@ -150,9 +153,12 @@ public class IdentitySourceBeanRegistry implements IdentitySourceEventListener {
         IdentitySourceEventPostProcessor identitySourceEventPostProcessor = beanFactory.getBean(IdentitySourceEventPostProcessor.class);
         IdentitySourceClient identitySourceClient;
         BeanDefinitionBuilder definitionBuilder;
-        ObjectMapper objectMapper = EncryptionModule.deserializerDecrypt();
         // 指定序列化输入的类型
-        objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(), ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+        ObjectMapper objectMapper = EncryptionModule.deserializerDecrypt().rebuild()
+            .activateDefaultTyping(
+                BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build(),
+                DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
+            .build();
         try{
             switch (entity.getProvider()) {
                 case DINGTALK -> {

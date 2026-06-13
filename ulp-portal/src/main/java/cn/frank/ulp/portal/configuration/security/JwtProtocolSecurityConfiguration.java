@@ -18,8 +18,6 @@ package cn.frank.ulp.portal.configuration.security;
 
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.cache.CacheProperties;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,6 +38,7 @@ import cn.frank.ulp.protocol.jwt.RedisJwtAuthorizationService;
 import cn.frank.ulp.protocol.jwt.authentication.JwtAuthenticationFailureEventListener;
 import cn.frank.ulp.protocol.jwt.authentication.JwtAuthenticationSuccessEventListener;
 import cn.frank.ulp.protocol.jwt.configurers.JwtAuthorizationServerConfigurer;
+import cn.frank.ulp.support.cache.UlpCacheProperties;
 import cn.frank.ulp.support.web.useragent.UserAgentParser;
 import static org.springframework.security.config.http.SessionCreationPolicy.NEVER;
 
@@ -61,7 +60,6 @@ public class JwtProtocolSecurityConfiguration extends AbstractSecurityConfigurat
      * @throws Exception Exception
      */
     @Bean(value = JWT_PROTOCOL_SECURITY_FILTER_CHAIN)
-    @RefreshScope
     public SecurityFilterChain jwtProtocolSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
         //@formatter:off
         httpSecurity.getSharedObject(AuthenticationManagerBuilder.class).parentAuthenticationManager(null);
@@ -109,7 +107,7 @@ public class JwtProtocolSecurityConfiguration extends AbstractSecurityConfigurat
 
     @Bean
     public JwtAuthorizationService jwtAuthorizationService(RedisConnectionFactory redisConnectionFactory,
-                                                           CacheProperties cacheProperties,
+                                                           UlpCacheProperties cacheProperties,
                                                            AutowireCapableBeanFactory beanFactory,
                                                            ApplicationServiceLoader applicationServiceLoader) {
         RedisTemplate<String, String> redisTemplate = getStringRedisTemplate(redisConnectionFactory,

@@ -45,7 +45,11 @@ public class AuditEvent extends ApplicationEvent {
 
     public AuditEvent(String requestId, String sessionId, Actor actor, Event event,
                       UserAgent userAgent, GeoLocation geoLocation, List<Target> targets) {
-        super(requestId);
+        // ApplicationEvent forbids a null source. requestId comes from MDC via TraceUtils,
+        // which can be empty when an event fires outside the servlet thread (e.g., async
+        // listeners, scheduled jobs) or inside a MockMvc filter chain that did not run the
+        // TraceFilter. Falling back to a sentinel keeps publishing safe and audit-correlatable.
+        super(requestId != null ? requestId : "no-trace");
         this.requestId = requestId;
         this.sessionId = sessionId;
         this.actor = actor;

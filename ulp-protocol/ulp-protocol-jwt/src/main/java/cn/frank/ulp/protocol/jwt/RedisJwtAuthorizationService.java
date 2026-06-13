@@ -27,17 +27,17 @@ import java.util.Set;
 
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.data.redis.core.RedisOperations;
-import org.springframework.http.converter.json.SpringHandlerInstantiator;
+import org.springframework.http.support.JacksonHandlerInstantiator;
 import org.springframework.util.Assert;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.application.ApplicationServiceLoader;
 import cn.frank.ulp.protocol.jwt.jackson.JwtAuthorizationModule;
 import cn.frank.ulp.support.jackjson.SupportJackson2Module;
 
 import lombok.Setter;
+
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
 import static cn.frank.ulp.protocol.jwt.constant.JwtProtocolConstants.JWT_PROTOCOL_CACHE_PREFIX;
 
 /**
@@ -58,9 +58,9 @@ public class RedisJwtAuthorizationService extends AbstractJwtAuthorizationServic
         Assert.notNull(redisOperations, "redisOperations mut not be null");
         this.redisOperations = redisOperations;
         ClassLoader classLoader = this.getClass().getClassLoader();
-        objectMapper.registerModules(SupportJackson2Module.getModules(classLoader));
-        objectMapper.registerModule(new JwtAuthorizationModule());
-        objectMapper.setHandlerInstantiator(new SpringHandlerInstantiator(beanFactory));
+        this.objectMapper = SupportJackson2Module.objectMapperBuilder(classLoader)
+            .addModule(new JwtAuthorizationModule())
+            .handlerInstantiator(new JacksonHandlerInstantiator(beanFactory)).build();
     }
 
     /**
@@ -164,12 +164,15 @@ public class RedisJwtAuthorizationService extends AbstractJwtAuthorizationServic
     private final RedisOperations<String, String> redisOperations;
 
     @Setter
-    private String                                prefix       = JWT_PROTOCOL_CACHE_PREFIX;
+    private String                                prefix = JWT_PROTOCOL_CACHE_PREFIX;
 
-    @Setter
-    private ObjectMapper                          objectMapper = new ObjectMapper();
+    private ObjectMapper                          objectMapper;
 
-    private static final MessageDigest            DIGEST;
+    public void setObjectMapper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
+    private static final MessageDigest DIGEST;
 
     static {
         try {

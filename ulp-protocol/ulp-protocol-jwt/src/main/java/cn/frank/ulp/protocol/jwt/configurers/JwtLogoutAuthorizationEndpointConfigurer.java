@@ -18,10 +18,10 @@ package cn.frank.ulp.protocol.jwt.configurers;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.security.config.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
@@ -52,8 +52,8 @@ public class JwtLogoutAuthorizationEndpointConfigurer extends AbstractConfigurer
     @Override
     public void init(HttpSecurity httpSecurity) {
         requestMatcher = new OrRequestMatcher(
-            new AntPathRequestMatcher(JWT_SLO_PATH, HttpMethod.GET.name()),
-            new AntPathRequestMatcher(JWT_SLO_PATH, HttpMethod.POST.name()));
+            PathPatternRequestMatcher.pathPattern(HttpMethod.GET, JWT_SLO_PATH),
+            PathPatternRequestMatcher.pathPattern(HttpMethod.POST, JWT_SLO_PATH));
         httpSecurity.authenticationProvider(new JwtLogoutAuthenticationProvider());
     }
 

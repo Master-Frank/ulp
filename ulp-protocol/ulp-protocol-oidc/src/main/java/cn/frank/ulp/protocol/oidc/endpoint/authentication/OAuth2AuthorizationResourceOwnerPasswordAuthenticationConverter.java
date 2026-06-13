@@ -60,17 +60,15 @@ public final class OAuth2AuthorizationResourceOwnerPasswordAuthenticationConvert
             ? getQueryParameters(request)
             : getFormParameters(request);
         // username (必填)
-        String username = parameters.getFirst(OAuth2ParameterNames.USERNAME);
-        if (!StringUtils.hasText(username)
-            || parameters.get(OAuth2ParameterNames.USERNAME).size() != 1) {
-            throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.USERNAME,
+        String username = parameters.getFirst("username");
+        if (!StringUtils.hasText(username) || parameters.get("username").size() != 1) {
+            throwError(OAuth2ErrorCodes.INVALID_REQUEST, "username",
                 ACCESS_TOKEN_REQUEST_ERROR_URI);
         }
         // password (必填)
-        String password = parameters.getFirst(OAuth2ParameterNames.PASSWORD);
-        if (!StringUtils.hasText(password)
-            || parameters.get(OAuth2ParameterNames.PASSWORD).size() != 1) {
-            throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.PASSWORD,
+        String password = parameters.getFirst("password");
+        if (!StringUtils.hasText(password) || parameters.get("password").size() != 1) {
+            throwError(OAuth2ErrorCodes.INVALID_REQUEST, "password",
                 ACCESS_TOKEN_REQUEST_ERROR_URI);
         }
         // scope (OPTIONAL)
@@ -88,9 +86,8 @@ public final class OAuth2AuthorizationResourceOwnerPasswordAuthenticationConvert
         Map<String, Object> additionalParameters = new HashMap<>(16);
         parameters.forEach((key, value) -> {
             if (!key.equals(OAuth2ParameterNames.GRANT_TYPE)
-                && !key.equals(OAuth2ParameterNames.CLIENT_ID)
-                && !key.equals(OAuth2ParameterNames.USERNAME)
-                && !key.equals(OAuth2ParameterNames.PASSWORD)) {
+                && !key.equals(OAuth2ParameterNames.CLIENT_ID) && !key.equals("username")
+                && !key.equals("password")) {
                 additionalParameters.put(key,
                     (value.size() == 1) ? value.get(0) : value.toArray(new String[0]));
             }

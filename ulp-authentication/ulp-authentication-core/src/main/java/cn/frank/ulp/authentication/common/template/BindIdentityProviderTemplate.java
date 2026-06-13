@@ -25,8 +25,6 @@ import java.util.Map;
 import org.apache.http.entity.ContentType;
 import org.springframework.http.HttpStatus;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import cn.frank.ulp.support.exception.TemplateNotExistException;
 import cn.frank.ulp.support.result.ApiRestResult;
 
@@ -36,6 +34,8 @@ import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import jakarta.servlet.http.HttpServletResponse;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 /**
  *
@@ -63,7 +63,7 @@ public class BindIdentityProviderTemplate {
             Template template = freemarkerTemplateConfiguration.getTemplate("bind_redirect.ftlh");
             Map<String, Object> data = new HashMap<>(16);
             data.put("nonce", System.currentTimeMillis());
-            ObjectMapper objectMapper = new ObjectMapper();
+            ObjectMapper objectMapper = JsonMapper.builder().build();
             data.put("result", objectMapper.writeValueAsString(result));
             template.process(data, response.getWriter());
         } catch (Exception e) {

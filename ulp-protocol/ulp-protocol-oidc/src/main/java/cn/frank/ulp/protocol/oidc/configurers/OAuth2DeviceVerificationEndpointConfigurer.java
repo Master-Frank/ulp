@@ -24,7 +24,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.security.config.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -35,13 +35,13 @@ import org.springframework.security.oauth2.server.authorization.authentication.O
 import org.springframework.security.oauth2.server.authorization.authentication.OAuth2DeviceVerificationAuthenticationProvider;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.web.OAuth2DeviceVerificationEndpointFilter;
-import org.springframework.security.oauth2.server.authorization.web.authentication.DelegatingAuthenticationConverter;
 import org.springframework.security.oauth2.server.authorization.web.authentication.OAuth2DeviceAuthorizationConsentAuthenticationConverter;
 import org.springframework.security.oauth2.server.authorization.web.authentication.OAuth2DeviceVerificationAuthenticationConverter;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.DelegatingAuthenticationConverter;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
@@ -75,12 +75,10 @@ public final class OAuth2DeviceVerificationEndpointConfigurer extends AbstractCo
     @Override
     public void init(HttpSecurity builder) {
         this.requestMatcher = new OrRequestMatcher(
-            new AntPathRequestMatcher(
-                ProtocolConstants.OidcEndpointConstants.DEVICE_VERIFICATION_ENDPOINT,
-                HttpMethod.GET.name()),
-            new AntPathRequestMatcher(
-                ProtocolConstants.OidcEndpointConstants.DEVICE_VERIFICATION_ENDPOINT,
-                HttpMethod.POST.name()));
+            PathPatternRequestMatcher.pathPattern(HttpMethod.GET,
+                ProtocolConstants.OidcEndpointConstants.DEVICE_VERIFICATION_ENDPOINT),
+            PathPatternRequestMatcher.pathPattern(HttpMethod.POST,
+                ProtocolConstants.OidcEndpointConstants.DEVICE_VERIFICATION_ENDPOINT));
 
         List<AuthenticationProvider> authenticationProviders = createDefaultAuthenticationProviders(
             builder);

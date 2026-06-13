@@ -18,7 +18,7 @@ package cn.frank.ulp.support.hibernate;
 
 import java.util.Map;
 
-import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
+import org.springframework.boot.hibernate.autoconfigure.HibernatePropertiesCustomizer;
 
 public class CustomHibernatePropertiesCustomizer implements HibernatePropertiesCustomizer {
 

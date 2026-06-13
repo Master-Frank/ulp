@@ -23,9 +23,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import cn.frank.ulp.common.entity.setting.SettingEntity;
 import cn.frank.ulp.common.jackjson.encrypt.EncryptionModule;
 import cn.frank.ulp.common.repository.setting.SettingRepository;
@@ -36,6 +33,9 @@ import cn.frank.ulp.console.pojo.save.setting.StorageConfigSaveParam;
 import cn.frank.ulp.console.service.setting.StorageSettingService;
 import cn.frank.ulp.support.context.ApplicationContextService;
 import cn.frank.ulp.support.exception.UlpException;
+
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 import static cn.frank.ulp.core.context.ContextService.addImgSrcHostContentSecurityPolicy;
 import static cn.frank.ulp.core.setting.StorageProviderSettingConstants.STORAGE_BEAN_NAME;
 import static cn.frank.ulp.core.setting.StorageProviderSettingConstants.STORAGE_PROVIDER_KEY;
@@ -84,7 +84,7 @@ public class StorageSettingServiceImpl extends SettingServiceImpl implements Sto
                 addImgSrcHostContentSecurityPolicy(config.getConfig().getDomain());
             }
             return setting;
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             logger.error("保存存储配置发生异常", e);
             throw new UlpException("保存存储配置发生异常");
         }

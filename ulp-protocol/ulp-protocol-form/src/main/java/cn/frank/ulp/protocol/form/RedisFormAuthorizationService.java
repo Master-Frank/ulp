@@ -18,16 +18,14 @@ package cn.frank.ulp.protocol.form;
 
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.data.redis.core.RedisOperations;
-import org.springframework.http.converter.json.SpringHandlerInstantiator;
+import org.springframework.http.support.JacksonHandlerInstantiator;
 import org.springframework.util.Assert;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.application.ApplicationServiceLoader;
 import cn.frank.ulp.protocol.form.jackson.FormAuthorizationModule;
 import cn.frank.ulp.support.jackjson.SupportJackson2Module;
 
-import lombok.Setter;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  *
@@ -42,13 +40,16 @@ public class RedisFormAuthorizationService extends AbstractFormAuthorizationServ
         Assert.notNull(redisOperations, "redisOperations mut not be null");
         this.redisOperations = redisOperations;
         ClassLoader classLoader = this.getClass().getClassLoader();
-        objectMapper.registerModules(SupportJackson2Module.getModules(classLoader));
-        objectMapper.registerModule(new FormAuthorizationModule());
-        objectMapper.setHandlerInstantiator(new SpringHandlerInstantiator(beanFactory));
+        this.objectMapper = SupportJackson2Module.objectMapperBuilder(classLoader)
+            .addModule(new FormAuthorizationModule())
+            .handlerInstantiator(new JacksonHandlerInstantiator(beanFactory)).build();
     }
 
     private final RedisOperations<String, String> redisOperations;
 
-    @Setter
-    private ObjectMapper                          objectMapper = new ObjectMapper();
+    private ObjectMapper                          objectMapper;
+
+    public void setObjectMapper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 }

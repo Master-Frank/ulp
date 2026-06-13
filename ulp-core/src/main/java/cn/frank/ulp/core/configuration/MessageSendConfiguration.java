@@ -19,13 +19,13 @@ package cn.frank.ulp.core.configuration;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
 
 import cn.frank.ulp.common.entity.setting.config.SmsConfig;
 import cn.frank.ulp.common.message.mail.DefaultMailProviderSendImpl;
+import cn.frank.ulp.common.message.mail.MailNoneProviderSend;
 import cn.frank.ulp.common.message.mail.MailProviderConfig;
 import cn.frank.ulp.common.message.mail.MailProviderSend;
 import cn.frank.ulp.common.message.sms.SmsNoneProviderSend;
@@ -52,7 +52,6 @@ public class MessageSendConfiguration {
      * @return {@link SmsProviderSend}
      */
     @Bean(SMS_PROVIDER_SEND)
-    @RefreshScope
     public SmsProviderSend smsProviderSend() {
         //查询当前启用的短信提供商
         SmsConfig config = getSmsProviderConfig();
@@ -69,12 +68,11 @@ public class MessageSendConfiguration {
      * @return {@link MailProviderSend}
      */
     @Bean(MAIL_PROVIDER_SEND)
-    @RefreshScope
     public MailProviderSend mailProviderSend(@Qualifier(value = APPLICATION_TASK_EXECUTOR_BEAN_NAME) TaskExecutor taskExecutor) {
 
         MailProviderConfig config = getMailProviderConfig();
         if (Objects.isNull(config)) {
-            return null;
+            return new MailNoneProviderSend();
         }
         return new DefaultMailProviderSendImpl(config, taskExecutor);
     }

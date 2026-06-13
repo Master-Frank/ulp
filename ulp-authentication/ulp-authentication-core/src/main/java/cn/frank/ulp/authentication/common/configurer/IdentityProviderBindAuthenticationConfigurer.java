@@ -23,7 +23,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractAu
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.Assert;
 
@@ -75,7 +75,7 @@ public class IdentityProviderBindAuthenticationConfigurer extends
     }
 
     @Override
-    public void init(HttpSecurity http) throws Exception {
+    public void init(HttpSecurity http) {
         super.init(http);
         putFilterBefore(http, getAuthenticationFilter(), OAuth2LoginAuthenticationFilter.class);
         //认证提供商
@@ -95,7 +95,7 @@ public class IdentityProviderBindAuthenticationConfigurer extends
      */
     @Override
     protected RequestMatcher createLoginProcessingUrlMatcher(String loginProcessingUrl) {
-        return new AntPathRequestMatcher(loginProcessingUrl);
+        return PathPatternRequestMatcher.pathPattern(loginProcessingUrl);
     }
 
     public static IdentityProviderBindAuthenticationConfigurer idpBind(UserDetailsService userDetailsService,

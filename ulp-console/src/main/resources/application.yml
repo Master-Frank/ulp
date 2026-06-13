@@ -51,9 +51,10 @@ spring:
       max-request-size: 50MB
   session:
     redis:
+      # 由 ConsoleSessionConfiguration 上的 @EnableRedisIndexedHttpSession 读取；
+      # flush-mode (immediate) 与 repository-type (indexed) 由该类用代码而非配置承载，
+      # 因为 Spring Boot 4 已移除 spring-boot-session 自动装配。
       namespace: ${spring.cache.redis.key-prefix}:session
-      flush-mode: immediate
-      repository-type: indexed
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/ulp?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
     username: root
@@ -76,7 +77,9 @@ spring:
   data:
     jpa:
       repositories:
-        bootstrap-mode: deferred
+        # SB4 + Hibernate 7: deferred 触发 async EMF bootstrap，与 MultiTenancy.getTenantIdentifierResolver
+        # 回调 SpringBeanContainer.getBean 抢 BeanFactory 锁的主线程死锁。改 default 走同步装配。
+        bootstrap-mode: default
     #reids
     redis:
       host: 127.0.0.1

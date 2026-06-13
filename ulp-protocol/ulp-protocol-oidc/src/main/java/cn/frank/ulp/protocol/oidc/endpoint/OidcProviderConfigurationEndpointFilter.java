@@ -34,7 +34,7 @@ import org.springframework.security.oauth2.server.authorization.context.Authoriz
 import org.springframework.security.oauth2.server.authorization.oidc.OidcProviderConfiguration;
 import org.springframework.security.oauth2.server.authorization.oidc.http.converter.OidcProviderConfigurationHttpMessageConverter;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -66,8 +66,8 @@ public final class OidcProviderConfigurationEndpointFilter extends OncePerReques
     private final RequestMatcher requestMatcher;
 
     public OidcProviderConfigurationEndpointFilter() {
-        requestMatcher = new AntPathRequestMatcher(DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI,
-            HttpMethod.GET.name());
+        requestMatcher = PathPatternRequestMatcher.pathPattern(HttpMethod.GET,
+            DEFAULT_OIDC_PROVIDER_CONFIGURATION_ENDPOINT_URI);
     }
 
     public OidcProviderConfigurationEndpointFilter(RequestMatcher requestMatcher) {

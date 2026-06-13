@@ -16,37 +16,35 @@
  */
 package cn.frank.ulp.support.util;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonParser;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.cfg.DateTimeFeature;
+import tools.jackson.databind.cfg.MapperConfig;
+import tools.jackson.databind.introspect.Annotated;
+import tools.jackson.databind.introspect.JacksonAnnotationIntrospector;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.ser.std.SimpleBeanPropertyFilter;
+import tools.jackson.databind.ser.std.SimpleFilterProvider;
 
 /**
  * Jackson 工具.
  */
 public class JsonUtils {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper();
-
-    static {
-        MAPPER.registerModule(new JavaTimeModule());
-        MAPPER.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        MAPPER.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-    }
+    private static final JsonMapper MAPPER = JsonMapper.builder()
+        .changeDefaultPropertyInclusion(v -> v.withValueInclusion(JsonInclude.Include.NON_NULL))
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        .configure(DateTimeFeature.WRITE_DATES_AS_TIMESTAMPS, false).build();
 
     public JsonUtils() {
     }
@@ -54,7 +52,7 @@ public class JsonUtils {
     public static <T> T readValue(String content, Class<T> valueType) throws JsonUtilException {
         try {
             return hasText(content) ? MAPPER.readValue(content, valueType) : null;
-        } catch (IOException e) {
+        } catch (JacksonException e) {
             throw new JsonUtilException(e);
         }
     }
@@ -62,7 +60,7 @@ public class JsonUtils {
     public static <T> T readValue(String content, TypeReference<T> typeReference) {
         try {
             return hasText(content) ? MAPPER.readValue(content, typeReference) : null;
-        } catch (IOException e) {
+        } catch (JacksonException e) {
             throw new JsonUtilException(e);
         }
     }
@@ -70,7 +68,7 @@ public class JsonUtils {
     public static <T> T readValue(byte[] data, Class<T> valueType) throws JsonUtilException {
         try {
             return data != null && data.length > 0 ? MAPPER.readValue(data, valueType) : null;
-        } catch (IOException e) {
+        } catch (JacksonException e) {
             throw new JsonUtilException(e);
         }
     }
@@ -78,7 +76,7 @@ public class JsonUtils {
     public static <T> T readValue(byte[] data, TypeReference<T> typeReference) {
         try {
             return data != null && data.length > 0 ? MAPPER.readValue(data, typeReference) : null;
-        } catch (IOException e) {
+        } catch (JacksonException e) {
             throw new JsonUtilException(e);
         }
     }
@@ -86,7 +84,7 @@ public class JsonUtils {
     public static JsonNode readTree(String content) {
         try {
             return hasText(content) ? MAPPER.readTree(content) : null;
-        } catch (IOException e) {
+        } catch (JacksonException e) {
             throw new JsonUtilException(e);
         }
     }
@@ -94,7 +92,7 @@ public class JsonUtils {
     public static JsonNode readTree(JsonParser parser) {
         try {
             return MAPPER.readTree(parser);
-        } catch (IOException e) {
+        } catch (JacksonException e) {
             throw new JsonUtilException(e);
         }
     }
@@ -102,7 +100,7 @@ public class JsonUtils {
     public static String writeValueAsString(Object value) throws JsonUtilException {
         try {
             return MAPPER.writeValueAsString(value);
-        } catch (IOException e) {
+        } catch (JacksonException e) {
             throw new JsonUtilException(e);
         }
     }
@@ -110,7 +108,7 @@ public class JsonUtils {
     public static byte[] writeValueAsBytes(Object value) throws JsonUtilException {
         try {
             return MAPPER.writeValueAsBytes(value);
-        } catch (IOException e) {
+        } catch (JacksonException e) {
             throw new JsonUtilException(e);
         }
     }
@@ -185,13 +183,13 @@ public class JsonUtils {
         } catch (Exception e) {
             // fallback：使用 jackson FilterProvider
             try {
-                ObjectMapper mapper = MAPPER.copy();
-                mapper.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
-                    @Override
-                    public Object findFilterId(com.fasterxml.jackson.databind.introspect.Annotated a) {
-                        return "__excludeFilter__";
-                    }
-                });
+                JsonMapper mapper = MAPPER.rebuild()
+                    .annotationIntrospector(new JacksonAnnotationIntrospector() {
+                        @Override
+                        public Object findFilterId(MapperConfig<?> config, Annotated a) {
+                            return "__excludeFilter__";
+                        }
+                    }).build();
                 SimpleFilterProvider provider = new SimpleFilterProvider().addFilter(
                     "__excludeFilter__", SimpleBeanPropertyFilter.serializeAllExcept(properties));
                 return mapper.writer(provider).writeValueAsString(value);

@@ -59,8 +59,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.USERNAME;
-
 import static cn.frank.ulp.common.constant.SessionConstants.SESSION_PATH;
 import static cn.frank.ulp.support.constant.UlpConstants.DEFAULT_DATE_TIME_FORMATTER_PATTERN;
 
@@ -88,9 +86,9 @@ public class SessionManageEndpoint {
         SessionRegistry registry = ApplicationContextService.getBean(SessionRegistry.class);
         if (registry instanceof ClusterSessionRegistryImpl) {
             //根据用户查询
-            if (StringUtils.isNoneBlank(req.getParameter(USERNAME))) {
+            if (StringUtils.isNoneBlank(req.getParameter("username"))) {
                 principals = ((ClusterSessionRegistryImpl<?>) (registry))
-                    .getSessionList(req.getParameter(USERNAME));
+                    .getSessionList(req.getParameter("username"));
             } else {
                 principals = registry.getAllPrincipals();
             }

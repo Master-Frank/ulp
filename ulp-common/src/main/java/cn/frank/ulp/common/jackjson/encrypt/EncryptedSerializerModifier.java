@@ -19,16 +19,16 @@ package cn.frank.ulp.common.jackjson.encrypt;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.databind.BeanDescription;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializationConfig;
-import com.fasterxml.jackson.databind.ser.BeanPropertyWriter;
-import com.fasterxml.jackson.databind.ser.BeanSerializerModifier;
+import tools.jackson.databind.BeanDescription;
+import tools.jackson.databind.SerializationConfig;
+import tools.jackson.databind.ValueSerializer;
+import tools.jackson.databind.ser.BeanPropertyWriter;
+import tools.jackson.databind.ser.ValueSerializerModifier;
 
 /**
  * @author Frank Zhang
  */
-public class EncryptedSerializerModifier extends BeanSerializerModifier {
+public class EncryptedSerializerModifier extends ValueSerializerModifier {
 
     private final JsonEncryptType jsonEncryptType;
 
@@ -42,7 +42,7 @@ public class EncryptedSerializerModifier extends BeanSerializerModifier {
 
     @Override
     public List<BeanPropertyWriter> changeProperties(SerializationConfig config,
-                                                     BeanDescription beanDesc,
+                                                     BeanDescription.Supplier beanDesc,
                                                      List<BeanPropertyWriter> beanProperties) {
         /*
             遍历beanProperties处理Encrypt.class注解
@@ -57,7 +57,7 @@ public class EncryptedSerializerModifier extends BeanSerializerModifier {
                 if (jsonEncryptType == null) {
                     deserializer = annotation.deserializer();
                 }
-                JsonSerializer<Object> serializer = new EncryptedJsonSerializer(
+                ValueSerializer<Object> serializer = new EncryptedJsonSerializer(
                     writer.getSerializer(), deserializer);
                 writer.assignSerializer(serializer);
                 newWriter.add(writer);

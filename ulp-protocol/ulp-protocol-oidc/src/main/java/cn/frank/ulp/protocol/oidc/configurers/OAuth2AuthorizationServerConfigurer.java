@@ -32,7 +32,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.authorization.web.NimbusJwkSetEndpointFilter;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.security.web.context.SecurityContextHolderFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
@@ -80,17 +80,16 @@ public final class OAuth2AuthorizationServerConfigurer extends
     }
 
     @Override
-    public void init(HttpSecurity httpSecurity) throws Exception {
+    public void init(HttpSecurity httpSecurity) {
         initSessionRegistry(httpSecurity);
         this.configurers.values().forEach(configurer -> {
             configurer.init(httpSecurity);
             this.endpointMatchers.add(configurer.getEndpointMatcher());
         });
         //Get jwk endpoint
-        this.endpointMatchers.add(new EndpointMatcher(
-            new AntPathRequestMatcher(ProtocolConstants.OidcEndpointConstants.JWK_SET_ENDPOINT,
-                HttpMethod.GET.name()),
-            false));
+        this.endpointMatchers
+            .add(new EndpointMatcher(PathPatternRequestMatcher.pathPattern(HttpMethod.GET,
+                ProtocolConstants.OidcEndpointConstants.JWK_SET_ENDPOINT), false));
         //异常处理
         httpSecurity.exceptionHandling(exceptionHandling -> {
             if (exceptionHandling != null) {

@@ -24,8 +24,6 @@ import org.mapstruct.Mapper;
 import org.springframework.beans.BeanUtils;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cn.frank.ulp.common.entity.setting.SettingEntity;
 import cn.frank.ulp.common.jackjson.encrypt.EncryptionModule;
@@ -38,6 +36,10 @@ import cn.frank.ulp.console.pojo.save.setting.StorageConfigSaveParam;
 import cn.frank.ulp.support.validation.ValidationUtils;
 
 import jakarta.validation.ValidationException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.DefaultTyping;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import static cn.frank.ulp.core.setting.StorageProviderSettingConstants.STORAGE_PROVIDER_KEY;
 
 /**
@@ -132,12 +134,15 @@ public interface StorageSettingConverter {
             }
             entity.setName(STORAGE_PROVIDER_KEY);
             // 指定序列化输入的类型
-            objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(),
-                ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
-            entity.setValue(objectMapper.writeValueAsString(builder.build()));
+            ObjectMapper typedMapper = objectMapper.rebuild()
+                .activateDefaultTyping(
+                    BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build(),
+                    DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
+                .build();
+            entity.setValue(typedMapper.writeValueAsString(builder.build()));
             entity.setDesc(provider.getDesc());
             return entity;
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new RuntimeException(e);
         }
     }
@@ -172,10 +177,11 @@ public interface StorageSettingConverter {
         if (Objects.isNull(entity)) {
             return StorageProviderConfigResult.builder().enabled(false).build();
         }
-        ObjectMapper objectMapper = EncryptionModule.deserializerDecrypt();
-        // 指定序列化输入的类型
-        objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(),
-            ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+        ObjectMapper objectMapper = EncryptionModule.deserializerDecrypt().rebuild()
+            .activateDefaultTyping(
+                BasicPolymorphicTypeValidator.builder().allowIfSubType(Object.class).build(),
+                DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
+            .build();
         try {
             String value = entity.getValue();
             StorageConfig storageConfig = objectMapper.readValue(value, StorageConfig.class);
@@ -186,7 +192,7 @@ public interface StorageSettingConverter {
                     .enabled(true)
                     .config(storageConfig.getConfig()).build();
             //@formatter:on
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new RuntimeException(e);
         }
     }
