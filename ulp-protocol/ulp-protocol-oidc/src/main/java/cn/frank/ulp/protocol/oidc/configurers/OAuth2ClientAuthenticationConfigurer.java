@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -48,6 +49,7 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.util.StringUtils;
 
 import cn.frank.ulp.common.constant.ProtocolConstants;
 import cn.frank.ulp.protocol.code.EndpointMatcher;
@@ -188,18 +190,19 @@ public final class OAuth2ClientAuthenticationConfigurer extends AbstractConfigur
 
         SecurityContextHolder.clearContext();
 
-        // TODO
-        // The authorization server MAY return an HTTP 401 (Unauthorized) status code
-        // to indicate which HTTP authentication schemes are supported.
-        // If the client attempted to authenticate via the "Authorization" request header field,
-        // the authorization server MUST respond with an HTTP 401 (Unauthorized) status code and
-        // include the "WWW-Authenticate" response header field
-        // matching the authentication scheme used by the client.
-
         OAuth2Error error = ((OAuth2AuthenticationException) exception).getError();
         ServletServerHttpResponse httpResponse = new ServletServerHttpResponse(response);
         if (OAuth2ErrorCodes.INVALID_CLIENT.equals(error.getErrorCode())) {
             httpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
+            // RFC 6749 § 5.2: 客户端用 Authorization header (Basic/Bearer) 认证失败时，
+            // 401 响应 MUST 携带 WWW-Authenticate header，scheme 与客户端使用的保持一致；
+            // 上游 SAS OAuth2ClientAuthenticationFilter 同位置留了 TODO 没实现，这里按 spec 补齐。
+            String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+            if (StringUtils.hasText(authHeader)) {
+                String scheme = authHeader.split("\\s+", 2)[0];
+                response.setHeader(HttpHeaders.WWW_AUTHENTICATE,
+                    scheme + " realm=\"ulp\", error=\"invalid_client\"");
+            }
             error = new OAuth2Error(error.getErrorCode(),
                 "Client authentication failed. Either the client or the client credentials are invalid.",
                 OIDC_ERROR_URI);
