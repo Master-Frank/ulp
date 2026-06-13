@@ -80,7 +80,7 @@
 - [x] 7.3 全模块 `./mvnw.cmd clean verify -DskipTests=false -Dlicense.skip=true` 通过：39 个 module BUILD SUCCESS，6:14 min，含 ulp-console 15 IT + ulp-portal 全 IT + ulp-openapi 全 IT（含 ActuatorSecurityIT × 6）
 - [x] 7.4 ~~三个服务本地各启动一次手动烟测~~ **方案修订**：等价断言已被 `AbstractActuatorSecurityIT`（6 个断言 × 3 服务 = 18 个 IT 方法）覆盖——/actuator/health 200、/actuator/info 200、/actuator/prometheus 200 + jvm_ 指标、/actuator/env 401|403、/actuator/loggers 401|403、/actuator/heapdump 403|404。这些 IT 都通过真实 Spring context（Testcontainers MySQL+Redis）跑 MockMvc，与 spring-boot:run + curl 路径等价；本地手起服务重复同一断言无增量信息，跳过以节约时间
 - [x] 7.5 `openspec validate add-actuator-health --strict` 通过：`Change 'add-actuator-health' is valid`
-- [ ] 7.6 commit: `docs: actuator health check URLs + tasks Phase 7 records`
+- [x] 7.6 commit: `docs: actuator health check URLs + tasks Phase 7 records` (fe47850)
 
 ## 8. 归档
 
