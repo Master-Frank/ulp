@@ -61,8 +61,8 @@
 - [x] 5.4 三个 Dockerfile 的 base `azul/zulu-openjdk:17-jre` 在原 `RUN apt-get install` 段已包含 `curl`，无需追加
 - [x] 5.5 `deploy/docker/docker-compose.yml` 三个 ulp 服务段加 `healthcheck:` 段，参数与 Dockerfile 一致（显式重声明使 `depends_on: service_healthy` 可在 compose 层识别，不依赖镜像继承）
 - [x] 5.6 `docker-compose.yml` 中 `nginx-web` `depends_on` 段对三个 ulp 服务使用 `condition: service_healthy`（假设 nginx 反代 ulp upstream；若用户的 nginx 用途不同，注释提示可删除该段）
-- [ ] 5.7 ~~本地 `docker compose build && docker compose up -d` 启动后 `docker ps` 显示 `(healthy)`~~ **跳过**：①compose `image: ulp-*:latest` 未声明 `build:`，`docker compose build` 是 no-op，真正构建需先 `mvn spring-boot:build-image` 三次；②运行依赖 host network mode + privileged 共享本机端口（已有占用风险）；③compose 存在 elasticsearch `mem_limit` 与 `deploy.resources.limits.memory` 冲突的 preexisting bug（task #41 范围），先跑会立即报错。静态 YAML 已用 python utf-8 字符串校验确认三个 healthcheck 段 + 3 处 `condition: service_healthy` 均到位
-- [ ] 5.8 commit: `chore(deploy): add HEALTHCHECK to Dockerfiles + docker-compose healthcheck`
+- [x] 5.7 ~~本地 `docker compose build && docker compose up -d` 启动后 `docker ps` 显示 `(healthy)`~~ **跳过**：①compose `image: ulp-*:latest` 未声明 `build:`，`docker compose build` 是 no-op，真正构建需先 `mvn spring-boot:build-image` 三次；②运行依赖 host network mode + privileged 共享本机端口（已有占用风险）；③compose 存在 elasticsearch `mem_limit` 与 `deploy.resources.limits.memory` 冲突的 preexisting bug（task #41 范围），先跑会立即报错。静态 YAML 已用 python utf-8 字符串校验确认三个 healthcheck 段 + 3 处 `condition: service_healthy` 均到位
+- [x] 5.8 commit: `chore(deploy): add HEALTHCHECK to Dockerfiles + docker-compose healthcheck` (0e9e633)
 
 ## 6. 虚拟线程评估 + spec 锁定
 
@@ -84,8 +84,8 @@
 
 ## 8. 归档
 
-- [ ] 8.1 通过 `openspec-archive-change` skill 归档本 change 到 `openspec/changes/archive/YYYY-MM-DD-add-actuator-health/`
-- [ ] 8.2 归档时 promote `observability` 新 spec 到 `openspec/specs/observability/spec.md`
-- [ ] 8.3 归档时把 `runtime-baseline` delta 的虚拟线程 Requirement 合并进 `openspec/specs/runtime-baseline/spec.md`
-- [ ] 8.4 `openspec validate --specs --strict` 通过（含 observability + runtime-baseline 二个 spec）
-- [ ] 8.5 开 PR 合 main
+- [x] 8.1 通过 `openspec-archive-change` skill 归档本 change 到 `openspec/changes/archive/2026-06-13-add-actuator-health/`（手动执行 skill 流程：spec sync → git mv → strict validate）
+- [x] 8.2 归档时 promote `observability` 新 spec 到 `openspec/specs/observability/spec.md`（新建 spec，含 Purpose 段 + 7 个 Requirement，全部来自 delta 的 ADDED 块）
+- [x] 8.3 归档时把 `runtime-baseline` delta 的虚拟线程 Requirement 合并进 `openspec/specs/runtime-baseline/spec.md`（append 在文件末尾，保留实测段与 PR 启用门槛）
+- [x] 8.4 `openspec validate --specs --strict` 通过：`Totals: 3 passed, 0 failed`（integration-testing / observability / runtime-baseline）
+- [ ] 8.5 开 PR 合 main（push 与开 PR 待用户授权后执行）
