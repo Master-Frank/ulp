@@ -28,7 +28,7 @@
 - [x] 3.6 单元测试：`LiquibaseChangelogHealthIndicatorTest` 7 个用例覆盖 UP / OUT_OF_SERVICE（仅 unrun / 仅 unexpected / 二者皆有）/ 缓存命中 / invalidate / classpath 前缀剥离。**未 mock JDBC + DatabaseFactory**——Liquibase SDK 静态调用链路 mock 成本太高且脆，改为：①提取 `buildHealth(unrun, unexpected, changelog)` 静态方法直测构造逻辑，②匿名子类覆盖 `protected compute()` + 计数器验缓存语义
 - [x] 3.7 本地启动 ulp-console 后 `curl http://localhost:1898/actuator/health` 返回 `liquibaseChangelogDrift: { status: UP, details: { changelog: "classpath*:db/ulp-changelog-master.xml", status: "all changesets applied" } }`
 - [x] 3.8 ~~手动 `UPDATE DATABASECHANGELOG SET MD5SUM='deadbeef'`~~ **跳过**：原 plan 假设我们检测 md5sum 漂移，但 3.3 已把检测维度收敛到 unrun/unexpected，md5sum 改了也不会触发本 indicator（boot 期 SpringLiquibase 直接 fail-fast，应用根本起不来到 indicator 阶段）。同等价值的 OUT_OF_SERVICE 验证已被 3.6 单元测试覆盖；运行时手动验证需 INSERT 假行到 `ulp_changelog_table`，属破坏性 DB 改动，本期不做
-- [x] 3.9 commit: `feat(actuator): add LiquibaseChangelogHealthIndicator with 5min cache` (pending)
+- [x] 3.9 commit: `feat(actuator): add LiquibaseChangelogHealthIndicator with 5min cache` (df94e5c)
 
 **Phase 3 实现偏差汇总**（不是 bug，是有意识地优于 plan 的修订）：
 1. **检测维度从 checksum → unrun/unexpected**：md5sum 漂移由 SpringLiquibase boot fail-fast 覆盖，运行时再查重复且实现复杂；改查 Liquibase SDK 自带的 list* 方法，覆盖更广更稳
