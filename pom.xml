@@ -718,6 +718,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+        <!-- micrometer prometheus registry：暴露 /actuator/prometheus，版本由 spring-boot BOM 管理 -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <scope>runtime</scope>
+        </dependency>
         <!-- processor -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
