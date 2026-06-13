@@ -71,7 +71,7 @@
 - [x] 6.3 `./mvnw.cmd -pl ulp-console verify -Dit.test='*IT' -Dlicense.skip=true -Dsurefire.failIfNoSpecifiedTests=false` 全绿：4 个 IT 类共 15 个测试方法（ActuatorSecurityIT × 6 + OrganizationControllerIT + UserControllerIT × 3 + AppControllerIT × 3 — 注:Phase 4 是 18 个,本次范围只 ulp-console 故 15），1:11 min，0 failures / 0 errors
 - [x] 6.4 评估走"稳定但保守"路线：design.md Decision 6 追加 2026-06-13 实测段（实测/范围/限制三段）；runtime-baseline spec 保留"暂不启用"结论但补充"实测在基础 IT 路径下未挂死"的事实 + 升级启用 PR 的硬性证据要求（三 deployable 全 IT + pinning trace + 主路径压测）。**未走"放开 spec"分支**——本次实测覆盖窄（仅 ulp-console + 串行 MockMvc），不足以替代生产级压测,spec 仍保留禁用 default + 严格审批门槛
 - [x] 6.5 已从 ulp-console application.yml 移除临时加的 `spring.threads.virtual` 配置；三服务恢复"未声明"状态（=默认 false）
-- [ ] 6.6 commit: `chore(runtime): evaluate virtual threads on SB4 + Hibernate7 + Lettuce, lock baseline`
+- [x] 6.6 commit: `chore(runtime): evaluate virtual threads on SB4 + Hibernate7 + Lettuce, lock baseline` (0ca52bb)
 
 ## 7. 文档 + 最终验证
 
