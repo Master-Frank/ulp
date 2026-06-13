@@ -131,6 +131,28 @@ server:
       io: 32
       worker: 256
     buffer-size: 1024
+# spring boot actuator —— 见 openspec/specs/observability/spec.md
+# 暴露白名单显式列出；heapdump/threaddump/shutdown 等敏感端点永不暴露。
+# /actuator/health/{liveness,readiness} 供 k8s 探针 + docker HEALTHCHECK；
+# show-details=always 暴露组件 breakdown，访问权限由 PortalSecurityConfiguration 控制。
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus, loggers, env, mappings
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+  info:
+    env:
+      enabled: true
+    build:
+      enabled: true
+    git:
+      enabled: true
+      mode: full
 # springdoc
 springdoc:
   swagger-ui:

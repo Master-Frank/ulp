@@ -38,23 +38,77 @@
             <artifactId>ulp-audit</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!-- 集成测试：从 ulp-support 消费共享测试基础设施（AbstractIntegrationTest、AbstractActuatorSecurityIT 等） -->
+        <dependency>
+            <groupId>cn.frank.ulp</groupId>
+            <artifactId>ulp-support</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <!-- test-jar 不会传递 test-scope 依赖，必须在消费方再次声明 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Spring Boot 4 把 MockMvc 测试切片从 spring-boot-starter-test 拆出，需单独声明 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <!-- build -->
     <build>
         <!--打包后名称-->
         <finalName>ulp-openapi-${project.version}</finalName>
         <plugins>
-            <!--spring-boot-maven-plugin-->
+            <!--spring-boot-maven-plugin —— build-info 生成 META-INF/build-info.properties，
+                供 /actuator/info 通过 BuildProperties 自动暴露 build.{group,artifact,name,version,time}-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <executions>
                     <execution>
+                        <id>build-info</id>
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>repackage</id>
                         <goals>
                             <goal>repackage</goal>
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <!--git-commit-id —— 生成 classpath:git.properties，供 /actuator/info 通过 GitProperties 暴露
+                git.{branch,commit.id,commit.time}；配置由 root pluginManagement 提供-->
+            <plugin>
+                <groupId>io.github.git-commit-id</groupId>
+                <artifactId>git-commit-id-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

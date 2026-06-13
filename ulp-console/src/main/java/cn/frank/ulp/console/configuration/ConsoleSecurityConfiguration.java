@@ -27,6 +27,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.serializer.GenericJacksonJsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.http.HttpMethod;
@@ -37,6 +39,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.*;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -138,6 +141,37 @@ public class ConsoleSecurityConfiguration implements BeanClassLoaderAware {
                 .with(withFormLoginConfigurer(),configurer-> {});
         // @formatter:on
         return httpSecurity.build();
+    }
+
+    /**
+     * Actuator 专用 SecurityFilterChain：与 /api/** 主链路解耦，独立处理 /actuator/**。
+     *
+     * <p>放行 health / info / prometheus 给运维探针和监控系统拉取；其余端点
+     * （env / loggers / metrics / mappings 等）要求 ROLE_ADMIN，未鉴权请求返回 403。
+     * 当前 console 没有把 actuator 暴露给 admin 登录的路径，hasRole 在实践中等同 deny；
+     * 写成 hasRole 而非 denyAll 是为后续运维平台用 admin token 拉指标保留接入点。
+     *
+     * <p>{@code @Order(HIGHEST_PRECEDENCE)}：securityMatcher 已经把 actuator 路径与
+     * 主 chain 的 /api/** 隔开，理论上顺序无所谓，但显式声明避免未来扩展时踩坑。
+     */
+    @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    public SecurityFilterChain actuatorSecurityFilterChain(HttpSecurity http) throws Exception {
+        // @formatter:off
+        http.securityMatcher("/actuator/**")
+            .authorizeHttpRequests(registry -> registry
+                .requestMatchers(
+                    PathPatternRequestMatcher.pathPattern("/actuator/health"),
+                    PathPatternRequestMatcher.pathPattern("/actuator/health/**"),
+                    PathPatternRequestMatcher.pathPattern("/actuator/info"),
+                    PathPatternRequestMatcher.pathPattern("/actuator/prometheus")
+                ).permitAll()
+                .anyRequest().hasRole("ADMIN"))
+            .csrf(AbstractHttpConfigurer::disable)
+            .cors(AbstractHttpConfigurer::disable)
+            .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        // @formatter:on
+        return http.build();
     }
 
     /**

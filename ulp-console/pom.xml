@@ -113,17 +113,31 @@
         <!--打包后名称-->
         <finalName>ulp-console-${project.version}</finalName>
         <plugins>
-            <!--spring-boot-maven-plugin-->
+            <!--spring-boot-maven-plugin —— build-info 生成 META-INF/build-info.properties，
+                供 /actuator/info 通过 BuildProperties 自动暴露 build.{group,artifact,name,version,time}-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <executions>
                     <execution>
+                        <id>build-info</id>
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>repackage</id>
                         <goals>
                             <goal>repackage</goal>
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <!--git-commit-id —— 生成 classpath:git.properties，供 /actuator/info 通过 GitProperties 暴露
+                git.{branch,commit.id,commit.time}；配置由 root pluginManagement 提供-->
+            <plugin>
+                <groupId>io.github.git-commit-id</groupId>
+                <artifactId>git-commit-id-maven-plugin</artifactId>
             </plugin>
             <!--清理-->
             <plugin>

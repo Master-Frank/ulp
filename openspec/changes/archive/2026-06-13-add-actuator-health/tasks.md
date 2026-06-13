@@ -1,0 +1,91 @@
+## 1. Actuator 基础接入（端点暴露 + 健康分级）
+
+- [x] 1.1 在 root `pom.xml` 加 `io.micrometer:micrometer-registry-prometheus` 依赖（已有 actuator starter，仅缺 Prometheus registry）
+- [x] 1.2 三个部署单元（ulp-console / ulp-portal / ulp-openapi）`application.yml` 新增 `management.endpoints.web.exposure.include: health, info, metrics, prometheus, loggers, env, mappings`
+- [x] 1.3 三个 `application.yml` 新增 `management.endpoint.health.show-details: always` + `management.endpoint.health.probes.enabled: true`
+- [x] 1.4 三个 `application.yml` 新增 `management.info.env.enabled: true`、`management.info.build.enabled: true`、`management.info.git.enabled: true`、`management.info.git.mode: full`
+- [x] 1.5 `mvnw.cmd clean compile -Dlicense.skip=true` 全模块通过
+- [x] 1.6 本地启动 ulp-console，`curl http://localhost:1898/actuator/health` 返回 200 含 components.db / components.redis 详情（注：SB4 默认不带 LiquibaseHealthIndicator，仅有 LiquibaseEndpoint；liquibase 健康项由 Phase 3 自定义指标提供）
+- [x] 1.7 `curl http://localhost:1898/actuator/health/liveness` 与 `/readiness` 返回 200 + `{"status":"UP"}`
+- [x] 1.8 commit: `feat(actuator): expose health/info/metrics/prometheus endpoints with probe support` (63bd364)
+
+## 2. build-info / git-info 接入
+
+- [x] 2.1 `spring-boot-maven-plugin` 加 `build-info` execution（**偏差**：放在三个 deployable pom 而非 root pom——root 加会让所有 library jar 都生成 `META-INF/build-info.properties`，Spring Boot `BuildProperties` auto-config 读 classpath 单一资源会导致下游应用拿到错乱的 ulp-* library 元数据而非自己的）
+- [x] 2.2 root `pom.xml` `pluginManagement` 加 `io.github.git-commit-id:git-commit-id-maven-plugin`，配置 `failOnNoGitDirectory=false` + `includeOnlyProperties`（白名单 branch / build.{time,version} / commit.* —— 比 plan 略保守，剔除 user.email/host 等可能泄漏的字段）；三个 deployable pom 显式声明插件激活
+- [x] 2.3 在 `ulp-support` 创建 `cn.frank.ulp.support.observability.RuntimeBaselineInfoContributor`，实现 `InfoContributor`，namespace `runtime`，暴露 **springBoot / spring / java / jackson** 四字段（plan 写三字段，多加 spring 是因为 Spring Boot 4 + Spring Framework 7 是分版本号锁定的，两边都要 visible）；通过 `@Component` 直接注册（不走 SupportAutoConfiguration `@Bean`——三个 Application 类都在 `cn.frank.ulp` 包根，默认 component scan 必然覆盖 `cn.frank.ulp.support.observability.**`）
+- [x] 2.4 `mvnw.cmd -pl ulp-support,ulp-console -am install -DskipTests` 后 unzip ulp-console fat jar → BOOT-INF/lib/ulp-support-1.1.0.jar 含 RuntimeBaselineInfoContributor.class；ulp-console-1.1.0.jar BOOT-INF/classes/ 含 `META-INF/build-info.properties` + `git.properties`
+- [x] 2.5 本地启动 ulp-console 1898，`curl /actuator/info` 返回三 namespace 齐全：`build.version=1.1.0`、`git.commit.id.abbrev=63bd364`、`runtime.springBoot=4.0.7` + spring 7.0.8 + java 21.0.11 + jackson 3.1.4
+- [x] 2.6 commit: `feat(actuator): expose build/git/runtime info via /actuator/info` (aba85ce)
+
+## 3. 自定义 LiquibaseChangelogHealthIndicator
+
+- [x] 3.1 在 `ulp-support` 创建 `cn.frank.ulp.support.observability.LiquibaseChangelogHealthIndicator`，bean 名 `liquibaseChangelogDriftHealthIndicator`（Spring Boot 4 actuator 用 `@Component` bean 名去 `HealthIndicator` 后缀作为 components key，故最终 health JSON 里出现的是 `liquibaseChangelogDrift`）
+- [x] 3.2 ~~读取 `DATABASECHANGELOG` 表的 last N 行~~ **方案修订**：不再手写 SQL，改为复用 Liquibase 5 SDK 的 `Liquibase.listUnrunChangeSets()` + `listUnexpectedChangeSets()`——前者识别 classpath 有但 DB 没跑的、后者识别 DB 跑过但 classpath 不存在的。比手写 SQL 多识别两种漂移，且无需自己解析 changeset 元数据
+- [x] 3.3 ~~classpath changelog 的 checksum 解析~~ **方案修订**：checksum 漂移由 SpringLiquibase 在 boot 期 fail-fast（应用根本起不来），indicator 不再重复检测；改为聚焦 unrun / unexpected 两个运行时可见的漂移信号。规避了 `ClassLoaderResourceAccessor` + Spring `classpath*:` 前缀的复杂兼容问题
+- [x] 3.4 实现内存 cache（5 分钟 TTL，`AtomicReference<CachedHealth>` + `Instant` 比较；零额外依赖，无需 Caffeine）
+- [x] 3.5 漂移时 status `OUT_OF_SERVICE`，details 含 `unrunInClasspath` / `unexpectedInDb` 数组（字段名比 plan 的 `driftedChangesets` 更直接表达检测维度）
+- [x] 3.6 单元测试：`LiquibaseChangelogHealthIndicatorTest` 7 个用例覆盖 UP / OUT_OF_SERVICE（仅 unrun / 仅 unexpected / 二者皆有）/ 缓存命中 / invalidate / classpath 前缀剥离。**未 mock JDBC + DatabaseFactory**——Liquibase SDK 静态调用链路 mock 成本太高且脆，改为：①提取 `buildHealth(unrun, unexpected, changelog)` 静态方法直测构造逻辑，②匿名子类覆盖 `protected compute()` + 计数器验缓存语义
+- [x] 3.7 本地启动 ulp-console 后 `curl http://localhost:1898/actuator/health` 返回 `liquibaseChangelogDrift: { status: UP, details: { changelog: "classpath*:db/ulp-changelog-master.xml", status: "all changesets applied" } }`
+- [x] 3.8 ~~手动 `UPDATE DATABASECHANGELOG SET MD5SUM='deadbeef'`~~ **跳过**：原 plan 假设我们检测 md5sum 漂移，但 3.3 已把检测维度收敛到 unrun/unexpected，md5sum 改了也不会触发本 indicator（boot 期 SpringLiquibase 直接 fail-fast，应用根本起不来到 indicator 阶段）。同等价值的 OUT_OF_SERVICE 验证已被 3.6 单元测试覆盖；运行时手动验证需 INSERT 假行到 `ulp_changelog_table`，属破坏性 DB 改动，本期不做
+- [x] 3.9 commit: `feat(actuator): add LiquibaseChangelogHealthIndicator with 5min cache` (df94e5c)
+
+**Phase 3 实现偏差汇总**（不是 bug，是有意识地优于 plan 的修订）：
+1. **检测维度从 checksum → unrun/unexpected**：md5sum 漂移由 SpringLiquibase boot fail-fast 覆盖，运行时再查重复且实现复杂；改查 Liquibase SDK 自带的 list* 方法，覆盖更广更稳
+2. **必须复刻 SpringLiquibase 的两处归一化**才能拿到正确结果：
+   - 路径前缀剥离：`classpath*:db/ulp-changelog-master.xml` → `db/ulp-changelog-master.xml`，否则 `ChangeLogParseException: file not found`
+   - 自定义表名传递：`ulp_changelog_table` / `ulp_changelog_lock_table`（本仓 `UlpLiquibaseConfiguration` 设定）必须 setDatabaseChangeLogTableName，否则新 `Liquibase` 实例查默认 `DATABASECHANGELOG` 空表，全部 changeset 报"unrun"假阳性
+3. **测试策略**：不 mock JDBC + 静态 DatabaseFactory，改为提取静态 buildHealth + 匿名子类 override compute() — 测试成本低且行为覆盖更直接
+
+## 4. SecurityConfiguration 鉴权放行
+
+- [x] 4.1 修改 `ulp-console/.../ConsoleSecurityConfiguration.java`：**偏差**——原 plan 写"在 `authorizeHttpRequests` 中加 …"行不通，主链路用 `.securityMatcher(API_PATH+"/**")` scope 在 `/api/**`，`/actuator/**` 落在 chain 之外；改为新加 `actuatorSecurityFilterChain` @Bean（`@Order(HIGHEST_PRECEDENCE)`），公开 health/info/prometheus，其余 `hasRole("ADMIN")`（保留运维平台用 admin token 接入点的可能）
+- [x] 4.2 修改 `ulp-portal/.../PortalSecurityConfiguration.java`：同样独立 `actuatorSecurityFilterChain` @Bean；非公开端点 `denyAll()`（portal 是终端用户入口，无诊断访问角色）
+- [x] 4.3 修改 `ulp-openapi/.../OpenApiSecurityConfiguration.java`：同 portal，独立 chain；非公开端点 `denyAll()`（openapi 只走 access_token 鉴权，actuator 不在该体系内）
+- [x] 4.4 三处全部 `PathPatternRequestMatcher.pathPattern(...)`，未使用 `antMatchers`（runtime-baseline 已禁）
+- [x] 4.5 在 `ulp-support` 创建 `AbstractActuatorSecurityIT`（基于 `AbstractIntegrationTest`），三模块通过子类继承复用同一份合同断言：
+  - [x] 4.5.1 未鉴权 GET `/actuator/health` → 200
+  - [x] 4.5.2 未鉴权 GET `/actuator/info` → 200
+  - [x] 4.5.3 未鉴权 GET `/actuator/prometheus` → 200，body 含 `# HELP` / `# TYPE` / `jvm_` 指标（**偏差**：先打一发 `/actuator/health` 让 WebMvcMetricsFilter 记录 `http_server_requests` 否则首次抓取空；断言改为更通用的 `jvm_*` 计数器存在）
+  - [x] 4.5.4 未鉴权 GET `/actuator/env` → 401 或 403
+  - [x] 4.5.5 未鉴权 GET `/actuator/loggers` → 401 或 403
+  - [x] 4.5.6 未鉴权 GET `/actuator/heapdump` → **403 或 404**（**偏差**：security filter 在 dispatcher 前运行，`hasRole`/`denyAll` 未鉴权直接 403；未暴露端点理想 404，两种都满足"不可访问"目标）
+- [x] 4.6 三个部署单元各创建 `ActuatorSecurityIT extends AbstractActuatorSecurityIT`，`./mvnw.cmd -pl ulp-console,ulp-portal,ulp-openapi verify -Dit.test=ActuatorSecurityIT` 全绿（18/18 tests）
+- [x] 4.7 commit: `feat(security): wire actuator endpoint authorization across 3 services` (65b8655)
+
+## 5. Docker HEALTHCHECK 集成
+
+- [x] 5.1 `ulp-console/Dockerfile`（**路径偏差**：实际 Dockerfile 在模块根而非 `deploy/docker/`）加 `HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=60s CMD curl -fs http://localhost:1898/actuator/health/liveness`
+- [x] 5.2 `ulp-portal/Dockerfile` 同上（port 1989）
+- [x] 5.3 `ulp-openapi/Dockerfile` 同上（port 1988）
+- [x] 5.4 三个 Dockerfile 的 base `azul/zulu-openjdk:17-jre` 在原 `RUN apt-get install` 段已包含 `curl`，无需追加
+- [x] 5.5 `deploy/docker/docker-compose.yml` 三个 ulp 服务段加 `healthcheck:` 段，参数与 Dockerfile 一致（显式重声明使 `depends_on: service_healthy` 可在 compose 层识别，不依赖镜像继承）
+- [x] 5.6 `docker-compose.yml` 中 `nginx-web` `depends_on` 段对三个 ulp 服务使用 `condition: service_healthy`（假设 nginx 反代 ulp upstream；若用户的 nginx 用途不同，注释提示可删除该段）
+- [x] 5.7 ~~本地 `docker compose build && docker compose up -d` 启动后 `docker ps` 显示 `(healthy)`~~ **跳过**：①compose `image: ulp-*:latest` 未声明 `build:`，`docker compose build` 是 no-op，真正构建需先 `mvn spring-boot:build-image` 三次；②运行依赖 host network mode + privileged 共享本机端口（已有占用风险）；③compose 存在 elasticsearch `mem_limit` 与 `deploy.resources.limits.memory` 冲突的 preexisting bug（task #41 范围），先跑会立即报错。静态 YAML 已用 python utf-8 字符串校验确认三个 healthcheck 段 + 3 处 `condition: service_healthy` 均到位
+- [x] 5.8 commit: `chore(deploy): add HEALTHCHECK to Dockerfiles + docker-compose healthcheck` (0e9e633)
+
+## 6. 虚拟线程评估 + spec 锁定
+
+- [x] 6.1 ~~本地启动 ulp-console，**不** 设 `spring.threads.virtual.enabled`（保持默认 false），跑现有 IT 套件确认基线绿~~ **方案修订**：基线由 Phase 4 的 `ActuatorSecurityIT` 18/18 + Phase 5 commit 前的全模块 `verify` 共同证明，本步骤跳过显式重跑以节约 CI 时间
+- [x] 6.2 临时在 `ulp-console/src/main/resources/application.yml` 顶部加 `spring.threads.virtual.enabled: true`；Spring boot 启动正常（IT 直接验证启动路径），日志无 `pinning detected` / `deadlock` 字样
+- [x] 6.3 `./mvnw.cmd -pl ulp-console verify -Dit.test='*IT' -Dlicense.skip=true -Dsurefire.failIfNoSpecifiedTests=false` 全绿：4 个 IT 类共 15 个测试方法（ActuatorSecurityIT × 6 + OrganizationControllerIT + UserControllerIT × 3 + AppControllerIT × 3 — 注:Phase 4 是 18 个,本次范围只 ulp-console 故 15），1:11 min，0 failures / 0 errors
+- [x] 6.4 评估走"稳定但保守"路线：design.md Decision 6 追加 2026-06-13 实测段（实测/范围/限制三段）；runtime-baseline spec 保留"暂不启用"结论但补充"实测在基础 IT 路径下未挂死"的事实 + 升级启用 PR 的硬性证据要求（三 deployable 全 IT + pinning trace + 主路径压测）。**未走"放开 spec"分支**——本次实测覆盖窄（仅 ulp-console + 串行 MockMvc），不足以替代生产级压测,spec 仍保留禁用 default + 严格审批门槛
+- [x] 6.5 已从 ulp-console application.yml 移除临时加的 `spring.threads.virtual` 配置；三服务恢复"未声明"状态（=默认 false）
+- [x] 6.6 commit: `chore(runtime): evaluate virtual threads on SB4 + Hibernate7 + Lettuce, lock baseline` (0ca52bb)
+
+## 7. 文档 + 最终验证
+
+- [x] 7.1 root `README.md` 加"健康检查 / 指标端点"段，三服务表格 + 注释覆盖 health/liveness/readiness/info/prometheus/敏感端点；附 Docker HEALTHCHECK + compose depends_on 说明
+- [x] 7.2 `CLAUDE.md` "Configuration that's easy to get wrong" 段加 Actuator 鉴权条目：说明 actuator chain 独立 @Bean、`.securityMatcher(API_PATH+"/**")` 主链路不覆盖 `/actuator/**`、三处 SecurityConfiguration 必须同步、敏感端点放行将泄密。**偏差**：CLAUDE.md 在 repo 根但 untracked（per session 持久约束不 commit），改动留在 working tree 供后续会话读取，不进 git 历史
+- [x] 7.3 全模块 `./mvnw.cmd clean verify -DskipTests=false -Dlicense.skip=true` 通过：39 个 module BUILD SUCCESS，6:14 min，含 ulp-console 15 IT + ulp-portal 全 IT + ulp-openapi 全 IT（含 ActuatorSecurityIT × 6）
+- [x] 7.4 ~~三个服务本地各启动一次手动烟测~~ **方案修订**：等价断言已被 `AbstractActuatorSecurityIT`（6 个断言 × 3 服务 = 18 个 IT 方法）覆盖——/actuator/health 200、/actuator/info 200、/actuator/prometheus 200 + jvm_ 指标、/actuator/env 401|403、/actuator/loggers 401|403、/actuator/heapdump 403|404。这些 IT 都通过真实 Spring context（Testcontainers MySQL+Redis）跑 MockMvc，与 spring-boot:run + curl 路径等价；本地手起服务重复同一断言无增量信息，跳过以节约时间
+- [x] 7.5 `openspec validate add-actuator-health --strict` 通过：`Change 'add-actuator-health' is valid`
+- [x] 7.6 commit: `docs: actuator health check URLs + tasks Phase 7 records` (fe47850)
+
+## 8. 归档
+
+- [x] 8.1 通过 `openspec-archive-change` skill 归档本 change 到 `openspec/changes/archive/2026-06-13-add-actuator-health/`（手动执行 skill 流程：spec sync → git mv → strict validate）
+- [x] 8.2 归档时 promote `observability` 新 spec 到 `openspec/specs/observability/spec.md`（新建 spec，含 Purpose 段 + 7 个 Requirement，全部来自 delta 的 ADDED 块）
+- [x] 8.3 归档时把 `runtime-baseline` delta 的虚拟线程 Requirement 合并进 `openspec/specs/runtime-baseline/spec.md`（append 在文件末尾，保留实测段与 PR 启用门槛）
+- [x] 8.4 `openspec validate --specs --strict` 通过：`Totals: 3 passed, 0 failed`（integration-testing / observability / runtime-baseline）
+- [ ] 8.5 开 PR 合 main（push 与开 PR 待用户授权后执行）
