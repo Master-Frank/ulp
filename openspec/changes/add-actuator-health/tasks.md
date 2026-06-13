@@ -39,18 +39,18 @@
 
 ## 4. SecurityConfiguration 鉴权放行
 
-- [ ] 4.1 修改 `ulp-console/.../ConsoleSecurityConfiguration.java`：`authorizeHttpRequests` 中加 `requestMatchers("/actuator/health", "/actuator/health/**", "/actuator/info", "/actuator/prometheus").permitAll()`，加 `requestMatchers("/actuator/**").hasRole("ADMIN")`
-- [ ] 4.2 修改 `ulp-portal/.../PortalSecurityConfiguration.java`：加 `permitAll` 公开端点；其余 `/actuator/**` 用 `denyAll()`
-- [ ] 4.3 修改 `ulp-openapi/.../OpenApiSecurityConfiguration.java`：同 portal，公开端点 `permitAll`，其余 `denyAll`
-- [ ] 4.4 三处确认未使用 `antMatchers`，全部 `requestMatchers`（runtime-baseline 已禁 antMatchers）
-- [ ] 4.5 写一个 `ActuatorSecurityIT` 集成测试（基于 `AbstractIntegrationTest`），覆盖：
-  - [ ] 4.5.1 未鉴权 GET `/actuator/health` → 200
-  - [ ] 4.5.2 未鉴权 GET `/actuator/info` → 200
-  - [ ] 4.5.3 未鉴权 GET `/actuator/prometheus` → 200，body 含 `http_server_requests_seconds_count`
-  - [ ] 4.5.4 未鉴权 GET `/actuator/env` → 401 或 403
-  - [ ] 4.5.5 未鉴权 GET `/actuator/loggers` → 401 或 403
-  - [ ] 4.5.6 未鉴权 GET `/actuator/heapdump` → 404（未暴露）
-- [ ] 4.6 三个部署单元各跑一次该 IT（或在 ulp-support 提供 abstract 基类后各模块继承）
+- [x] 4.1 修改 `ulp-console/.../ConsoleSecurityConfiguration.java`：**偏差**——原 plan 写"在 `authorizeHttpRequests` 中加 …"行不通，主链路用 `.securityMatcher(API_PATH+"/**")` scope 在 `/api/**`，`/actuator/**` 落在 chain 之外；改为新加 `actuatorSecurityFilterChain` @Bean（`@Order(HIGHEST_PRECEDENCE)`），公开 health/info/prometheus，其余 `hasRole("ADMIN")`（保留运维平台用 admin token 接入点的可能）
+- [x] 4.2 修改 `ulp-portal/.../PortalSecurityConfiguration.java`：同样独立 `actuatorSecurityFilterChain` @Bean；非公开端点 `denyAll()`（portal 是终端用户入口，无诊断访问角色）
+- [x] 4.3 修改 `ulp-openapi/.../OpenApiSecurityConfiguration.java`：同 portal，独立 chain；非公开端点 `denyAll()`（openapi 只走 access_token 鉴权，actuator 不在该体系内）
+- [x] 4.4 三处全部 `PathPatternRequestMatcher.pathPattern(...)`，未使用 `antMatchers`（runtime-baseline 已禁）
+- [x] 4.5 在 `ulp-support` 创建 `AbstractActuatorSecurityIT`（基于 `AbstractIntegrationTest`），三模块通过子类继承复用同一份合同断言：
+  - [x] 4.5.1 未鉴权 GET `/actuator/health` → 200
+  - [x] 4.5.2 未鉴权 GET `/actuator/info` → 200
+  - [x] 4.5.3 未鉴权 GET `/actuator/prometheus` → 200，body 含 `# HELP` / `# TYPE` / `jvm_` 指标（**偏差**：先打一发 `/actuator/health` 让 WebMvcMetricsFilter 记录 `http_server_requests` 否则首次抓取空；断言改为更通用的 `jvm_*` 计数器存在）
+  - [x] 4.5.4 未鉴权 GET `/actuator/env` → 401 或 403
+  - [x] 4.5.5 未鉴权 GET `/actuator/loggers` → 401 或 403
+  - [x] 4.5.6 未鉴权 GET `/actuator/heapdump` → **403 或 404**（**偏差**：security filter 在 dispatcher 前运行，`hasRole`/`denyAll` 未鉴权直接 403；未暴露端点理想 404，两种都满足"不可访问"目标）
+- [x] 4.6 三个部署单元各创建 `ActuatorSecurityIT extends AbstractActuatorSecurityIT`，`./mvnw.cmd -pl ulp-console,ulp-portal,ulp-openapi verify -Dit.test=ActuatorSecurityIT` 全绿（18/18 tests）
 - [ ] 4.7 commit: `feat(security): wire actuator endpoint authorization across 3 services`
 
 ## 5. Docker HEALTHCHECK 集成

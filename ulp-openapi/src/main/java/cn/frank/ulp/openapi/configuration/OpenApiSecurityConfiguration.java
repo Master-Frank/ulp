@@ -18,6 +18,8 @@ package cn.frank.ulp.openapi.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -46,6 +48,34 @@ import static cn.frank.ulp.openapi.constant.OpenApiV1Constants.OPEN_API_V1_PATH;
 @EnableMethodSecurity
 @Configuration
 public class OpenApiSecurityConfiguration {
+
+    /**
+     * Actuator 专用 SecurityFilterChain：与 /api/v1/** 主链路解耦。
+     *
+     * <p>放行 health / info / prometheus；其余 actuator 端点 {@code denyAll()} ——
+     * openapi 走 access_token 鉴权，actuator 不参与 token 体系，所有非公开端点直接拒绝。
+     *
+     * <p>{@code @Order(HIGHEST_PRECEDENCE)}：确保此 chain 在默认 /api/v1/** chain 之前匹配。
+     */
+    @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    public SecurityFilterChain actuatorSecurityFilterChain(HttpSecurity http) throws Exception {
+        // @formatter:off
+        http.securityMatcher("/actuator/**")
+            .authorizeHttpRequests(registry -> registry
+                .requestMatchers(
+                    PathPatternRequestMatcher.pathPattern("/actuator/health"),
+                    PathPatternRequestMatcher.pathPattern("/actuator/health/**"),
+                    PathPatternRequestMatcher.pathPattern("/actuator/info"),
+                    PathPatternRequestMatcher.pathPattern("/actuator/prometheus")
+                ).permitAll()
+                .anyRequest().denyAll())
+            .csrf(AbstractHttpConfigurer::disable)
+            .cors(AbstractHttpConfigurer::disable)
+            .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        // @formatter:on
+        return http.build();
+    }
 
     /**
      * securityFilterChain

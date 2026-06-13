@@ -24,14 +24,18 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.lang.NonNull;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.annotation.web.configurers.RequestCacheConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -116,6 +120,36 @@ public class PortalSecurityConfiguration extends AbstractSecurityConfiguration
             PathPatternRequestMatcher.pathPattern(HttpMethod.GET, "/webjars/**"),
             PathPatternRequestMatcher.pathPattern(HttpMethod.GET, "/images/**"),
             PathPatternRequestMatcher.pathPattern(HttpMethod.GET, "/favicon.ico"));
+    }
+
+    /**
+     * Actuator 专用 SecurityFilterChain：与 IDP / OIDC / FORM / JWT / 默认 /api/** chain 全部解耦。
+     *
+     * <p>放行 health / info / prometheus；其余 actuator 端点 {@code denyAll()} ——
+     * portal 是终端用户面向的，没有任何"admin"语义，actuator 全部敏感端点都不该被任何 portal 用户访问。
+     * 需要运维拉指标的场景在 console 走 hasRole("ADMIN")，或者后续走独立 management 端口隔离。
+     *
+     * <p>{@code @Order(HIGHEST_PRECEDENCE)}：portal 有 5 条 chain（IDP / OIDC / FORM / JWT / 默认），
+     * 显式声明 actuator chain 最高优先级，避免 IDP 那种 OrRequestMatcher 误捕 /actuator/* 路径。
+     */
+    @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    public SecurityFilterChain actuatorSecurityFilterChain(HttpSecurity http) throws Exception {
+        // @formatter:off
+        http.securityMatcher("/actuator/**")
+            .authorizeHttpRequests(registry -> registry
+                .requestMatchers(
+                    PathPatternRequestMatcher.pathPattern("/actuator/health"),
+                    PathPatternRequestMatcher.pathPattern("/actuator/health/**"),
+                    PathPatternRequestMatcher.pathPattern("/actuator/info"),
+                    PathPatternRequestMatcher.pathPattern("/actuator/prometheus")
+                ).permitAll()
+                .anyRequest().denyAll())
+            .csrf(AbstractHttpConfigurer::disable)
+            .cors(AbstractHttpConfigurer::disable)
+            .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        // @formatter:on
+        return http.build();
     }
 
     /**
