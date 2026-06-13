@@ -7,15 +7,15 @@
 - [x] 1.5 `mvnw.cmd clean compile -Dlicense.skip=true` 全模块通过
 - [x] 1.6 本地启动 ulp-console，`curl http://localhost:1898/actuator/health` 返回 200 含 components.db / components.redis 详情（注：SB4 默认不带 LiquibaseHealthIndicator，仅有 LiquibaseEndpoint；liquibase 健康项由 Phase 3 自定义指标提供）
 - [x] 1.7 `curl http://localhost:1898/actuator/health/liveness` 与 `/readiness` 返回 200 + `{"status":"UP"}`
-- [ ] 1.8 commit: `feat(actuator): expose health/info/metrics/prometheus endpoints with probe support`
+- [x] 1.8 commit: `feat(actuator): expose health/info/metrics/prometheus endpoints with probe support` (63bd364)
 
 ## 2. build-info / git-info 接入
 
-- [ ] 2.1 root `pom.xml` 的 `<build><plugins>` 加 `spring-boot-maven-plugin` 的 `build-info` execution（如已存在则跳过）
-- [ ] 2.2 root `pom.xml` 加 `pl.project13.maven:git-commit-id-maven-plugin`，配置 `failOnNoGitDirectory=false`、`includeOnlyProperties=^git\.(branch|commit\.id\.abbrev|commit\.time)$`
-- [ ] 2.3 在 `ulp-support` 创建 `cn.frank.ulp.support.observability.RuntimeBaselineInfoContributor`，实现 `InfoContributor`，namespace `runtime`，暴露 springBoot / java / jackson 三个字段；通过 `@Component` 注册
-- [ ] 2.4 `mvnw.cmd clean package -DskipTests=true` 后检查任一部署单元 jar 内含 `META-INF/build-info.properties` 与 `git.properties`
-- [ ] 2.5 本地启动后 `curl http://localhost:1898/actuator/info` 返回含 `build.version` / `git.commit.id.abbrev` / `runtime.springBoot` 三个字段
+- [x] 2.1 `spring-boot-maven-plugin` 加 `build-info` execution（**偏差**：放在三个 deployable pom 而非 root pom——root 加会让所有 library jar 都生成 `META-INF/build-info.properties`，Spring Boot `BuildProperties` auto-config 读 classpath 单一资源会导致下游应用拿到错乱的 ulp-* library 元数据而非自己的）
+- [x] 2.2 root `pom.xml` `pluginManagement` 加 `io.github.git-commit-id:git-commit-id-maven-plugin`，配置 `failOnNoGitDirectory=false` + `includeOnlyProperties`（白名单 branch / build.{time,version} / commit.* —— 比 plan 略保守，剔除 user.email/host 等可能泄漏的字段）；三个 deployable pom 显式声明插件激活
+- [x] 2.3 在 `ulp-support` 创建 `cn.frank.ulp.support.observability.RuntimeBaselineInfoContributor`，实现 `InfoContributor`，namespace `runtime`，暴露 **springBoot / spring / java / jackson** 四字段（plan 写三字段，多加 spring 是因为 Spring Boot 4 + Spring Framework 7 是分版本号锁定的，两边都要 visible）；通过 `@Component` 直接注册（不走 SupportAutoConfiguration `@Bean`——三个 Application 类都在 `cn.frank.ulp` 包根，默认 component scan 必然覆盖 `cn.frank.ulp.support.observability.**`）
+- [x] 2.4 `mvnw.cmd -pl ulp-support,ulp-console -am install -DskipTests` 后 unzip ulp-console fat jar → BOOT-INF/lib/ulp-support-1.1.0.jar 含 RuntimeBaselineInfoContributor.class；ulp-console-1.1.0.jar BOOT-INF/classes/ 含 `META-INF/build-info.properties` + `git.properties`
+- [x] 2.5 本地启动 ulp-console 1898，`curl /actuator/info` 返回三 namespace 齐全：`build.version=1.1.0`、`git.commit.id.abbrev=63bd364`、`runtime.springBoot=4.0.7` + spring 7.0.8 + java 21.0.11 + jackson 3.1.4
 - [ ] 2.6 commit: `feat(actuator): expose build/git/runtime info via /actuator/info`
 
 ## 3. 自定义 LiquibaseChangelogHealthIndicator

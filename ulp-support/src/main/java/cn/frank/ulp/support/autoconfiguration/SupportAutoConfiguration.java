@@ -28,6 +28,10 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  * {@code ContextService.getPortalPublicBaseUrl()} 时炸 NoSuchBeanDefinitionException。
  * 通过 {@code META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports}
  * 注册，确保任何依赖 ulp-support 的 Spring Boot app 都自动拿到 SupportProperties bean。</p>
+ *
+ * <p>注：RuntimeBaselineInfoContributor 用 {@code @Component} 自注册，不在此 @Bean
+ * 注册——三个 deployable 的 Application 都在 {@code cn.frank.ulp} 包根，默认 component scan
+ * 覆盖整个 {@code cn.frank.ulp.**} 子树。</p>
  */
 @AutoConfiguration
 @EnableConfigurationProperties(SupportProperties.class)
