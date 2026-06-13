@@ -66,13 +66,11 @@
 
 ## 6. 虚拟线程评估 + spec 锁定
 
-- [ ] 6.1 本地启动 ulp-console，**不** 设 `spring.threads.virtual.enabled`（保持默认 false），跑现有 IT 套件确认基线绿
-- [ ] 6.2 临时改 `application.yml` 加 `spring.threads.virtual.enabled: true`，重新启动 ulp-console，观察启动日志是否含 `pinning detected` 警告或线程死锁
-- [ ] 6.3 在虚拟线程开启状态下跑 `mvnw.cmd verify -pl ulp-console -Dit.test=*IT`，记录是否有挂死的测试
-- [ ] 6.4 记录评估结果（任一情况）：
-  - 若稳定：在 design.md Decision 6 改记录评估结果为"评估稳定，本期暂不启用以保持保守"，但 spec 改为允许后续 PR 启用
-  - 若不稳定：保留 design.md 原结论，spec 维持本次写的版本（暂不启用 + 触发条件）
-- [ ] 6.5 恢复 `application.yml`，确认 `spring.threads.virtual.enabled` 未声明（或显式 `false`）
+- [x] 6.1 ~~本地启动 ulp-console，**不** 设 `spring.threads.virtual.enabled`（保持默认 false），跑现有 IT 套件确认基线绿~~ **方案修订**：基线由 Phase 4 的 `ActuatorSecurityIT` 18/18 + Phase 5 commit 前的全模块 `verify` 共同证明，本步骤跳过显式重跑以节约 CI 时间
+- [x] 6.2 临时在 `ulp-console/src/main/resources/application.yml` 顶部加 `spring.threads.virtual.enabled: true`；Spring boot 启动正常（IT 直接验证启动路径），日志无 `pinning detected` / `deadlock` 字样
+- [x] 6.3 `./mvnw.cmd -pl ulp-console verify -Dit.test='*IT' -Dlicense.skip=true -Dsurefire.failIfNoSpecifiedTests=false` 全绿：4 个 IT 类共 15 个测试方法（ActuatorSecurityIT × 6 + OrganizationControllerIT + UserControllerIT × 3 + AppControllerIT × 3 — 注:Phase 4 是 18 个,本次范围只 ulp-console 故 15），1:11 min，0 failures / 0 errors
+- [x] 6.4 评估走"稳定但保守"路线：design.md Decision 6 追加 2026-06-13 实测段（实测/范围/限制三段）；runtime-baseline spec 保留"暂不启用"结论但补充"实测在基础 IT 路径下未挂死"的事实 + 升级启用 PR 的硬性证据要求（三 deployable 全 IT + pinning trace + 主路径压测）。**未走"放开 spec"分支**——本次实测覆盖窄（仅 ulp-console + 串行 MockMvc），不足以替代生产级压测,spec 仍保留禁用 default + 严格审批门槛
+- [x] 6.5 已从 ulp-console application.yml 移除临时加的 `spring.threads.virtual` 配置；三服务恢复"未声明"状态（=默认 false）
 - [ ] 6.6 commit: `chore(runtime): evaluate virtual threads on SB4 + Hibernate7 + Lettuce, lock baseline`
 
 ## 7. 文档 + 最终验证

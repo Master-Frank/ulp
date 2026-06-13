@@ -124,6 +124,15 @@ Console 已有 `ADMIN` 角色，Portal / OpenApi 没有独立 admin 角色概念
 
 结论：本期 `spring.threads.virtual.enabled=false`（默认即 false）；在 `runtime-baseline` spec 加一条 Requirement 记录此决定 + 重启评估的触发条件（QPS > 500 持续、或 Hibernate 8 / Lettuce 7 修了 pinning）
 
+**2026-06-13 评估实测补充**：
+
+- 操作：在 `ulp-console/src/main/resources/application.yml` 临时加 `spring.threads.virtual.enabled: true`，跑 `mvnw verify -pl ulp-console -Dit.test=*IT`
+- 范围：4 个 IT 类共 15 个测试方法（ActuatorSecurityIT × 6 + OrganizationControllerIT + UserControllerIT × 3 + AppControllerIT × 3），覆盖 Spring Security 7 filter 链路、JPA/Hibernate 7 事务、MySQL JDBC、Redis Lettuce（actuator/health 探针）、MapStruct、Liquibase 启动、Spring Session Indexed
+- 结果：15/15 全绿（1:11 min），Spring boot 启动正常，未观察到死锁；日志无 `pinning detected` / `deadlock` 字样
+- **限制**：（1）`-Djdk.tracePinnedThreads=full` 未配进 Failsafe forked JVM argLine，pinning 未真正 trace，仅说明"未明显死锁"≠"无 pinning"；（2）只跑了 ulp-console，ulp-portal / ulp-openapi 未验；（3）单线程 MockMvc 串行调用，未触发高并发竞争；（4）SSO 协议链路（OIDC AS / SAML / form-fill）目前没有 IT 覆盖
+
+最终结论维持**本期不启用**——已知风险范围确实有缩小（基本 IT 路径在虚拟线程下可正常运行），但生产级别的并发 + pinning 压力测试缺位，本期不冒险。`spec.md` 维持"暂不启用 + 后续 PR 启用时同步改 spec"的约束，且约束语气可略放宽（实测有正面信号，不再是纯纸面评估）。
+
 ### Decision 7: Liquibase changelog 漂移如何检测
 
 **选：启动期 hook + 定期 indicator 复查**
