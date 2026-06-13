@@ -55,13 +55,13 @@
 
 ## 5. Docker HEALTHCHECK 集成
 
-- [ ] 5.1 `deploy/docker/ulp-console.Dockerfile` 加 `HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=60s CMD curl -fs http://localhost:1898/actuator/health/liveness || exit 1`
-- [ ] 5.2 `deploy/docker/ulp-portal.Dockerfile` 同上（port 1989）
-- [ ] 5.3 `deploy/docker/ulp-openapi.Dockerfile` 同上（port 1988）
-- [ ] 5.4 Dockerfile 基础镜像若未含 `curl` 则改用 `wget --spider` 或加 `RUN apt-get install -y curl`（取决于 base image，azul/zulu-openjdk 基于 ubuntu，含 wget 但无 curl）
-- [ ] 5.5 `deploy/docker/docker-compose.yml` 三个 ulp 服务段加 `healthcheck:` 段，参数与 Dockerfile 一致
-- [ ] 5.6 `docker-compose.yml` 中下游依赖 ulp-* 的服务（如 nginx）`depends_on` 段使用 `condition: service_healthy`
-- [ ] 5.7 本地 `docker compose build && docker compose up -d` 启动后 `docker ps` 显示三个 ulp 容器 STATUS 为 `(healthy)`
+- [x] 5.1 `ulp-console/Dockerfile`（**路径偏差**：实际 Dockerfile 在模块根而非 `deploy/docker/`）加 `HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=60s CMD curl -fs http://localhost:1898/actuator/health/liveness`
+- [x] 5.2 `ulp-portal/Dockerfile` 同上（port 1989）
+- [x] 5.3 `ulp-openapi/Dockerfile` 同上（port 1988）
+- [x] 5.4 三个 Dockerfile 的 base `azul/zulu-openjdk:17-jre` 在原 `RUN apt-get install` 段已包含 `curl`，无需追加
+- [x] 5.5 `deploy/docker/docker-compose.yml` 三个 ulp 服务段加 `healthcheck:` 段，参数与 Dockerfile 一致（显式重声明使 `depends_on: service_healthy` 可在 compose 层识别，不依赖镜像继承）
+- [x] 5.6 `docker-compose.yml` 中 `nginx-web` `depends_on` 段对三个 ulp 服务使用 `condition: service_healthy`（假设 nginx 反代 ulp upstream；若用户的 nginx 用途不同，注释提示可删除该段）
+- [ ] 5.7 ~~本地 `docker compose build && docker compose up -d` 启动后 `docker ps` 显示 `(healthy)`~~ **跳过**：①compose `image: ulp-*:latest` 未声明 `build:`，`docker compose build` 是 no-op，真正构建需先 `mvn spring-boot:build-image` 三次；②运行依赖 host network mode + privileged 共享本机端口（已有占用风险）；③compose 存在 elasticsearch `mem_limit` 与 `deploy.resources.limits.memory` 冲突的 preexisting bug（task #41 范围），先跑会立即报错。静态 YAML 已用 python utf-8 字符串校验确认三个 healthcheck 段 + 3 处 `condition: service_healthy` 均到位
 - [ ] 5.8 commit: `chore(deploy): add HEALTHCHECK to Dockerfiles + docker-compose healthcheck`
 
 ## 6. 虚拟线程评估 + spec 锁定

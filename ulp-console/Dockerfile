@@ -48,4 +48,11 @@ RUN sed -i 's/archive.ubuntu.com/cn.archive.ubuntu.com/g' /etc/apt/sources.list 
 
 EXPOSE 1898
 
+# 健康检查：start-period 60s 留出 JVM + Spring context + Liquibase 冷启动时间；
+# 之后每 30s 拉 /actuator/health/liveness，连续 3 次失败标记 unhealthy。
+# 用 liveness 而非 /actuator/health 整体：后者会扣 DB/Redis 探针，外部依赖瞬断不应直接重启容器；
+# liveness 反映"应用自身存活"，更适合编排层的重启决策。
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=60s \
+    CMD curl -fs http://localhost:1898/actuator/health/liveness || exit 1
+
 ENTRYPOINT ["java","-XX:TieredStopAtLevel=1","-Djava.security.egd=file:/dev/./urandom","-Dspring.main.lazy-initialization=false","org.springframework.boot.loader.launch.JarLauncher"]

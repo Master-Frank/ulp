@@ -50,4 +50,8 @@ RUN sed -i 's/archive.ubuntu.com/cn.archive.ubuntu.com/g' /etc/apt/sources.list 
 
 EXPOSE 1989
 
+# 健康检查：见 ulp-console/Dockerfile 注释；端口换 1989。
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=60s \
+    CMD curl -fs http://localhost:1989/actuator/health/liveness || exit 1
+
 ENTRYPOINT ["java","-XX:TieredStopAtLevel=1","-Djava.security.egd=file:/dev/./urandom","-Dspring.main.lazy-initialization=false","org.springframework.boot.loader.launch.JarLauncher"]

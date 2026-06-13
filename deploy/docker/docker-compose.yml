@@ -65,6 +65,16 @@ services:
       - /docker/nginx/log:/var/log/nginx
     privileged: true
     network_mode: "host"
+    # 假设 /docker/nginx/conf/nginx.conf 反代 ulp-* 三个 upstream；
+    # 等三个后端 healthy 再启 nginx，避免 502 窗口。
+    # 若用户的 nginx 用途与 ulp 无关，可删除本段——不影响 ulp 服务自身。
+    depends_on:
+      ulp-console:
+        condition: service_healthy
+      ulp-portal:
+        condition: service_healthy
+      ulp-openapi:
+        condition: service_healthy
 
   redis:
     image: redis:6.2.12
@@ -144,6 +154,14 @@ services:
       - /docker/ulp/conf:/opt/ulp/conf
     privileged: true
     network_mode: "host"
+    # 与 Dockerfile HEALTHCHECK 参数一致；docker-compose 显式声明使 `depends_on: service_healthy`
+    # 可识别。compose 不继承镜像的 HEALTHCHECK 用于 condition 判断时会 fallback 到 service_started。
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:1898/actuator/health/liveness"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
 
   ulp-portal:
     image: ulp-portal:latest
@@ -159,6 +177,12 @@ services:
       - /docker/ulp/conf:/opt/ulp/conf
     privileged: true
     network_mode: "host"
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:1989/actuator/health/liveness"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
 
   ulp-openapi:
     image: ulp-openapi:latest
@@ -174,3 +198,9 @@ services:
       - /docker/ulp/conf:/opt/ulp/conf
     privileged: true
     network_mode: "host"
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:1988/actuator/health/liveness"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
